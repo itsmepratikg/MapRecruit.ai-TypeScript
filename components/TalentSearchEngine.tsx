@@ -1,0 +1,910 @@
+
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import {
+  Search, Filter, Plus, X, FolderOpen, Tag as TagIcon,
+  SlidersHorizontal, ArrowRight, XCircle, Send, Star, MapPin, Briefcase, CheckCircle, Clock, Sparkles, ThumbsUp, Trash2, Edit2, History, Bookmark, ArrowUpDown, User,
+  Eye, Share2, ChevronUp, ChevronDown, MessageSquare
+} from 'lucide-react';
+import { MOCK_PROFILES, RECENT_SEARCHES, SAVED_SEARCHES, RECENT_VISITS, QUICK_FILTERS, SIDEBAR_FILTERS } from '../data';
+import { SearchState } from '../types';
+import { EmptyView, ChatBubble } from './Common';
+import { AdvancedSearchModal } from './AdvancedSearchModal';
+
+// --- UTILITIES ---
+export const getCategoryForFilter = (filterValue: string) => {
+  if (filterValue === 'High Match (>90%)') return 'match';
+  for (const group of SIDEBAR_FILTERS) {
+    if (group.options.includes(filterValue)) return group.id;
+  }
+  return 'unknown';
+};
+
+export const filterProfilesEngine = (profiles: any[], activeFilters: string[], advancedParams: any = {}, searchKeywords: string[] = []) => {
+  let filtered = profiles;
+
+  if (Object.keys(advancedParams).length > 0) {
+    filtered = filtered.filter(p => {
+      let matches = true;
+      if (advancedParams.keywords && !JSON.stringify(p).toLowerCase().includes(advancedParams.keywords.toLowerCase())) matches = false;
+      if (advancedParams.location && !p.location.toLowerCase().includes(advancedParams.location.toLowerCase())) matches = false;
+      if (advancedParams.jobTitle && !p.title.toLowerCase().includes(advancedParams.jobTitle.toLowerCase())) matches = false;
+      return matches;
+    });
+  }
+
+  if (searchKeywords.length > 0) {
+    filtered = filtered.filter(p => {
+      const profileString = JSON.stringify(p).toLowerCase();
+      return searchKeywords.every(keyword => profileString.includes(keyword.toLowerCase()));
+    });
+  }
+
+  if (!activeFilters || activeFilters.length === 0) return filtered;
+
+  const filtersByCategory = activeFilters.reduce((acc: any, filter) => {
+    if (typeof filter !== 'string') return acc;
+    const category = getCategoryForFilter(filter);
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(filter);
+    return acc;
+  }, {});
+
+  return filtered.filter(profile => {
+    return Object.keys(filtersByCategory).every(category => {
+      const categoryFilters = filtersByCategory[category];
+      if (categoryFilters.length === 0) return true;
+
+      switch (category) {
+        case 'location': return categoryFilters.includes(profile.location);
+        case 'title': return categoryFilters.includes(profile.title);
+        case 'status': return categoryFilters.includes(profile.status);
+        case 'availability': return categoryFilters.includes(profile.availability);
+        case 'skills': return profile.skills?.some((skill: string) => categoryFilters.includes(skill));
+        case 'match': return profile.matchScore > 90;
+        default: return true;
+      }
+    });
+  });
+};
+
+// --- SUB-COMPONENTS FOR SEARCH ---
+
+export const ProfileCard: React.FC<{ profile: any, onNavigate: () => void }> = ({ profile, onNavigate }) => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-all duration-200 flex flex-col md:flex-row gap-4 group relative">
+    <div className="absolute top-4 right-4 flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+      <Sparkles size={12} />
+      {profile.matchScore}% Match
+    </div>
+
+    <div className="flex-shrink-0">
+      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-500 font-bold text-xl border-2 border-white shadow-sm">
+        {profile.avatar}
+      </div>
+    </div>
+
+    <div className="flex-grow">
+      <div className="flex items-start justify-between">
+        <div>
+          <h3 onClick={onNavigate} className="text-lg font-bold text-gray-900 group-hover:text-green-600 transition-colors cursor-pointer">
+            {profile.name}
+          </h3>
+          <p className="text-gray-600 font-medium">{profile.title}</p>
+        </div>
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-y-2 gap-x-4 text-sm text-gray-500">
+        <div className="flex items-center gap-1">
+          <MapPin size={14} />
+          {profile.location}
+        </div>
+        <div className="flex items-center gap-1">
+          <Briefcase size={14} />
+          {profile.experience}
+        </div>
+        <div className="flex items-center gap-1">
+          <CheckCircle size={14} className={profile.status === 'Active' ? "text-green-500" : "text-yellow-500"} />
+          {profile.status}
+        </div>
+        <div className="flex items-center gap-1">
+          <Clock size={14} />
+          {profile.availability}
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {profile.skills?.map((skill: string, idx: number) => (
+          <span key={idx} className="px-2 py-1 bg-gray-50 text-gray-600 text-xs rounded-md border border-gray-200">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div className="flex md:flex-col justify-between items-end border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-4 mt-4 md:mt-0 gap-2">
+      <button className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-full transition-colors">
+        <ThumbsUp size={18} />
+      </button>
+      <button 
+        onClick={onNavigate}
+        className="text-sm bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-medium transition-colors w-full md:w-auto shadow-sm shadow-green-200"
+      >
+        View
+      </button>
+    </div>
+  </div>
+);
+
+export const LandingDashboard: React.FC<{ onSearch: (t: string) => void, onModifySearch: (t: string) => void }> = ({ onSearch, onModifySearch }) => {
+  const [activeTab, setActiveTab] = useState<string | null>(null);
+  const [sortOption, setSortOption] = useState('name');
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const toggleTab = (tab: string) => {
+    if (activeTab === tab) {
+      setActiveTab(null);
+    } else {
+      setActiveTab(tab);
+    }
+  };
+
+  const sortedSavedSearches = useMemo(() => {
+    return [...SAVED_SEARCHES].sort((a, b) => {
+      if (sortOption === 'name') {
+        return a.name.localeCompare(b.name);
+      } else {
+        // @ts-ignore
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+    });
+  }, [sortOption]);
+
+  return (
+    <div className="w-full max-w-4xl mx-auto mt-12 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex border-b border-gray-100">
+        <button 
+          onClick={() => toggleTab('recent_visits')}
+          className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors border-b-2 ${activeTab === 'recent_visits' ? 'text-green-600 border-green-600 bg-green-50/50' : 'text-gray-500 border-transparent hover:bg-gray-50'}`}
+        >
+          <Eye size={16} /> Recently Visited Profiles
+        </button>
+        <button 
+          onClick={() => toggleTab('recent_searches')}
+          className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors border-b-2 ${activeTab === 'recent_searches' ? 'text-green-600 border-green-600 bg-green-50/50' : 'text-gray-500 border-transparent hover:bg-gray-50'}`}
+        >
+          <History size={16} /> Recent Searches
+        </button>
+        <button 
+          onClick={() => toggleTab('saved_searches')}
+          className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors border-b-2 ${activeTab === 'saved_searches' ? 'text-green-600 border-green-600 bg-green-50/50' : 'text-gray-500 border-transparent hover:bg-gray-50'}`}
+        >
+          <Bookmark size={16} /> Saved Searches
+        </button>
+      </div>
+
+      {activeTab && (
+        <div className="p-6 min-h-[300px] animate-in fade-in zoom-in-95 duration-200">
+          {activeTab === 'recent_visits' && (
+            <div className="space-y-3">
+              {RECENT_VISITS.map(visit => (
+                <div key={visit.id} className="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-lg hover:shadow-md transition-shadow group cursor-pointer">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-sm">
+                      <User size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-gray-800 group-hover:text-green-600 transition-colors">{visit.name}</h4>
+                      <p className="text-xs text-gray-500">{visit.role}</p>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-400">{visit.time}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'recent_searches' && (
+            <div className="space-y-3">
+              {RECENT_SEARCHES.map(search => (
+                <div key={search.id} className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:shadow-md transition-shadow bg-white">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center text-white shadow-sm">
+                      <Search size={18} />
+                    </div>
+                    <div className="flex gap-2">
+                      {search.terms.map((term, i) => (
+                        <span key={i} className="px-3 py-1 rounded-full border border-purple-200 bg-purple-50 text-purple-700 text-xs font-medium">
+                          {term}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-xs text-gray-400">{search.date}</span>
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => onSearch(search.terms.join(' '))}
+                        className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Re-run Search"
+                      >
+                        <Search size={16} />
+                      </button>
+                      <button 
+                        onClick={() => onModifySearch(search.terms.join(' '))}
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Modify Search"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'saved_searches' && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <button 
+                      onClick={() => setIsSortOpen(!isSortOpen)}
+                      className="flex items-center gap-1 px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50"
+                    >
+                      <ArrowUpDown size={14} /> Sort: {sortOption === 'name' ? 'Name' : 'Created Date'}
+                    </button>
+                    
+                    {isSortOpen && (
+                      <>
+                        <div className="fixed inset-0 z-10" onClick={() => setIsSortOpen(false)}></div>
+                        <div className="absolute top-full left-0 mt-1 w-36 bg-white border border-gray-200 rounded-lg shadow-lg z-20 overflow-hidden">
+                          <button 
+                            onClick={() => { setSortOption('name'); setIsSortOpen(false); }}
+                            className={`w-full text-left px-4 py-2 text-xs hover:bg-green-50 hover:text-green-700 ${sortOption === 'name' ? 'bg-green-50 text-green-700 font-medium' : 'text-gray-600'}`}
+                          >
+                            Name (A-Z)
+                          </button>
+                          <button 
+                            onClick={() => { setSortOption('date'); setIsSortOpen(false); }}
+                            className={`w-full text-left px-4 py-2 text-xs hover:bg-green-50 hover:text-green-700 ${sortOption === 'date' ? 'bg-green-50 text-green-700 font-medium' : 'text-gray-600'}`}
+                          >
+                            Created Date
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="relative">
+                    <input type="text" placeholder="Filter by name..." className="pl-8 pr-3 py-1.5 border border-gray-200 rounded-lg text-xs w-48 outline-none focus:border-green-500 bg-white" />
+                    <Search size={12} className="absolute left-2.5 top-2 text-gray-400" />
+                  </div>
+                </div>
+                <button className="text-xs text-gray-500 hover:text-green-600 font-medium">Clear Filters</button>
+              </div>
+
+              {sortedSavedSearches.map(saved => (
+                <div key={saved.id} className="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:shadow-md transition-shadow bg-white group">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center text-white shadow-sm">
+                      <Search size={18} />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-sm font-bold text-gray-800">{saved.name}</h4>
+                        {saved.shared && <span className="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 flex items-center gap-1"><Share2 size={8} /> Shared</span>}
+                      </div>
+                      <div className="flex gap-2 mt-1">
+                        {saved.tags.map((tag, i) => (
+                          <span key={i} className="text-xs text-purple-600 border border-purple-100 px-2 py-0.5 rounded-full bg-purple-50">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button 
+                      onClick={() => onSearch(saved.tags.join(' '))}
+                      className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Run Search"
+                    >
+                      <Search size={16} />
+                    </button>
+                    <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Share">
+                      <Share2 size={16} />
+                    </button>
+                    <button 
+                      onClick={() => onModifySearch(saved.tags.join(' '))}
+                      className="p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Edit"
+                    >
+                      <Edit2 size={16} />
+                    </button>
+                    <button 
+                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const FilterGroup: React.FC<{ label: string, options: string[], activeFilters: string[], onToggle: (o: string) => void }> = ({ label, options, activeFilters, onToggle }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div className="border-b border-gray-100 py-4 last:border-0">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-between w-full text-left mb-2 group"
+      >
+        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider group-hover:text-green-600 transition-colors">
+          {label}
+        </span>
+        {isOpen ? <ChevronUp size={14} className="text-gray-400" /> : <ChevronDown size={14} className="text-gray-400" />}
+      </button>
+      
+      {isOpen && (
+        <div className="space-y-2 mt-2">
+          {options.map(opt => {
+            const isActive = activeFilters.includes(opt);
+            return (
+              <label key={opt} className={`flex items-center justify-between text-sm cursor-pointer p-1.5 rounded transition-colors ${isActive ? 'bg-green-50 text-green-900' : 'text-gray-600 hover:bg-gray-50'}`}>
+                <div className="flex items-center gap-2">
+                  <input 
+                    type="checkbox" 
+                    checked={isActive}
+                    onChange={() => onToggle(opt)}
+                    className="rounded border-gray-300 text-green-600 focus:ring-green-500 w-4 h-4 bg-white" 
+                  />
+                  <span className="truncate max-w-[280px]">{opt}</span>
+                </div>
+              </label>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const FilterPopup: React.FC<{ isOpen: boolean, onClose: () => void, activeFilters: string[], onToggle: (f: string) => void, onReset: () => void }> = ({ isOpen, onClose, activeFilters, onToggle, onReset }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200">
+        <div className="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+            <h2 className="font-semibold text-gray-800 flex items-center gap-2">
+              <SlidersHorizontal size={18} className="text-green-600" /> Filter Candidates
+            </h2>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-full">
+              <X size={20}/>
+            </button>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto p-5 scrollbar-thin scrollbar-thumb-gray-200">
+             {SIDEBAR_FILTERS.map(category => (
+               <FilterGroup 
+                 key={category.id}
+                 label={category.label}
+                 options={category.options}
+                 activeFilters={activeFilters}
+                 onToggle={onToggle}
+               />
+             ))}
+        </div>
+
+        <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex justify-between gap-3 items-center">
+            <button 
+              onClick={onReset}
+              className="text-sm text-gray-500 hover:text-red-500 font-medium px-2 py-1 rounded transition-colors"
+            >
+              Reset All
+            </button>
+            <button 
+              onClick={onClose} 
+              className="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-all shadow-md shadow-green-200 active:scale-95"
+            >
+              View Results
+            </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const TalentSearchEngine: React.FC<{ 
+    searchState: SearchState, 
+    setSearchState: (s: any) => void,
+    onNavigateToProfile: () => void 
+}> = ({ searchState, setSearchState, onNavigateToProfile }) => {
+  
+  const [placeholder, setPlaceholder] = useState("Describe your ideal candidate...");
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false); 
+  const [isChatOpen, setIsChatOpen] = useState(true);
+  const [isAiEnabled, setIsAiEnabled] = useState(true); 
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const filteredProfiles = useMemo(() => {
+    return filterProfilesEngine(MOCK_PROFILES, searchState.activeFilters, searchState.advancedParams, searchState.searchKeywords);
+  }, [searchState.activeFilters, searchState.advancedParams, searchState.searchKeywords]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [searchState.chatMessages]);
+
+  useEffect(() => {
+    let examples = [];
+    if (isAiEnabled) {
+      examples = [
+        "Describe your ideal candidate...",
+        "Looking for forklift drivers in Atlanta...",
+        "Candidates with 5+ years of experience...",
+        "Someone who knows SAP and Team Leadership..."
+      ];
+    } else {
+      examples = [
+        "Enter keywords...",
+        "Search by Job Title...",
+        "Search by Skill...",
+        "Search by Location..."
+      ];
+    }
+    
+    let i = 0;
+    setPlaceholder(examples[0]);
+    const interval = setInterval(() => {
+      i = (i + 1) % examples.length;
+      setPlaceholder(examples[i]);
+    }, 4000); 
+    return () => clearInterval(interval);
+  }, [isAiEnabled]);
+
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const term = searchState.inputValue.trim();
+    
+    let newKeywords = [...searchState.searchKeywords];
+    if (term && !newKeywords.includes(term)) {
+        newKeywords.push(term);
+    }
+    
+    const newState = {
+        ...searchState,
+        inputValue: '',
+        searchKeywords: newKeywords,
+        view: 'results'
+    };
+    
+    // @ts-ignore
+    setSearchState((prev: any) => {
+        // Only Add Chat message if not already added for this interaction
+        let newMessages = [...prev.chatMessages];
+        if (isAiEnabled && term) {
+            newMessages.push({
+                id: Date.now(),
+                text: `I've added "${term}" to your filters. Found ${MOCK_PROFILES.length} profiles initially. Refine further below:`,
+                suggestions: [
+                  { label: "Require Forklift Cert", action: () => toggleFilter("Forklift Certified") },
+                  { label: "Show Supervisors", action: () => toggleFilter("Warehouse Supervisor") },
+                  { label: "High Match (>90%)", action: () => toggleFilter("High Match (>90%)") }
+                ]
+            });
+        }
+        return { ...newState, chatMessages: newMessages };
+    });
+  };
+
+  const handleAdvancedSearch = (params: any) => {
+    let newKeywords = [...searchState.searchKeywords];
+    if (params.keywords) {
+        const keys = params.keywords.split(' ').filter((k: string) => k.trim() !== '');
+        newKeywords = [...new Set([...newKeywords, ...keys])];
+    }
+    // @ts-ignore
+    setSearchState((prev: any) => ({ 
+        ...prev, 
+        advancedParams: params, 
+        searchKeywords: newKeywords, 
+        view: 'results'
+    }));
+  };
+
+  const clearSearch = () => {
+    // @ts-ignore
+    setSearchState({
+      view: 'initial',
+      inputValue: '',
+      activeFilters: [],
+      searchKeywords: [],
+      advancedParams: {},
+      chatMessages: []
+    });
+  };
+
+  const removeKeyword = (keyword: string) => {
+      // @ts-ignore
+      setSearchState((prev: any) => ({
+          ...prev,
+          searchKeywords: prev.searchKeywords.filter((k: string) => k !== keyword)
+      }));
+  };
+
+  const toggleFilter = (filterName: string) => {
+    const isActive = searchState.activeFilters.includes(filterName);
+    let newFilters;
+    let newMessages = [...searchState.chatMessages];
+
+    if (isActive) {
+      newFilters = searchState.activeFilters.filter((f: string) => f !== filterName);
+      if (isAiEnabled) newMessages.push({ text: `Removed filter: ${filterName}` });
+    } else {
+      newFilters = [...searchState.activeFilters, filterName];
+      if (isAiEnabled) newMessages.push({ text: `Applying filter: ${filterName}` });
+    }
+    
+    // @ts-ignore
+    setSearchState((prev: any) => ({
+        ...prev,
+        activeFilters: newFilters,
+        chatMessages: newMessages
+    }));
+  };
+
+  const handleChatInput = (e: any) => {
+    e.preventDefault();
+    const input = e.target.elements.chatInput.value;
+    if (!input.trim()) return;
+
+    // @ts-ignore
+    setSearchState((prev: any) => ({
+        ...prev,
+        chatMessages: [...prev.chatMessages, { text: input }]
+    }));
+    e.target.reset();
+
+    setTimeout(() => {
+      // @ts-ignore
+      setSearchState((prev: any) => ({
+          ...prev,
+          chatMessages: [...prev.chatMessages, {
+            text: "I'm analyzing your request. Try using the checkboxes on the left for precise control.",
+            suggestions: [
+               { label: "Reset All Filters", action: () => setSearchState((p: any) => ({...p, activeFilters: []})) }
+            ]
+          }]
+      }));
+    }, 1000);
+  };
+
+  const onModifySearch = (keywordsString: string) => {
+    if (keywordsString) {
+      const newKeys = keywordsString.split(' ').filter(k => k.trim() !== '');
+      // @ts-ignore
+      setSearchState((prev: any) => ({
+          ...prev,
+          searchKeywords: [...new Set([...prev.searchKeywords, ...newKeys])]
+      }));
+    }
+    setIsAdvancedOpen(true);
+  };
+
+  const onDirectSearch = (keywordsString: string) => {
+    if (keywordsString) {
+      const newKeys = keywordsString.split(' ').filter(k => k.trim() !== '');
+      // @ts-ignore
+      setSearchState((prev: any) => ({
+          ...prev,
+          searchKeywords: [...new Set([...prev.searchKeywords, ...newKeys])],
+          view: 'results'
+      }));
+    } else {
+       // @ts-ignore
+       setSearchState((prev: any) => ({ ...prev, view: 'results' })); 
+    }
+  };
+
+  // RENDER INITIAL LANDING
+  if (searchState.view === 'initial') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <AdvancedSearchModal 
+          isOpen={isAdvancedOpen}
+          onClose={() => setIsAdvancedOpen(false)}
+          initialKeywords={searchState.searchKeywords.join(' ')}
+          onSearch={(params) => {
+            handleAdvancedSearch(params);
+          }}
+        />
+
+        <div className="w-full max-w-2xl text-center space-y-8 animate-in fade-in zoom-in duration-500">
+          <div className="flex justify-center mb-6">
+             <div className="flex items-center gap-2">
+               <div className="bg-green-600 text-white p-2 rounded-lg">
+                  <Search size={32} />
+               </div>
+               <span className="text-3xl font-bold text-gray-800 tracking-tight">MapRecruit</span>
+             </div>
+          </div>
+
+          <h1 className="text-4xl font-extrabold text-gray-900">
+            Find your next hire, <span className="text-green-600">conversationally.</span>
+          </h1>
+          
+          <form onSubmit={handleSearch} className="relative w-full max-w-xl mx-auto group">
+            <div className="absolute inset-y-0 left-4 flex items-center gap-2">
+               <button 
+                type="button" 
+                onClick={() => setIsAiEnabled(!isAiEnabled)}
+                className={`p-2 rounded-lg transition-colors z-10 ${isAiEnabled ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'}`}
+                title={isAiEnabled ? "AI Search Enabled" : "Traditional Search"}
+              >
+                <Sparkles size={18} className={isAiEnabled ? "fill-green-600" : ""} />
+              </button>
+            </div>
+            <input 
+              type="text"
+              value={searchState.inputValue}
+              // @ts-ignore
+              onChange={(e) => setSearchState({...searchState, inputValue: e.target.value})}
+              placeholder={placeholder}
+              className="w-full pl-12 pr-28 py-4 rounded-2xl border-2 border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-50 outline-none text-lg shadow-lg shadow-gray-100 transition-all placeholder:text-gray-400 bg-white"
+            />
+            <div className="absolute right-3 top-2.5 flex items-center gap-2">
+               {searchState.inputValue && (
+                 // @ts-ignore
+                 <button type="button" onClick={() => setSearchState({...searchState, inputValue: ''})} className="text-gray-400 hover:text-gray-600 p-2">
+                   <XCircle size={20} />
+                 </button>
+               )}
+               <button type="submit" className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-xl shadow-md transition-transform active:scale-95">
+                  <ArrowRight size={20} />
+               </button>
+            </div>
+          </form>
+
+          {!isAiEnabled && (
+            <div className="flex justify-end w-full max-w-xl mx-auto -mt-6">
+               <button 
+                 onClick={() => setIsAdvancedOpen(true)}
+                 className="text-green-600 text-sm font-medium hover:underline flex items-center gap-1"
+               >
+                 Advanced Search
+               </button>
+            </div>
+          )}
+
+          <LandingDashboard onSearch={onDirectSearch} onModifySearch={onModifySearch} />
+        </div>
+      </div>
+    );
+  }
+
+  // RENDER RESULTS VIEW
+  return (
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      
+      <FilterPopup 
+        isOpen={isFilterPopupOpen}
+        onClose={() => setIsFilterPopupOpen(false)}
+        activeFilters={searchState.activeFilters}
+        onToggle={toggleFilter}
+        // @ts-ignore
+        onReset={() => setSearchState((prev: any) => ({...prev, activeFilters: []}))}
+      />
+
+      <AdvancedSearchModal 
+        isOpen={isAdvancedOpen}
+        onClose={() => setIsAdvancedOpen(false)}
+        initialKeywords={searchState.searchKeywords.join(' ')}
+        onSearch={handleAdvancedSearch}
+      />
+
+      <header className="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-4 lg:px-6 shadow-sm z-20 flex-shrink-0">
+        <div className="flex items-center gap-6 flex-1">
+           <div className="flex items-center gap-2 cursor-pointer mr-4" onClick={clearSearch}>
+             <div className="bg-green-600 text-white p-1.5 rounded-md">
+                <Search size={20} />
+             </div>
+             <span className="text-xl font-bold text-gray-800 hidden md:block">MapRecruit</span>
+           </div>
+           
+           <div className="flex items-center gap-2 w-full max-w-2xl">
+             <form onSubmit={handleSearch} className="relative flex-1">
+               <div className="absolute left-3 top-2.5 text-gray-400">
+                 <Search size={16} />
+               </div>
+               <input 
+                  type="text" 
+                  value={searchState.inputValue}
+                  // @ts-ignore
+                  onChange={(e) => setSearchState({...searchState, inputValue: e.target.value})}
+                  className="w-full bg-gray-100 text-sm rounded-lg pl-9 pr-20 py-2.5 focus:bg-white focus:ring-2 focus:ring-green-100 outline-none border border-transparent focus:border-green-300 transition-all"
+                  placeholder="Add another keyword..."
+               />
+                
+               <div className="absolute right-2 top-1.5 flex items-center gap-1">
+                 {searchState.inputValue && (
+                   // @ts-ignore
+                   <button type="button" onClick={() => setSearchState({...searchState, inputValue: ''})} className="text-gray-400 hover:text-gray-600 p-1">
+                     <X size={16} />
+                   </button>
+                 )}
+                 <button 
+                  type="button" 
+                  onClick={() => setIsAiEnabled(!isAiEnabled)}
+                  className={`p-1 rounded transition-colors ${isAiEnabled ? 'text-green-600 bg-green-50' : 'text-gray-400 hover:text-gray-600'}`}
+                  title={isAiEnabled ? "AI Search Enabled" : "Traditional Search"}
+                >
+                  <Sparkles size={16} className={isAiEnabled ? "fill-green-600" : ""} />
+                </button>
+               </div>
+             </form>
+             
+             <button 
+               onClick={() => setIsAdvancedOpen(true)}
+               className="text-green-700 font-medium text-sm whitespace-nowrap px-3 py-2 hover:bg-green-50 rounded-lg transition-colors border border-transparent hover:border-green-100"
+             >
+               Advanced Search
+             </button>
+           </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button onClick={() => setIsChatOpen(!isChatOpen)} className={`p-2 rounded-lg text-gray-600 hover:bg-gray-100 lg:hidden ${isChatOpen ? 'bg-green-50 text-green-700' : ''}`}>
+            <MessageSquare size={20} />
+          </button>
+          <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm">JD</div>
+        </div>
+      </header>
+
+      <div className="flex flex-1 overflow-hidden relative">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth bg-gray-50/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6 space-y-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <h2 className="text-2xl font-bold text-gray-900">Search Results</h2>
+                    <button 
+                      onClick={() => setIsFilterPopupOpen(true)}
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:text-green-700 transition-colors bg-white shadow-sm"
+                      title="Filter Results"
+                    >
+                      <Filter size={16} />
+                      {searchState.activeFilters.length > 0 && (
+                        <span className="absolute top-[-4px] right-[-4px] w-3 h-3 bg-green-600 rounded-full border-2 border-white"></span>
+                      )}
+                    </button>
+                  </div>
+                  
+                  <p className="text-gray-500 text-sm">
+                    Showing <span className="font-bold text-gray-900">{filteredProfiles.length}</span> candidates 
+                    {(searchState.activeFilters.length > 0 || searchState.searchKeywords.length > 0) ? <span> matching your criteria</span> : <span> available</span>}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex gap-2 overflow-x-auto pb-2 w-full no-scrollbar">
+                {QUICK_FILTERS.map((filter) => {
+                  const isActive = searchState.activeFilters.includes(filter.value);
+                  return (
+                    <button
+                      key={filter.value}
+                      onClick={() => toggleFilter(filter.value)}
+                      className={`
+                        px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap shadow-sm
+                        ${isActive 
+                          ? 'bg-green-100 text-green-700 border-green-200 ring-1 ring-green-300' 
+                          : 'bg-white text-gray-600 border-gray-200 hover:border-green-300 hover:text-green-600'
+                        }
+                      `}
+                    >
+                      {filter.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {(searchState.searchKeywords.length > 0 || searchState.activeFilters.length > 0) && (
+              <div className="flex flex-wrap gap-2 mb-6 animate-in fade-in slide-in-from-top-2">
+                
+                {searchState.searchKeywords.map((k, idx) => (
+                  <span key={`key-${idx}`} className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white border border-green-200 text-green-700 text-xs font-medium shadow-sm">
+                    "{k}"
+                    <button onClick={() => removeKeyword(k)} className="hover:bg-green-100 rounded-full p-0.5"><X size={12} /></button>
+                  </span>
+                ))}
+
+                {searchState.activeFilters.map((filter, idx) => {
+                  const label = typeof filter === 'string' ? filter : "Unknown Filter";
+                  return (
+                    <span key={`filt-${idx}`} className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white border border-green-200 text-green-700 text-xs font-medium shadow-sm">
+                      {label}
+                      <button onClick={() => toggleFilter(filter)} className="hover:bg-green-100 rounded-full p-0.5"><X size={12} /></button>
+                    </span>
+                  );
+                })}
+                
+                <button onClick={clearSearch} className="text-xs text-gray-500 underline hover:text-green-600 ml-2">Clear all</button>
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {filteredProfiles.map(profile => (
+                <ProfileCard key={profile.id} profile={profile} onNavigate={onNavigateToProfile} />
+              ))}
+              
+              {filteredProfiles.length === 0 && (
+                <div className="text-center py-20 bg-white rounded-xl border-2 border-dashed border-gray-200">
+                  <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <User size={32} className="text-gray-400" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">No matching profiles</h3>
+                  <p className="text-gray-500 text-sm max-w-xs mx-auto mt-2">
+                    Try removing some filters or adjusting your keywords.
+                  </p>
+                  <button onClick={clearSearch} className="mt-4 text-green-600 font-medium text-sm hover:underline">
+                    Clear all filters
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+
+        <aside className={`${isChatOpen ? 'w-80 md:w-96 translate-x-0' : 'w-0 translate-x-full lg:w-0'} bg-white border-l border-gray-200 transition-all duration-300 ease-in-out flex flex-col z-10 absolute inset-y-0 right-0 lg:relative`}>
+          <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white shadow-sm">
+                   <Sparkles size={18} />
+                </div>
+                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-800 text-sm">Talent Assistant</h3>
+                <p className="text-xs text-green-600 font-medium">Online • Fine-tuning results</p>
+              </div>
+            </div>
+            <button onClick={() => setIsChatOpen(false)} className="lg:hidden text-gray-400"><X size={18}/></button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
+             {searchState.chatMessages.length === 0 && (
+               <div className="text-center mt-10 opacity-60">
+                 <p className="text-sm text-gray-500">I'm here to help you refine your search. Ask me anything about the candidates.</p>
+               </div>
+             )}
+             {searchState.chatMessages.map((msg: any, idx: number) => (
+               <ChatBubble key={idx} message={msg} isBot={!msg.text.includes("Yes") && !msg.text.includes("No") && !msg.text.includes("Remove filter") && idx % 2 === 0} />
+             ))}
+             <div ref={chatEndRef} />
+          </div>
+
+          <div className="p-4 bg-white border-t border-gray-100">
+            <form onSubmit={handleChatInput} className="relative">
+              <input 
+                name="chatInput"
+                type="text" 
+                placeholder="Type to refine (e.g. 'Only seniors')"
+                className="w-full bg-gray-100 text-sm rounded-xl pl-4 pr-12 py-3 focus:bg-white focus:ring-2 focus:ring-green-100 outline-none transition-all"
+              />
+              <button type="submit" className="absolute right-2 top-2 p-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                <Send size={16} />
+              </button>
+            </form>
+            <p className="text-[10px] text-center text-gray-400 mt-2">AI assistance for filtering candidates.</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  );
+};
