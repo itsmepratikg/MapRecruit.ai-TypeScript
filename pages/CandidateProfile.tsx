@@ -17,14 +17,14 @@ import { ProfileDetails, ActivitiesView, TalentChatView, RecommendedView, Simila
 const LocalMatchAnalysisModal = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
-       <div className="bg-white w-full max-w-4xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
-          <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-white">
+       <div className="bg-white dark:bg-slate-800 w-full max-w-4xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
+          <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-white dark:bg-slate-800">
              <div className="flex items-center gap-3">
-                <button onClick={onClose} className="text-slate-400 hover:text-slate-600">Close</button>
-                <h3 className="font-bold text-slate-800 text-lg">Match Analysis</h3>
+                <button onClick={onClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">Close</button>
+                <h3 className="font-bold text-slate-800 dark:text-slate-200 text-lg">Match Analysis</h3>
              </div>
           </div>
-          <div className="p-8 text-center text-slate-500">Analysis Content Placeholder</div>
+          <div className="p-8 text-center text-slate-500 dark:text-slate-400">Analysis Content Placeholder</div>
        </div>
     </div>
   );
@@ -76,7 +76,7 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
   const renderContent = () => {
     switch(activeTab) {
       case 'profile': return <ProfileDetails data={FULL_PROFILE_DATA} />;
-      case 'resume': return <div className="h-[800px] bg-slate-200 rounded flex items-center justify-center text-slate-400 font-medium">PDF Viewer Placeholder</div>;
+      case 'resume': return <div className="h-[800px] bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-slate-400 dark:text-slate-500 font-medium">PDF Viewer Placeholder</div>;
       case 'activity': return <ActivitiesView />;
       case 'chat': return <TalentChatView />;
       case 'campaigns': return <CampaignsView onPreviewCampaign={setPreviewCampaign} onShowMatchScore={() => setShowMatchScore(true)} />;
@@ -90,13 +90,13 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden relative bg-slate-50/50 w-full animate-in fade-in duration-300">
+    <div className="flex flex-col h-full overflow-hidden relative bg-slate-50 dark:bg-slate-900 w-full animate-in fade-in duration-300">
         {/* MODALS */}
         {showMatchScore && <LocalMatchAnalysisModal onClose={() => setShowMatchScore(false)} />}
         
         {maximizedTemplate && (
             <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
-            <div className="bg-white w-full max-w-6xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col"> 
+            <div className="bg-white dark:bg-slate-800 w-full max-w-6xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col"> 
                 <InterviewFormContent 
                     template={maximizedTemplate.template}
                     roundName={maximizedTemplate.roundName}
@@ -111,7 +111,7 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
 
         {selectedInterview && (
             <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
-            <div className="bg-white w-full max-w-6xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col"> 
+            <div className="bg-white dark:bg-slate-800 w-full max-w-6xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col"> 
                 {selectedInterview.templateAttached ? (
                     <InterviewFormContent 
                         template={{ title: selectedInterview.name }}
@@ -121,13 +121,13 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
                     />
                 ) : (
                     <div className="flex flex-col h-full">
-                        <div className="px-6 py-4 border-b flex justify-between items-center">
-                            <h3 className="font-bold text-slate-800">{selectedInterview.name}</h3>
-                            <button onClick={() => setSelectedInterview(null)}><ChevronLeft size={20}/></button>
+                        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-white dark:bg-slate-800">
+                            <h3 className="font-bold text-slate-800 dark:text-slate-200">{selectedInterview.name}</h3>
+                            <button onClick={() => setSelectedInterview(null)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><ChevronLeft size={20}/></button>
                         </div>
-                        <div className="flex-1 flex flex-col items-center justify-center bg-slate-50">
-                            <FileEdit size={48} className="text-slate-300 mb-4"/>
-                            <p className="text-slate-500 mb-4">No Template Attached</p>
+                        <div className="flex-1 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900">
+                            <FileEdit size={48} className="text-slate-300 dark:text-slate-600 mb-4"/>
+                            <p className="text-slate-500 dark:text-slate-400 mb-4">No Template Attached</p>
                             <button className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-green-700 transition-colors">Attach Template</button>
                         </div>
                     </div>
@@ -136,26 +136,26 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
             </div>
         )}
 
-        <header className={`bg-white border-b border-slate-200 shrink-0 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'py-2 px-6 shadow-sm' : 'py-6 px-8'}`}>
+        <header className={`bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shrink-0 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'py-2 px-6 shadow-sm' : 'py-6 px-8'}`}>
           <div className="h-full">
             <div className={`transition-opacity duration-200 ${isScrolled ? 'hidden opacity-0' : 'block opacity-100'}`}>
               <div className="flex justify-between items-start">
                 <div className="flex gap-4">
-                  <div className="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 font-bold text-2xl uppercase">
+                  <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-2xl uppercase">
                     {candidateName.charAt(0)}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                        <h1 className="text-2xl font-bold text-green-500">{candidateName}</h1>
-                        <button className="text-slate-400 hover:text-green-600"><FileEdit size={14} /></button>
+                        <h1 className="text-2xl font-bold text-green-600 dark:text-green-400">{candidateName}</h1>
+                        <button className="text-slate-400 hover:text-green-600 dark:hover:text-green-400"><FileEdit size={14} /></button>
                     </div>
-                    <p className="text-sm text-slate-500 font-medium mb-1">{candidateRole}</p>
-                    <div className="flex flex-col gap-1 text-sm text-slate-500">
-                      <div className="flex items-center gap-2"><span className="font-bold text-slate-700 flex items-center gap-1"><User size={12}/> Contact Details</span></div>
-                      <div className="flex items-center gap-2"><MapPin size={14} className="text-green-500" /><span>{candidateLocation}</span><CheckCircle size={14} className="text-green-500" /></div>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">{candidateRole}</p>
+                    <div className="flex flex-col gap-1 text-sm text-slate-500 dark:text-slate-400">
+                      <div className="flex items-center gap-2"><span className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1"><User size={12}/> Contact Details</span></div>
+                      <div className="flex items-center gap-2"><MapPin size={14} className="text-green-500 dark:text-green-400" /><span>{candidateLocation}</span><CheckCircle size={14} className="text-green-500 dark:text-green-400" /></div>
                       <div className="flex items-center gap-2"><TagIcon size={14} className="text-slate-400" />
                         {displayTags.length > 0 ? (
-                            displayTags.map((tag: any, i: number) => (<span key={i} className="bg-slate-100 px-2 py-0.5 rounded text-xs">{tag}</span>))
+                            displayTags.map((tag: any, i: number) => (<span key={i} className="bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-2 py-0.5 rounded text-xs">{tag}</span>))
                         ) : (
                             <span className="text-xs text-slate-400 italic">No Tags</span>
                         )}
@@ -166,10 +166,10 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
                 <div className="flex flex-col items-end gap-6">
                   <ActionIcons />
                   <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-right text-sm">
-                    <div><span className="text-slate-800 font-bold block">Candidate Type</span><span className="text-slate-500">{candidateType}</span></div>
-                    <div><span className="text-slate-800 font-bold block">Availability</span><span className="text-slate-500">{candidateAvailability}</span></div>
-                    <div><span className="text-slate-800 font-bold block">Employment Status</span><span className="text-slate-500">{candidateStatus}</span></div>
-                    <div><span className="text-slate-800 font-bold block">Channel</span><span className="text-slate-500">{CANDIDATE.channel}</span></div>
+                    <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Candidate Type</span><span className="text-slate-500 dark:text-slate-400">{candidateType}</span></div>
+                    <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Availability</span><span className="text-slate-500 dark:text-slate-400">{candidateAvailability}</span></div>
+                    <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Employment Status</span><span className="text-slate-500 dark:text-slate-400">{candidateStatus}</span></div>
+                    <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Channel</span><span className="text-slate-500 dark:text-slate-400">{CANDIDATE.channel}</span></div>
                   </div>
                 </div>
               </div>
@@ -177,15 +177,15 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
             <div className={`flex items-center justify-between transition-opacity duration-200 ${isScrolled ? 'flex opacity-100' : 'hidden opacity-0'}`}>
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 font-bold">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold">
                         {candidateName.charAt(0)}
                     </div>
-                    <span className="font-bold text-green-500 text-lg">{candidateName}</span>
+                    <span className="font-bold text-green-600 dark:text-green-400 text-lg">{candidateName}</span>
                 </div>
-                <div className="h-6 w-px bg-slate-200"></div>
+                <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
                 <div className="flex items-center gap-6 text-sm">
-                  <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Type:</span><span className="text-slate-700 font-semibold">{candidateType}</span></div>
-                  <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Availability:</span><span className="text-slate-700 font-semibold">{candidateAvailability}</span></div>
+                  <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Type:</span><span className="text-slate-700 dark:text-slate-200 font-semibold">{candidateType}</span></div>
+                  <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Availability:</span><span className="text-slate-700 dark:text-slate-200 font-semibold">{candidateAvailability}</span></div>
                   <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Status:</span><StatusBadge status={candidateStatus} /></div>
                 </div>
               </div>

@@ -138,7 +138,7 @@ const Tooltip = ({ data, position }: { data: any, position: { x: number, y: numb
 
     return (
         <div 
-            className="fixed z-[110] pointer-events-none bg-white p-3 rounded-lg shadow-xl border border-slate-200 text-xs animate-in fade-in zoom-in-95 duration-150"
+            className="fixed z-[110] pointer-events-none bg-white dark:bg-slate-800 p-3 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 text-xs animate-in fade-in zoom-in-95 duration-150"
             style={{ 
                 left: left, 
                 top: top,
@@ -147,31 +147,31 @@ const Tooltip = ({ data, position }: { data: any, position: { x: number, y: numb
         >
             {isLink ? (
                 <>
-                    <p className="font-bold text-slate-800 mb-1 border-b border-slate-100 pb-1">
+                    <p className="font-bold text-slate-800 dark:text-slate-200 mb-1 border-b border-slate-100 dark:border-slate-700 pb-1">
                         {data.source.name} <span className="text-slate-400">→</span> {data.target.name}
                     </p>
                     <div className="flex justify-between gap-4 mt-2">
-                        <span className="text-slate-500">Profiles:</span>
-                        <span className="font-mono font-bold text-slate-700">{data.value}</span>
+                        <span className="text-slate-500 dark:text-slate-400">Profiles:</span>
+                        <span className="font-mono font-bold text-slate-700 dark:text-slate-200">{data.value}</span>
                     </div>
                     <div className="flex justify-between gap-4 mt-1">
-                        <span className="text-slate-500">Conversion:</span>
-                        <span className="font-mono font-bold text-blue-600">
+                        <span className="text-slate-500 dark:text-slate-400">Conversion:</span>
+                        <span className="font-mono font-bold text-blue-600 dark:text-blue-400">
                             {((data.value / data.source.value) * 100).toFixed(1)}%
                         </span>
                     </div>
                 </>
             ) : (
                 <>
-                    <p className="font-bold text-slate-800 mb-1 border-b border-slate-100 pb-1">{data.name}</p>
+                    <p className="font-bold text-slate-800 dark:text-slate-200 mb-1 border-b border-slate-100 dark:border-slate-700 pb-1">{data.name}</p>
                     <div className="space-y-1 mt-2">
                         <div className="flex justify-between gap-4">
-                            <span className="text-slate-500">Total Count:</span>
-                            <span className="font-mono font-bold text-slate-700">{data.value}</span>
+                            <span className="text-slate-500 dark:text-slate-400">Total Count:</span>
+                            <span className="font-mono font-bold text-slate-700 dark:text-slate-200">{data.value}</span>
                         </div>
                         <div className="flex justify-between gap-4">
-                            <span className="text-slate-500">Overall Impact:</span>
-                            <span className="font-mono font-bold text-emerald-600">
+                            <span className="text-slate-500 dark:text-slate-400">Overall Impact:</span>
+                            <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
                                 {((data.value / 1000) * 100).toFixed(1)}%
                             </span>
                         </div>
@@ -343,12 +343,11 @@ export const NetworkGraphModal = ({ isOpen, onClose, initialRoundType = 'Screeni
           .attr("font-family", "sans-serif")
           .attr("font-size", 11)
           .attr("font-weight", 600)
-          .attr("fill", "#334155")
           .style("pointer-events", "none") // Let clicks pass through to rect
           .selectAll("text")
           .data(nodes)
           .join("text")
-          .attr("class", "sankey-label") // Class for highlighting
+          .attr("class", "sankey-label text-slate-700 dark:text-slate-300") // Apply Tailwind classes for dark mode
           .attr("x", (d: any) => d.x1 + 6)
           .attr("y", (d: any) => (d.y1 + d.y0) / 2)
           .attr("dy", "0.35em")
@@ -369,36 +368,36 @@ export const NetworkGraphModal = ({ isOpen, onClose, initialRoundType = 'Screeni
     <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
        <Tooltip data={tooltipData?.data} position={tooltipData?.position || null} />
        
-       <div className="bg-white w-full max-w-7xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
+       <div className="bg-white dark:bg-slate-800 w-full max-w-7xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-200 border border-slate-200 dark:border-slate-700">
           
           {/* Header */}
-          <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
+          <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
              <div className="flex items-center gap-4">
-                <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+                <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-lg">
                     <GitGraph size={20} />
                 </div>
                 <div>
-                    <h3 className="font-bold text-slate-800 text-lg">Candidate Flow Analysis</h3>
-                    <p className="text-xs text-slate-500">Visualization of candidate distribution across stages</p>
+                    <h3 className="font-bold text-slate-800 dark:text-slate-200 text-lg">Candidate Flow Analysis</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Visualization of candidate distribution across stages</p>
                 </div>
              </div>
-             <button onClick={onClose} className="text-slate-400 hover:text-slate-600 p-2 hover:bg-slate-100 rounded-full transition-colors"><X size={20}/></button>
+             <button onClick={onClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors"><X size={20}/></button>
           </div>
           
-          <div className="flex-1 p-6 overflow-hidden flex flex-col bg-slate-50">
+          <div className="flex-1 p-6 overflow-hidden flex flex-col bg-slate-50 dark:bg-slate-900">
              {/* Stats Bar */}
              <div className="flex justify-between items-center mb-4">
                 <div className="flex gap-2">
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-medium border border-indigo-100">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-lg text-xs font-medium border border-indigo-100 dark:border-indigo-800">
                         Total Profiles: 1,000
                     </div>
                     {roundType === 'Interview' && (
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium border border-emerald-100">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-lg text-xs font-medium border border-emerald-100 dark:border-emerald-800">
                             Completed: {RAW_DATA.Interview.find(r => r[1] === 'Interview Completed')?.[2] || 0}
                         </div>
                     )}
                 </div>
-                <div className="flex items-center gap-4 text-xs text-slate-500">
+                <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
                     <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></span> <span>Normal Flow</span></div>
                     <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-sm"></span> <span>Drop-off</span></div>
                     <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-sm"></span> <span>Success</span></div>
@@ -406,7 +405,7 @@ export const NetworkGraphModal = ({ isOpen, onClose, initialRoundType = 'Screeni
              </div>
 
              {/* Graph Area */}
-             <div className="flex-1 bg-white rounded-xl border border-slate-200 p-6 shadow-sm relative flex flex-col overflow-hidden">
+             <div className="flex-1 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm relative flex flex-col overflow-hidden">
                 <div ref={wrapperRef} className="flex-1 min-h-0 w-full relative">
                     <svg ref={svgRef} width="100%" height="100%" style={{ overflow: 'visible' }}></svg>
                 </div>

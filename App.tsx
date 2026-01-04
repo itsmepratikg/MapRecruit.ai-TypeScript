@@ -6,7 +6,7 @@ import {
   User, Phone, UserCog, Lock, Menu, X, ChevronRight, Moon, Sun,
   Brain, Search, GitBranch, MessageCircle, ThumbsUp, ChevronLeft,
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
-  Palette
+  Palette, PlusCircle
 } from 'lucide-react';
 import { ToastProvider, useToast } from './components/Toast';
 import { Home } from './pages/Home';
@@ -499,24 +499,68 @@ const App = () => {
                       activeTab={activeCampaignTab === 'Intelligence'} 
                       onClick={() => setActiveCampaignTab('Intelligence')} 
                     />
-                    <NavItem 
-                      icon={Search} 
-                      label="Source AI" 
-                      activeTab={activeCampaignTab.startsWith('Source AI')} 
-                      onClick={() => setActiveCampaignTab('Source AI')} 
-                    />
+                    
+                    {/* Source AI Group */}
+                    <div>
+                        <NavItem 
+                        icon={Search} 
+                        label="Source AI" 
+                        activeTab={activeCampaignTab.startsWith('Source AI')} 
+                        onClick={() => setActiveCampaignTab('Source AI')} 
+                        />
+                        {activeCampaignTab.startsWith('Source AI') && (
+                            <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                                <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 mt-2 px-2">Sourcing Tools</div>
+                                <button onClick={() => setActiveCampaignTab('Source AI:ATTACH')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center justify-between group ${activeCampaignTab === 'Source AI:ATTACH' || activeCampaignTab === 'Source AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    <span>Attach People</span>
+                                    <PlusCircle size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-emerald-600" />
+                                </button>
+                                <button onClick={() => setActiveCampaignTab('Source AI:PROFILES')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center justify-between ${activeCampaignTab === 'Source AI:PROFILES' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    <span>Attached Profiles</span>
+                                    <span className="bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full">4</span>
+                                </button>
+                                <button onClick={() => setActiveCampaignTab('Source AI:INTEGRATIONS')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:INTEGRATIONS' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Integrations
+                                </button>
+                                
+                                <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 mt-4 px-2">Job Details</div>
+                                <button onClick={() => setActiveCampaignTab('Source AI:JD')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:JD' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Job Description
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
                     <NavItem 
                       icon={GitBranch} 
                       label="Match AI" 
                       activeTab={activeCampaignTab === 'Match AI'} 
                       onClick={() => setActiveCampaignTab('Match AI')} 
                     />
-                    <NavItem 
-                      icon={MessageCircle} 
-                      label="Engage AI" 
-                      activeTab={activeCampaignTab.startsWith('Engage AI')} 
-                      onClick={() => setActiveCampaignTab('Engage AI')} 
-                    />
+                    
+                    {/* Engage AI Group */}
+                    <div>
+                        <NavItem 
+                        icon={MessageCircle} 
+                        label="Engage AI" 
+                        activeTab={activeCampaignTab.startsWith('Engage AI')} 
+                        onClick={() => setActiveCampaignTab('Engage AI')} 
+                        />
+                        {activeCampaignTab.startsWith('Engage AI') && (
+                            <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                                <button onClick={() => setActiveCampaignTab('Engage AI:BUILDER')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:BUILDER' || activeCampaignTab === 'Engage AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Workflow Builder
+                                </button>
+                                <button onClick={() => setActiveCampaignTab('Engage AI:ROOM')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:ROOM' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Interview Panel
+                                </button>
+                                <button onClick={() => setActiveCampaignTab('Engage AI:TRACKING')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:TRACKING' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Candidate List
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
                     <NavItem 
                       icon={ThumbsUp} 
                       label="Recommended" 

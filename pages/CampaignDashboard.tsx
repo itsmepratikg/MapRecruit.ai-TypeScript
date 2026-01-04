@@ -869,10 +869,13 @@ export const CampaignDashboard = ({ campaign, activeTab: initialTab = 'Intellige
     if (activeTab.startsWith('Source AI')) {
         // Handle sub-tabs if needed, or pass default
         const subView = activeTab.includes(':') ? activeTab.split(':')[1] : 'ATTACH';
-        return <CampaignSourceAI activeView={subView} />;
+        return <CampaignSourceAI activeView={subView} hideSidebar={true} />;
     }
     if (activeTab === 'Match AI') return <MatchWorkflow />;
-    if (activeTab.startsWith('Engage AI')) return <EngageWorkflow activeView="BUILDER" />; 
+    if (activeTab.startsWith('Engage AI')) {
+        const subView = activeTab.includes(':') ? activeTab.split(':')[1] : 'BUILDER';
+        return <EngageWorkflow activeView={subView} />; 
+    }
     if (activeTab === 'Recommended Profiles') return <RecommendedProfilesView />;
     
     // Default: Intelligence Dashboard
