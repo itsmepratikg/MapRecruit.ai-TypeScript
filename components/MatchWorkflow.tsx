@@ -1,13 +1,13 @@
-
 import React, { useState } from 'react';
 import { 
   CheckCircle, XCircle, AlertCircle, ChevronRight, User, 
   Briefcase, MapPin, GraduationCap, Award, Brain, 
   ArrowUpRight, MessageSquare, Download, ThumbsUp, ThumbsDown,
   Search, Filter, MoreHorizontal, Sparkles, TrendingUp, FileText,
-  Mail, Phone, Linkedin, ExternalLink
+  Mail, Phone, Linkedin, ExternalLink, Menu, ChevronLeft
 } from 'lucide-react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from 'recharts';
+import { useScreenSize } from '../hooks/useScreenSize';
 
 // --- MOCK DATA ---
 const MATCH_CANDIDATES = [
@@ -105,25 +105,30 @@ const CandidateListCard = ({ candidate, isSelected, onClick }: any) => (
     </div>
 );
 
-const MatchAnalysisView = ({ candidate }: { candidate: typeof MATCH_CANDIDATES[0] }) => {
+const MatchAnalysisView = ({ candidate, onBack }: { candidate: typeof MATCH_CANDIDATES[0], onBack?: () => void }) => {
     return (
-        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900 p-6 transition-colors">
+        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900 p-4 lg:p-6 transition-colors">
             <div className="max-w-5xl mx-auto space-y-6">
                 
+                {/* Mobile Back Button */}
+                <button onClick={onBack} className="lg:hidden flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-2">
+                    <ChevronLeft size={16} /> Back to List
+                </button>
+
                 {/* Header Card */}
                 <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 transition-colors">
                     <div className="flex flex-col md:flex-row justify-between items-start gap-6">
                         <div className="flex gap-5">
-                            <div className="w-20 h-20 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-2xl font-bold text-slate-500 dark:text-slate-300 shadow-inner">
+                            <div className="w-20 h-20 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-2xl font-bold text-slate-500 dark:text-slate-300 shadow-inner shrink-0">
                                 {candidate.avatar}
                             </div>
                             <div>
-                                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                                <h2 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 flex-wrap">
                                     {candidate.name}
                                     <a href="#" className="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400"><ExternalLink size={18}/></a>
                                 </h2>
                                 <p className="text-slate-600 dark:text-slate-400 font-medium mb-2">{candidate.role} <span className="text-slate-300 dark:text-slate-600 mx-2">|</span> {candidate.location}</p>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 flex-wrap">
                                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 shadow-sm transition-colors">
                                         <ThumbsUp size={16} /> Shortlist
                                     </button>
@@ -137,7 +142,7 @@ const MatchAnalysisView = ({ candidate }: { candidate: typeof MATCH_CANDIDATES[0
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-6 bg-slate-50 dark:bg-slate-900/50 px-6 py-4 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <div className="flex items-center gap-6 bg-slate-50 dark:bg-slate-900/50 px-6 py-4 rounded-xl border border-slate-100 dark:border-slate-700 w-full md:w-auto justify-center md:justify-start">
                             <div className="text-center">
                                 <span className="block text-3xl font-bold text-emerald-600 dark:text-emerald-400">{candidate.score}%</span>
                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Match Score</span>
@@ -175,7 +180,7 @@ const MatchAnalysisView = ({ candidate }: { candidate: typeof MATCH_CANDIDATES[0
                                 {candidate.aiSummary}
                             </p>
                             
-                            <div className="mt-6 grid grid-cols-2 gap-4">
+                            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Skills Match</h4>
                                     <div className="flex flex-wrap gap-2">
@@ -297,14 +302,25 @@ const MatchAnalysisView = ({ candidate }: { candidate: typeof MATCH_CANDIDATES[0
 
 export const MatchWorkflow = () => {
     const [selectedCandidateId, setSelectedCandidateId] = useState<number>(1);
+    const [isMobileListOpen, setIsMobileListOpen] = useState(true);
     const selectedCandidate = MATCH_CANDIDATES.find(c => c.id === selectedCandidateId) || MATCH_CANDIDATES[0];
+    const { isDesktop } = useScreenSize();
+
+    const handleSelectCandidate = (id: number) => {
+        setSelectedCandidateId(id);
+        if (!isDesktop) setIsMobileListOpen(false);
+    };
 
     return (
         <div className="flex h-full bg-white dark:bg-slate-900 relative overflow-hidden transition-colors">
-            {/* Left Sidebar List */}
-            <div className="w-80 border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex flex-col z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+            {/* Sidebar List */}
+            <div className={`w-full lg:w-80 border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex flex-col z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] absolute lg:relative inset-0 lg:inset-auto transition-transform duration-300 ${isMobileListOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 <div className="p-4 border-b border-slate-200 dark:border-slate-700">
-                    <h3 className="font-bold text-slate-800 dark:text-slate-100 mb-2">Ranked Candidates</h3>
+                    <div className="flex justify-between items-center mb-2">
+                        <h3 className="font-bold text-slate-800 dark:text-slate-100">Ranked Candidates</h3>
+                        {/* Mobile close list */}
+                        <button className="lg:hidden text-slate-400" onClick={() => setIsMobileListOpen(false)}><ChevronLeft/></button>
+                    </div>
                     <div className="relative">
                         <Search className="absolute left-3 top-2.5 text-slate-400" size={14} />
                         <input type="text" placeholder="Filter list..." className="w-full pl-9 pr-4 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm bg-slate-50 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-slate-200 dark:placeholder-slate-500" />
@@ -319,15 +335,17 @@ export const MatchWorkflow = () => {
                         <CandidateListCard 
                             key={candidate.id} 
                             candidate={candidate} 
-                            isSelected={selectedCandidateId === candidate.id}
-                            onClick={() => setSelectedCandidateId(candidate.id)}
+                            isSelected={selectedCandidateId === candidate.id && isDesktop}
+                            onClick={() => handleSelectCandidate(candidate.id)}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Main Content */}
-            <MatchAnalysisView candidate={selectedCandidate} />
+            <div className={`flex-1 flex flex-col h-full overflow-hidden ${!isMobileListOpen ? 'w-full' : 'hidden lg:flex'}`}>
+                <MatchAnalysisView candidate={selectedCandidate} onBack={() => setIsMobileListOpen(true)} />
+            </div>
         </div>
     );
 };

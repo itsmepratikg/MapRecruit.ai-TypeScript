@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   User, FileText, Briefcase, Activity, MessageSquare, 
@@ -136,16 +135,16 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
             </div>
         )}
 
-        <header className={`bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shrink-0 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'py-2 px-6 shadow-sm' : 'py-6 px-8'}`}>
+        <header className={`bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shrink-0 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'py-2 px-4 md:px-6 shadow-sm' : 'py-4 md:py-6 px-4 md:px-8'}`}>
           <div className="h-full">
             <div className={`transition-opacity duration-200 ${isScrolled ? 'hidden opacity-0' : 'block opacity-100'}`}>
-              <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-2xl uppercase">
+              <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+                <div className="flex gap-4 w-full md:w-auto">
+                  <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-2xl uppercase shrink-0">
                     {candidateName.charAt(0)}
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
                         <h1 className="text-2xl font-bold text-green-600 dark:text-green-400">{candidateName}</h1>
                         <button className="text-slate-400 hover:text-green-600 dark:hover:text-green-400"><FileEdit size={14} /></button>
                     </div>
@@ -153,7 +152,7 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
                     <div className="flex flex-col gap-1 text-sm text-slate-500 dark:text-slate-400">
                       <div className="flex items-center gap-2"><span className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1"><User size={12}/> Contact Details</span></div>
                       <div className="flex items-center gap-2"><MapPin size={14} className="text-green-500 dark:text-green-400" /><span>{candidateLocation}</span><CheckCircle size={14} className="text-green-500 dark:text-green-400" /></div>
-                      <div className="flex items-center gap-2"><TagIcon size={14} className="text-slate-400" />
+                      <div className="flex items-center gap-2 flex-wrap"><TagIcon size={14} className="text-slate-400" />
                         {displayTags.length > 0 ? (
                             displayTags.map((tag: any, i: number) => (<span key={i} className="bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-2 py-0.5 rounded text-xs">{tag}</span>))
                         ) : (
@@ -163,9 +162,9 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end gap-6">
-                  <ActionIcons />
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-right text-sm">
+                <div className="flex flex-col items-end gap-4 md:gap-6 w-full md:w-auto">
+                  <div className="self-end"><ActionIcons /></div>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-right text-sm w-full md:w-auto">
                     <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Candidate Type</span><span className="text-slate-500 dark:text-slate-400">{candidateType}</span></div>
                     <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Availability</span><span className="text-slate-500 dark:text-slate-400">{candidateAvailability}</span></div>
                     <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Employment Status</span><span className="text-slate-500 dark:text-slate-400">{candidateStatus}</span></div>
@@ -180,10 +179,10 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
                     <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold">
                         {candidateName.charAt(0)}
                     </div>
-                    <span className="font-bold text-green-600 dark:text-green-400 text-lg">{candidateName}</span>
+                    <span className="font-bold text-green-600 dark:text-green-400 text-lg hidden sm:block">{candidateName}</span>
                 </div>
-                <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
-                <div className="flex items-center gap-6 text-sm">
+                <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+                <div className="flex items-center gap-6 text-sm hidden sm:flex">
                   <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Type:</span><span className="text-slate-700 dark:text-slate-200 font-semibold">{candidateType}</span></div>
                   <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Availability:</span><span className="text-slate-700 dark:text-slate-200 font-semibold">{candidateAvailability}</span></div>
                   <div className="flex items-center gap-2"><span className="text-slate-400 font-medium">Status:</span><StatusBadge status={candidateStatus} /></div>
@@ -206,7 +205,7 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
             />
             </div>
           ) : (
-            <div className="p-8 max-w-7xl mx-auto pb-24">{renderContent()}</div>
+            <div className="p-4 md:p-8 max-w-7xl mx-auto pb-24">{renderContent()}</div>
           )}
           </div>
         </div>

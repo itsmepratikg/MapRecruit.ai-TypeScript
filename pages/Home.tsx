@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { 
   WelcomeHeader, TrendGraph, 
@@ -21,7 +20,7 @@ export const Home = () => {
             margin: 10,
             staticGrid: true, // Default to locked
             animate: true,
-            disableOneColumnMode: true, // Force multi-column layout on larger screens
+            disableOneColumnMode: false, // Enable stacking on mobile
             float: true // Allow widgets to float up
         });
     }
