@@ -61,7 +61,7 @@ export const WelcomeHeader = () => {
         bgGradient = 'from-emerald-500 to-teal-600'; // Morning Colors
       } else if (hour >= 12 && hour < 18) {
         greeting = 'Good Afternoon';
-        bgGradient = 'from-blue-600 to-indigo-600'; // Afternoon Colors
+        bgGradient = 'from-blue-600 to-yellow-500'; // Afternoon Colors
       }
 
       const lastLogin = now.toLocaleString('en-US', {
@@ -162,6 +162,45 @@ export const AlertsWidget = () => (
         </div>
      </div>
   </div>
+);
+
+// New Grouped Widget for GridStack Convenience
+export const MetricsOverviewWidget = () => (
+    <div className="flex flex-col gap-6 h-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1">
+            <MetricCard 
+                title="Active Campaigns" 
+                value="4" 
+                icon={Briefcase} 
+                colorClass="text-green-600" 
+                iconBg="bg-green-50" 
+            />
+            <MetricCard 
+                title="Closed Campaigns" 
+                value="71" 
+                icon={Briefcase} 
+                colorClass="text-red-500" 
+                iconBg="bg-red-50" 
+            />
+            <MetricCard 
+                title="Active Profiles" 
+                value="11k" 
+                icon={Users} 
+                colorClass="text-blue-600" 
+                iconBg="bg-blue-50" 
+            />
+            <MetricCard 
+                title="Shortlisted" 
+                value="9" 
+                icon={UserCheck} 
+                colorClass="text-emerald-600" 
+                iconBg="bg-emerald-50" 
+            />
+        </div>
+        <div className="flex-1">
+            <AlertsWidget />
+        </div>
+    </div>
 );
 
 export const TrendGraph = () => (

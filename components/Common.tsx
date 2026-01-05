@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { 
   FileEdit, FileText, CheckCircle, Download, Share2, MoreHorizontal, 
   Shield, Lock, Star, ChevronRight 
-} from 'lucide-react';
+} from './Icons';
 
 export const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const styles: Record<string, string> = {

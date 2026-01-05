@@ -853,7 +853,15 @@ export const CampaignDashboard = ({ campaign, activeTab: initialTab = 'Intellige
     setActiveTab(initialTab); // Directly sync with prop, don't split unless complex logic required
   }, [initialTab]);
 
+  // Determine layout mode
+  const isAppView = activeTab.startsWith('Source AI') || activeTab.startsWith('Engage AI') || activeTab.startsWith('Match AI');
+
   useEffect(() => {
+    if (isAppView) {
+        setIsScrolled(false); // Reset scroll state for app views
+        return;
+    }
+
     const handleScroll = () => {
       if (scrollContainerRef.current) {
         setIsScrolled(scrollContainerRef.current.scrollTop > 20);
@@ -862,7 +870,7 @@ export const CampaignDashboard = ({ campaign, activeTab: initialTab = 'Intellige
     const container = scrollContainerRef.current;
     if (container) container.addEventListener('scroll', handleScroll);
     return () => { if (container) container.removeEventListener('scroll', handleScroll); };
-  }, []);
+  }, [isAppView]);
 
   const renderContent = () => {
     if (activeTab === 'Settings') return <CampaignSettingsView />;
@@ -910,14 +918,26 @@ export const CampaignDashboard = ({ campaign, activeTab: initialTab = 'Intellige
 
   return (
     <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-hidden relative transition-colors">
-        {/* Scrollable Container */}
-        <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
-            <CampaignHeader campaign={campaign} isScrolled={isScrolled} />
-            
-            <div className="min-h-full">
-                {renderContent()}
+        {isAppView ? (
+            // Full Height Layout (No Outer Scroll) for App-like views (Source, Engage, Match)
+            <>
+                <div className="shrink-0 z-40 relative">
+                    <CampaignHeader campaign={campaign} isScrolled={false} />
+                </div>
+                <div className="flex-1 overflow-hidden relative">
+                    {renderContent()}
+                </div>
+            </>
+        ) : (
+            // Scrollable Document Layout for Dashboard and Settings
+            <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
+                <CampaignHeader campaign={campaign} isScrolled={isScrolled} />
+                
+                <div className="min-h-full">
+                    {renderContent()}
+                </div>
             </div>
-        </div>
+        )}
     </div>
   );
 };

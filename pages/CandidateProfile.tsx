@@ -5,7 +5,7 @@ import {
   Users, ThumbsUp, Video, Mail, Phone, Linkedin, 
   ChevronLeft, MoreHorizontal, Minimize2, HelpCircle, 
   FileEdit, Folder, Copy, MessageCircle, MapPin, CheckCircle, Tag as TagIcon
-} from 'lucide-react';
+} from '../components/Icons';
 import { ActionIcons, StatusBadge, EmptyView } from '../components/Common';
 import { CANDIDATE, FULL_PROFILE_DATA } from '../data';
 import { InterviewFormContent } from '../components/InterviewComponents';

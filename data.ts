@@ -1,7 +1,7 @@
 
 import { 
   FileText, Settings, Link, Mail, Video, MessageSquare, HelpCircle, Megaphone, GitBranch, ListChecks, CheckCircle2, Pilcrow, MoveRight, Film, MapPin, Map, MinusCircle
-} from 'lucide-react';
+} from './components/Icons';
 import { Candidate, EngageNode, EngageEdge, Question, Campaign, PanelMember, CampaignActivity } from './types';
 
 export const PANEL_MEMBERS: PanelMember[] = [

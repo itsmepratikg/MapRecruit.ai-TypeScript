@@ -2,8 +2,8 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { 
   GitBranch, Users, Video, Layout, ZoomIn, ZoomOut, Undo2, Redo2,
-  Link as LinkIcon, Save, AlertTriangle, CheckCircle, X, RotateCcw, RotateCcwSquare, RotateCwSquare
-} from 'lucide-react';
+  Link as LinkIcon, Save, AlertTriangle, CheckCircle, X, RotateCcw, Retweet, PlusCircle
+} from '../components/Icons';
 import { NODE_TYPES } from '../data';
 import { EngageNode, EngageEdge } from '../types';
 import { INITIAL_NODES_GRAPH, INITIAL_EDGES_GRAPH } from './engage/demoData';
@@ -582,154 +582,151 @@ const WorkflowBuilder = ({ onDirtyChange, onShowAnalytics }: WorkflowBuilderProp
       </div>
 
       {connectingNodeId && (
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-bold flex items-center gap-2 animate-pulse">
-              <LinkIcon size={16} /> Select a valid target node (green) to connect
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-30" style={{ overflow: 'visible' }}>
+              <path 
+                  d={`M ${nodes.find(n => n.id === connectingNodeId)?.x! + (layoutDirection === 'HORIZONTAL' ? CARD_WIDTH : CARD_WIDTH/2)} ${nodes.find(n => n.id === connectingNodeId)?.y! + (layoutDirection === 'HORIZONTAL' ? CARD_HEIGHT/2 : CARD_HEIGHT)} L ${startPan.x} ${startPan.y}`} 
+                  fill="none" 
+                  stroke="#3b82f6" 
+                  strokeWidth="2" 
+                  strokeDasharray="5,5" 
+                  className="animate-pulse"
+              />
+          </svg>
+      )}
+      
+      <div 
+          ref={containerRef}
+          className="flex-1 overflow-auto relative cursor-grab active:cursor-grabbing"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '20px 20px' }}
+      >
+          <div 
+              className="absolute transform origin-top-left transition-transform duration-75"
+              style={{ 
+                  width: contentSize.width, 
+                  height: contentSize.height,
+                  transform: `scale(${zoom})`
+              }}
+          >
+                {/* Edges Layer */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ overflow: 'visible' }}>
+                    {edges.map((edge, i) => (
+                        <BezierEdge key={i} {...edge} direction={layoutDirection} />
+                    ))}
+                </svg>
+
+                {/* Nodes Layer */}
+                {nodes.map(node => (
+                    <NodeCard 
+                        key={node.id} 
+                        node={node} 
+                        isSelected={selectedNode?.id === node.id}
+                        onSelect={setSelectedNode}
+                        onEdit={handleEditNode}
+                        onDelete={(id: string) => {
+                            const newNodes = nodes.filter(n => n.id !== id);
+                            const newEdges = edgesList.filter(e => e.from !== id && e.to !== id);
+                            setNodes(newNodes);
+                            setEdgesList(newEdges);
+                            recordHistory(newNodes, newEdges);
+                        }}
+                        onStartConnect={handleStartConnect}
+                        onEndConnect={handleEndConnect}
+                        isConnecting={!!connectingNodeId}
+                        isValidTarget={connectingNodeId ? isConnectionValid(connectingNodeId, node.id) : false}
+                        layoutDirection={layoutDirection}
+                        onShowAnalytics={onShowAnalytics}
+                    />
+                ))}
           </div>
+      </div>
+
+      {/* BOTTOM TOOLBAR (Unified Bar) */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40 flex items-center gap-2 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-2 animate-in slide-in-from-bottom-6 duration-300">
+          
+          {/* Node Palette Section */}
+          <div className="flex items-center gap-1 px-2">
+              <span className="text-[10px] font-bold text-slate-400 uppercase mr-2 tracking-wider">Add Step</span>
+              {Object.keys(NODE_TYPES).map(type => {
+                  const conf = NODE_TYPES[type];
+                  const Icon = conf.icon;
+                  return (
+                      <button 
+                          key={type}
+                          onClick={() => handleAddNode(type)}
+                          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all group relative"
+                          title={`Add ${conf.label}`}
+                      >
+                          <Icon size={20} />
+                      </button>
+                  )
+              })}
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700 mx-2"></div>
+
+          {/* View Controls Section */}
+          <div className="flex items-center gap-1 px-2">
+              <button onClick={() => setZoom(z => Math.max(z - 0.1, 0.5))} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl text-slate-500 dark:text-slate-400 transition-colors"><ZoomOut size={18}/></button>
+              <button onClick={() => setZoom(1)} className="px-2 text-xs font-bold text-slate-500 dark:text-slate-400 min-w-[3rem] text-center">{Math.round(zoom * 100)}%</button>
+              <button onClick={() => setZoom(z => Math.min(z + 0.1, 2))} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl text-slate-500 dark:text-slate-400 transition-colors"><ZoomIn size={18}/></button>
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700 mx-2"></div>
+
+          {/* History & Layout Section */}
+          <div className="flex items-center gap-1 px-2">
+              <button onClick={handleUndo} disabled={historyStep === 0} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl text-slate-500 dark:text-slate-400 disabled:opacity-30 transition-colors"><Undo2 size={18}/></button>
+              <button onClick={handleRedo} disabled={historyStep === history.length - 1} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl text-slate-500 dark:text-slate-400 disabled:opacity-30 transition-colors"><Redo2 size={18}/></button>
+              <div className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+              <button onClick={handleToggleLayout} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl text-slate-500 dark:text-slate-400 transition-colors" title="Toggle Orientation">
+                  <Retweet size={18} />
+              </button>
+          </div>
+      </div>
+
+      {/* Modals */}
+      {editingNode && (
+          <NodeConfigurationModal 
+              node={editingNode} 
+              onClose={() => setEditingNode(null)} 
+              onSave={handleSaveNode} 
+          />
       )}
 
       {configCriteriaId && (
           <AutomationPlaceholderModal 
-             isEnabled={nodes.find(n => n.id === configCriteriaId)?.data.config?.enabled || false}
-             onClose={() => setConfigCriteriaId(null)}
-             onToggle={(val) => handleToggleAutomation(configCriteriaId, val)}
+              isEnabled={nodes.find(n => n.id === configCriteriaId)?.data.config?.enabled || false} 
+              onToggle={(val) => handleToggleAutomation(configCriteriaId, val)}
+              onClose={() => setConfigCriteriaId(null)}
           />
       )}
-
-      {editingNode && (
-        <NodeConfigurationModal node={editingNode} onClose={() => setEditingNode(null)} onSave={handleSaveNode} />
-      )}
-
-      <div 
-        ref={containerRef}
-        className={`flex-1 overflow-auto relative ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} bg-slate-50 dark:bg-slate-900 select-none transition-colors`}
-        style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '24px 24px' }} // TODO: Dark mode grid pattern update via CSS class if possible, otherwise inline style logic
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-      >
-        <div 
-            className="relative p-10 transition-transform duration-200 origin-top-left"
-            style={{ 
-              transform: `scale(${zoom})`, 
-              width: `${contentSize.width}px`, 
-              height: `${contentSize.height}px` 
-            }}
-        >
-          <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
-            {edges.map((edge: any, i) => <BezierEdge key={i} {...edge} direction={layoutDirection} />)}
-            {connectingNodeId && (
-                <defs>
-                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="3" orient="auto" markerUnits="strokeWidth">
-                        <path d="M0,0 L0,6 L9,3 z" fill="#6366f1" />
-                    </marker>
-                </defs>
-            )}
-          </svg>
-          {nodes.map(node => (
-            <React.Fragment key={node.id}>
-                <NodeCard 
-                node={node} 
-                onSelect={setSelectedNode} 
-                onEdit={handleEditNode}
-                onDelete={() => {}}
-                onStartConnect={handleStartConnect}
-                onEndConnect={handleEndConnect}
-                isSelected={selectedNode?.id === node.id} 
-                isConnecting={connectingNodeId !== null}
-                isValidTarget={connectingNodeId ? isConnectionValid(connectingNodeId, node.id) : false}
-                layoutDirection={layoutDirection}
-                onShowAnalytics={onShowAnalytics}
-                />
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom Floating Toolbar */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 flex items-center gap-3 z-20">
-        {/* Add Nodes */}
-        <div className="flex items-center gap-1 pr-3 border-r border-slate-200 dark:border-slate-700">
-            <span className="text-[10px] font-bold text-slate-400 uppercase mr-2 ml-2">Add Step</span>
-            {Object.keys(NODE_TYPES).map(type => {
-                const config = NODE_TYPES[type];
-                const Icon = config.icon;
-                return (
-                    <button 
-                        key={type}
-                        onClick={() => handleAddNode(type)}
-                        className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors relative group"
-                        title={`Add ${config.label}`}
-                    >
-                        <Icon size={18} />
-                    </button>
-                )
-            })}
-        </div>
-
-        {/* Zoom Controls */}
-        <div className="flex items-center gap-1">
-           <button onClick={() => setZoom(z => Math.max(0.1, z - 0.1))} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"><ZoomOut size={16}/></button>
-           <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 w-8 text-center">{Math.round(zoom * 100)}%</span>
-           <button onClick={() => setZoom(z => Math.min(3, z + 0.1))} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"><ZoomIn size={16}/></button>
-           <button onClick={() => setZoom(0.85)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 ml-1" title="Reset View"><RotateCcw size={14} className="opacity-50" /></button>
-           
-           <div className="w-px h-4 bg-slate-300 dark:bg-slate-600 mx-2"></div>
-
-           {/* Layout Tools: Toggle Orientation */}
-           <button 
-             onClick={handleToggleLayout} 
-             className="p-1.5 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded transition-colors flex items-center gap-2" 
-             title={layoutDirection === 'HORIZONTAL' ? "Switch to Vertical Layout" : "Switch to Horizontal Layout"}
-           >
-              {layoutDirection === 'HORIZONTAL' ? <RotateCwSquare size={16} /> : <RotateCcwSquare size={16} />}
-           </button>
-
-           <div className="w-px h-4 bg-slate-300 dark:bg-slate-600 mx-2"></div>
-
-           {/* Undo / Redo */}
-           <button 
-             onClick={handleUndo} 
-             disabled={isSaved || historyStep === 0}
-             className={`p-1.5 rounded transition-colors ${isSaved || historyStep === 0 ? 'text-slate-300 dark:text-slate-600 cursor-not-allowed' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-slate-200'}`}
-             title="Undo"
-           >
-              <Undo2 size={16} /> 
-           </button>
-           <button 
-             onClick={handleRedo} 
-             disabled={isSaved || historyStep === history.length - 1}
-             className={`p-1.5 rounded transition-colors ${isSaved || historyStep === history.length - 1 ? 'text-slate-300 dark:text-slate-600 cursor-not-allowed' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-slate-200'}`}
-             title="Redo"
-           >
-              <Redo2 size={16} /> 
-           </button>
-        </div>
-      </div>
     </div>
   );
 };
 
-export const EngageWorkflow = ({ activeView = 'BUILDER' }: { activeView?: string }) => {
-  // We keep isWorkflowDirty here to pass to Builder, even if navigation is external.
-  const [isWorkflowDirty, setIsWorkflowDirty] = useState(false);
-  const [isNetworkGraphOpen, setIsNetworkGraphOpen] = useState(false);
-  const [analyticsRoundType, setAnalyticsRoundType] = useState<string>('Screening');
+export const EngageWorkflow = ({ activeView }: { activeView: string }) => {
+    const [isDirty, setIsDirty] = useState(false);
+    const [showAnalytics, setShowAnalytics] = useState<string | null>(null);
 
-  const handleShowAnalytics = (type: string) => {
-      setAnalyticsRoundType(type);
-      setIsNetworkGraphOpen(true);
-  };
-
-  return (
-    <div className="flex flex-col h-full bg-white dark:bg-slate-900 relative">
-       <NetworkGraphModal isOpen={isNetworkGraphOpen} onClose={() => setIsNetworkGraphOpen(false)} initialRoundType={analyticsRoundType} />
-       {/* Content Area */}
-       <div className="flex-1 overflow-hidden relative">
-          {activeView === 'BUILDER' && <WorkflowBuilder onDirtyChange={setIsWorkflowDirty} onShowAnalytics={handleShowAnalytics} />}
-          {activeView === 'TRACKING' && <CandidateTracking />}
-          {activeView === 'ROOM' && <InterviewRoom />}
-       </div>
-    </div>
-  );
+    if (activeView === 'ROOM') return <InterviewRoom />;
+    if (activeView === 'TRACKING') return <CandidateTracking />;
+    
+    return (
+        <>
+            <WorkflowBuilder 
+                onDirtyChange={setIsDirty} 
+                onShowAnalytics={setShowAnalytics} 
+            />
+            <NetworkGraphModal 
+                isOpen={!!showAnalytics} 
+                onClose={() => setShowAnalytics(null)} 
+                initialRoundType={showAnalytics || 'Screening'}
+            />
+        </>
+    );
 };

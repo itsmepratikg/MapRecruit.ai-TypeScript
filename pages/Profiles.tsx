@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { FolderOpen, Tag as TagIcon } from 'lucide-react';
+import { FolderOpen, Tag as TagIcon } from '../components/Icons';
 import { SearchState } from '../types';
 import { EmptyView } from '../components/Common';
 import { TalentSearchEngine } from '../components/TalentSearchEngine';

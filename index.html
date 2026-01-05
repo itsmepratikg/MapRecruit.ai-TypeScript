@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TalentHub ATS</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/gridstack@10.3.1/dist/gridstack.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
       :root {
         /* Default Emerald Theme */
@@ -43,6 +45,18 @@
       }
       .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background-color: #64748b;
+      }
+
+      /* GridStack Customization */
+      .grid-stack-item-content {
+        border-radius: 0.75rem; /* rounded-xl */
+        overflow: hidden;
+      }
+      /* Hide handles when not editing (controlled via React state class usually, but adding default) */
+      .grid-stack-placeholder > .placeholder-content {
+        background-color: rgba(16, 185, 129, 0.1) !important;
+        border: 2px dashed #10b981 !important;
+        border-radius: 0.75rem;
       }
     </style>
     <script>
@@ -93,10 +107,11 @@
     "react/": "https://esm.sh/react@18.3.1/",
     "react-dom": "https://esm.sh/react-dom@18.3.1",
     "react-dom/": "https://esm.sh/react-dom@18.3.1/",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react",
     "recharts": "https://esm.sh/recharts@2.12.7?external=react,react-dom",
     "d3": "https://esm.sh/d3@7.8.5",
-    "d3-sankey": "https://esm.sh/d3-sankey@0.12.3"
+    "d3-sankey": "https://esm.sh/d3-sankey@0.12.3",
+    "gridstack": "https://esm.sh/gridstack@10.3.1",
+    "lucide-react": "https://esm.sh/lucide-react@0.469.0?external=react,react-dom"
   }
 }
 </script>

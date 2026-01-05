@@ -1,13 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 import { 
   LayoutDashboard, Users, Briefcase, BarChart2, 
   Settings, LogOut, UserPlus, Building2, CheckCircle, 
   User, Phone, UserCog, Lock, Menu, X, ChevronRight, Moon, Sun,
   Brain, Search, GitBranch, MessageCircle, ThumbsUp, ChevronLeft,
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
-  Palette, PlusCircle
-} from 'lucide-react';
+  Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
+  SlidersHorizontal, Tag, Layout, MessageSquare
+} from './components/Icons';
 import { ToastProvider, useToast } from './components/Toast';
 import { Home } from './pages/Home';
 import { Profiles } from './pages/Profiles';
@@ -15,6 +17,7 @@ import { Campaigns } from './pages/Campaigns';
 import { Metrics } from './pages/Metrics';
 import { CandidateProfile } from './pages/CandidateProfile';
 import { CampaignDashboard } from './pages/CampaignDashboard';
+import { SettingsPage } from './pages/Settings';
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 
@@ -232,7 +235,19 @@ const ThemeSettingsModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
 };
 
 // Sidebar Footer Component
-const SidebarFooter = ({ setIsCreateProfileOpen, darkMode, setDarkMode, setIsThemeSettingsOpen }: { setIsCreateProfileOpen: (v: boolean) => void, darkMode: boolean, setDarkMode: (v: boolean) => void, setIsThemeSettingsOpen: (v: boolean) => void }) => (
+const SidebarFooter = ({ 
+  setIsCreateProfileOpen, 
+  darkMode, 
+  setDarkMode, 
+  setIsThemeSettingsOpen,
+  onNavigate
+}: { 
+  setIsCreateProfileOpen: (v: boolean) => void, 
+  darkMode: boolean, 
+  setDarkMode: (v: boolean) => void, 
+  setIsThemeSettingsOpen: (v: boolean) => void,
+  onNavigate: (view: ViewState) => void
+}) => (
     <div className="p-2 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 mt-auto space-y-1 shrink-0 transition-colors">
         {/* Create Profile */}
         <button 
@@ -327,9 +342,7 @@ const SidebarFooter = ({ setIsCreateProfileOpen, darkMode, setDarkMode, setIsThe
                         </div>
                    </div>
 
-                   <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
-                      <Settings size={16} /> Admin Settings
-                   </button>
+                   {/* Removed Settings from here as requested to move to main sidebar, keeping only admin/specific user actions */}
                    <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                       <UserCog size={16} /> Product Admin Settings
                    </button>
@@ -352,7 +365,7 @@ const SidebarFooter = ({ setIsCreateProfileOpen, darkMode, setDarkMode, setIsThe
     </div>
 );
 
-type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS';
+type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS';
 
 const PROFILE_TABS = [
   { id: 'profile', label: 'Profile', icon: User },
@@ -364,6 +377,27 @@ const PROFILE_TABS = [
   { id: 'interviews', label: 'Interviews', icon: Video },
   { id: 'recommended', label: 'Recommended', icon: ThumbsUp },
   { id: 'similar', label: 'Similar', icon: Copy },
+];
+
+const SETTINGS_SUBMENU = [
+  { id: 'COMPANY_INFO', label: 'Company Info', icon: Building2 },
+  { id: 'ROLES', label: 'Roles', icon: Shield },
+  { id: 'USERS', label: 'Users', icon: Users },
+  { id: 'CLIENTS', label: 'Clients', icon: Briefcase },
+  { id: 'THEMES', label: 'Themes', icon: Palette },
+  { id: 'CUSTOM_FIELD', label: 'Custom Field', icon: FileText },
+  { id: 'TAGS', label: 'Tags', icon: Tag },
+  { id: 'TEAMS', label: 'Teams', icon: Users },
+  { id: 'COMMUNICATION', label: 'Communication', icon: MessageSquare },
+  { id: 'AUTHENTICATION', label: 'Authentication', icon: Lock },
+  { id: 'SOURCE_AI', label: 'Source AI', icon: Search },
+  { id: 'API_CREDITS', label: 'API Credits', icon: CreditCard },
+  { id: 'COMM_TEMPLATES', label: 'Communication Templates', icon: Mail },
+  { id: 'ENGAGE_WORKFLOW', label: 'EngageAI Workflow', icon: GitBranch },
+  { id: 'QUESTIONNAIRE', label: 'Questionnaire', icon: ClipboardList },
+  { id: 'PROFILE_SOURCES', label: 'Profile Sources', icon: Database },
+  { id: 'MRI_PREFERENCE', label: 'MRI Preference', icon: SlidersHorizontal },
+  { id: 'REACHOUT_LAYOUTS', label: 'ReachOut Layouts', icon: Layout },
 ];
 
 const App = () => {
@@ -394,6 +428,8 @@ const App = () => {
   
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [activeCampaignTab, setActiveCampaignTab] = useState<string>('Intelligence');
+  const [activeSettingsTab, setActiveSettingsTab] = useState('COMPANY_INFO'); // Settings Tab State
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isCreateProfileOpen, setIsCreateProfileOpen] = useState(false);
   const [isThemeSettingsOpen, setIsThemeSettingsOpen] = useState(false);
@@ -451,6 +487,25 @@ const App = () => {
                   <NavItem view="CAMPAIGNS" icon={Briefcase} label="Campaigns" />
                   <NavItem view="PROFILES" icon={Users} label="Profiles" />
                   <NavItem view="METRICS" icon={BarChart2} label="Metrics" />
+                  
+                  {/* Settings Item with Sub-Menu */}
+                  <div>
+                    <NavItem view="SETTINGS" icon={Settings} label="Settings" />
+                    {activeView === 'SETTINGS' && (
+                        <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                            {SETTINGS_SUBMENU.map(item => (
+                                <button 
+                                    key={item.id}
+                                    onClick={() => setActiveSettingsTab(item.id)}
+                                    className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center gap-2 ${activeSettingsTab === item.id ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                                >
+                                    {/* <item.icon size={14} className={activeSettingsTab === item.id ? 'text-emerald-600' : 'text-slate-400'}/> */}
+                                    {item.label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                  </div>
                 </>
               ) : selectedCandidateId ? (
                 <div className="animate-in fade-in slide-in-from-left-4 duration-300">
@@ -567,18 +622,18 @@ const App = () => {
                       activeTab={activeCampaignTab === 'Recommended Profiles'} 
                       onClick={() => setActiveCampaignTab('Recommended Profiles')} 
                     />
-                    <NavItem 
-                      icon={Settings} 
-                      label="Settings" 
-                      activeTab={activeCampaignTab === 'Settings'} 
-                      onClick={() => setActiveCampaignTab('Settings')} 
-                    />
                   </div>
                 </div>
               )}
            </div>
 
-           <SidebarFooter setIsCreateProfileOpen={setIsCreateProfileOpen} darkMode={darkMode} setDarkMode={setDarkMode} setIsThemeSettingsOpen={setIsThemeSettingsOpen} />
+           <SidebarFooter 
+             setIsCreateProfileOpen={setIsCreateProfileOpen} 
+             darkMode={darkMode} 
+             setDarkMode={setDarkMode} 
+             setIsThemeSettingsOpen={setIsThemeSettingsOpen}
+             onNavigate={(view) => { setActiveView(view); setSelectedCandidateId(null); setSelectedCampaign(null); }}
+           />
         </div>
 
         {/* Main Content */}
@@ -621,6 +676,8 @@ const App = () => {
            )}
 
            {activeView === 'METRICS' && <Metrics />}
+           
+           {activeView === 'SETTINGS' && <SettingsPage activeTab={activeSettingsTab} />}
         </div>
 
         {/* Create Profile Modal */}

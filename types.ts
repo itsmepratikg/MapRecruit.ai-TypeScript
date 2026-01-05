@@ -1,5 +1,5 @@
 
-import { LucideIcon } from 'lucide-react';
+import React from 'react';
 
 export type ViewMode = 'SEARCH' | 'FOLDERS' | 'TAGS' | 'CANDIDATE';
 
@@ -26,7 +26,7 @@ export interface ActivityLog {
   author: string;
   time: string;
   dateGroup: string;
-  icon: any; 
+  icon: React.FC<any>; 
   color: string;
   description?: string;
 }

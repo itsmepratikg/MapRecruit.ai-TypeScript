@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { BarChart2 } from 'lucide-react';
+import { BarChart2 } from '../components/Icons';
 
 export const Metrics = () => {
   return (

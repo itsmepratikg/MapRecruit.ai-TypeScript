@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { 
   Briefcase, Lock, Archive, Search, ChevronDown, RefreshCw, MoreVertical, HelpCircle, 
   Heart, Share2, Network, ChevronRight, CheckCircle, PlusCircle, Users, Link, FileText, X
-} from 'lucide-react';
+} from '../components/Icons';
 import { GLOBAL_CAMPAIGNS } from '../data';
 import { Campaign } from '../types';
 import { useToast } from '../components/Toast';
