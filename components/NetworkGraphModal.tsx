@@ -138,40 +138,44 @@ const Tooltip = ({ data, position }: { data: any, position: { x: number, y: numb
 
     return (
         <div 
-            className="fixed z-[110] pointer-events-none bg-white dark:bg-slate-800 p-3 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 text-xs animate-in fade-in zoom-in-95 duration-150"
+            className="fixed z-[110] pointer-events-none bg-white dark:bg-slate-800 p-3 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 text-xs animate-in fade-in zoom-in-95 duration-150 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95"
             style={{ 
                 left: left, 
                 top: top,
-                minWidth: '200px'
+                minWidth: '180px'
             }}
         >
             {isLink ? (
                 <>
-                    <p className="font-bold text-slate-800 dark:text-slate-200 mb-1 border-b border-slate-100 dark:border-slate-700 pb-1">
-                        {data.source.name} <span className="text-slate-400">→</span> {data.target.name}
+                    <p className="font-bold text-slate-800 dark:text-slate-200 mb-2 pb-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                        <span className="truncate max-w-[80px]">{data.source.name}</span>
+                        <span className="text-slate-400">→</span>
+                        <span className="truncate max-w-[80px] text-right">{data.target.name}</span>
                     </p>
-                    <div className="flex justify-between gap-4 mt-2">
-                        <span className="text-slate-500 dark:text-slate-400">Profiles:</span>
-                        <span className="font-mono font-bold text-slate-700 dark:text-slate-200">{data.value}</span>
-                    </div>
-                    <div className="flex justify-between gap-4 mt-1">
-                        <span className="text-slate-500 dark:text-slate-400">Conversion:</span>
-                        <span className="font-mono font-bold text-blue-600 dark:text-blue-400">
-                            {((data.value / data.source.value) * 100).toFixed(1)}%
-                        </span>
+                    <div className="space-y-1.5 pt-1">
+                        <div className="flex justify-between gap-4">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium">Profiles</span>
+                            <span className="font-bold text-slate-700 dark:text-slate-200">{data.value}</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium">Conversion</span>
+                            <span className="font-bold text-blue-600 dark:text-blue-400">
+                                {((data.value / data.source.value) * 100).toFixed(1)}%
+                            </span>
+                        </div>
                     </div>
                 </>
             ) : (
                 <>
-                    <p className="font-bold text-slate-800 dark:text-slate-200 mb-1 border-b border-slate-100 dark:border-slate-700 pb-1">{data.name}</p>
-                    <div className="space-y-1 mt-2">
+                    <p className="font-bold text-slate-800 dark:text-slate-200 mb-2 pb-2 border-b border-slate-100 dark:border-slate-700">{data.name}</p>
+                    <div className="space-y-1.5 pt-1">
                         <div className="flex justify-between gap-4">
-                            <span className="text-slate-500 dark:text-slate-400">Total Count:</span>
-                            <span className="font-mono font-bold text-slate-700 dark:text-slate-200">{data.value}</span>
+                            <span className="text-slate-500 dark:text-slate-400 font-medium">Total Count</span>
+                            <span className="font-bold text-slate-700 dark:text-slate-200">{data.value}</span>
                         </div>
                         <div className="flex justify-between gap-4">
-                            <span className="text-slate-500 dark:text-slate-400">Overall Impact:</span>
-                            <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                            <span className="text-slate-500 dark:text-slate-400 font-medium">Impact</span>
+                            <span className="font-bold text-emerald-600 dark:text-emerald-400">
                                 {((data.value / 1000) * 100).toFixed(1)}%
                             </span>
                         </div>

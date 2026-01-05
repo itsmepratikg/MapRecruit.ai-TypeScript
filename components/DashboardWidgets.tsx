@@ -40,6 +40,30 @@ const EMAIL_DATA = [
   { name: 'Dec 26', opened: 0, bounced: 0 },
 ];
 
+// --- HELPER COMPONENTS ---
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700 shadow-xl rounded-lg outline-none min-w-[150px]">
+        {label && <p className="text-xs font-bold text-slate-700 dark:text-slate-200 mb-2 pb-2 border-b border-slate-100 dark:border-slate-700">{label}</p>}
+        <div className="space-y-1.5 pt-1">
+            {payload.map((entry: any, index: number) => (
+            <div key={index} className="flex items-center justify-between gap-4 text-xs">
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color || entry.fill }}></div>
+                    <span className="text-slate-500 dark:text-slate-400 font-medium capitalize">{entry.name}</span>
+                </div>
+                <span className="font-bold text-slate-700 dark:text-slate-200">{entry.value}</span>
+            </div>
+            ))}
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 // --- WIDGET COMPONENTS ---
 
 export const WelcomeHeader = () => {
@@ -221,10 +245,7 @@ export const TrendGraph = () => (
                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#94a3b8'}} dy={10} />
                  <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#94a3b8'}} />
-                 <Tooltip 
-                    contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}} 
-                    itemStyle={{fontSize: '12px'}}
-                 />
+                 <Tooltip content={<CustomTooltip />} />
                  <Line type="monotone" dataKey="profiles" stroke="#6366f1" strokeWidth={2} dot={{r: 3, fill: '#6366f1', strokeWidth: 0}} activeDot={{r: 6}} />
                  <Line type="monotone" dataKey="applies" stroke="#82ca9d" strokeWidth={2} dot={{r: 3, fill: '#82ca9d', strokeWidth: 0}} />
               </LineChart>
@@ -287,7 +308,7 @@ export const SourceDistributionChart = () => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                  ))}
               </Pie>
-              <Tooltip />
+              <Tooltip content={<CustomTooltip />} />
               <Legend 
                  layout="vertical" 
                  verticalAlign="middle" 
@@ -365,6 +386,7 @@ export const EmailDeliveryReport = () => (
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 9, fill: '#94a3b8'}} />
                   <YAxis axisLine={false} tickLine={false} tick={{fontSize: 9, fill: '#94a3b8'}} />
+                  <Tooltip content={<CustomTooltip />} />
                   <Bar dataKey="opened" fill="#82ca9d" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="bounced" fill="#ff8042" radius={[4, 4, 0, 0]} />
                </BarChart>
@@ -444,4 +466,85 @@ export const PreScreeningProgress = () => (
          </div>
       </div>
    </div>
+);
+
+export const SourcingEfficiencyWidget = () => (
+  <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-6 shadow-sm h-full flex flex-col">
+     <h3 className="text-gray-800 dark:text-slate-100 font-bold text-base mb-4">Sourcing Efficiency</h3>
+     <div className="flex-1 min-h-[200px]">
+        <ResponsiveContainer width="100%" height="100%">
+           <BarChart data={[
+               { name: 'LinkedIn', value: 85 },
+               { name: 'Indeed', value: 65 },
+               { name: 'Internal', value: 45 },
+               { name: 'Referral', value: 30 },
+           ]}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#94a3b8'}} />
+              <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#94a3b8'}} />
+              <Tooltip content={<CustomTooltip />} cursor={{fill: 'transparent'}} />
+              <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} barSize={30} />
+           </BarChart>
+        </ResponsiveContainer>
+     </div>
+  </div>
+);
+
+export const QualitySegmentationWidget = () => (
+  <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-6 shadow-sm h-full flex flex-col">
+     <h3 className="text-gray-800 dark:text-slate-100 font-bold text-base mb-4">Candidate Quality</h3>
+     <div className="flex-1 min-h-[200px] flex items-center justify-center">
+        <ResponsiveContainer width="100%" height="100%">
+           <PieChart>
+              <Pie
+                 data={[
+                     { name: 'High Match', value: 45, color: '#10b981' },
+                     { name: 'Medium Match', value: 35, color: '#f59e0b' },
+                     { name: 'Low Match', value: 20, color: '#ef4444' },
+                 ]}
+                 cx="50%"
+                 cy="50%"
+                 innerRadius={60}
+                 outerRadius={80}
+                 paddingAngle={2}
+                 dataKey="value"
+              >
+                 {[
+                     { name: 'High Match', value: 45, color: '#10b981' },
+                     { name: 'Medium Match', value: 35, color: '#f59e0b' },
+                     { name: 'Low Match', value: 20, color: '#ef4444' },
+                 ].map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                 ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="bottom" height={36} iconType="circle" />
+           </PieChart>
+        </ResponsiveContainer>
+     </div>
+  </div>
+);
+
+export const PipelineHealthWidget = () => (
+  <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-6 shadow-sm h-full flex flex-col">
+     <h3 className="text-gray-800 dark:text-slate-100 font-bold text-base mb-4">Pipeline Health</h3>
+     <div className="space-y-4">
+        {[
+            { label: 'Sourcing', value: 100, total: 100, color: 'bg-blue-500' },
+            { label: 'Screening', value: 65, total: 100, color: 'bg-indigo-500' },
+            { label: 'Interview', value: 30, total: 100, color: 'bg-purple-500' },
+            { label: 'Offer', value: 10, total: 100, color: 'bg-emerald-500' },
+        ].map((stage, idx) => (
+            <div key={idx}>
+                <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-600 dark:text-slate-300 font-medium">{stage.label}</span>
+                    <span className="text-slate-500 dark:text-slate-400">{stage.value}%</span>
+                </div>
+                <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2">
+                    <div className={`h-2 rounded-full ${stage.color}`} style={{ width: `${stage.value}%` }}></div>
+                </div>
+            </div>
+        ))}
+     </div>
+  </div>
 );

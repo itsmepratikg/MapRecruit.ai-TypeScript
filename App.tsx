@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import { 
@@ -7,7 +8,7 @@ import {
   Brain, Search, GitBranch, MessageCircle, ThumbsUp, ChevronLeft,
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
   Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
-  SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon
+  SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon
 } from './components/Icons';
 import { ToastProvider, useToast } from './components/Toast';
 import { Home } from './pages/Home';
@@ -15,7 +16,7 @@ import { Profiles } from './pages/Profiles';
 import { Campaigns } from './pages/Campaigns';
 import { Metrics } from './pages/Metrics';
 import { CandidateProfile } from './pages/CandidateProfile';
-import { CampaignDashboard } from './pages/CampaignDashboard';
+import { CampaignDashboard } from './pages/Campaign/index'; // Updated import
 import { SettingsPage } from './pages/Settings';
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
@@ -48,12 +49,14 @@ const AccountMenuContent = ({
     darkMode, 
     setDarkMode, 
     setIsThemeSettingsOpen,
-    closeMenu
+    closeMenu,
+    onNavigate
 }: { 
     darkMode: boolean, 
     setDarkMode: (v: boolean) => void, 
     setIsThemeSettingsOpen: (v: boolean) => void,
-    closeMenu?: () => void
+    closeMenu?: () => void,
+    onNavigate?: (view: any) => void
 }) => (
   <>
     <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex flex-col items-center text-center bg-white dark:bg-slate-800 rounded-t-lg relative">
@@ -89,7 +92,13 @@ const AccountMenuContent = ({
             <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 flex items-center justify-center text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors cursor-help">?</div>
         </div>
 
-        <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+        <button 
+            onClick={() => {
+                if(onNavigate) onNavigate('SETTINGS');
+                if(closeMenu) closeMenu();
+            }}
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
+        >
             <Settings size={16} /> Admin Settings
         </button>
 
@@ -199,7 +208,12 @@ const SidebarFooter = ({
                 {isDesktop && (
                     <div className="hidden group-hover/account:block absolute left-full bottom-0 ml-4 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
                         <div className="absolute bottom-6 -left-2 w-4 h-4 bg-white dark:bg-slate-800 transform rotate-45 border-l border-b border-slate-200 dark:border-slate-700"></div>
-                        <AccountMenuContent darkMode={darkMode} setDarkMode={setDarkMode} setIsThemeSettingsOpen={setIsThemeSettingsOpen} />
+                        <AccountMenuContent 
+                            darkMode={darkMode} 
+                            setDarkMode={setDarkMode} 
+                            setIsThemeSettingsOpen={setIsThemeSettingsOpen}
+                            onNavigate={onNavigate} 
+                        />
                     </div>
                 )}
             </div>
@@ -215,6 +229,7 @@ const SidebarFooter = ({
                                 setDarkMode={setDarkMode} 
                                 setIsThemeSettingsOpen={setIsThemeSettingsOpen} 
                                 closeMenu={() => setMobileMenuOpen(null)}
+                                onNavigate={onNavigate}
                             />
                         )}
                     </div>
@@ -454,24 +469,19 @@ const App = () => {
                         icon={Search} 
                         label="Source AI" 
                         activeTab={activeCampaignTab.startsWith('Source AI')} 
-                        onClick={() => { setActiveCampaignTab('Source AI'); if (!isDesktop) setIsSidebarOpen(false); }}
+                        onClick={() => { setActiveCampaignTab('Source AI'); if (!isDesktop) setIsSidebarOpen(false); }} 
                         />
                         {activeCampaignTab.startsWith('Source AI') && !isCollapsed && (
                             <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
-                                <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 mt-2 px-2">Sourcing Tools</div>
-                                <button onClick={() => { setActiveCampaignTab('Source AI:ATTACH'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center justify-between group ${activeCampaignTab === 'Source AI:ATTACH' || activeCampaignTab === 'Source AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    <span>Attach People</span>
-                                    <PlusCircle size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-emerald-600" />
+                                <button onClick={() => { setActiveCampaignTab('Source AI:ATTACH'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:ATTACH' || activeCampaignTab === 'Source AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Attach People
                                 </button>
-                                <button onClick={() => { setActiveCampaignTab('Source AI:PROFILES'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center justify-between ${activeCampaignTab === 'Source AI:PROFILES' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    <span>Attached Profiles</span>
-                                    <span className="bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full">4</span>
+                                <button onClick={() => { setActiveCampaignTab('Source AI:PROFILES'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:PROFILES' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                    Attached Profiles
                                 </button>
                                 <button onClick={() => { setActiveCampaignTab('Source AI:INTEGRATIONS'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:INTEGRATIONS' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                                     Integrations
                                 </button>
-                                
-                                <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 mt-4 px-2">Job Details</div>
                                 <button onClick={() => { setActiveCampaignTab('Source AI:JD'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:JD' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                                     Job Description
                                 </button>
@@ -515,6 +525,13 @@ const App = () => {
                       activeTab={activeCampaignTab === 'Recommended Profiles'} 
                       onClick={() => { setActiveCampaignTab('Recommended Profiles'); if (!isDesktop) setIsSidebarOpen(false); }}
                     />
+
+                    <NavItem 
+                      icon={Settings} 
+                      label="Settings" 
+                      activeTab={activeCampaignTab === 'Settings'} 
+                      onClick={() => { setActiveCampaignTab('Settings'); if (!isDesktop) setIsSidebarOpen(false); }}
+                    />
                   </div>
                 </div>
               )}
@@ -556,14 +573,7 @@ const App = () => {
            {activeView === 'CAMPAIGNS' && (
              selectedCampaign ? (
                 <div className="h-full flex flex-col">
-                   <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex items-center gap-2 shrink-0">
-                      <button onClick={handleBackToCampaigns} className="text-sm text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 transition-colors">
-                         <ChevronRight size={14} className="rotate-180"/> Back to Campaigns
-                      </button>
-                      <span className="text-slate-300 dark:text-slate-600">|</span>
-                      <span className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">{selectedCampaign.name}</span>
-                   </div>
-                   <CampaignDashboard campaign={selectedCampaign} activeTab={activeCampaignTab} />
+                   <CampaignDashboard campaign={selectedCampaign} activeTab={activeCampaignTab} onBack={handleBackToCampaigns} />
                 </div>
              ) : (
                 <Campaigns onNavigateToCampaign={handleNavigateToCampaign} />
