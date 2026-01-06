@@ -1,3 +1,4 @@
+
 # Integration Test Cases
 **Module:** Module Interactions
 **Date:** 2025-05-20
@@ -21,3 +22,10 @@
 | ID | Scenario | Pre-Condition | Steps | Expected Result |
 |----|----------|---------------|-------|-----------------|
 | IT-05 | GridStack Layout | Dashboard Loaded | 1. Click "Edit Dashboard"<br>2. Resize Widget 1 | Other widgets reflow correctly. Layout state is saved on "Save Layout". |
+
+## 4. User State Integration
+
+| ID | Scenario | Pre-Condition | Steps | Expected Result |
+|----|----------|---------------|-------|-----------------|
+| IT-06 | Profile to Sidebar Sync | Editing My Account | 1. Update First Name in Basic Details<br>2. Click Save | Sidebar User Avatar/Name updates immediately without reload. |
+| IT-07 | Theme Persistence | Dashboard | 1. Change Theme in Modal<br>2. Refresh Page | Theme choice persists (read from LocalStorage). |

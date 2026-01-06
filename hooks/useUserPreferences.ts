@@ -39,8 +39,6 @@ export const useUserPreferences = () => {
         }
 
         // 2. Handle Robust Merging (Ensure all modes exist)
-        // If the stored data has layouts, we merge them with defaults to ensure
-        // that if 'mobile' or 'tablet' is missing in the saved data, we use the default.
         if (parsed.preferences?.dashboardConfig?.layouts) {
             return { 
                 ...DEFAULT_USER_ACCOUNT, 
@@ -77,8 +75,31 @@ export const useUserPreferences = () => {
     }
   }, [userAccount]);
 
+  // Apply Theme Effect
+  useEffect(() => {
+    const applyTheme = (t: string) => {
+        const isDark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    };
+
+    const currentTheme = userAccount.preferences.theme;
+    applyTheme(currentTheme);
+
+    // Listen for system changes if mode is system
+    if (currentTheme === 'system') {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = () => applyTheme('system');
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+  }, [userAccount.preferences.theme]);
+
   // Helper to update specific preferences
-  const updateTheme = (theme: 'light' | 'dark') => {
+  const updateTheme = (theme: 'light' | 'dark' | 'system') => {
     setUserAccount(prev => ({
       ...prev,
       preferences: {

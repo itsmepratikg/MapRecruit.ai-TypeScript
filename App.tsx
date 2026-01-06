@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom/client';
 import { 
   LayoutDashboard, Users, Briefcase, BarChart2, 
   Settings, LogOut, UserPlus, Building2, CheckCircle, 
-  User, Phone, UserCog, Lock, Menu, X, ChevronRight, Moon, Sun,
+  User, Phone, UserCog, Lock, Menu, X, ChevronRight,
   Brain, Search, GitBranch, MessageCircle, ThumbsUp, ChevronLeft,
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
   Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
-  SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon
+  SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon,
+  Calendar, Clock // Added Clock and Calendar imports
 } from './components/Icons';
 import { ToastProvider, useToast } from './components/Toast';
 import { Home } from './pages/Home';
@@ -18,48 +19,43 @@ import { Metrics } from './pages/Metrics';
 import { CandidateProfile } from './pages/CandidateProfile';
 import { CampaignDashboard } from './pages/Campaign/index'; 
 import { SettingsPage } from './pages/Settings/index';
+import { MyAccount } from './pages/MyAccount/index'; // Import MyAccount
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 import { useScreenSize } from './hooks/useScreenSize';
 import { ThemeSettingsModal } from './components/ThemeSettingsModal';
 import { useUserPreferences } from './hooks/useUserPreferences';
+import { useUserProfile } from './hooks/useUserProfile';
+import { COLORS } from './data/profile';
 
 // --- Reusable Menu Contents ---
 
-const ClientMenuContent = () => (
+const ClientMenuContent = ({ activeClient, clients }: { activeClient: string, clients: string[] }) => (
   <>
     <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900 rounded-t mb-1">Switch Client</div>
     <div className="p-1 space-y-1">
-        <button className="w-full text-left px-3 py-2 text-sm text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 rounded flex items-center justify-between font-medium">
-            TRC Talent Solutions <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400"/>
-        </button>
-        <button className="w-full text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-            Amazon Warehouse Operations
-        </button>
-        <button className="w-full text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-            Google Staffing Services
-        </button>
-        <button className="w-full text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-            Microsoft HR Tech
-        </button>
+        {clients.map(client => (
+            <button key={client} className={`w-full text-left px-3 py-2 text-sm rounded flex items-center justify-between font-medium ${client === activeClient ? 'text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-700' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}>
+                {client}
+                {client === activeClient && <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400"/>}
+            </button>
+        ))}
     </div>
   </>
 );
 
 const AccountMenuContent = ({ 
-    theme, 
-    updateTheme, 
     setIsThemeSettingsOpen,
     closeMenu,
-    onNavigate
+    onNavigate,
+    userProfile
 }: { 
-    theme: string, 
-    updateTheme: (t: 'light' | 'dark') => void, 
     setIsThemeSettingsOpen: (v: boolean) => void,
     closeMenu?: () => void,
-    onNavigate?: (view: any) => void
+    onNavigate?: (view: any) => void,
+    userProfile: any
 }) => {
-    const isDark = theme === 'dark';
+    const userColorObj = COLORS.find(c => c.name === userProfile.color) || COLORS[0];
     
     return (
       <>
@@ -69,32 +65,41 @@ const AccountMenuContent = ({
                     <X size={20} />
                 </button>
             )}
-            <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border-4 border-white dark:border-slate-600 shadow-md mb-3">
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" className="w-full h-full object-cover" />
+            <div className={`w-16 h-16 rounded-full overflow-hidden border-4 border-white dark:border-slate-600 shadow-md mb-3 flex items-center justify-center text-2xl font-bold ${!userProfile.avatar ? userColorObj.class : 'bg-slate-200'}`}>
+                {userProfile.avatar ? (
+                    <img src={userProfile.avatar} alt="User" className="w-full h-full object-cover" />
+                ) : (
+                    userProfile.firstName.charAt(0) + userProfile.lastName.charAt(0)
+                )}
             </div>
-            <h4 className="font-bold text-slate-800 dark:text-slate-100 text-lg">Pratik</h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">pratik.gaurav@trcdemo.com</p>
+            <h4 className="font-bold text-slate-800 dark:text-slate-100 text-lg">{userProfile.firstName}</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{userProfile.email}</p>
             
             <div className="w-full border-t border-slate-100 dark:border-slate-700 pt-3 space-y-2">
                 <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 px-2">
                     <User size={16} className="text-slate-400 dark:text-slate-500"/> 
-                    <span className="font-medium">Product Admin</span>
+                    <span className="font-medium">{userProfile.role}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 px-2">
                     <Phone size={16} className="text-slate-400 dark:text-slate-500"/> 
-                    <span className="font-mono text-xs">+917004029399</span>
+                    <span className="font-mono text-xs">{userProfile.phone}</span>
                 </div>
             </div>
         </div>
         
         <div className="py-2 bg-white dark:bg-slate-800 rounded-b-lg">
-            <div className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item">
+            <button 
+                onClick={() => {
+                    if(onNavigate) onNavigate('MY_ACCOUNT');
+                    if(closeMenu) closeMenu();
+                }}
+                className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item"
+            >
                 <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
                     <User size={16} /> 
                     <span className="font-medium">My Account</span>
                 </div>
-                <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 flex items-center justify-center text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors cursor-help">?</div>
-            </div>
+            </button>
 
             <button 
                 onClick={() => {
@@ -112,20 +117,6 @@ const AccountMenuContent = ({
             <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                 <Lock size={16} /> Change Password
             </button>
-
-            {/* Dark Mode Toggle */}
-            <div 
-                    onClick={() => updateTheme(isDark ? 'light' : 'dark')}
-                    className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item"
-            >
-                    <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
-                        {isDark ? <Sun size={16} /> : <Moon size={16} />}
-                        <span className="font-medium">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
-                    </div>
-                    <div className={`w-8 h-4 rounded-full relative transition-colors ${isDark ? 'bg-emerald-600' : 'bg-slate-300'}`}>
-                        <div className={`absolute top-0.5 left-0.5 w-3 h-3 bg-white dark:bg-slate-800 rounded-full transition-transform ${isDark ? 'translate-x-4' : 'translate-x-0'}`}></div>
-                    </div>
-            </div>
 
             <button 
                 onClick={() => setIsThemeSettingsOpen(true)}
@@ -145,19 +136,21 @@ const AccountMenuContent = ({
 // Sidebar Footer Component
 const SidebarFooter = ({ 
   setIsCreateProfileOpen, 
-  theme,
-  updateTheme,
   setIsThemeSettingsOpen,
-  onNavigate
+  onNavigate,
+  userProfile,
+  clients
 }: { 
   setIsCreateProfileOpen: (v: boolean) => void, 
-  theme: string,
-  updateTheme: (t: 'light' | 'dark') => void,
   setIsThemeSettingsOpen: (v: boolean) => void,
-  onNavigate: (view: ViewState) => void
+  onNavigate: (view: ViewState) => void,
+  userProfile: any,
+  clients: string[]
 }) => {
     const { isDesktop } = useScreenSize();
     const [mobileMenuOpen, setMobileMenuOpen] = useState<'client' | 'account' | null>(null);
+    
+    const userColorObj = COLORS.find(c => c.name === userProfile.color) || COLORS[0];
 
     const handleMenuClick = (menu: 'client' | 'account') => {
         if (!isDesktop) {
@@ -183,13 +176,13 @@ const SidebarFooter = ({
                     onClick={() => handleMenuClick('client')}
                 >
                     <Building2 size={18} className="text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
-                    <span className="text-sm font-medium truncate">TRC Talent Solutions</span>
+                    <span className="text-sm font-medium truncate">{userProfile.activeClient}</span>
                 </button>
                 
                 {/* Desktop Client List Popover - Hover */}
                 {isDesktop && (
                     <div className="hidden group-hover/client:block absolute left-full bottom-0 ml-2 w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
-                        <ClientMenuContent />
+                        <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} />
                     </div>
                 )}
             </div>
@@ -200,11 +193,15 @@ const SidebarFooter = ({
                     className="w-full flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors"
                     onClick={() => handleMenuClick('account')}
                 >
-                    <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-300 dark:border-slate-600 shrink-0">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" className="w-full h-full object-cover" />
+                    <div className={`w-8 h-8 rounded-full overflow-hidden border border-slate-300 dark:border-slate-600 shrink-0 flex items-center justify-center text-xs font-bold ${!userProfile.avatar ? userColorObj.class : 'bg-slate-200'}`}>
+                        {userProfile.avatar ? (
+                            <img src={userProfile.avatar} alt="User" className="w-full h-full object-cover" />
+                        ) : (
+                            userProfile.firstName.charAt(0) + userProfile.lastName.charAt(0)
+                        )}
                     </div>
                     <div className="text-left flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">Pratik</p>
+                        <p className="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">{userProfile.firstName}</p>
                         <p className="text-xs text-slate-400 dark:text-slate-500 truncate">My Account</p>
                     </div>
                 </button>
@@ -214,10 +211,9 @@ const SidebarFooter = ({
                     <div className="hidden group-hover/account:block absolute left-full bottom-0 ml-4 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
                         <div className="absolute bottom-6 -left-2 w-4 h-4 bg-white dark:bg-slate-800 transform rotate-45 border-l border-b border-slate-200 dark:border-slate-700"></div>
                         <AccountMenuContent 
-                            theme={theme} 
-                            updateTheme={updateTheme} 
                             setIsThemeSettingsOpen={setIsThemeSettingsOpen}
                             onNavigate={onNavigate} 
+                            userProfile={userProfile}
                         />
                     </div>
                 )}
@@ -227,14 +223,13 @@ const SidebarFooter = ({
             {!isDesktop && mobileMenuOpen && (
                 <div className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200" onClick={() => setMobileMenuOpen(null)}>
                     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
-                        {mobileMenuOpen === 'client' && <ClientMenuContent />}
+                        {mobileMenuOpen === 'client' && <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} />}
                         {mobileMenuOpen === 'account' && (
                             <AccountMenuContent 
-                                theme={theme} 
-                                updateTheme={updateTheme} 
                                 setIsThemeSettingsOpen={setIsThemeSettingsOpen} 
                                 closeMenu={() => setMobileMenuOpen(null)}
                                 onNavigate={onNavigate}
+                                userProfile={userProfile}
                             />
                         )}
                     </div>
@@ -244,7 +239,7 @@ const SidebarFooter = ({
     );
 };
 
-type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS';
+type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS' | 'MY_ACCOUNT';
 
 const PROFILE_TABS = [
   { id: 'profile', label: 'Profile', icon: User },
@@ -279,6 +274,16 @@ const SETTINGS_SUBMENU = [
   { id: 'REACHOUT_LAYOUTS', label: 'ReachOut Layouts', icon: Layout },
 ];
 
+const MY_ACCOUNT_MENU = [
+    { id: 'BASIC_DETAILS', label: 'Basic Details', icon: User },
+    { id: 'COMM_PREFS', label: 'Communication', icon: MessageSquare },
+    { id: 'USER_PREFS', label: 'Appearance', icon: SlidersHorizontal },
+    { id: 'CALENDAR', label: 'Calendar', icon: Calendar },
+    { id: 'ROLES_PERMISSIONS', label: 'Roles & Permissions', icon: Shield },
+    { id: 'AUTH_SYNC', label: 'Password & Authentication', icon: Lock },
+    { id: 'LAST_LOGIN', label: 'Last Login Sessions', icon: Clock },
+];
+
 const App = () => {
   const [activeView, setActiveView] = useState<ViewState>('DASHBOARD');
   
@@ -287,6 +292,9 @@ const App = () => {
   
   // Hook for User Preferences (Theme & Dashboard)
   const { theme, updateTheme } = useUserPreferences();
+  
+  // Hook for User Profile Data (Synchronized)
+  const { userProfile, clients } = useUserProfile();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -302,7 +310,9 @@ const App = () => {
   
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [activeCampaignTab, setActiveCampaignTab] = useState<string>('Intelligence');
-  const [activeSettingsTab, setActiveSettingsTab] = useState('COMPANY_INFO'); // Settings Tab State
+  
+  const [activeSettingsTab, setActiveSettingsTab] = useState('COMPANY_INFO');
+  const [activeAccountTab, setActiveAccountTab] = useState('BASIC_DETAILS'); // My Account State
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
   const [isCreateProfileOpen, setIsCreateProfileOpen] = useState(false);
@@ -383,7 +393,7 @@ const App = () => {
            </div>
 
            <div className={`flex-1 overflow-y-auto py-4 ${isCollapsed ? 'px-2' : 'px-3'} space-y-1`}>
-              {!selectedCampaign && !selectedCandidateId ? (
+              {!selectedCampaign && !selectedCandidateId && activeView !== 'MY_ACCOUNT' ? (
                 <>
                   <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
                   <NavItem view="CAMPAIGNS" icon={Briefcase} label="Campaigns" />
@@ -408,6 +418,33 @@ const App = () => {
                     )}
                   </div>
                 </>
+              ) : activeView === 'MY_ACCOUNT' ? (
+                <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                  <button 
+                    onClick={() => setActiveView('DASHBOARD')}
+                    className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
+                    title="Back to Dashboard"
+                  >
+                    <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Dashboard</span>
+                  </button>
+                  
+                  <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
+                    <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">My Account Settings</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage your personal preferences</p>
+                  </div>
+
+                  <div className="space-y-1">
+                    {MY_ACCOUNT_MENU.map(item => (
+                        <NavItem 
+                            key={item.id}
+                            icon={item.icon} 
+                            label={item.label} 
+                            activeTab={activeAccountTab === item.id} 
+                            onClick={() => { setActiveAccountTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                        />
+                    ))}
+                  </div>
+                </div>
               ) : selectedCandidateId ? (
                 <div className="animate-in fade-in slide-in-from-left-4 duration-300">
                   <button 
@@ -535,10 +572,10 @@ const App = () => {
            {!isCollapsed && (
                <SidebarFooter 
                  setIsCreateProfileOpen={setIsCreateProfileOpen} 
-                 theme={theme}
-                 updateTheme={updateTheme} 
                  setIsThemeSettingsOpen={setIsThemeSettingsOpen}
                  onNavigate={(view) => { setActiveView(view); setSelectedCandidateId(null); setSelectedCampaign(null); if (!isDesktop) setIsSidebarOpen(false); }}
+                 userProfile={userProfile}
+                 clients={clients}
                />
            )}
         </div>
@@ -578,6 +615,8 @@ const App = () => {
            {activeView === 'METRICS' && <Metrics />}
            
            {activeView === 'SETTINGS' && <SettingsPage activeTab={activeSettingsTab} />}
+
+           {activeView === 'MY_ACCOUNT' && <MyAccount activeTab={activeAccountTab} />}
         </div>
 
         {/* Create Profile Modal */}

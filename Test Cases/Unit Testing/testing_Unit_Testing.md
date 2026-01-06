@@ -1,3 +1,4 @@
+
 # Unit Test Cases
 **Module:** Core Utils & Components
 **Date:** 2025-05-20
@@ -10,6 +11,7 @@
 | UT-02 | `hexToRgb` invalid hex | `ZZZZZZ` | Returns `{r: 0, g: 0, b: 0}` |
 | UT-03 | `rgbToHex` valid rgb | `16, 185, 129` | Returns `#10B981` |
 | UT-04 | `mixColors` 50% mix | Color1, Color2, 50 | Returns average RGB values |
+| UT-12 | `generatePalette` | `#10b981` | Returns object with keys 50-950 containing correct hex shades |
 
 ## 2. Search Logic (`components/TalentSearchEngine.tsx`)
 
@@ -27,3 +29,10 @@
 | UT-09 | `StatusBadge` Active | `<StatusBadge status="Active" />` | Renders with green background/text classes |
 | UT-10 | `StatusBadge` Closed | `<StatusBadge status="Closed" />` | Renders with red background/text classes |
 | UT-11 | `MetricCard` props | `<MetricCard title="Test" value="10" />` | Renders Title "Test" and Value "10" correctly |
+
+## 4. User Profile Hook (`hooks/useUserProfile.ts`)
+
+| ID | Test Case | Function | Expected Result |
+|----|-----------|----------|-----------------|
+| UT-13 | Initial Load | `useUserProfile()` | Returns default data if LocalStorage is empty. |
+| UT-14 | Save Profile | `saveProfile({firstName: "New"})` | Updates internal state and calls `localStorage.setItem`. |

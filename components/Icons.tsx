@@ -56,6 +56,7 @@ export const FolderOpen = (props: any) => <Icon {...props} iconClass="fa-solid f
 export const GitBranch = (props: any) => <Icon {...props} iconClass="fa-solid fa-code-branch" />;
 export const GitGraph = (props: any) => <Icon {...props} iconClass="fa-solid fa-diagram-project" />;
 export const Globe = (props: any) => <Icon {...props} iconClass="fa-solid fa-globe" />;
+export const GripHorizontal = (props: any) => <Icon {...props} iconClass="fa-solid fa-grip-lines" />;
 export const Heart = (props: any) => <Icon {...props} iconClass="fa-solid fa-heart" />;
 export const HelpCircle = (props: any) => <Icon {...props} iconClass="fa-solid fa-circle-question" />;
 export const History = (props: any) => <Icon {...props} iconClass="fa-solid fa-clock-rotate-left" />;
@@ -118,6 +119,7 @@ export const Split = (props: any) => <Icon {...props} iconClass="fa-solid fa-arr
 export const Square = (props: any) => <Icon {...props} iconClass="fa-regular fa-square" />;
 export const Star = (props: any) => <Icon {...props} iconClass="fa-solid fa-star" />;
 export const Sun = (props: any) => <Icon {...props} iconClass="fa-solid fa-sun" />;
+export const Tablet = (props: any) => <Icon {...props} iconClass="fa-solid fa-tablet-screen-button" />;
 export const Tag = (props: any) => <Icon {...props} iconClass="fa-solid fa-tag" />;
 export const ThumbsDown = (props: any) => <Icon {...props} iconClass="fa-solid fa-thumbs-down" />;
 export const ThumbsUp = (props: any) => <Icon {...props} iconClass="fa-solid fa-thumbs-up" />;

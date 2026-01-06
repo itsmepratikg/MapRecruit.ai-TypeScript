@@ -9,6 +9,8 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend, BarChart, Bar 
 } from 'recharts';
+import { useUserProfile } from '../hooks/useUserProfile';
+import { COLORS } from '../data/profile';
 
 // --- MOCK DATA ---
 
@@ -67,11 +69,15 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 // --- WIDGET COMPONENTS ---
 
 export const WelcomeHeader = () => {
+  const { userProfile } = useUserProfile();
   const [timeData, setTimeData] = useState({ 
     greeting: 'Good Evening', 
     lastLogin: '', 
     bgGradient: 'from-indigo-900 to-indigo-800' 
   });
+
+  const userColorObj = COLORS.find(c => c.name === userProfile.color) || COLORS[0];
+  const initials = (userProfile.firstName.charAt(0) + userProfile.lastName.charAt(0)).toUpperCase();
 
   useEffect(() => {
     const updateTime = () => {
@@ -112,7 +118,7 @@ export const WelcomeHeader = () => {
       
       <div className="z-10 flex-1">
         <div className="flex justify-between items-start mb-4">
-          <h2 className="text-xl font-bold tracking-tight">{timeData.greeting}, Pratik</h2>
+          <h2 className="text-xl font-bold tracking-tight">{timeData.greeting}, {userProfile.firstName}</h2>
           <span className="text-[10px] text-white/80 bg-black/20 px-2 py-1 rounded border border-white/10 whitespace-nowrap">
             Last Login: {timeData.lastLogin}
           </span>
@@ -123,14 +129,20 @@ export const WelcomeHeader = () => {
         </p>
         
         <div className="flex items-center gap-4 mb-2">
-          <div className="w-12 h-12 rounded-xl bg-white p-0.5 shadow-lg ring-2 ring-white/20 shrink-0">
-             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" className="w-full h-full object-cover rounded-lg" alt="User" />
+          <div className={`w-12 h-12 rounded-xl p-0.5 shadow-lg ring-2 ring-white/20 shrink-0 ${!userProfile.avatar ? 'bg-white' : 'bg-transparent'}`}>
+             {userProfile.avatar ? (
+                 <img src={userProfile.avatar} className="w-full h-full object-cover rounded-lg" alt="User" />
+             ) : (
+                 <div className={`w-full h-full rounded-lg flex items-center justify-center text-lg font-bold ${userColorObj.class}`}>
+                    {initials}
+                 </div>
+             )}
           </div>
           <div className="min-w-0">
-             <p className="font-bold text-base truncate">Pratik</p>
+             <p className="font-bold text-base truncate">{userProfile.firstName}</p>
              <div className="flex items-center gap-1.5 mt-1 text-[10px] text-white/90 bg-white/10 px-2 py-0.5 rounded-full w-fit border border-white/10 backdrop-blur-sm">
                <Briefcase size={10} /> 
-               <span className="truncate">TRC Talent Solutions</span>
+               <span className="truncate">{userProfile.activeClient}</span>
              </div>
           </div>
         </div>
@@ -425,3 +437,58 @@ export const PreScreeningProgress = () => (
       </div>
    </div>
 );
+
+// --- METADATA DEFINITIONS ---
+export const WIDGET_DEFINITIONS = [
+  { id: 'welcome', title: 'Welcome Header', defaultW: 4, defaultH: 10, minW: 3, minH: 6 },
+  { id: 'active_campaigns', title: 'Active Campaigns', defaultW: 2, defaultH: 4, minW: 2, minH: 3 },
+  { id: 'closed_campaigns', title: 'Closed Campaigns', defaultW: 2, defaultH: 4, minW: 2, minH: 3 },
+  { id: 'active_profiles', title: 'Active Profiles', defaultW: 2, defaultH: 4, minW: 2, minH: 3 },
+  { id: 'shortlisted', title: 'Shortlisted', defaultW: 2, defaultH: 4, minW: 2, minH: 3 },
+  { id: 'alerts', title: 'Alerts & Warnings', defaultW: 8, defaultH: 5, minW: 4, minH: 3 },
+  { id: 'trend_graph', title: 'Trend Graph', defaultW: 6, defaultH: 12, minW: 4, minH: 6 },
+  { id: 'source_distribution', title: 'Source Distribution', defaultW: 6, defaultH: 12, minW: 4, minH: 6 },
+  { id: 'upcoming_interviews', title: 'Upcoming Interviews', defaultW: 6, defaultH: 10, minW: 3, minH: 5 },
+  { id: 'email_delivery', title: 'Email Delivery', defaultW: 6, defaultH: 10, minW: 4, minH: 5 },
+  { id: 'portal_reports', title: 'Portal Reports', defaultW: 6, defaultH: 10, minW: 4, minH: 5 },
+  { id: 'pre_screening', title: 'Pre-Screening Report', defaultW: 6, defaultH: 10, minW: 4, minH: 5 },
+];
+
+// Registry Export for Dynamic Loading
+export const WIDGET_REGISTRY: Record<string, React.ReactNode> = {
+  'welcome': <WelcomeHeader />,
+  'active_campaigns': (
+    <MetricCard title="Active Campaigns" value="4" icon={Briefcase} colorClass="text-green-600" iconBg="bg-green-50" />
+  ),
+  'closed_campaigns': (
+    <MetricCard title="Closed Campaigns" value="71" icon={Briefcase} colorClass="text-red-500" iconBg="bg-red-50" />
+  ),
+  'active_profiles': (
+    <MetricCard title="Active Profiles" value="11k" icon={Users} colorClass="text-blue-600" iconBg="bg-blue-50" />
+  ),
+  'shortlisted': (
+    <MetricCard title="Shortlisted" value="9" icon={UserCheck} colorClass="text-emerald-600" iconBg="bg-emerald-50" />
+  ),
+  'alerts': <AlertsWidget />,
+  'trend_graph': <TrendGraph />,
+  'source_distribution': <SourceDistributionChart />,
+  'upcoming_interviews': (
+    <EmptyWidget 
+      title="Upcoming Interviews" 
+      sub={
+      <div className="flex gap-2">
+          <select className="text-[10px] border rounded px-1 bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200"><option>Interviews</option></select>
+          <div className="flex bg-gray-100 dark:bg-slate-700 rounded"><button className="px-2 text-[10px] dark:text-slate-300">Previous</button><button className="px-2 text-[10px] bg-white dark:bg-slate-600 shadow-sm dark:text-white">Upcoming</button></div>
+      </div>
+      } 
+    />
+  ),
+  'email_delivery': <EmailDeliveryReport />,
+  'portal_reports': (
+    <EmptyWidget 
+      title="Portal Sourcing Reports" 
+      sub={<select className="text-[10px] border rounded px-1 bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200"><option>Last 7 days</option></select>} 
+    />
+  ),
+  'pre_screening': <PreScreeningProgress />
+};

@@ -1,3 +1,4 @@
+
 # System Test Cases (E2E)
 **Module:** Full Application Flow
 **Date:** 2025-05-20
@@ -13,3 +14,9 @@
 | ID | Scenario | Steps | Success Criteria |
 |----|----------|-------|------------------|
 | ST-02 | Manual Profile Entry | 1. Click "Create" in Sidebar Footer.<br>2. Select "Manual Entry".<br>3. Fill Name, Email, Title.<br>4. Click "Create Profile". | Modal closes. Toast Success appears. (Future: New profile appears in search list). |
+
+## 3. Personalization Flow
+
+| ID | Scenario | Steps | Success Criteria |
+|----|----------|-------|------------------|
+| ST-03 | User Account Setup | 1. Open User Menu > My Account.<br>2. Update Avatar and Job Title.<br>3. Go to Appearance > Dashboard Layout.<br>4. Move widgets and Save.<br>5. Refresh Page. | Avatar updates globally. Custom dashboard layout loads correctly after refresh. |
