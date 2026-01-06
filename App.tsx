@@ -22,6 +22,7 @@ import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 import { useScreenSize } from './hooks/useScreenSize';
 import { ThemeSettingsModal } from './components/ThemeSettingsModal';
+import { useUserPreferences } from './hooks/useUserPreferences';
 
 // --- Reusable Menu Contents ---
 
@@ -46,108 +47,112 @@ const ClientMenuContent = () => (
 );
 
 const AccountMenuContent = ({ 
-    darkMode, 
-    setDarkMode, 
+    theme, 
+    updateTheme, 
     setIsThemeSettingsOpen,
     closeMenu,
     onNavigate
 }: { 
-    darkMode: boolean, 
-    setDarkMode: (v: boolean) => void, 
+    theme: string, 
+    updateTheme: (t: 'light' | 'dark') => void, 
     setIsThemeSettingsOpen: (v: boolean) => void,
     closeMenu?: () => void,
     onNavigate?: (view: any) => void
-}) => (
-  <>
-    <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex flex-col items-center text-center bg-white dark:bg-slate-800 rounded-t-lg relative">
-        {closeMenu && (
-            <button onClick={closeMenu} className="absolute top-2 right-2 p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full lg:hidden">
-                <X size={20} />
-            </button>
-        )}
-        <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border-4 border-white dark:border-slate-600 shadow-md mb-3">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" className="w-full h-full object-cover" />
-        </div>
-        <h4 className="font-bold text-slate-800 dark:text-slate-100 text-lg">Pratik</h4>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">pratik.gaurav@trcdemo.com</p>
-        
-        <div className="w-full border-t border-slate-100 dark:border-slate-700 pt-3 space-y-2">
-            <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 px-2">
-                <User size={16} className="text-slate-400 dark:text-slate-500"/> 
-                <span className="font-medium">Product Admin</span>
-            </div>
-            <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 px-2">
-                <Phone size={16} className="text-slate-400 dark:text-slate-500"/> 
-                <span className="font-mono text-xs">+917004029399</span>
-            </div>
-        </div>
-    </div>
+}) => {
+    const isDark = theme === 'dark';
     
-    <div className="py-2 bg-white dark:bg-slate-800 rounded-b-lg">
-        <div className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item">
-            <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
-                <User size={16} /> 
-                <span className="font-medium">My Account</span>
+    return (
+      <>
+        <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex flex-col items-center text-center bg-white dark:bg-slate-800 rounded-t-lg relative">
+            {closeMenu && (
+                <button onClick={closeMenu} className="absolute top-2 right-2 p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full lg:hidden">
+                    <X size={20} />
+                </button>
+            )}
+            <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border-4 border-white dark:border-slate-600 shadow-md mb-3">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" className="w-full h-full object-cover" />
             </div>
-            <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 flex items-center justify-center text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors cursor-help">?</div>
+            <h4 className="font-bold text-slate-800 dark:text-slate-100 text-lg">Pratik</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">pratik.gaurav@trcdemo.com</p>
+            
+            <div className="w-full border-t border-slate-100 dark:border-slate-700 pt-3 space-y-2">
+                <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 px-2">
+                    <User size={16} className="text-slate-400 dark:text-slate-500"/> 
+                    <span className="font-medium">Product Admin</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 px-2">
+                    <Phone size={16} className="text-slate-400 dark:text-slate-500"/> 
+                    <span className="font-mono text-xs">+917004029399</span>
+                </div>
+            </div>
         </div>
-
-        <button 
-            onClick={() => {
-                if(onNavigate) onNavigate('SETTINGS');
-                if(closeMenu) closeMenu();
-            }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
-        >
-            <Settings size={16} /> Admin Settings
-        </button>
-
-        <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
-            <UserCog size={16} /> Product Admin Settings
-        </button>
-        <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
-            <Lock size={16} /> Change Password
-        </button>
-
-        {/* Dark Mode Toggle */}
-        <div 
-                onClick={() => setDarkMode(!darkMode)}
-                className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item"
-        >
+        
+        <div className="py-2 bg-white dark:bg-slate-800 rounded-b-lg">
+            <div className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item">
                 <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
-                    {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-                    <span className="font-medium">{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                    <User size={16} /> 
+                    <span className="font-medium">My Account</span>
                 </div>
-                <div className={`w-8 h-4 rounded-full relative transition-colors ${darkMode ? 'bg-emerald-600' : 'bg-slate-300'}`}>
-                    <div className={`absolute top-0.5 left-0.5 w-3 h-3 bg-white dark:bg-slate-800 rounded-full transition-transform ${darkMode ? 'translate-x-4' : 'translate-x-0'}`}></div>
-                </div>
-        </div>
+                <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 flex items-center justify-center text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors cursor-help">?</div>
+            </div>
 
-        <button 
-            onClick={() => setIsThemeSettingsOpen(true)}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
-        >
-            <Palette size={16} /> Themes
-        </button>
-        <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
-        <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium">
-            <LogoutIcon size={16} /> Logout
-        </button>
-    </div>
-  </>
-);
+            <button 
+                onClick={() => {
+                    if(onNavigate) onNavigate('SETTINGS');
+                    if(closeMenu) closeMenu();
+                }}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
+            >
+                <Settings size={16} /> Admin Settings
+            </button>
+
+            <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <UserCog size={16} /> Product Admin Settings
+            </button>
+            <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <Lock size={16} /> Change Password
+            </button>
+
+            {/* Dark Mode Toggle */}
+            <div 
+                    onClick={() => updateTheme(isDark ? 'light' : 'dark')}
+                    className="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item"
+            >
+                    <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
+                        {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                        <span className="font-medium">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+                    </div>
+                    <div className={`w-8 h-4 rounded-full relative transition-colors ${isDark ? 'bg-emerald-600' : 'bg-slate-300'}`}>
+                        <div className={`absolute top-0.5 left-0.5 w-3 h-3 bg-white dark:bg-slate-800 rounded-full transition-transform ${isDark ? 'translate-x-4' : 'translate-x-0'}`}></div>
+                    </div>
+            </div>
+
+            <button 
+                onClick={() => setIsThemeSettingsOpen(true)}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
+            >
+                <Palette size={16} /> Themes
+            </button>
+            <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
+            <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium">
+                <LogoutIcon size={16} /> Logout
+            </button>
+        </div>
+      </>
+    );
+};
 
 // Sidebar Footer Component
 const SidebarFooter = ({ 
   setIsCreateProfileOpen, 
-  darkMode, 
-  setDarkMode, 
+  theme,
+  updateTheme,
   setIsThemeSettingsOpen,
   onNavigate
 }: { 
   setIsCreateProfileOpen: (v: boolean) => void, 
-  darkMode: boolean, 
-  setDarkMode: (v: boolean) => void, 
+  theme: string,
+  updateTheme: (t: 'light' | 'dark') => void,
   setIsThemeSettingsOpen: (v: boolean) => void,
   onNavigate: (view: ViewState) => void
 }) => {
@@ -209,8 +214,8 @@ const SidebarFooter = ({
                     <div className="hidden group-hover/account:block absolute left-full bottom-0 ml-4 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
                         <div className="absolute bottom-6 -left-2 w-4 h-4 bg-white dark:bg-slate-800 transform rotate-45 border-l border-b border-slate-200 dark:border-slate-700"></div>
                         <AccountMenuContent 
-                            darkMode={darkMode} 
-                            setDarkMode={setDarkMode} 
+                            theme={theme} 
+                            updateTheme={updateTheme} 
                             setIsThemeSettingsOpen={setIsThemeSettingsOpen}
                             onNavigate={onNavigate} 
                         />
@@ -225,8 +230,8 @@ const SidebarFooter = ({
                         {mobileMenuOpen === 'client' && <ClientMenuContent />}
                         {mobileMenuOpen === 'account' && (
                             <AccountMenuContent 
-                                darkMode={darkMode} 
-                                setDarkMode={setDarkMode} 
+                                theme={theme} 
+                                updateTheme={updateTheme} 
                                 setIsThemeSettingsOpen={setIsThemeSettingsOpen} 
                                 closeMenu={() => setMobileMenuOpen(null)}
                                 onNavigate={onNavigate}
@@ -280,24 +285,16 @@ const App = () => {
   // Use custom hook for screen size detection
   const { width: windowWidth, isDesktop } = useScreenSize();
   
-  // Dark Mode State
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark' ||
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-    return false;
-  });
+  // Hook for User Preferences (Theme & Dashboard)
+  const { theme, updateTheme } = useUserPreferences();
 
   useEffect(() => {
-    if (darkMode) {
+    if (theme === 'dark') {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
     }
-  }, [darkMode]);
+  }, [theme]);
   
   // Navigation State
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
@@ -325,8 +322,6 @@ const App = () => {
   const handleBackToCampaigns = () => setSelectedCampaign(null);
 
   // Logic for mobile collapsed state
-  // On Desktop: Always Expanded (per previous instruction)
-  // On Mobile: Collapsed if not explicitly Open
   const isCollapsed = !isDesktop && !isSidebarOpen; 
 
   // Using 100 shade for selected background instead of 50 for better visibility
@@ -347,7 +342,7 @@ const App = () => {
 
   return (
     <ToastProvider>
-      <div className={`flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors ${darkMode ? 'dark' : ''}`}>
+      <div className={`flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors ${theme === 'dark' ? 'dark' : ''}`}>
         
         {/* Mobile Sidebar Overlay - Only when fully open */}
         {isSidebarOpen && !isDesktop && (
@@ -540,8 +535,8 @@ const App = () => {
            {!isCollapsed && (
                <SidebarFooter 
                  setIsCreateProfileOpen={setIsCreateProfileOpen} 
-                 darkMode={darkMode} 
-                 setDarkMode={setDarkMode} 
+                 theme={theme}
+                 updateTheme={updateTheme} 
                  setIsThemeSettingsOpen={setIsThemeSettingsOpen}
                  onNavigate={(view) => { setActiveView(view); setSelectedCandidateId(null); setSelectedCampaign(null); if (!isDesktop) setIsSidebarOpen(false); }}
                />

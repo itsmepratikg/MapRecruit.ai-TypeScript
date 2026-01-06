@@ -1,8 +1,149 @@
 
 import { 
-  FileText, Settings, Link, Mail, Video, MessageSquare, HelpCircle, Megaphone, GitBranch, ListChecks, CheckCircle2, Pilcrow, MoveRight, Film, MapPin, Map, MinusCircle
+  FileText, Settings, Link, Mail, Video, MessageSquare, HelpCircle, Megaphone, GitBranch, ListChecks, CheckCircle2, Pilcrow, MoveRight, Film, MapPin, Map, MinusCircle, Briefcase, Users, UserCheck
 } from './components/Icons';
 import { Candidate, EngageNode, EngageEdge, Question, Campaign, PanelMember, CampaignActivity } from './types';
+
+// --- NEW USER ACCOUNT JSON STRUCTURE ---
+export const DEFAULT_USER_ACCOUNT = {
+  id: "usr_123",
+  name: "Pratik",
+  preferences: {
+    theme: "light", // 'light' or 'dark'
+    dashboardConfig: {
+      rowHeight: 30,
+      margin: 15,
+      layouts: {
+        desktop: [
+  {
+    "id": "welcome",
+    "x": 0,
+    "y": 0,
+    "w": 4,
+    "h": 10,
+    "visible": true
+  },
+  {
+    "id": "active_campaigns",
+    "x": 4,
+    "y": 0,
+    "w": 2,
+    "h": 4,
+    "visible": true
+  },
+  {
+    "id": "closed_campaigns",
+    "x": 6,
+    "y": 0,
+    "w": 2,
+    "h": 4,
+    "visible": true
+  },
+  {
+    "id": "active_profiles",
+    "x": 8,
+    "y": 0,
+    "w": 2,
+    "h": 4,
+    "visible": true
+  },
+  {
+    "id": "shortlisted",
+    "x": 10,
+    "y": 0,
+    "w": 2,
+    "h": 4,
+    "visible": true
+  },
+  {
+    "id": "alerts",
+    "x": 4,
+    "y": 5,
+    "w": 8,
+    "h": 5,
+    "visible": true
+  },
+  {
+    "id": "trend_graph",
+    "x": 0,
+    "y": 11,
+    "w": 6,
+    "h": 12,
+    "visible": true
+  },
+  {
+    "id": "source_distribution",
+    "x": 6,
+    "y": 11,
+    "w": 6,
+    "h": 12,
+    "visible": true
+  },
+  {
+    "id": "upcoming_interviews",
+    "x": 0,
+    "y": 24,
+    "w": 6,
+    "h": 10,
+    "visible": true
+  },
+  {
+    "id": "email_delivery",
+    "x": 6,
+    "y": 24,
+    "w": 6,
+    "h": 10,
+    "visible": true
+  },
+  {
+    "id": "portal_reports",
+    "x": 6,
+    "y": 35,
+    "w": 6,
+    "h": 10,
+    "visible": true
+  },
+  {
+    "id": "pre_screening",
+    "x": 0,
+    "y": 35,
+    "w": 6,
+    "h": 10,
+    "visible": true
+  }
+],
+        tablet: [
+          { id: "welcome", x: 0, y: 0, w: 12, h: 6, visible: true },
+          { id: "active_campaigns", x: 0, y: 6, w: 6, h: 4, visible: true },
+          { id: "closed_campaigns", x: 6, y: 6, w: 6, h: 4, visible: true },
+          { id: "active_profiles", x: 0, y: 10, w: 6, h: 4, visible: true },
+          { id: "shortlisted", x: 6, y: 10, w: 6, h: 4, visible: true },
+          { id: "alerts", x: 0, y: 14, w: 12, h: 4, visible: true },
+          { id: "trend_graph", x: 0, y: 18, w: 12, h: 12, visible: true },
+          { id: "source_distribution", x: 0, y: 30, w: 12, h: 12, visible: true },
+          { id: "upcoming_interviews", x: 0, y: 42, w: 6, h: 8, visible: true },
+          { id: "email_delivery", x: 6, y: 42, w: 6, h: 8, visible: true },
+          { id: "portal_reports", x: 0, y: 50, w: 6, h: 8, visible: true },
+          { id: "pre_screening", x: 0, y: 58, w: 12, h: 8, visible: true }
+        ],
+        mobile: [
+          { id: "welcome", x: 0, y: 0, w: 12, h: 8, visible: true },
+          { id: "active_campaigns", x: 0, y: 8, w: 12, h: 4, visible: true },
+          { id: "closed_campaigns", x: 0, y: 12, w: 12, h: 4, visible: true },
+          { id: "active_profiles", x: 0, y: 16, w: 12, h: 4, visible: true },
+          { id: "shortlisted", x: 0, y: 20, w: 12, h: 4, visible: true },
+          { id: "alerts", x: 0, y: 24, w: 12, h: 4, visible: true },
+          { id: "trend_graph", x: 0, y: 28, w: 12, h: 12, visible: true },
+          { id: "source_distribution", x: 0, y: 40, w: 12, h: 12, visible: true },
+          { id: "upcoming_interviews", x: 0, y: 52, w: 12, h: 8, visible: true },
+          { id: "email_delivery", x: 0, y: 60, w: 12, h: 8, visible: true },
+          { id: "portal_reports", x: 0, y: 68, w: 12, h: 8, visible: true },
+          { id: "pre_screening", x: 0, y: 76, w: 12, h: 8, visible: true }
+        ]
+      }
+    }
+  }
+};
 
 export const PANEL_MEMBERS: PanelMember[] = [
   { id: 1, name: "QA Team Admin (Product Admin)", role: "QA Team Admin (Product Admin)", subRole: "Owner", initials: "QT", color: "bg-red-800 text-white" },

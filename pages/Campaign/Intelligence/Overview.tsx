@@ -302,7 +302,7 @@ const PipelineHealthSection = () => {
 
 export const IntelligenceOverview = () => {
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
         {/* Top Cards Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-80">
             <PanelMembersWidget members={PANEL_MEMBERS} />
