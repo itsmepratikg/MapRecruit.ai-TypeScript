@@ -10,6 +10,7 @@ import { BasicDetails } from './BasicDetails';
 import { Communication } from './Communication';
 import { CalendarSettings } from './CalendarSettings';
 import { RolesPermissions } from './RolesPermissions';
+import { AuthSync } from './AuthSync';
 
 interface MyAccountProps {
   activeTab: string;
@@ -29,7 +30,7 @@ export const MyAccount = ({ activeTab }: MyAccountProps) => {
       case 'ROLES_PERMISSIONS':
         return <RolesPermissions />;
       case 'AUTH_SYNC':
-        return <div className="p-8 lg:p-12"><AccountPlaceholder title="Password & Authentication" description="Manage 2FA, password changes, and connected third-party accounts." icon={Lock} /></div>;
+        return <AuthSync />;
       case 'LAST_LOGIN':
         return <div className="p-8 lg:p-12"><AccountPlaceholder title="Last Login Sessions" description="Review your recent login activity, IP addresses, and device history for security." icon={Clock} /></div>;
       default:

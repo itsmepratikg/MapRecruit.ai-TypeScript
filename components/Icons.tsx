@@ -55,6 +55,7 @@ export const FileEdit = (props: any) => <Icon {...props} iconClass="fa-solid fa-
 export const FileText = (props: any) => <Icon {...props} iconClass="fa-solid fa-file-lines" />;
 export const Film = (props: any) => <Icon {...props} iconClass="fa-solid fa-film" />;
 export const Filter = (props: any) => <Icon {...props} iconClass="fa-solid fa-filter" />;
+export const Fingerprint = (props: any) => <Icon {...props} iconClass="fa-solid fa-fingerprint" />;
 export const Folder = (props: any) => <Icon {...props} iconClass="fa-solid fa-folder" />;
 export const FolderOpen = (props: any) => <Icon {...props} iconClass="fa-solid fa-folder-open" />;
 export const GitBranch = (props: any) => <Icon {...props} iconClass="fa-solid fa-code-branch" />;
@@ -68,6 +69,7 @@ export const Home = (props: any) => <Icon {...props} iconClass="fa-solid fa-hous
 export const Image = (props: any) => <Icon {...props} iconClass="fa-solid fa-image" />;
 export const Info = (props: any) => <Icon {...props} iconClass="fa-solid fa-circle-info" />;
 export const Italic = (props: any) => <Icon {...props} iconClass="fa-solid fa-italic" />;
+export const Key = (props: any) => <Icon {...props} iconClass="fa-solid fa-key" />;
 export const Layers = (props: any) => <Icon {...props} iconClass="fa-solid fa-layer-group" />;
 export const Layout = (props: any) => <Icon {...props} iconClass="fa-solid fa-table-columns" />;
 export const LayoutDashboard = (props: any) => <Icon {...props} iconClass="fa-solid fa-gauge-high" />;
