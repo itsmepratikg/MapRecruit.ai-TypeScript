@@ -41,6 +41,7 @@ export const ChevronRight = (props: any) => <Icon {...props} iconClass="fa-solid
 export const ChevronUp = (props: any) => <Icon {...props} iconClass="fa-solid fa-chevron-up" />;
 export const ClipboardList = (props: any) => <Icon {...props} iconClass="fa-solid fa-clipboard-list" />;
 export const Clock = (props: any) => <Icon {...props} iconClass="fa-solid fa-clock" />;
+export const Command = (props: any) => <Icon {...props} iconClass="fa-solid fa-terminal" />;
 export const Copy = (props: any) => <Icon {...props} iconClass="fa-solid fa-copy" />;
 export const CreditCard = (props: any) => <Icon {...props} iconClass="fa-solid fa-credit-card" />;
 export const Database = (props: any) => <Icon {...props} iconClass="fa-solid fa-database" />;

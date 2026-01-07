@@ -9,7 +9,7 @@ import {
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
   Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
   SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon,
-  Calendar, Clock // Added Clock and Calendar imports
+  Calendar, Clock
 } from './components/Icons';
 import { ToastProvider, useToast } from './components/Toast';
 import { Home } from './pages/Home';
@@ -19,7 +19,8 @@ import { Metrics } from './pages/Metrics';
 import { CandidateProfile } from './pages/CandidateProfile';
 import { CampaignDashboard } from './pages/Campaign/index'; 
 import { SettingsPage } from './pages/Settings/index';
-import { MyAccount } from './pages/MyAccount/index'; // Import MyAccount
+import { MyAccount } from './pages/MyAccount/index'; 
+import { Login } from './pages/Login/index';
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 import { useScreenSize } from './hooks/useScreenSize';
@@ -48,11 +49,13 @@ const AccountMenuContent = ({
     setIsThemeSettingsOpen,
     closeMenu,
     onNavigate,
+    onLogout,
     userProfile
 }: { 
     setIsThemeSettingsOpen: (v: boolean) => void,
     closeMenu?: () => void,
     onNavigate?: (view: any) => void,
+    onLogout: () => void,
     userProfile: any
 }) => {
     const userColorObj = COLORS.find(c => c.name === userProfile.color) || COLORS[0];
@@ -125,7 +128,10 @@ const AccountMenuContent = ({
                 <Palette size={16} /> Themes
             </button>
             <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
-            <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium">
+            <button 
+                onClick={() => { onLogout(); if(closeMenu) closeMenu(); }}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium"
+            >
                 <LogoutIcon size={16} /> Logout
             </button>
         </div>
@@ -138,12 +144,14 @@ const SidebarFooter = ({
   setIsCreateProfileOpen, 
   setIsThemeSettingsOpen,
   onNavigate,
+  onLogout,
   userProfile,
   clients
 }: { 
   setIsCreateProfileOpen: (v: boolean) => void, 
   setIsThemeSettingsOpen: (v: boolean) => void,
   onNavigate: (view: ViewState) => void,
+  onLogout: () => void,
   userProfile: any,
   clients: string[]
 }) => {
@@ -213,6 +221,7 @@ const SidebarFooter = ({
                         <AccountMenuContent 
                             setIsThemeSettingsOpen={setIsThemeSettingsOpen}
                             onNavigate={onNavigate} 
+                            onLogout={onLogout}
                             userProfile={userProfile}
                         />
                     </div>
@@ -229,6 +238,7 @@ const SidebarFooter = ({
                                 setIsThemeSettingsOpen={setIsThemeSettingsOpen} 
                                 closeMenu={() => setMobileMenuOpen(null)}
                                 onNavigate={onNavigate}
+                                onLogout={onLogout}
                                 userProfile={userProfile}
                             />
                         )}
@@ -285,6 +295,7 @@ const MY_ACCOUNT_MENU = [
 ];
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeView, setActiveView] = useState<ViewState>('DASHBOARD');
   
   // Use custom hook for screen size detection
@@ -304,11 +315,32 @@ const App = () => {
   const [activeCampaignTab, setActiveCampaignTab] = useState<string>('Intelligence');
   
   const [activeSettingsTab, setActiveSettingsTab] = useState('COMPANY_INFO');
-  const [activeAccountTab, setActiveAccountTab] = useState('BASIC_DETAILS'); // My Account State
+  const [activeAccountTab, setActiveAccountTab] = useState('BASIC_DETAILS'); 
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
   const [isCreateProfileOpen, setIsCreateProfileOpen] = useState(false);
   const [isThemeSettingsOpen, setIsThemeSettingsOpen] = useState(false);
+
+  // Check Authentication on Mount
+  useEffect(() => {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+          setIsAuthenticated(true);
+      }
+  }, []);
+
+  const handleLogin = () => {
+      setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+      localStorage.removeItem('authToken');
+      setIsAuthenticated(false);
+      // Reset view states
+      setActiveView('DASHBOARD');
+      setSelectedCandidateId(null);
+      setSelectedCampaign(null);
+  };
 
   // Sub-navigation handlers
   const handleNavigateToProfile = () => {
@@ -344,278 +376,283 @@ const App = () => {
 
   return (
     <ToastProvider>
-      <div className="flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors">
-        
-        {/* Mobile Sidebar Overlay - Only when fully open */}
-        {isSidebarOpen && !isDesktop && (
-          <div 
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
+      {!isAuthenticated ? (
+          <Login onLogin={handleLogin} />
+      ) : (
+          <div className="flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors">
+            
+            {/* Mobile Sidebar Overlay - Only when fully open */}
+            {isSidebarOpen && !isDesktop && (
+              <div 
+                className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                onClick={() => setIsSidebarOpen(false)}
+              />
+            )}
 
-        {/* Sidebar */}
-        <div className={`fixed inset-y-0 left-0 z-50 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transform transition-all duration-300 ease-in-out flex flex-col shadow-xl 
-            ${isDesktop 
-                ? 'w-64 relative translate-x-0' // Desktop: Always expanded
-                : (isSidebarOpen 
-                    ? 'w-64 translate-x-0 shadow-2xl' // Mobile Open: Expanded Overlay
-                    : 'w-16 translate-x-0' // Mobile Closed: Mini Sidebar
-                  )
-            }
-        `}>
-           <div className={`h-16 flex items-center ${isCollapsed ? 'justify-center px-0' : 'px-6'} border-b border-slate-200 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-900 transition-all duration-300`}>
-              {isCollapsed ? (
-                  // Mobile Mini Header: Just a Menu Button to expand
-                  <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-slate-500 hover:text-emerald-600 transition-colors">
-                      <Menu size={24} />
-                  </button>
-              ) : (
-                  // Full Header
-                  <>
-                    <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm shrink-0">M</div>
-                    <span className="font-bold text-lg text-slate-800 dark:text-slate-100 tracking-tight ml-3">MapRecruit</span>
-                    
-                    {/* Mobile Close Button */}
-                    {!isDesktop && (
-                        <button onClick={() => setIsSidebarOpen(false)} className="ml-auto text-slate-400 hover:text-slate-600"><X size={20}/></button>
-                    )}
-                  </>
-              )}
-           </div>
-
-           <div className={`flex-1 overflow-y-auto py-4 ${isCollapsed ? 'px-2' : 'px-3'} space-y-1`}>
-              {!selectedCampaign && !selectedCandidateId && activeView !== 'MY_ACCOUNT' ? (
-                <>
-                  <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
-                  <NavItem view="CAMPAIGNS" icon={Briefcase} label="Campaigns" />
-                  <NavItem view="PROFILES" icon={Users} label="Profiles" />
-                  <NavItem view="METRICS" icon={BarChart2} label="Metrics" />
-                  
-                  {/* Settings Item with Sub-Menu */}
-                  <div>
-                    <NavItem view="SETTINGS" icon={Settings} label="Settings" />
-                    {activeView === 'SETTINGS' && !isCollapsed && (
-                        <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
-                            {SETTINGS_SUBMENU.map(item => (
-                                <button 
-                                    key={item.id}
-                                    onClick={() => { setActiveSettingsTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                                    className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center gap-2 ${activeSettingsTab === item.id ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
-                                >
-                                    {item.label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                  </div>
-                </>
-              ) : activeView === 'MY_ACCOUNT' ? (
-                <div className="animate-in fade-in slide-in-from-left-4 duration-300">
-                  <button 
-                    onClick={() => setActiveView('DASHBOARD')}
-                    className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
-                    title="Back to Dashboard"
-                  >
-                    <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Dashboard</span>
-                  </button>
-                  
-                  <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
-                    <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">My Account Settings</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage your personal preferences</p>
-                  </div>
-
-                  <div className="space-y-1">
-                    {MY_ACCOUNT_MENU.map(item => (
-                        <NavItem 
-                            key={item.id}
-                            icon={item.icon} 
-                            label={item.label} 
-                            activeTab={activeAccountTab === item.id} 
-                            onClick={() => { setActiveAccountTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                        />
-                    ))}
-                  </div>
-                </div>
-              ) : selectedCandidateId ? (
-                <div className="animate-in fade-in slide-in-from-left-4 duration-300">
-                  <button 
-                    onClick={handleBackToProfiles}
-                    className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
-                    title="Back to Search"
-                  >
-                    <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Search</span>
-                  </button>
-                  
-                  <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
-                    <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">Candidate Profile</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">ID: {selectedCandidateId}</p>
-                  </div>
-
-                  <div className="space-y-1">
-                    {PROFILE_TABS.map(tab => (
-                        <NavItem 
-                            key={tab.id}
-                            icon={tab.icon} 
-                            label={tab.label} 
-                            activeTab={activeProfileTab === tab.id} 
-                            onClick={() => { setActiveProfileTab(tab.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                        />
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="animate-in fade-in slide-in-from-left-4 duration-300">
-                  <button 
-                    onClick={handleBackToCampaigns}
-                    className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
-                    title="Back to Campaigns"
-                  >
-                    <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Campaigns</span>
-                  </button>
-                  
-                  <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
-                    <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">{selectedCampaign?.name}</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">ID: {selectedCampaign?.jobID}</p>
-                  </div>
-
-                  <div className="space-y-1">
-                    <NavItem 
-                      icon={Brain} 
-                      label="Intelligence" 
-                      activeTab={activeCampaignTab === 'Intelligence'} 
-                      onClick={() => { setActiveCampaignTab('Intelligence'); if (!isDesktop) setIsSidebarOpen(false); }}
-                    />
-                    
-                    {/* Source AI Group */}
-                    <div>
-                        <NavItem 
-                        icon={Search} 
-                        label="Source AI" 
-                        activeTab={activeCampaignTab.startsWith('Source AI')} 
-                        onClick={() => { setActiveCampaignTab('Source AI'); if (!isDesktop) setIsSidebarOpen(false); }} 
-                        />
-                        {activeCampaignTab.startsWith('Source AI') && !isCollapsed && (
-                            <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
-                                <button onClick={() => { setActiveCampaignTab('Source AI:ATTACH'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:ATTACH' || activeCampaignTab === 'Source AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Attach People
-                                </button>
-                                <button onClick={() => { setActiveCampaignTab('Source AI:PROFILES'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:PROFILES' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Attached Profiles
-                                </button>
-                                <button onClick={() => { setActiveCampaignTab('Source AI:INTEGRATIONS'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:INTEGRATIONS' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Integrations
-                                </button>
-                                <button onClick={() => { setActiveCampaignTab('Source AI:JD'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:JD' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Job Description
-                                </button>
-                            </div>
-                        )}
-                    </div>
-
-                    <NavItem 
-                      icon={GitBranch} 
-                      label="Match AI" 
-                      activeTab={activeCampaignTab === 'Match AI'} 
-                      onClick={() => { setActiveCampaignTab('Match AI'); if (!isDesktop) setIsSidebarOpen(false); }}
-                    />
-                    
-                    {/* Engage AI Group */}
-                    <div>
-                        <NavItem 
-                        icon={MessageCircle} 
-                        label="Engage AI" 
-                        activeTab={activeCampaignTab.startsWith('Engage AI')} 
-                        onClick={() => { setActiveCampaignTab('Engage AI'); if (!isDesktop) setIsSidebarOpen(false); }} 
-                        />
-                        {activeCampaignTab.startsWith('Engage AI') && !isCollapsed && (
-                            <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
-                                <button onClick={() => { setActiveCampaignTab('Engage AI:BUILDER'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:BUILDER' || activeCampaignTab === 'Engage AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Workflow Builder
-                                </button>
-                                <button onClick={() => { setActiveCampaignTab('Engage AI:ROOM'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:ROOM' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Interview Panel
-                                </button>
-                                <button onClick={() => { setActiveCampaignTab('Engage AI:TRACKING'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:TRACKING' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
-                                    Candidate List
-                                </button>
-                            </div>
-                        )}
-                    </div>
-
-                    <NavItem 
-                      icon={ThumbsUp} 
-                      label="Recommended" 
-                      activeTab={activeCampaignTab === 'Recommended Profiles'} 
-                      onClick={() => { setActiveCampaignTab('Recommended Profiles'); if (!isDesktop) setIsSidebarOpen(false); }}
-                    />
-
-                    <NavItem 
-                      icon={Settings} 
-                      label="Settings" 
-                      activeTab={activeCampaignTab === 'Settings'} 
-                      onClick={() => { setActiveCampaignTab('Settings'); if (!isDesktop) setIsSidebarOpen(false); }}
-                    />
-                  </div>
-                </div>
-              )}
-           </div>
-
-           {!isCollapsed && (
-               <SidebarFooter 
-                 setIsCreateProfileOpen={setIsCreateProfileOpen} 
-                 setIsThemeSettingsOpen={setIsThemeSettingsOpen}
-                 onNavigate={(view) => { setActiveView(view); setSelectedCandidateId(null); setSelectedCampaign(null); if (!isDesktop) setIsSidebarOpen(false); }}
-                 userProfile={userProfile}
-                 clients={clients}
-               />
-           )}
-        </div>
-
-        {/* Main Content */}
-        <div className={`flex-1 flex flex-col h-full overflow-hidden w-full relative bg-slate-50 dark:bg-slate-950 transition-colors ${!isDesktop && !isSidebarOpen ? 'pl-16' : ''}`}>
-           {activeView === 'DASHBOARD' && <Home />}
-           
-           {activeView === 'PROFILES' && (
-             selectedCandidateId ? (
-                <div className="h-full flex flex-col">
-                   <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex items-center gap-2 shrink-0">
-                      <button onClick={handleBackToProfiles} className="text-sm text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 transition-colors">
-                         <ChevronRight size={14} className="rotate-180"/> Back to Search
+            {/* Sidebar */}
+            <div className={`fixed inset-y-0 left-0 z-50 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transform transition-all duration-300 ease-in-out flex flex-col shadow-xl 
+                ${isDesktop 
+                    ? 'w-64 relative translate-x-0' // Desktop: Always expanded
+                    : (isSidebarOpen 
+                        ? 'w-64 translate-x-0 shadow-2xl' // Mobile Open: Expanded Overlay
+                        : 'w-16 translate-x-0' // Mobile Closed: Mini Sidebar
+                      )
+                }
+            `}>
+               <div className={`h-16 flex items-center ${isCollapsed ? 'justify-center px-0' : 'px-6'} border-b border-slate-200 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-900 transition-all duration-300`}>
+                  {isCollapsed ? (
+                      // Mobile Mini Header: Just a Menu Button to expand
+                      <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-slate-500 hover:text-emerald-600 transition-colors">
+                          <Menu size={24} />
                       </button>
-                      <span className="text-slate-300 dark:text-slate-600">|</span>
-                      <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Candidate Profile</span>
-                   </div>
-                   
-                   <CandidateProfile activeTab={activeProfileTab} />
-                </div>
-             ) : (
-                <Profiles onNavigateToProfile={handleNavigateToProfile} view="SEARCH" />
-             )
-           )}
+                  ) : (
+                      // Full Header
+                      <>
+                        <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm shrink-0">M</div>
+                        <span className="font-bold text-lg text-slate-800 dark:text-slate-100 tracking-tight ml-3">MapRecruit</span>
+                        
+                        {/* Mobile Close Button */}
+                        {!isDesktop && (
+                            <button onClick={() => setIsSidebarOpen(false)} className="ml-auto text-slate-400 hover:text-slate-600"><X size={20}/></button>
+                        )}
+                      </>
+                  )}
+               </div>
 
-           {activeView === 'CAMPAIGNS' && (
-             selectedCampaign ? (
-                <div className="h-full flex flex-col">
-                   <CampaignDashboard campaign={selectedCampaign} activeTab={activeCampaignTab} onBack={handleBackToCampaigns} />
-                </div>
-             ) : (
-                <Campaigns onNavigateToCampaign={handleNavigateToCampaign} />
-             )
-           )}
+               <div className={`flex-1 overflow-y-auto py-4 ${isCollapsed ? 'px-2' : 'px-3'} space-y-1`}>
+                  {!selectedCampaign && !selectedCandidateId && activeView !== 'MY_ACCOUNT' ? (
+                    <>
+                      <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
+                      <NavItem view="CAMPAIGNS" icon={Briefcase} label="Campaigns" />
+                      <NavItem view="PROFILES" icon={Users} label="Profiles" />
+                      <NavItem view="METRICS" icon={BarChart2} label="Metrics" />
+                      
+                      {/* Settings Item with Sub-Menu */}
+                      <div>
+                        <NavItem view="SETTINGS" icon={Settings} label="Settings" />
+                        {activeView === 'SETTINGS' && !isCollapsed && (
+                            <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                                {SETTINGS_SUBMENU.map(item => (
+                                    <button 
+                                        key={item.id}
+                                        onClick={() => { setActiveSettingsTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                                        className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center gap-2 ${activeSettingsTab === item.id ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                                    >
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                      </div>
+                    </>
+                  ) : activeView === 'MY_ACCOUNT' ? (
+                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                      <button 
+                        onClick={() => setActiveView('DASHBOARD')}
+                        className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
+                        title="Back to Dashboard"
+                      >
+                        <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Dashboard</span>
+                      </button>
+                      
+                      <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
+                        <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">My Account Settings</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage your personal preferences</p>
+                      </div>
 
-           {activeView === 'METRICS' && <Metrics />}
-           
-           {activeView === 'SETTINGS' && <SettingsPage activeTab={activeSettingsTab} />}
+                      <div className="space-y-1">
+                        {MY_ACCOUNT_MENU.map(item => (
+                            <NavItem 
+                                key={item.id}
+                                icon={item.icon} 
+                                label={item.label} 
+                                activeTab={activeAccountTab === item.id} 
+                                onClick={() => { setActiveAccountTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                            />
+                        ))}
+                      </div>
+                    </div>
+                  ) : selectedCandidateId ? (
+                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                      <button 
+                        onClick={handleBackToProfiles}
+                        className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
+                        title="Back to Search"
+                      >
+                        <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Search</span>
+                      </button>
+                      
+                      <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
+                        <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">Candidate Profile</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">ID: {selectedCandidateId}</p>
+                      </div>
 
-           {activeView === 'MY_ACCOUNT' && <MyAccount activeTab={activeAccountTab} />}
-        </div>
+                      <div className="space-y-1">
+                        {PROFILE_TABS.map(tab => (
+                            <NavItem 
+                                key={tab.id}
+                                icon={tab.icon} 
+                                label={tab.label} 
+                                activeTab={activeProfileTab === tab.id} 
+                                onClick={() => { setActiveProfileTab(tab.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                            />
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                      <button 
+                        onClick={handleBackToCampaigns}
+                        className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
+                        title="Back to Campaigns"
+                      >
+                        <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Campaigns</span>
+                      </button>
+                      
+                      <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
+                        <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">{selectedCampaign?.name}</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">ID: {selectedCampaign?.jobID}</p>
+                      </div>
 
-        {/* Create Profile Modal */}
-        <CreateProfileModal isOpen={isCreateProfileOpen} onClose={() => setIsCreateProfileOpen(false)} />
-        {/* Theme Settings Modal */}
-        <ThemeSettingsModal isOpen={isThemeSettingsOpen} onClose={() => setIsThemeSettingsOpen(false)} />
-      </div>
+                      <div className="space-y-1">
+                        <NavItem 
+                          icon={Brain} 
+                          label="Intelligence" 
+                          activeTab={activeCampaignTab === 'Intelligence'} 
+                          onClick={() => { setActiveCampaignTab('Intelligence'); if (!isDesktop) setIsSidebarOpen(false); }}
+                        />
+                        
+                        {/* Source AI Group */}
+                        <div>
+                            <NavItem 
+                            icon={Search} 
+                            label="Source AI" 
+                            activeTab={activeCampaignTab.startsWith('Source AI')} 
+                            onClick={() => { setActiveCampaignTab('Source AI'); if (!isDesktop) setIsSidebarOpen(false); }} 
+                            />
+                            {activeCampaignTab.startsWith('Source AI') && !isCollapsed && (
+                                <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                                    <button onClick={() => { setActiveCampaignTab('Source AI:ATTACH'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:ATTACH' || activeCampaignTab === 'Source AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Attach People
+                                    </button>
+                                    <button onClick={() => { setActiveCampaignTab('Source AI:PROFILES'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:PROFILES' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Attached Profiles
+                                    </button>
+                                    <button onClick={() => { setActiveCampaignTab('Source AI:INTEGRATIONS'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:INTEGRATIONS' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Integrations
+                                    </button>
+                                    <button onClick={() => { setActiveCampaignTab('Source AI:JD'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Source AI:JD' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Job Description
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
+                        <NavItem 
+                          icon={GitBranch} 
+                          label="Match AI" 
+                          activeTab={activeCampaignTab === 'Match AI'} 
+                          onClick={() => { setActiveCampaignTab('Match AI'); if (!isDesktop) setIsSidebarOpen(false); }}
+                        />
+                        
+                        {/* Engage AI Group */}
+                        <div>
+                            <NavItem 
+                            icon={MessageCircle} 
+                            label="Engage AI" 
+                            activeTab={activeCampaignTab.startsWith('Engage AI')} 
+                            onClick={() => { setActiveCampaignTab('Engage AI'); if (!isDesktop) setIsSidebarOpen(false); }} 
+                            />
+                            {activeCampaignTab.startsWith('Engage AI') && !isCollapsed && (
+                                <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                                    <button onClick={() => { setActiveCampaignTab('Engage AI:BUILDER'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:BUILDER' || activeCampaignTab === 'Engage AI' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Workflow Builder
+                                    </button>
+                                    <button onClick={() => { setActiveCampaignTab('Engage AI:ROOM'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:ROOM' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Interview Panel
+                                    </button>
+                                    <button onClick={() => { setActiveCampaignTab('Engage AI:TRACKING'); if (!isDesktop) setIsSidebarOpen(false); }} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeCampaignTab === 'Engage AI:TRACKING' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                        Candidate List
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
+                        <NavItem 
+                          icon={ThumbsUp} 
+                          label="Recommended" 
+                          activeTab={activeCampaignTab === 'Recommended Profiles'} 
+                          onClick={() => { setActiveCampaignTab('Recommended Profiles'); if (!isDesktop) setIsSidebarOpen(false); }}
+                        />
+
+                        <NavItem 
+                          icon={Settings} 
+                          label="Settings" 
+                          activeTab={activeCampaignTab === 'Settings'} 
+                          onClick={() => { setActiveCampaignTab('Settings'); if (!isDesktop) setIsSidebarOpen(false); }}
+                        />
+                      </div>
+                    </div>
+                  )}
+               </div>
+
+               {!isCollapsed && (
+                   <SidebarFooter 
+                     setIsCreateProfileOpen={setIsCreateProfileOpen} 
+                     setIsThemeSettingsOpen={setIsThemeSettingsOpen}
+                     onNavigate={(view) => { setActiveView(view); setSelectedCandidateId(null); setSelectedCampaign(null); if (!isDesktop) setIsSidebarOpen(false); }}
+                     onLogout={handleLogout}
+                     userProfile={userProfile}
+                     clients={clients}
+                   />
+               )}
+            </div>
+
+            {/* Main Content */}
+            <div className={`flex-1 flex flex-col h-full overflow-hidden w-full relative bg-slate-50 dark:bg-slate-950 transition-colors ${!isDesktop && !isSidebarOpen ? 'pl-16' : ''}`}>
+               {activeView === 'DASHBOARD' && <Home />}
+               
+               {activeView === 'PROFILES' && (
+                 selectedCandidateId ? (
+                    <div className="h-full flex flex-col">
+                       <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex items-center gap-2 shrink-0">
+                          <button onClick={handleBackToProfiles} className="text-sm text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 transition-colors">
+                             <ChevronRight size={14} className="rotate-180"/> Back to Search
+                          </button>
+                          <span className="text-slate-300 dark:text-slate-600">|</span>
+                          <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Candidate Profile</span>
+                       </div>
+                       
+                       <CandidateProfile activeTab={activeProfileTab} />
+                    </div>
+                 ) : (
+                    <Profiles onNavigateToProfile={handleNavigateToProfile} view="SEARCH" />
+                 )
+               )}
+
+               {activeView === 'CAMPAIGNS' && (
+                 selectedCampaign ? (
+                    <div className="h-full flex flex-col">
+                       <CampaignDashboard campaign={selectedCampaign} activeTab={activeCampaignTab} onBack={handleBackToCampaigns} />
+                    </div>
+                 ) : (
+                    <Campaigns onNavigateToCampaign={handleNavigateToCampaign} />
+                 )
+               )}
+
+               {activeView === 'METRICS' && <Metrics />}
+               
+               {activeView === 'SETTINGS' && <SettingsPage activeTab={activeSettingsTab} />}
+
+               {activeView === 'MY_ACCOUNT' && <MyAccount activeTab={activeAccountTab} />}
+            </div>
+
+            {/* Create Profile Modal */}
+            <CreateProfileModal isOpen={isCreateProfileOpen} onClose={() => setIsCreateProfileOpen(false)} />
+            {/* Theme Settings Modal */}
+            <ThemeSettingsModal isOpen={isThemeSettingsOpen} onClose={() => setIsThemeSettingsOpen(false)} />
+          </div>
+      )}
     </ToastProvider>
   );
 };
