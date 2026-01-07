@@ -105,6 +105,14 @@ export const AuthSync = () => {
     passkey: false
   });
 
+  // Check for existing passkey in storage on load
+  useEffect(() => {
+    const existingPasskey = localStorage.getItem('maprecruit_passkey_id');
+    if (existingPasskey) {
+        setSsoStatus(prev => ({ ...prev, passkey: true }));
+    }
+  }, []);
+
   // Validation State
   const [validity, setValidity] = useState({
     length: false,
@@ -171,20 +179,22 @@ export const AuthSync = () => {
       }
 
       try {
-          // 1. Generate Challenge
+          // 1. Generate Challenge (In production, this must come from the server)
           const challenge = new Uint8Array(32);
           window.crypto.getRandomValues(challenge);
 
-          // 2. User Info (In production, ID comes from server)
+          // 2. User Info
           const userId = "usr_123_demo"; 
           const userIdBuffer = Uint8Array.from(userId, c => c.charCodeAt(0));
 
-          // 3. Create Credentials
+          // 3. Create Credentials Options
           const publicKey: PublicKeyCredentialCreationOptions = {
               challenge,
               rp: {
                   name: "MapRecruit ATS",
-                  id: window.location.hostname // Uses current domain (localhost or production)
+                  // Use window.location.hostname to support various preview environments
+                  // Note: navigator.credentials.create requires a secure context (HTTPS or localhost)
+                  id: window.location.hostname 
               },
               user: {
                   id: userIdBuffer,
@@ -207,18 +217,26 @@ export const AuthSync = () => {
           const credential = await navigator.credentials.create({ publicKey });
 
           if (credential) {
-              // In a real app, you would send this credential to your backend for verification
               console.log("WebAuthn Credential Created:", credential);
+              
+              // Store credential ID locally as requested for simulation persistence
+              localStorage.setItem('maprecruit_passkey_id', credential.id);
+              
               setSsoStatus(prev => ({ ...prev, passkey: true }));
               addToast("Biometric Passkey registered successfully.", "success");
           }
       } catch (err: any) {
           console.error("WebAuthn Error:", err);
-          // Handle specific error cases
-          if (err.name === 'NotAllowedError') {
-             addToast("Passkey setup cancelled by user.", "info");
+          
+          if (err.name === 'NotAllowedError' || (err.message && err.message.includes('not enabled'))) {
+             // Handle both User Cancellation AND Feature Policy Block
+             if (err.message && err.message.includes('publickey-credentials-create')) {
+                 addToast("Feature blocked: WebAuthn permission missing in iframe.", "error");
+             } else {
+                 addToast("Passkey setup cancelled or not allowed.", "info");
+             }
           } else if (err.name === 'SecurityError') {
-             addToast("Security Error: Use HTTPS or localhost.", "error");
+             addToast("Security Error: Passkeys require HTTPS or localhost.", "error");
           } else {
              addToast("Failed to create passkey. Ensure your device supports biometrics.", "error");
           }
@@ -241,7 +259,12 @@ export const AuthSync = () => {
   const handleCancel = () => {
     setIsEditing(false);
     setPasswords({ current: '', new: '', confirm: '' });
-    // Reset Passkey visual state if it was toggled but not confirmed
+    
+    // Revert visual state if user cancelled changes without saving
+    // (Here we just reload status from storage or default)
+    const existingPasskey = localStorage.getItem('maprecruit_passkey_id');
+    setSsoStatus(prev => ({ ...prev, passkey: !!existingPasskey }));
+    
     addToast("Changes discarded", "info");
   };
 
@@ -250,11 +273,12 @@ export const AuthSync = () => {
 
     if (provider === 'passkey') {
         if (!ssoStatus.passkey) {
-            // Enabling Passkey
+            // Enabling Passkey triggers the flow
             setConfirmAction('PASSKEY');
         } else {
             // Disabling Passkey (Immediate)
             setSsoStatus(prev => ({ ...prev, passkey: false }));
+            localStorage.removeItem('maprecruit_passkey_id');
             addToast("Passkey sign-in disabled.", "info");
         }
         return;
