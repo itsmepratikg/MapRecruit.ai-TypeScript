@@ -1,9 +1,11 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
+import { ToastProvider } from './components/Toast';
 
 // IMPORTANT: Replace with your actual Client IDs
 const GOOGLE_CLIENT_ID = "INSERT_GOOGLE_CLIENT_ID_HERE";
@@ -37,7 +39,9 @@ msalInstance.initialize().then(() => {
       <React.StrictMode>
         <MsalProvider instance={msalInstance}>
             <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-              <App />
+              <ToastProvider>
+                <App />
+              </ToastProvider>
             </GoogleOAuthProvider>
         </MsalProvider>
       </React.StrictMode>

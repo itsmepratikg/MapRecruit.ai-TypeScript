@@ -11,7 +11,7 @@ import {
   SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon,
   Calendar, Clock, FolderPlus, Share2, Heart, MapPin, ChevronDown
 } from './components/Icons';
-import { ToastProvider, useToast } from './components/Toast';
+import { useToast } from './components/Toast';
 import { Home } from './pages/Home';
 import { Profiles } from './pages/Profiles/index'; 
 import { Campaigns } from './pages/Campaigns';
@@ -34,12 +34,16 @@ import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from './data';
 
 // --- Reusable Menu Contents ---
 
-const ClientMenuContent = ({ activeClient, clients }: { activeClient: string, clients: string[] }) => (
+const ClientMenuContent = ({ activeClient, clients, onSwitchClient }: { activeClient: string, clients: string[], onSwitchClient: (client: string) => void }) => (
   <>
     <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900 rounded-t mb-1">Switch Client</div>
-    <div className="p-1 space-y-1">
+    <div className="p-1 space-y-1 max-h-60 overflow-y-auto custom-scrollbar">
         {clients.map(client => (
-            <button key={client} className={`w-full text-left px-3 py-2 text-sm rounded flex items-center justify-between font-medium ${client === activeClient ? 'text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-700' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}>
+            <button 
+                key={client} 
+                onClick={() => onSwitchClient(client)}
+                className={`w-full text-left px-3 py-2 text-sm rounded flex items-center justify-between font-medium ${client === activeClient ? 'text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-700' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
+            >
                 {client}
                 {client === activeClient && <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400"/>}
             </button>
@@ -202,7 +206,8 @@ const SidebarFooter = ({
   onNavigate,
   onLogout,
   userProfile,
-  clients
+  clients,
+  onSwitchClient
 }: { 
   setIsCreateProfileOpen: (v: boolean) => void,
   setIsCreateFolderOpen: (v: boolean) => void,
@@ -211,7 +216,8 @@ const SidebarFooter = ({
   onNavigate: (view: ViewState) => void,
   onLogout: () => void,
   userProfile: any,
-  clients: string[]
+  clients: string[],
+  onSwitchClient: (client: string) => void
 }) => {
     const { isDesktop } = useScreenSize();
     const [mobileMenuOpen, setMobileMenuOpen] = useState<'client' | 'account' | 'create' | null>(null);
@@ -222,6 +228,11 @@ const SidebarFooter = ({
         if (!isDesktop) {
             setMobileMenuOpen(menu);
         }
+    };
+
+    const handleClientSelect = (client: string) => {
+        onSwitchClient(client);
+        setMobileMenuOpen(null); // Close on selection
     };
 
     return (
@@ -255,13 +266,13 @@ const SidebarFooter = ({
                     onClick={() => handleMenuClick('client')}
                 >
                     <Building2 size={18} className="text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
-                    <span className="text-sm font-medium truncate">{userProfile.activeClient}</span>
+                    <span className="text-sm font-medium truncate" title={userProfile.activeClient}>{userProfile.activeClient}</span>
                 </button>
                 
                 {/* Desktop Client List Popover - Hover */}
                 {isDesktop && (
                     <div className="hidden group-hover/client:block absolute left-full bottom-0 ml-2 w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
-                        <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} />
+                        <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} />
                     </div>
                 )}
             </div>
@@ -311,7 +322,7 @@ const SidebarFooter = ({
                                 closeMenu={() => setMobileMenuOpen(null)}
                             />
                         )}
-                        {mobileMenuOpen === 'client' && <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} />}
+                        {mobileMenuOpen === 'client' && <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} />}
                         {mobileMenuOpen === 'account' && (
                             <AccountMenuContent 
                                 setIsThemeSettingsOpen={setIsThemeSettingsOpen} 
@@ -387,14 +398,21 @@ const PROFILE_SUBMENU = [
 const CampaignMenuContent = ({ 
     onNavigate, 
     onNavigateToCampaign,
-    activeView
+    activeView,
+    activeClient
 }: { 
     onNavigate: (tab: string) => void,
     onNavigateToCampaign: (campaign: Campaign) => void,
-    activeView: ViewState
+    activeView: ViewState,
+    activeClient: string
 }) => {
-    const [expandedClient, setExpandedClient] = useState<string>('TRC Talent Solutions');
+    const [expandedClient, setExpandedClient] = useState<string>(activeClient);
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Update expanded client when global context changes
+    useEffect(() => {
+        setExpandedClient(activeClient);
+    }, [activeClient]);
 
     // Filter Logic
     const filterClients = (clients: typeof SIDEBAR_CAMPAIGN_DATA.clients) => {
@@ -521,6 +539,7 @@ const CampaignMenuContent = ({
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeView, setActiveView] = useState<ViewState>('DASHBOARD');
+  const { addToast } = useToast();
   
   // Use custom hook for screen size detection
   const { width: windowWidth, isDesktop } = useScreenSize();
@@ -529,7 +548,7 @@ const App = () => {
   const { theme, updateTheme } = useUserPreferences();
   
   // Hook for User Profile Data (Synchronized)
-  const { userProfile, clients } = useUserProfile();
+  const { userProfile, clients, saveProfile } = useUserProfile();
   
   // Navigation State
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
@@ -604,6 +623,11 @@ const App = () => {
       if (!isDesktop) setIsSidebarOpen(false);
   };
 
+  const handleSwitchClient = (newClient: string) => {
+      saveProfile({ ...userProfile, activeClient: newClient });
+      addToast(`Switched to ${newClient}`, 'success');
+  };
+
   const handleProfileSubmenuClick = (id: string) => {
       setActiveView('PROFILES');
       setActiveProfileSubView(id as any);
@@ -629,12 +653,12 @@ const App = () => {
     </button>
   );
 
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   return (
-    <ToastProvider>
-      {!isAuthenticated ? (
-          <Login onLogin={handleLogin} />
-      ) : (
-          <div className="flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors">
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors">
             
             {/* Mobile Sidebar Overlay - Only when fully open */}
             {isSidebarOpen && !isDesktop && (
@@ -699,6 +723,7 @@ const App = () => {
                                     onNavigate={handleNavigateToCampaignList}
                                     onNavigateToCampaign={handleNavigateToCampaign}
                                     activeView={activeView}
+                                    activeClient={userProfile.activeClient}
                                 />
                             </div>
                         )}
@@ -999,6 +1024,7 @@ const App = () => {
                      onLogout={handleLogout}
                      userProfile={userProfile}
                      clients={clients}
+                     onSwitchClient={handleSwitchClient}
                    />
                )}
             </div>
@@ -1056,8 +1082,6 @@ const App = () => {
                 message={placeholderConfig.message} 
             />
           </div>
-      )}
-    </ToastProvider>
   );
 };
 

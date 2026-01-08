@@ -162,6 +162,21 @@ export const SIDEBAR_CAMPAIGN_DATA = {
   archivedCount: 17,
   clients: [
     {
+      name: "TRC Talent Solutions",
+      campaigns: [
+        { id: 1, name: "Warehouse Associate - Voice Bot", jobId: "002000" },
+        { id: 2, name: "Cherry Picker Lift Driver", jobId: "40000610" },
+        { id: 3, name: "Manager of Accounting", jobId: "40000617" },
+        { id: 4, name: "Manager of Accounting", jobId: "40000622" },
+        { id: 5, name: "Manager of Accounting", jobId: "40000630" },
+        { id: 6, name: "Manager of Accounting", jobId: "40000621" },
+        { id: 7, name: "Cherry Picker Lift Driver", jobId: "40000631" },
+        { id: 8, name: "java developer", jobId: "12682951" },
+        { id: 9, name: "Cherry Picker Lift Driver", jobId: "40000615" },
+        { id: 10, name: "Hyperdrive Alignment Specialist", jobId: "40000192" }
+      ]
+    },
+    {
       name: "Amazon Warehouse Operations",
       campaigns: [
         { id: 1002, name: "Warehouse Associate - Voice Bot", jobId: "002002" },
@@ -204,21 +219,6 @@ export const SIDEBAR_CAMPAIGN_DATA = {
         { id: 1029, name: "java developer", jobId: "12682958" },
         { id: 1030, name: "Cherry Picker Lift Driver", jobId: "40000637" },
         { id: 1031, name: "Hyperdrive Alignment Specialist", jobId: "40000196" }
-      ]
-    },
-    {
-      name: "TRC Talent Solutions",
-      campaigns: [
-        { id: 1, name: "Warehouse Associate - Voice Bot", jobId: "002000" },
-        { id: 2, name: "Cherry Picker Lift Driver", jobId: "40000610" },
-        { id: 3, name: "Manager of Accounting", jobId: "40000617" },
-        { id: 4, name: "Manager of Accounting", jobId: "40000622" },
-        { id: 5, name: "Manager of Accounting", jobId: "40000630" },
-        { id: 6, name: "Manager of Accounting", jobId: "40000621" },
-        { id: 7, name: "Cherry Picker Lift Driver", jobId: "40000631" },
-        { id: 8, name: "java developer", jobId: "12682951" },
-        { id: 9, name: "Cherry Picker Lift Driver", jobId: "40000615" },
-        { id: 10, name: "Hyperdrive Alignment Specialist", jobId: "40000192" }
       ]
     }
   ]
@@ -667,6 +667,9 @@ export const QUICK_FILTERS = [
 ];
 
 export const SIDEBAR_FILTERS = [
+  { id: 'branch', label: 'Branch', options: ['TRC Talent Solutions', 'Amazon Warehouse Operations', 'Google Staffing Services', 'Microsoft HR Tech'] },
+  { id: 'client', label: 'Client', options: ['018 - ALCON', '031 - WIKA ONSITE', '037 - CONVERGENT - AUG'] },
+  { id: 'vendor', label: 'Vendor', options: ['Adecco Employment', 'Apple'] },
   { id: 'location', label: 'Locations', options: ['Atlanta, GA', 'Marietta, GA', 'Decatur, GA', 'Alpharetta, GA', 'Smyrna, GA'] },
   { id: 'title', label: 'Job Title', options: ['Warehouse Supervisor', 'Forklift Operator', 'Logistics Coordinator', 'Operations Manager', 'Warehouse Associate'] },
   { id: 'skills', label: 'Skills & Certs', options: ["Forklift Certified", "SAP", "Inventory Management", "Team Leadership", "OSHA Safety", "Data Entry"] },
