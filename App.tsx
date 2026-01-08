@@ -526,8 +526,8 @@ const App = () => {
                   )}
                </div>
 
-               <div className={`flex-1 ${!activeView.startsWith('PROFILES') ? 'overflow-visible' : 'overflow-y-auto'} py-4 ${isCollapsed ? 'px-2' : 'px-3'} space-y-1`}>
-                  {!selectedCampaign && !selectedCandidateId && activeView !== 'MY_ACCOUNT' && activeView !== 'PROFILES' ? (
+               <div className={`flex-1 ${!activeView.startsWith('PROFILES') && !activeView.startsWith('SETTINGS') ? 'overflow-visible' : 'overflow-y-auto'} py-4 ${isCollapsed ? 'px-2' : 'px-3'} space-y-1`}>
+                  {!selectedCampaign && !selectedCandidateId && activeView !== 'MY_ACCOUNT' && activeView !== 'PROFILES' && activeView !== 'SETTINGS' ? (
                     <>
                       <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
                       <NavItem view="CAMPAIGNS" icon={Briefcase} label="Campaigns" />
@@ -550,7 +550,7 @@ const App = () => {
 
                         {/* Desktop Hover Flyout */}
                         {isDesktop && (
-                            <div className="hidden group-hover/profile:block absolute left-full top-0 ml-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                            <div className="hidden group-hover/profile:block absolute left-full top-0 ml-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto">
                                 <div className="py-1">
                                     <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 mb-1">
                                         Profiles Module
@@ -572,20 +572,40 @@ const App = () => {
 
                       <NavItem view="METRICS" icon={BarChart2} label="Metrics" />
                       
-                      {/* Settings Item with Sub-Menu */}
-                      <div>
-                        <NavItem view="SETTINGS" icon={Settings} label="Settings" />
-                        {activeView === 'SETTINGS' && !isCollapsed && (
-                            <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
-                                {SETTINGS_SUBMENU.map(item => (
-                                    <button 
-                                        key={item.id}
-                                        onClick={() => { setActiveSettingsTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                                        className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors flex items-center gap-2 ${activeSettingsTab === item.id ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
-                                    >
-                                        {item.label}
-                                    </button>
-                                ))}
+                      {/* Main Sidebar Settings Item with Hover Menu */}
+                      <div className="relative group/settings">
+                        <button 
+                            onClick={() => {
+                                setActiveView('SETTINGS');
+                                setActiveSettingsTab('COMPANY_INFO');
+                            }}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200`}
+                        >
+                            <div className="flex items-center gap-3">
+                                <Settings size={20} className='text-slate-400 dark:text-slate-500' />
+                                <span className={isCollapsed ? 'hidden' : 'block'}>Settings</span>
+                            </div>
+                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform`} />}
+                        </button>
+
+                        {/* Desktop Hover Flyout */}
+                        {isDesktop && (
+                            <div className="hidden group-hover/settings:block absolute left-full top-0 ml-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto custom-scrollbar">
+                                <div className="py-1">
+                                    <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 mb-1">
+                                        Administration
+                                    </div>
+                                    {SETTINGS_SUBMENU.map(item => (
+                                        <button 
+                                            key={item.id}
+                                            onClick={(e) => { e.stopPropagation(); setActiveView('SETTINGS'); setActiveSettingsTab(item.id); }}
+                                            className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 transition-colors text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
+                                        >
+                                            <item.icon size={16} className="text-slate-400" />
+                                            {item.label}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         )}
                       </div>
@@ -614,6 +634,34 @@ const App = () => {
                                 label={item.label} 
                                 activeTab={activeProfileSubView === item.id} 
                                 onClick={() => { setActiveProfileSubView(item.id as any); if (!isDesktop) setIsSidebarOpen(false); }}
+                            />
+                        ))}
+                      </div>
+                    </div>
+                  ) : activeView === 'SETTINGS' ? (
+                    // SETTINGS MODULE DRILL-DOWN SIDEBAR
+                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                      <button 
+                        onClick={() => setActiveView('DASHBOARD')}
+                        className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
+                        title="Back to Dashboard"
+                      >
+                        <ChevronLeft size={14} /> <span className={isCollapsed ? 'hidden' : 'inline'}>Back to Dashboard</span>
+                      </button>
+                      
+                      <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
+                        <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">System Settings</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Configure your workspace</p>
+                      </div>
+
+                      <div className="space-y-1">
+                        {SETTINGS_SUBMENU.map(item => (
+                            <NavItem 
+                                key={item.id}
+                                icon={item.icon} 
+                                label={item.label} 
+                                activeTab={activeSettingsTab === item.id} 
+                                onClick={() => { setActiveSettingsTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
                             />
                         ))}
                       </div>
