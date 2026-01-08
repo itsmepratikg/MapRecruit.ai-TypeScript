@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { 
   LayoutDashboard, Users, Briefcase, BarChart2, 
@@ -34,15 +33,18 @@ import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from './data';
 
 // --- Reusable Menu Contents ---
 
-const ClientMenuContent = ({ activeClient, clients, onSwitchClient }: { activeClient: string, clients: string[], onSwitchClient: (client: string) => void }) => (
+const ClientMenuContent = ({ activeClient, clients, onSwitchClient, onClose }: { activeClient: string, clients: string[], onSwitchClient: (client: string) => void, onClose: () => void }) => (
   <>
-    <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900 rounded-t mb-1">Switch Client</div>
+    <div className="flex justify-between items-center px-3 py-2 bg-slate-50 dark:bg-slate-900 rounded-t mb-1">
+        <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Switch Client</div>
+        <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors"><X size={14}/></button>
+    </div>
     <div className="p-1 space-y-1 max-h-60 overflow-y-auto custom-scrollbar">
         {clients.map(client => (
             <button 
                 key={client} 
                 onClick={() => onSwitchClient(client)}
-                className={`w-full text-left px-3 py-2 text-sm rounded flex items-center justify-between font-medium ${client === activeClient ? 'text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-700' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
+                className={`w-full text-left px-3 py-2 text-sm rounded flex items-center justify-between font-medium transition-colors duration-150 ${client === activeClient ? 'text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-700' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
             >
                 {client}
                 {client === activeClient && <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400"/>}
@@ -69,8 +71,11 @@ const CreateMenuContent = ({
     };
 
     return (
-        <div className="py-1 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 w-full">
-            <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Create New</div>
+        <div className="py-1 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 w-full relative">
+            <div className="flex justify-between items-center px-3 py-2">
+                <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Create New</div>
+                {closeMenu && <button onClick={(e) => { e.stopPropagation(); closeMenu(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded"><X size={14}/></button>}
+            </div>
             <button 
                 onClick={() => handleClick(onCreateProfile)}
                 className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors"
@@ -122,7 +127,7 @@ const AccountMenuContent = ({
       <>
         <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex flex-col items-center text-center bg-white dark:bg-slate-800 rounded-t-lg relative">
             {closeMenu && (
-                <button onClick={closeMenu} className="absolute top-2 right-2 p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full lg:hidden">
+                <button onClick={(e) => { e.stopPropagation(); closeMenu(); }} className="absolute top-2 right-2 p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300 rounded-full">
                     <X size={20} />
                 </button>
             )}
@@ -180,7 +185,7 @@ const AccountMenuContent = ({
             </button>
 
             <button 
-                onClick={() => setIsThemeSettingsOpen(true)}
+                onClick={() => { setIsThemeSettingsOpen(true); if(closeMenu) closeMenu(); }}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
             >
                 <Palette size={16} /> Themes
@@ -207,7 +212,11 @@ const SidebarFooter = ({
   onLogout,
   userProfile,
   clients,
-  onSwitchClient
+  onSwitchClient,
+  activePopover,
+  onHover,
+  onLeave,
+  onClosePopover
 }: { 
   setIsCreateProfileOpen: (v: boolean) => void,
   setIsCreateFolderOpen: (v: boolean) => void,
@@ -217,7 +226,11 @@ const SidebarFooter = ({
   onLogout: () => void,
   userProfile: any,
   clients: string[],
-  onSwitchClient: (client: string) => void
+  onSwitchClient: (client: string) => void,
+  activePopover: string | null,
+  onHover: (id: string) => void,
+  onLeave: () => void,
+  onClosePopover: () => void
 }) => {
     const { isDesktop } = useScreenSize();
     const [mobileMenuOpen, setMobileMenuOpen] = useState<'client' | 'account' | 'create' | null>(null);
@@ -227,60 +240,74 @@ const SidebarFooter = ({
     const handleMenuClick = (menu: 'client' | 'account' | 'create') => {
         if (!isDesktop) {
             setMobileMenuOpen(menu);
+        } else {
+            // Desktop: Hover is handled by parent, clicking might trigger immediate open or just be fallback
         }
     };
 
     const handleClientSelect = (client: string) => {
         onSwitchClient(client);
         setMobileMenuOpen(null); // Close on selection
+        onClosePopover();
+    };
+
+    // Helper for popup transitions
+    const getPopupClass = (id: string) => {
+        const isActive = activePopover === id;
+        return `absolute left-full bottom-0 ml-2 shadow-xl z-50 origin-bottom-left transition-all duration-200 ease-out transform ${
+            isActive 
+            ? 'opacity-100 scale-100 translate-x-0 visible pointer-events-auto' 
+            : 'opacity-0 scale-95 -translate-x-2 invisible pointer-events-none'
+        }`;
     };
 
     return (
         <div className="p-2 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 mt-auto space-y-1 shrink-0 transition-colors pb-4 lg:pb-2" onClick={(e) => e.stopPropagation()}>
             {/* Create Dropdown */}
-            <div className="relative group/create">
+            <div className="relative" onMouseEnter={() => onHover('create')} onMouseLeave={onLeave}>
                 <button 
                     onClick={() => handleMenuClick('create')}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors group"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'create' ? 'bg-slate-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400' : ''}`}
                 >
-                    <PlusCircle size={18} className="text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+                    <PlusCircle size={18} className={activePopover === 'create' ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"} />
                     <span className="text-sm font-medium">Create</span>
                 </button>
 
-                {/* Desktop Create Menu - Hover */}
+                {/* Desktop Create Menu */}
                 {isDesktop && (
-                    <div className="hidden group-hover/create:block absolute left-full bottom-0 ml-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                    <div className={`${getPopupClass('create')} w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg`}>
                         <CreateMenuContent 
-                            onCreateProfile={() => setIsCreateProfileOpen(true)}
-                            onCreateFolder={() => setIsCreateFolderOpen(true)}
+                            onCreateProfile={() => { setIsCreateProfileOpen(true); onClosePopover(); }}
+                            onCreateFolder={() => { setIsCreateFolderOpen(true); onClosePopover(); }}
                             onOpenPlaceholder={onOpenPlaceholder}
+                            closeMenu={onClosePopover}
                         />
                     </div>
                 )}
             </div>
     
             {/* Switch Client */}
-            <div className="relative group/client">
+            <div className="relative" onMouseEnter={() => onHover('client')} onMouseLeave={onLeave}>
                 <button 
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors group"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'client' ? 'bg-slate-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400' : ''}`}
                     onClick={() => handleMenuClick('client')}
                 >
-                    <Building2 size={18} className="text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+                    <Building2 size={18} className={activePopover === 'client' ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"} />
                     <span className="text-sm font-medium truncate" title={userProfile.activeClient}>{userProfile.activeClient}</span>
                 </button>
                 
-                {/* Desktop Client List Popover - Hover */}
+                {/* Desktop Client List Popover */}
                 {isDesktop && (
-                    <div className="hidden group-hover/client:block absolute left-full bottom-0 ml-2 w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
-                        <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} />
+                    <div className={`${getPopupClass('client')} w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg`}>
+                        <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} onClose={onClosePopover} />
                     </div>
                 )}
             </div>
     
             {/* User Account */}
-            <div className="relative group/account pt-2">
+            <div className="relative pt-2" onMouseEnter={() => onHover('account')} onMouseLeave={onLeave}>
                 <button 
-                    className="w-full flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors"
+                    className={`w-full flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'account' ? 'bg-slate-50 dark:bg-slate-800' : ''}`}
                     onClick={() => handleMenuClick('account')}
                 >
                     <div className={`w-8 h-8 rounded-full overflow-hidden border border-slate-300 dark:border-slate-600 shrink-0 flex items-center justify-center text-xs font-bold ${!userProfile.avatar ? userColorObj.class : 'bg-slate-200'}`}>
@@ -296,15 +323,16 @@ const SidebarFooter = ({
                     </div>
                 </button>
     
-                {/* Desktop Account Popover - Hover */}
+                {/* Desktop Account Popover */}
                 {isDesktop && (
-                    <div className="hidden group-hover/account:block absolute left-full bottom-0 ml-4 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                    <div className={`${getPopupClass('account')} bottom-2 ml-4 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg`}>
                         <div className="absolute bottom-6 -left-2 w-4 h-4 bg-white dark:bg-slate-800 transform rotate-45 border-l border-b border-slate-200 dark:border-slate-700"></div>
                         <AccountMenuContent 
                             setIsThemeSettingsOpen={setIsThemeSettingsOpen}
                             onNavigate={onNavigate} 
                             onLogout={onLogout}
                             userProfile={userProfile}
+                            closeMenu={onClosePopover}
                         />
                     </div>
                 )}
@@ -322,7 +350,7 @@ const SidebarFooter = ({
                                 closeMenu={() => setMobileMenuOpen(null)}
                             />
                         )}
-                        {mobileMenuOpen === 'client' && <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} />}
+                        {mobileMenuOpen === 'client' && <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} onClose={() => setMobileMenuOpen(null)} />}
                         {mobileMenuOpen === 'account' && (
                             <AccountMenuContent 
                                 setIsThemeSettingsOpen={setIsThemeSettingsOpen} 
@@ -353,26 +381,53 @@ const PROFILE_TABS = [
   { id: 'similar', label: 'Similar', icon: Copy },
 ];
 
-const SETTINGS_SUBMENU = [
-  { id: 'COMPANY_INFO', label: 'Company Info', icon: Building2 },
-  { id: 'ROLES', label: 'Roles', icon: Shield },
-  { id: 'USERS', label: 'Users', icon: Users },
-  { id: 'CLIENTS', label: 'Clients', icon: Briefcase },
-  { id: 'THEMES', label: 'Themes', icon: Palette },
-  { id: 'CUSTOM_FIELD', label: 'Custom Field', icon: FileText },
-  { id: 'TAGS', label: 'Tags', icon: Tag },
-  { id: 'TEAMS', label: 'Teams', icon: Users },
-  { id: 'COMMUNICATION', label: 'Communication', icon: MessageSquare },
-  { id: 'AUTHENTICATION', label: 'Authentication', icon: Lock },
-  { id: 'SOURCE_AI', label: 'Source AI', icon: Search },
-  { id: 'API_CREDITS', label: 'API Credits', icon: CreditCard },
-  { id: 'COMM_TEMPLATES', label: 'Communication Templates', icon: Mail },
-  { id: 'ENGAGE_WORKFLOW', label: 'EngageAI Workflow', icon: GitBranch },
-  { id: 'QUESTIONNAIRE', label: 'Questionnaire', icon: ClipboardList },
-  { id: 'PROFILE_SOURCES', label: 'Profile Sources', icon: Database },
-  { id: 'MRI_PREFERENCE', label: 'MRI Preference', icon: SlidersHorizontal },
-  { id: 'REACHOUT_LAYOUTS', label: 'ReachOut Layouts', icon: Layout },
+// Categorized Settings for Accordion Menu
+const SETTINGS_CATEGORIES = [
+  {
+    id: 'ORGANIZATION',
+    label: 'Organization',
+    items: [
+      { id: 'COMPANY_INFO', label: 'Company Info', icon: Building2 },
+      { id: 'ROLES', label: 'Roles', icon: Shield },
+      { id: 'USERS', label: 'Users', icon: Users },
+      { id: 'CLIENTS', label: 'Clients', icon: Briefcase },
+      { id: 'TEAMS', label: 'Teams', icon: Users },
+    ]
+  },
+  {
+    id: 'AI_AUTOMATION',
+    label: 'AI & Automation',
+    items: [
+      { id: 'SOURCE_AI', label: 'Source AI', icon: Search },
+      { id: 'ENGAGE_WORKFLOW', label: 'EngageAI Workflow', icon: GitBranch },
+      { id: 'QUESTIONNAIRE', label: 'Questionnaire', icon: ClipboardList },
+      { id: 'MRI_PREFERENCE', label: 'MRI Preference', icon: SlidersHorizontal },
+    ]
+  },
+  {
+    id: 'SYSTEM_CONFIG',
+    label: 'System & Data',
+    items: [
+      { id: 'CUSTOM_FIELD', label: 'Custom Field', icon: FileText },
+      { id: 'TAGS', label: 'Tags', icon: Tag },
+      { id: 'PROFILE_SOURCES', label: 'Profile Sources', icon: Database },
+      { id: 'COMMUNICATION', label: 'Communication', icon: MessageSquare },
+      { id: 'COMM_TEMPLATES', label: 'Comm Templates', icon: Mail },
+      { id: 'AUTHENTICATION', label: 'Authentication', icon: Lock },
+      { id: 'API_CREDITS', label: 'API Credits', icon: CreditCard },
+    ]
+  },
+  {
+    id: 'APPEARANCE',
+    label: 'Appearance',
+    items: [
+      { id: 'THEMES', label: 'Themes', icon: Palette },
+      { id: 'REACHOUT_LAYOUTS', label: 'ReachOut Layouts', icon: Layout },
+    ]
+  }
 ];
+
+const SETTINGS_SUBMENU = SETTINGS_CATEGORIES.flatMap(cat => cat.items);
 
 const MY_ACCOUNT_MENU = [
     { id: 'BASIC_DETAILS', label: 'Basic Details', icon: User },
@@ -399,12 +454,14 @@ const CampaignMenuContent = ({
     onNavigate, 
     onNavigateToCampaign,
     activeView,
-    activeClient
+    activeClient,
+    onClose
 }: { 
     onNavigate: (tab: string) => void,
     onNavigateToCampaign: (campaign: Campaign) => void,
     activeView: ViewState,
-    activeClient: string
+    activeClient: string,
+    onClose: () => void
 }) => {
     const [expandedClient, setExpandedClient] = useState<string>(activeClient);
     const [searchQuery, setSearchQuery] = useState('');
@@ -441,12 +498,17 @@ const CampaignMenuContent = ({
     const handleNavigateToList = (e: React.MouseEvent, tab: string) => {
         e.stopPropagation();
         onNavigate(tab);
+        onClose();
     };
 
     return (
-        <div className="absolute left-full top-0 ml-2 w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+        <div className="w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[90vh]">
             {/* Search */}
             <div className="p-3 border-b border-slate-100 dark:border-slate-700 shrink-0">
+                <div className="flex items-center gap-2 mb-2 justify-between">
+                    <span className="text-xs font-bold text-slate-400 uppercase">Campaigns</span>
+                    <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded"><X size={14}/></button>
+                </div>
                 <div className="relative">
                     <input 
                         type="text" 
@@ -491,7 +553,7 @@ const CampaignMenuContent = ({
                                             {client.campaigns.map(camp => (
                                                 <button 
                                                     key={camp.id}
-                                                    onClick={(e) => { e.stopPropagation(); onNavigateToCampaign({ ...GLOBAL_CAMPAIGNS[0], id: camp.id, name: camp.name, jobID: camp.jobId }); }} // Mapping mock minimal data to full structure for demo
+                                                    onClick={(e) => { e.stopPropagation(); onNavigateToCampaign({ ...GLOBAL_CAMPAIGNS[0], id: camp.id, name: camp.name, jobID: camp.jobId }); onClose(); }} // Mapping mock minimal data to full structure for demo
                                                     className="w-full text-left px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded flex justify-between items-center group/item transition-colors"
                                                 >
                                                     <span className="truncate flex-1" title={camp.name}>{camp.name}</span>
@@ -536,6 +598,96 @@ const CampaignMenuContent = ({
     );
 };
 
+// --- Settings Accordion Menu ---
+const SettingsMenuContent = ({
+    onNavigate,
+    activeTab,
+    onClose
+}: {
+    onNavigate: (tabId: string) => void,
+    activeTab: string,
+    onClose: () => void
+}) => {
+    // Determine initially expanded category based on active tab or default to first
+    const initialCategory = useMemo(() => {
+        const found = SETTINGS_CATEGORIES.find(cat => cat.items.some(item => item.id === activeTab));
+        return found ? found.id : SETTINGS_CATEGORIES[0].id;
+    }, []);
+
+    const [openCategory, setOpenCategory] = useState<string>(initialCategory);
+
+    return (
+        <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[80vh] overflow-hidden">
+            <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 shrink-0 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
+                <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Administration</span>
+                <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors"><X size={14}/></button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-1">
+                {SETTINGS_CATEGORIES.map(category => {
+                    const isOpen = openCategory === category.id;
+                    return (
+                        <div key={category.id} className="mb-1 last:mb-0">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenCategory(isOpen ? '' : category.id);
+                                }}
+                                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-md transition-colors ${isOpen ? 'bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                            >
+                                {category.label}
+                                <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                            </button>
+                            
+                            {isOpen && (
+                                <div className="mt-1 space-y-0.5 animate-in slide-in-from-top-1 duration-200">
+                                    {category.items.map(item => (
+                                        <button 
+                                            key={item.id}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onNavigate(item.id);
+                                                onClose();
+                                            }}
+                                            className={`w-full text-left pl-6 pr-3 py-2 text-xs flex items-center gap-2 transition-colors rounded-md ${activeTab === item.id ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
+                                        >
+                                            <item.icon size={14} className={activeTab === item.id ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"} />
+                                            {item.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+};
+
+const ProfilesMenuContent = ({ onNavigate, onClose }: { onNavigate: (view: string) => void, onClose: () => void }) => {
+    return (
+        <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[80vh] overflow-y-auto">
+            <div className="py-1">
+                <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 mb-1 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
+                    <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Profiles Module</span>
+                    <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors"><X size={14}/></button>
+                </div>
+                {PROFILE_SUBMENU.map(item => (
+                    <button 
+                        key={item.id}
+                        onClick={(e) => { e.stopPropagation(); onNavigate(item.id); onClose(); }}
+                        className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 transition-colors text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
+                    >
+                        <item.icon size={16} className="text-slate-400" />
+                        {item.label}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeView, setActiveView] = useState<ViewState>('DASHBOARD');
@@ -573,6 +725,37 @@ const App = () => {
       title: '',
       message: ''
   });
+
+  // Popover Logic with Delay and Strict Closing
+  const [activePopover, setActivePopover] = useState<string | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handlePopoverEnter = (id: string) => {
+    if (activePopover === id) return; // Already open
+    // Clear any pending open timers
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    
+    // Set timer for 1 second delay
+    hoverTimeoutRef.current = setTimeout(() => {
+        setActivePopover(id);
+    }, 1000);
+  };
+
+  const handlePopoverLeave = () => {
+    // Only clear pending timer. Do NOT close existing popover (strict requirement: "nothing else" closes it)
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+  };
+
+  const closePopover = () => setActivePopover(null);
+
+  // Global Esc Handler for Popovers
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') closePopover();
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
 
   // Check Authentication on Mount
   useEffect(() => {
@@ -636,6 +819,16 @@ const App = () => {
 
   // Logic for mobile collapsed state
   const isCollapsed = !isDesktop && !isSidebarOpen; 
+
+  // Helper for popover transitions - Reusable logic
+  const getPopoverClass = (id: string) => {
+    const isActive = activePopover === id;
+    return `absolute left-full top-0 ml-2 z-50 origin-top-left transition-all duration-300 ease-out transform ${
+        isActive 
+        ? 'opacity-100 scale-100 translate-x-0 visible pointer-events-auto' 
+        : 'opacity-0 scale-95 -translate-x-2 invisible pointer-events-none'
+    }`;
+  };
 
   // Using 100 shade for selected background instead of 50 for better visibility
   const NavItem: React.FC<{ view?: ViewState, icon: any, label: string, activeTab?: boolean, onClick?: () => void }> = ({ view, icon: Icon, label, activeTab, onClick }) => (
@@ -704,65 +897,58 @@ const App = () => {
                       <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
                       
                       {/* Campaign Fly-out Menu Item */}
-                      <div className="relative group/campaigns">
+                      <div className="relative" onMouseEnter={() => handlePopoverEnter('campaigns')} onMouseLeave={handlePopoverLeave}>
                         <button 
                             onClick={() => handleNavigateToCampaignList('Active')}
-                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${activeView === 'CAMPAIGNS' ? 'bg-emerald-100 text-emerald-900 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${activeView === 'CAMPAIGNS' || activePopover === 'campaigns' ? 'bg-emerald-100 text-emerald-900 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                         >
                             <div className="flex items-center gap-3">
-                                <Briefcase size={20} className={activeView === 'CAMPAIGNS' ? 'text-emerald-700' : 'text-slate-400 dark:text-slate-500'} />
+                                <Briefcase size={20} className={(activeView === 'CAMPAIGNS' || activePopover === 'campaigns') ? 'text-emerald-700' : 'text-slate-400 dark:text-slate-500'} />
                                 <span className={isCollapsed ? 'hidden' : 'block'}>Campaigns</span>
                             </div>
-                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform`} />}
+                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform duration-200 ${activePopover === 'campaigns' ? 'rotate-90 text-emerald-600' : ''}`} />}
                         </button>
 
                         {/* Desktop Flyout Content */}
                         {isDesktop && (
-                            <div className="hidden group-hover/campaigns:block">
+                            <div className={getPopoverClass('campaigns')}>
                                 <CampaignMenuContent 
                                     onNavigate={handleNavigateToCampaignList}
                                     onNavigateToCampaign={handleNavigateToCampaign}
                                     activeView={activeView}
                                     activeClient={userProfile.activeClient}
+                                    onClose={closePopover}
                                 />
                             </div>
                         )}
                       </div>
                       
                       {/* Main Sidebar Profile Item with Hover Menu */}
-                      <div className="relative group/profile">
+                      <div className="relative" onMouseEnter={() => handlePopoverEnter('profiles')} onMouseLeave={handlePopoverLeave}>
                         <button 
                             onClick={() => {
                                 setActiveView('PROFILES');
                                 setActiveProfileSubView('SEARCH');
                             }}
-                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200`}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${activePopover === 'profiles' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                         >
                             <div className="flex items-center gap-3">
-                                <Users size={20} className='text-slate-400 dark:text-slate-500' />
-                                <span className={isCollapsed ? 'hidden' : 'block'}>Profiles</span>
+                                <Users size={20} className={activePopover === 'profiles' ? 'text-emerald-600 dark:text-emerald-300' : 'text-slate-400 dark:text-slate-500'} />
+                                <span className="isCollapsed ? 'hidden' : 'block'">Profiles</span>
                             </div>
-                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform`} />}
+                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform duration-200 ${activePopover === 'profiles' ? 'rotate-90 text-emerald-600' : ''}`} />}
                         </button>
 
                         {/* Desktop Hover Flyout */}
                         {isDesktop && (
-                            <div className="hidden group-hover/profile:block absolute left-full top-0 ml-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto">
-                                <div className="py-1">
-                                    <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 mb-1">
-                                        Profiles Module
-                                    </div>
-                                    {PROFILE_SUBMENU.map(item => (
-                                        <button 
-                                            key={item.id}
-                                            onClick={(e) => { e.stopPropagation(); setActiveView('PROFILES'); setActiveProfileSubView(item.id as any); }}
-                                            className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 transition-colors text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
-                                        >
-                                            <item.icon size={16} className="text-slate-400" />
-                                            {item.label}
-                                        </button>
-                                    ))}
-                                </div>
+                            <div className={getPopoverClass('profiles')}>
+                                <ProfilesMenuContent 
+                                    onNavigate={(id) => {
+                                        setActiveView('PROFILES');
+                                        setActiveProfileSubView(id as any);
+                                    }}
+                                    onClose={closePopover}
+                                />
                             </div>
                         )}
                       </div>
@@ -770,46 +956,39 @@ const App = () => {
                       <NavItem view="METRICS" icon={BarChart2} label="Metrics" />
                       
                       {/* Main Sidebar Settings Item with Hover Menu */}
-                      <div className="relative group/settings">
+                      <div className="relative" onMouseEnter={() => handlePopoverEnter('settings')} onMouseLeave={handlePopoverLeave}>
                         <button 
                             onClick={() => {
                                 setActiveView('SETTINGS');
                                 setActiveSettingsTab('COMPANY_INFO');
                             }}
-                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200`}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${activePopover === 'settings' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                         >
                             <div className="flex items-center gap-3">
-                                <Settings size={20} className='text-slate-400 dark:text-slate-500' />
+                                <Settings size={20} className={activePopover === 'settings' ? 'text-emerald-600 dark:text-emerald-300' : 'text-slate-400 dark:text-slate-500'} />
                                 <span className={isCollapsed ? 'hidden' : 'block'}>Settings</span>
                             </div>
-                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform`} />}
+                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform duration-200 ${activePopover === 'settings' ? 'rotate-90 text-emerald-600' : ''}`} />}
                         </button>
 
                         {/* Desktop Hover Flyout */}
                         {isDesktop && (
-                            <div className="hidden group-hover/settings:block absolute left-full top-0 ml-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto custom-scrollbar">
-                                <div className="py-1">
-                                    <div className="px-3 py-2 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 mb-1">
-                                        Administration
-                                    </div>
-                                    {SETTINGS_SUBMENU.map(item => (
-                                        <button 
-                                            key={item.id}
-                                            onClick={(e) => { e.stopPropagation(); setActiveView('SETTINGS'); setActiveSettingsTab(item.id); }}
-                                            className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 transition-colors text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
-                                        >
-                                            <item.icon size={16} className="text-slate-400" />
-                                            {item.label}
-                                        </button>
-                                    ))}
-                                </div>
+                            <div className={getPopoverClass('settings')}>
+                                <SettingsMenuContent 
+                                    onNavigate={(tabId) => {
+                                        setActiveView('SETTINGS');
+                                        setActiveSettingsTab(tabId);
+                                    }}
+                                    activeTab={activeView === 'SETTINGS' ? activeSettingsTab : ''}
+                                    onClose={closePopover}
+                                />
                             </div>
                         )}
                       </div>
                     </>
                   ) : activeView === 'PROFILES' && !selectedCandidateId ? (
                     // PROFILE MODULE DRILL-DOWN SIDEBAR
-                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                    <div className="animate-in slide-in-from-left duration-300 ease-out">
                       <button 
                         onClick={() => setActiveView('DASHBOARD')}
                         className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
@@ -824,20 +1003,21 @@ const App = () => {
                       </div>
 
                       <div className="space-y-1">
-                        {PROFILE_SUBMENU.map(item => (
-                            <NavItem 
-                                key={item.id}
-                                icon={item.icon} 
-                                label={item.label} 
-                                activeTab={activeProfileSubView === item.id} 
-                                onClick={() => { setActiveProfileSubView(item.id as any); if (!isDesktop) setIsSidebarOpen(false); }}
-                            />
+                        {PROFILE_SUBMENU.map((item, index) => (
+                            <div key={item.id} className="animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${index * 50}ms` }}>
+                                <NavItem 
+                                    icon={item.icon} 
+                                    label={item.label} 
+                                    activeTab={activeProfileSubView === item.id} 
+                                    onClick={() => { setActiveProfileSubView(item.id as any); if (!isDesktop) setIsSidebarOpen(false); }}
+                                />
+                            </div>
                         ))}
                       </div>
                     </div>
                   ) : activeView === 'SETTINGS' ? (
                     // SETTINGS MODULE DRILL-DOWN SIDEBAR
-                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                    <div className="animate-in slide-in-from-left duration-300 ease-out">
                       <button 
                         onClick={() => setActiveView('DASHBOARD')}
                         className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
@@ -851,20 +1031,29 @@ const App = () => {
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Configure your workspace</p>
                       </div>
 
-                      <div className="space-y-1">
-                        {SETTINGS_SUBMENU.map(item => (
-                            <NavItem 
-                                key={item.id}
-                                icon={item.icon} 
-                                label={item.label} 
-                                activeTab={activeSettingsTab === item.id} 
-                                onClick={() => { setActiveSettingsTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                            />
+                      <div className="space-y-1 overflow-y-visible">
+                        {SETTINGS_CATEGORIES.map((cat, idx) => (
+                            <div key={cat.id} className={`${idx !== 0 ? 'mt-4 border-t border-slate-100 dark:border-slate-800 pt-4' : ''} animate-in fade-in slide-in-from-left-2 duration-300`} style={{ animationDelay: `${idx * 100}ms` }}>
+                                {!isCollapsed && (
+                                    <h4 className="px-3 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase mb-2">
+                                        {cat.label}
+                                    </h4>
+                                )}
+                                {cat.items.map(item => (
+                                    <NavItem 
+                                        key={item.id}
+                                        icon={item.icon} 
+                                        label={item.label} 
+                                        activeTab={activeSettingsTab === item.id} 
+                                        onClick={() => { setActiveSettingsTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                                    />
+                                ))}
+                            </div>
                         ))}
                       </div>
                     </div>
                   ) : activeView === 'MY_ACCOUNT' ? (
-                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                    <div className="animate-in slide-in-from-left duration-300 ease-out">
                       <button 
                         onClick={() => setActiveView('DASHBOARD')}
                         className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
@@ -879,19 +1068,20 @@ const App = () => {
                       </div>
 
                       <div className="space-y-1">
-                        {MY_ACCOUNT_MENU.map(item => (
-                            <NavItem 
-                                key={item.id}
-                                icon={item.icon} 
-                                label={item.label} 
-                                activeTab={activeAccountTab === item.id} 
-                                onClick={() => { setActiveAccountTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                            />
+                        {MY_ACCOUNT_MENU.map((item, index) => (
+                            <div key={item.id} className="animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${index * 50}ms` }}>
+                                <NavItem 
+                                    icon={item.icon} 
+                                    label={item.label} 
+                                    activeTab={activeAccountTab === item.id} 
+                                    onClick={() => { setActiveAccountTab(item.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                                />
+                            </div>
                         ))}
                       </div>
                     </div>
                   ) : selectedCandidateId ? (
-                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                    <div className="animate-in slide-in-from-left duration-300 ease-out">
                       <button 
                         onClick={handleBackToProfiles}
                         className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
@@ -906,19 +1096,20 @@ const App = () => {
                       </div>
 
                       <div className="space-y-1">
-                        {PROFILE_TABS.map(tab => (
-                            <NavItem 
-                                key={tab.id} 
-                                icon={tab.icon} 
-                                label={tab.label} 
-                                activeTab={activeProfileTab === tab.id} 
-                                onClick={() => { setActiveProfileTab(tab.id); if (!isDesktop) setIsSidebarOpen(false); }}
-                            />
+                        {PROFILE_TABS.map((tab, index) => (
+                            <div key={tab.id} className="animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${index * 50}ms` }}>
+                                <NavItem 
+                                    icon={tab.icon} 
+                                    label={tab.label} 
+                                    activeTab={activeProfileTab === tab.id} 
+                                    onClick={() => { setActiveProfileTab(tab.id); if (!isDesktop) setIsSidebarOpen(false); }}
+                                />
+                            </div>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <div className="animate-in fade-in slide-in-from-left-4 duration-300">
+                    <div className="animate-in slide-in-from-left duration-300 ease-out">
                       <button 
                         onClick={handleBackToCampaigns}
                         className={`w-full flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors ${isCollapsed ? 'justify-center' : ''}`}
@@ -1025,6 +1216,10 @@ const App = () => {
                      userProfile={userProfile}
                      clients={clients}
                      onSwitchClient={handleSwitchClient}
+                     activePopover={activePopover}
+                     onHover={handlePopoverEnter}
+                     onLeave={handlePopoverLeave}
+                     onClosePopover={closePopover}
                    />
                )}
             </div>
@@ -1035,7 +1230,7 @@ const App = () => {
                
                {activeView === 'PROFILES' && (
                  selectedCandidateId ? (
-                    <div className="h-full flex flex-col">
+                    <div className="h-full flex flex-col animate-in fade-in duration-300">
                        <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex items-center gap-2 shrink-0">
                           <button onClick={handleBackToProfiles} className="text-sm text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1 transition-colors">
                              <ChevronRight size={14} className="rotate-180"/> Back to Search
@@ -1053,7 +1248,7 @@ const App = () => {
 
                {activeView === 'CAMPAIGNS' && (
                  selectedCampaign ? (
-                    <div className="h-full flex flex-col">
+                    <div className="h-full flex flex-col animate-in fade-in duration-300">
                        <CampaignDashboard campaign={selectedCampaign} activeTab={activeCampaignTab} onBack={handleBackToCampaigns} />
                     </div>
                  ) : (

@@ -50,6 +50,15 @@
         background-color: #64748b;
       }
 
+      /* Hide Scrollbar Utility */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+
       /* GridStack Customization */
       .grid-stack-item-content {
         border-radius: 0.75rem; /* rounded-xl */
