@@ -1,8 +1,4 @@
 
-
-
-
-
 import { 
   FileText, Settings, Link, Mail, Video, MessageSquare, HelpCircle, Megaphone, GitBranch, ListChecks, CheckCircle2, Pilcrow, MoveRight, Film, MapPin, Map, MinusCircle, Briefcase, Users, UserCheck
 } from './components/Icons';
@@ -158,6 +154,75 @@ export const MOCK_USERS_LIST = [
   { id: 'usr_105', name: 'Vinay Kashyap', role: 'Admin', email: 'vinay.k@maprecruit.ai', avatar: null, initials: 'VK', color: 'bg-amber-100 text-amber-700' },
   { id: 'usr_123', name: 'Pratik Gaurav', role: 'Product Admin', email: 'pratik.gaurav@maprecruit.ai', avatar: null, initials: 'PG', color: 'bg-emerald-100 text-emerald-700' }, // Current User match
 ];
+
+// --- CAMPAIGN SIDEBAR STRUCTURE DATA ---
+export const SIDEBAR_CAMPAIGN_DATA = {
+  activeCount: 40,
+  closedCount: 32,
+  archivedCount: 17,
+  clients: [
+    {
+      name: "Amazon Warehouse Operations",
+      campaigns: [
+        { id: 1002, name: "Warehouse Associate - Voice Bot", jobId: "002002" },
+        { id: 1003, name: "Cherry Picker Lift Driver", jobId: "40000612" },
+        { id: 1004, name: "Manager of Accounting", jobId: "40000619" },
+        { id: 1005, name: "Manager of Accounting", jobId: "40000624" },
+        { id: 1006, name: "Manager of Accounting", jobId: "40000632" },
+        { id: 1007, name: "Manager of Accounting", jobId: "40000623" },
+        { id: 1008, name: "Cherry Picker Lift Driver", jobId: "40000633" },
+        { id: 1009, name: "java developer", jobId: "12682953" },
+        { id: 1010, name: "Cherry Picker Lift Driver", jobId: "40000618" },
+        { id: 1011, name: "Hyperdrive Alignment Specialist", jobId: "40000194" }
+      ]
+    },
+    {
+      name: "Google Staffing Services",
+      campaigns: [
+        { id: 1012, name: "Warehouse Associate - Voice Bot", jobId: "002001" },
+        { id: 1013, name: "Cherry Picker Lift Driver", jobId: "40000611" },
+        { id: 1014, name: "Manager of Accounting", jobId: "40000620" },
+        { id: 1015, name: "Manager of Accounting", jobId: "40000625" },
+        { id: 1016, name: "Manager of Accounting", jobId: "40000635" },
+        { id: 1017, name: "Manager of Accounting", jobId: "40000626" },
+        { id: 1018, name: "Cherry Picker Lift Driver", jobId: "40000634" },
+        { id: 1019, name: "java developer", jobId: "12682957" },
+        { id: 1020, name: "Cherry Picker Lift Driver", jobId: "40000616" },
+        { id: 1021, name: "Hyperdrive Alignment Specialist", jobId: "40000193" }
+      ]
+    },
+    {
+      name: "Microsoft HR Tech",
+      campaigns: [
+        { id: 1022, name: "Warehouse Associate - Voice Bot", jobId: "002003" },
+        { id: 1023, name: "Cherry Picker Lift Driver", jobId: "40000613" },
+        { id: 1024, name: "Manager of Accounting", jobId: "40000627" },
+        { id: 1025, name: "Manager of Accounting", jobId: "40000628" },
+        { id: 1026, name: "Manager of Accounting", jobId: "40000639" },
+        { id: 1027, name: "Manager of Accounting", jobId: "40000629" },
+        { id: 1028, name: "Cherry Picker Lift Driver", jobId: "40000636" },
+        { id: 1029, name: "java developer", jobId: "12682958" },
+        { id: 1030, name: "Cherry Picker Lift Driver", jobId: "40000637" },
+        { id: 1031, name: "Hyperdrive Alignment Specialist", jobId: "40000196" }
+      ]
+    },
+    {
+      name: "TRC Talent Solutions",
+      campaigns: [
+        { id: 1, name: "Warehouse Associate - Voice Bot", jobId: "002000" },
+        { id: 2, name: "Cherry Picker Lift Driver", jobId: "40000610" },
+        { id: 3, name: "Manager of Accounting", jobId: "40000617" },
+        { id: 4, name: "Manager of Accounting", jobId: "40000622" },
+        { id: 5, name: "Manager of Accounting", jobId: "40000630" },
+        { id: 6, name: "Manager of Accounting", jobId: "40000621" },
+        { id: 7, name: "Cherry Picker Lift Driver", jobId: "40000631" },
+        { id: 8, name: "java developer", jobId: "12682951" },
+        { id: 9, name: "Cherry Picker Lift Driver", jobId: "40000615" },
+        { id: 10, name: "Hyperdrive Alignment Specialist", jobId: "40000192" }
+      ]
+    }
+  ]
+};
 
 export const MOCK_TAGS: Tag[] = [
   {

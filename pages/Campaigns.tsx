@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Briefcase, Lock, Archive, Search, ChevronDown, RefreshCw, MoreVertical, HelpCircle, 
   Heart, Share2, Network, ChevronRight, CheckCircle, PlusCircle, Users, Link, FileText, X
@@ -166,9 +167,10 @@ const HoverMenu = ({ campaign, onAction, isOpenMobile }: { campaign: Campaign, o
 
 interface CampaignsProps {
   onNavigateToCampaign: (campaign: Campaign, tab?: string) => void;
+  initialTab?: string;
 }
 
-export const Campaigns: React.FC<CampaignsProps> = ({ onNavigateToCampaign }) => {
+export const Campaigns: React.FC<CampaignsProps> = ({ onNavigateToCampaign, initialTab }) => {
   const { addToast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
@@ -179,6 +181,13 @@ export const Campaigns: React.FC<CampaignsProps> = ({ onNavigateToCampaign }) =>
   const longPressTimer = useRef<any>(null);
 
   const [campaigns, setCampaigns] = useState<Campaign[]>(GLOBAL_CAMPAIGNS);
+
+  // Sync tab if passed from parent (e.g. Sidebar)
+  useEffect(() => {
+    if (initialTab && ['Active', 'Closed', 'Archived'].includes(initialTab)) {
+        setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   const filteredCampaigns = campaigns.filter(c => {
     // 1. Filter by Tab (Active/Closed/Archived)

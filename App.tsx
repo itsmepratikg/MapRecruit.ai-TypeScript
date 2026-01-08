@@ -9,11 +9,11 @@ import {
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
   Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
   SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon,
-  Calendar, Clock, FolderPlus, Share2, Heart, MapPin
+  Calendar, Clock, FolderPlus, Share2, Heart, MapPin, ChevronDown
 } from './components/Icons';
 import { ToastProvider, useToast } from './components/Toast';
 import { Home } from './pages/Home';
-import { Profiles } from './pages/Profiles/index'; // Updated Import
+import { Profiles } from './pages/Profiles/index'; 
 import { Campaigns } from './pages/Campaigns';
 import { Metrics } from './pages/Metrics';
 import { CandidateProfile } from './pages/CandidateProfile';
@@ -30,6 +30,7 @@ import { ThemeSettingsModal } from './components/ThemeSettingsModal';
 import { useUserPreferences } from './hooks/useUserPreferences';
 import { useUserProfile } from './hooks/useUserProfile';
 import { COLORS } from './data/profile';
+import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from './data';
 
 // --- Reusable Menu Contents ---
 
@@ -382,6 +383,141 @@ const PROFILE_SUBMENU = [
   { id: 'TAGS', label: 'Tags', icon: Tag },
 ];
 
+// Campaign Menu Components
+const CampaignMenuContent = ({ 
+    onNavigate, 
+    onNavigateToCampaign,
+    activeView
+}: { 
+    onNavigate: (tab: string) => void,
+    onNavigateToCampaign: (campaign: Campaign) => void,
+    activeView: ViewState
+}) => {
+    const [expandedClient, setExpandedClient] = useState<string>('TRC Talent Solutions');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Filter Logic
+    const filterClients = (clients: typeof SIDEBAR_CAMPAIGN_DATA.clients) => {
+        if (!searchQuery) return clients;
+        
+        return clients.map(client => {
+            // Check if client name matches OR if any campaign matches
+            const clientMatch = client.name.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchedCampaigns = client.campaigns.filter(c => 
+                c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                c.jobId.includes(searchQuery)
+            );
+            
+            if (clientMatch || matchedCampaigns.length > 0) {
+                return {
+                    ...client,
+                    campaigns: matchedCampaigns.length > 0 ? matchedCampaigns : client.campaigns
+                };
+            }
+            return null;
+        }).filter(Boolean) as typeof SIDEBAR_CAMPAIGN_DATA.clients;
+    };
+
+    const displayClients = filterClients(SIDEBAR_CAMPAIGN_DATA.clients);
+
+    const handleNavigateToList = (e: React.MouseEvent, tab: string) => {
+        e.stopPropagation();
+        onNavigate(tab);
+    };
+
+    return (
+        <div className="absolute left-full top-0 ml-2 w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+            {/* Search */}
+            <div className="p-3 border-b border-slate-100 dark:border-slate-700 shrink-0">
+                <div className="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search active campaigns..." 
+                        className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:text-slate-200"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        autoFocus
+                    />
+                    <Search size={12} className="absolute left-2.5 top-2 text-slate-400" />
+                </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-1 space-y-1">
+                {/* Active Campaigns Section */}
+                <div>
+                    <button 
+                        onClick={(e) => handleNavigateToList(e, 'Active')}
+                        className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group"
+                    >
+                        <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">Active Campaigns</span>
+                        <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded-full font-mono font-bold">{SIDEBAR_CAMPAIGN_DATA.activeCount}</span>
+                    </button>
+                    
+                    <div className="pl-2 mt-1 space-y-1">
+                        {displayClients.map(client => {
+                            // Expand if searched or if matches state
+                            const isExpanded = expandedClient === client.name || searchQuery.length > 0;
+                            
+                            return (
+                                <div key={client.name} className="rounded overflow-hidden">
+                                    <button 
+                                        onClick={(e) => { e.stopPropagation(); setExpandedClient(isExpanded ? '' : client.name); }}
+                                        className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${isExpanded ? 'text-slate-800 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400'}`}
+                                    >
+                                        <ChevronRight size={12} className={`transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`} />
+                                        {client.name}
+                                    </button>
+                                    
+                                    {isExpanded && (
+                                        <div className="pl-6 space-y-0.5 mt-0.5 border-l border-slate-100 dark:border-slate-700 ml-4 mb-1">
+                                            {client.campaigns.map(camp => (
+                                                <button 
+                                                    key={camp.id}
+                                                    onClick={(e) => { e.stopPropagation(); onNavigateToCampaign({ ...GLOBAL_CAMPAIGNS[0], id: camp.id, name: camp.name, jobID: camp.jobId }); }} // Mapping mock minimal data to full structure for demo
+                                                    className="w-full text-left px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded flex justify-between items-center group/item transition-colors"
+                                                >
+                                                    <span className="truncate flex-1" title={camp.name}>{camp.name}</span>
+                                                    <span className="text-[9px] text-slate-400 group-hover/item:text-slate-500 opacity-0 group-hover/item:opacity-100 transition-opacity ml-2">{camp.jobId}</span>
+                                                </button>
+                                            ))}
+                                            {client.campaigns.length === 0 && (
+                                                <div className="px-3 py-1 text-[10px] text-slate-400 italic">No campaigns found</div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                        {displayClients.length === 0 && (
+                            <div className="px-4 py-2 text-xs text-slate-400">No clients match your search.</div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
+
+                {/* Closed Campaigns */}
+                <button 
+                    onClick={(e) => handleNavigateToList(e, 'Closed')}
+                    className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group"
+                >
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 uppercase tracking-wide">Closed Campaigns</span>
+                    <span className="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded-full font-mono">{SIDEBAR_CAMPAIGN_DATA.closedCount}</span>
+                </button>
+
+                {/* Archived Campaigns */}
+                <button 
+                    onClick={(e) => handleNavigateToList(e, 'Archived')}
+                    className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group"
+                >
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 uppercase tracking-wide">Archived Campaigns</span>
+                    <span className="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded-full font-mono">{SIDEBAR_CAMPAIGN_DATA.archivedCount}</span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeView, setActiveView] = useState<ViewState>('DASHBOARD');
@@ -402,6 +538,7 @@ const App = () => {
   
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [activeCampaignTab, setActiveCampaignTab] = useState<string>('Intelligence');
+  const [targetCampaignTab, setTargetCampaignTab] = useState<string>('Active'); // Default to Active list
   
   const [activeSettingsTab, setActiveSettingsTab] = useState('COMPANY_INFO');
   const [activeAccountTab, setActiveAccountTab] = useState('BASIC_DETAILS'); 
@@ -453,8 +590,19 @@ const App = () => {
   const handleNavigateToCampaign = (campaign: Campaign, tab: string = 'Intelligence') => {
     setSelectedCampaign(campaign);
     setActiveCampaignTab(tab);
+    // When navigating to a specific campaign, we ensure we are in CAMPAIGNS view
+    setActiveView('CAMPAIGNS');
+    // Mobile sidebar handling
+    if (!isDesktop) setIsSidebarOpen(false);
   };
   const handleBackToCampaigns = () => setSelectedCampaign(null);
+
+  const handleNavigateToCampaignList = (tab: string) => {
+      setTargetCampaignTab(tab);
+      setActiveView('CAMPAIGNS');
+      setSelectedCampaign(null); // Ensure we are on list view
+      if (!isDesktop) setIsSidebarOpen(false);
+  };
 
   const handleProfileSubmenuClick = (id: string) => {
       setActiveView('PROFILES');
@@ -530,7 +678,31 @@ const App = () => {
                   {!selectedCampaign && !selectedCandidateId && activeView !== 'MY_ACCOUNT' && activeView !== 'PROFILES' && activeView !== 'SETTINGS' ? (
                     <>
                       <NavItem view="DASHBOARD" icon={LayoutDashboard} label="Dashboard" />
-                      <NavItem view="CAMPAIGNS" icon={Briefcase} label="Campaigns" />
+                      
+                      {/* Campaign Fly-out Menu Item */}
+                      <div className="relative group/campaigns">
+                        <button 
+                            onClick={() => handleNavigateToCampaignList('Active')}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${activeView === 'CAMPAIGNS' ? 'bg-emerald-100 text-emerald-900 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
+                        >
+                            <div className="flex items-center gap-3">
+                                <Briefcase size={20} className={activeView === 'CAMPAIGNS' ? 'text-emerald-700' : 'text-slate-400 dark:text-slate-500'} />
+                                <span className={isCollapsed ? 'hidden' : 'block'}>Campaigns</span>
+                            </div>
+                            {!isCollapsed && <ChevronRight size={16} className={`transition-transform`} />}
+                        </button>
+
+                        {/* Desktop Flyout Content */}
+                        {isDesktop && (
+                            <div className="hidden group-hover/campaigns:block">
+                                <CampaignMenuContent 
+                                    onNavigate={handleNavigateToCampaignList}
+                                    onNavigateToCampaign={handleNavigateToCampaign}
+                                    activeView={activeView}
+                                />
+                            </div>
+                        )}
+                      </div>
                       
                       {/* Main Sidebar Profile Item with Hover Menu */}
                       <div className="relative group/profile">
@@ -711,7 +883,7 @@ const App = () => {
                       <div className="space-y-1">
                         {PROFILE_TABS.map(tab => (
                             <NavItem 
-                                key={tab.id}
+                                key={tab.id} 
                                 icon={tab.icon} 
                                 label={tab.label} 
                                 activeTab={activeProfileTab === tab.id} 
@@ -859,7 +1031,7 @@ const App = () => {
                        <CampaignDashboard campaign={selectedCampaign} activeTab={activeCampaignTab} onBack={handleBackToCampaigns} />
                     </div>
                  ) : (
-                    <Campaigns onNavigateToCampaign={handleNavigateToCampaign} />
+                    <Campaigns onNavigateToCampaign={handleNavigateToCampaign} initialTab={targetCampaignTab} />
                  )
                )}
 
