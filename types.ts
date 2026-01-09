@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-export type ViewMode = 'SEARCH' | 'FOLDERS' | 'TAGS' | 'SHARED' | 'FAVORITES' | 'DUPLICATES' | 'LOCAL' | 'CANDIDATE';
+export type ViewMode = 'SEARCH' | 'FOLDERS' | 'TAGS' | 'SHARED' | 'FAVORITES' | 'DUPLICATES' | 'LOCAL' | 'CANDIDATE' | 'NEW_APPLIES' | 'OPEN_APPLIES' | 'NEW_LOCAL' | 'INTERVIEW_STATUS';
 
 // --- ACCESS CONTROL TYPES ---
 export type AccessLevel = 'PRIVATE' | 'CLIENT' | 'COMPANY'; // User, Client, Company

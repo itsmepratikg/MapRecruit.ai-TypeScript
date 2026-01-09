@@ -9,7 +9,7 @@ import {
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
   Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
   SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon,
-  Calendar, Clock, FolderPlus, Share2, Heart, MapPin, ChevronDown
+  Calendar, Clock, FolderPlus, Share2, Heart, MapPin, ChevronDown, CheckSquare, Target
 } from './components/Icons';
 import { useToast } from './components/Toast';
 import { Home } from './pages/Home';
@@ -31,8 +31,6 @@ import { useUserPreferences } from './hooks/useUserPreferences';
 import { useUserProfile } from './hooks/useUserProfile';
 import { COLORS } from './data/profile';
 import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from './data';
-
-// ... (Rest of App.tsx logic remains unchanged, but I must return the FULL content for the file being replaced. Since I cannot see the full content of App.tsx right now in my context window beyond the provided block, I will assume the provided file content is accurate and I just change the import line. Actually, looking at the provided files, I have the full content of App.tsx.)
 
 // --- Reusable Menu Contents ---
 
@@ -442,14 +440,42 @@ const MY_ACCOUNT_MENU = [
     { id: 'LAST_LOGIN', label: 'Last Login Sessions', icon: Clock },
 ];
 
-const PROFILE_SUBMENU = [
-  { id: 'SEARCH', label: 'Search Profiles', icon: Search },
-  { id: 'SHARED', label: 'Shared Profiles', icon: Share2 },
-  { id: 'FAVORITES', label: 'Favorite Profiles', icon: Heart },
-  { id: 'DUPLICATES', label: 'Duplicate Profiles', icon: Copy },
-  { id: 'LOCAL', label: 'New Local Profiles', icon: MapPin },
-  { id: 'FOLDERS', label: 'Folder Metrics', icon: FolderOpen },
-  { id: 'TAGS', label: 'Tags', icon: Tag },
+const PROFILES_CATEGORIES = [
+  {
+    id: 'SOURCE',
+    label: 'Search & Source',
+    items: [
+      { id: 'SEARCH', label: 'Search Profiles', icon: Search },
+      { id: 'NEW_LOCAL', label: 'New Local Profiles', icon: MapPin },
+      { id: 'LOCAL', label: 'Local Profiles', icon: MapPin },
+    ]
+  },
+  {
+    id: 'APPLICATIONS',
+    label: 'Applications',
+    items: [
+      { id: 'NEW_APPLIES', label: 'New Applies', icon: Clock },
+      { id: 'OPEN_APPLIES', label: 'Open Applies', icon: FolderOpen },
+      { id: 'INTERVIEW_STATUS', label: 'Interview Status', icon: Target },
+    ]
+  },
+  {
+    id: 'ORGANIZATION',
+    label: 'Organization',
+    items: [
+      { id: 'FOLDERS', label: 'Folder Metrics', icon: BarChart2 },
+      { id: 'TAGS', label: 'Tags', icon: Tag },
+      { id: 'DUPLICATES', label: 'Duplicate Profiles', icon: Copy },
+    ]
+  },
+  {
+    id: 'COLLAB',
+    label: 'Collaboration',
+    items: [
+      { id: 'SHARED', label: 'Shared Profiles', icon: Share2 },
+      { id: 'FAVORITES', label: 'Favorite Profiles', icon: Heart },
+    ]
+  }
 ];
 
 // Campaign Menu Components
@@ -668,24 +694,57 @@ const SettingsMenuContent = ({
     );
 };
 
-const ProfilesMenuContent = ({ onNavigate, onClose }: { onNavigate: (view: string) => void, onClose: () => void }) => {
+const ProfilesMenuContent = ({ onNavigate, onClose, activeView }: { onNavigate: (view: string) => void, onClose: () => void, activeView: string }) => {
+    // Determine initially expanded category based on active tab or default to first
+    const initialCategory = useMemo(() => {
+        const found = PROFILES_CATEGORIES.find(cat => cat.items.some(item => item.id === activeView));
+        return found ? found.id : PROFILES_CATEGORIES[0].id;
+    }, [activeView]);
+
+    const [openCategory, setOpenCategory] = useState<string>(initialCategory);
+
     return (
-        <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[80vh] overflow-y-auto">
+        <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[80vh] overflow-hidden">
             <div className="py-1">
                 <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 mb-1 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
                     <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Profiles Module</span>
                     <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors lg:hidden"><X size={14}/></button>
                 </div>
-                {PROFILE_SUBMENU.map(item => (
-                    <button 
-                        key={item.id}
-                        onClick={(e) => { e.stopPropagation(); onNavigate(item.id); onClose(); }}
-                        className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 transition-colors text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
-                    >
-                        <item.icon size={16} className="text-slate-400" />
-                        {item.label}
-                    </button>
-                ))}
+                
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-1">
+                    {PROFILES_CATEGORIES.map(category => {
+                        const isOpen = openCategory === category.id;
+                        return (
+                            <div key={category.id} className="mb-1 last:mb-0">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setOpenCategory(isOpen ? '' : category.id);
+                                    }}
+                                    className={`w-full flex items-center justify-between px-3 py-2 text-xs font-bold rounded-md transition-colors ${isOpen ? 'bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-200' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                                >
+                                    {category.label}
+                                    <ChevronDown size={12} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                                </button>
+                                
+                                {isOpen && (
+                                    <div className="mt-1 space-y-0.5 animate-in slide-in-from-top-1 duration-200">
+                                        {category.items.map(item => (
+                                            <button 
+                                                key={item.id}
+                                                onClick={(e) => { e.stopPropagation(); onNavigate(item.id); onClose(); }}
+                                                className={`w-full text-left pl-6 pr-3 py-2 text-xs flex items-center gap-2 transition-colors rounded-md ${activeView === item.id ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
+                                            >
+                                                <item.icon size={14} className={activeView === item.id ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"} />
+                                                {item.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
@@ -708,7 +767,7 @@ const App = () => {
   // Navigation State
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
   const [activeProfileTab, setActiveProfileTab] = useState('profile');
-  const [activeProfileSubView, setActiveProfileSubView] = useState<'SEARCH' | 'FOLDERS' | 'TAGS' | 'SHARED' | 'FAVORITES' | 'DUPLICATES' | 'LOCAL'>('SEARCH');
+  const [activeProfileSubView, setActiveProfileSubView] = useState<'SEARCH' | 'FOLDERS' | 'TAGS' | 'SHARED' | 'FAVORITES' | 'DUPLICATES' | 'LOCAL' | 'NEW_APPLIES' | 'OPEN_APPLIES' | 'NEW_LOCAL' | 'INTERVIEW_STATUS'>('SEARCH');
   
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [activeCampaignTab, setActiveCampaignTab] = useState<string>('Intelligence');
@@ -975,6 +1034,7 @@ const App = () => {
                                         setActiveProfileSubView(id as any);
                                     }}
                                     onClose={closePopover}
+                                    activeView={activeView === 'PROFILES' ? activeProfileSubView : ''}
                                 />
                             </div>
                         )}
@@ -1033,15 +1093,23 @@ const App = () => {
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage Candidates & Talent Pools</p>
                       </div>
 
-                      <div className="space-y-1">
-                        {PROFILE_SUBMENU.map((item, index) => (
-                            <div key={item.id} className="animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${index * 50}ms` }}>
-                                <NavItem 
-                                    icon={item.icon} 
-                                    label={item.label} 
-                                    activeTab={activeProfileSubView === item.id} 
-                                    onClick={() => { setActiveProfileSubView(item.id as any); if (!isDesktop) setIsSidebarOpen(false); }}
-                                />
+                      <div className="space-y-1 overflow-y-visible">
+                        {PROFILES_CATEGORIES.map((cat, idx) => (
+                            <div key={cat.id} className={`${idx !== 0 ? 'mt-4 border-t border-slate-100 dark:border-slate-800 pt-4' : ''} animate-in fade-in slide-in-from-left-2 duration-300`} style={{ animationDelay: `${idx * 100}ms` }}>
+                                {!isCollapsed && (
+                                    <h4 className="px-3 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase mb-2">
+                                        {cat.label}
+                                    </h4>
+                                )}
+                                {cat.items.map(item => (
+                                    <NavItem 
+                                        key={item.id}
+                                        icon={item.icon} 
+                                        label={item.label} 
+                                        activeTab={activeProfileSubView === item.id} 
+                                        onClick={() => { setActiveProfileSubView(item.id as any); if (!isDesktop) setIsSidebarOpen(false); }}
+                                    />
+                                ))}
                             </div>
                         ))}
                       </div>
@@ -1256,7 +1324,7 @@ const App = () => {
             </div>
 
             {/* Main Content */}
-            <div className={`flex-1 flex flex-col h-full overflow-hidden w-full relative bg-slate-50 dark:bg-slate-950 transition-colors ${!isDesktop && !isSidebarOpen ? 'pl-16' : ''}`}>
+            <div className={`flex-1 flex flex-col h-full overflow-hidden w-full relative bg-slate-50 dark:bg-slate-900 transition-colors ${!isDesktop && !isSidebarOpen ? 'pl-16' : ''}`}>
                {activeView === 'DASHBOARD' && <Home onNavigate={handleNavigateToCampaignList} />}
                
                {activeView === 'PROFILES' && (
