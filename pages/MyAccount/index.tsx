@@ -11,6 +11,7 @@ import { Communication } from './Communication';
 import { CalendarSettings } from './CalendarSettings';
 import { RolesPermissions } from './RolesPermissions';
 import { AuthSync } from './AuthSync';
+import { UserNotifications } from './UserNotifications';
 
 interface MyAccountProps {
   activeTab: string;
@@ -31,6 +32,8 @@ export const MyAccount = ({ activeTab }: MyAccountProps) => {
         return <RolesPermissions />;
       case 'AUTH_SYNC':
         return <AuthSync />;
+      case 'USER_NOTIFICATIONS':
+        return <UserNotifications />;
       case 'LAST_LOGIN':
         return <div className="p-8 lg:p-12"><AccountPlaceholder title="Last Login Sessions" description="Review your recent login activity, IP addresses, and device history for security." icon={Clock} /></div>;
       default:

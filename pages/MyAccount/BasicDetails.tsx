@@ -91,7 +91,7 @@ const ColorDropdown = ({ selected, onSelect }: { selected: string, onSelect: (c:
 // --- Main Component ---
 
 export const BasicDetails = () => {
-  const { addToast } = useToast();
+  const { addToast, addPromise } = useToast();
   const { userProfile, clients, saveProfile, updateAvatar } = useUserProfile();
   
   const [isEditing, setIsEditing] = useState(false);
@@ -141,10 +141,22 @@ export const BasicDetails = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-    saveProfile({ ...formData }); // activeClient and clients are handled by logic
-    addToast('Profile details updated successfully.', 'success');
+    
+    const saveAction = new Promise<void>((resolve) => {
+        setTimeout(() => {
+            saveProfile({ ...formData });
+            resolve();
+        }, 800);
+    });
+
+    await addPromise(saveAction, {
+        loading: 'Updating profile...',
+        success: 'Profile details updated successfully.',
+        error: 'Failed to update profile.'
+    });
+    
     setIsEditing(false);
   };
 

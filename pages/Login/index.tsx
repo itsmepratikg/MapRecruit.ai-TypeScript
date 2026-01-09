@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   Mail, Lock, Eye, EyeOff, ArrowRight, CheckCircle, 
@@ -12,7 +13,7 @@ interface LoginProps {
 }
 
 export const Login = ({ onLogin }: LoginProps) => {
-  const { addToast } = useToast();
+  const { addToast, addPromise } = useToast();
   const { instance } = useMsal();
   
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ export const Login = ({ onLogin }: LoginProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleEmailLogin = (e: React.FormEvent) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
         addToast("Please enter both email and password.", "error");
@@ -29,14 +30,32 @@ export const Login = ({ onLogin }: LoginProps) => {
 
     setIsLoading(true);
     
-    // Simulate API Call
-    setTimeout(() => {
-        setIsLoading(false);
-        // Simple mock validation (accept any non-empty input for demo)
-        localStorage.setItem('authToken', 'mock-jwt-token-123');
-        addToast("Successfully logged in!", "success");
+    // Simulate API Call using Promise
+    const loginAction = new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+            // Mock validation - fail if email contains 'fail'
+            if (email.includes('fail')) {
+                reject(new Error("Invalid credentials"));
+            } else {
+                localStorage.setItem('authToken', 'mock-jwt-token-123');
+                resolve();
+            }
+        }, 1500);
+    });
+
+    try {
+        await addPromise(loginAction, {
+            loading: 'Authenticating...',
+            success: 'Successfully logged in!',
+            error: 'Authentication failed. Please check credentials.'
+        });
         onLogin();
-    }, 1500);
+    } catch (error) {
+        console.error(error);
+        // Error toast is handled by addPromise automatically
+    } finally {
+        setIsLoading(false);
+    }
   };
 
   const handlePasskeyLogin = async () => {
@@ -63,8 +82,18 @@ export const Login = ({ onLogin }: LoginProps) => {
 
         if (credential) {
             console.log("Passkey authenticated:", credential);
-            localStorage.setItem('authToken', 'mock-passkey-token-456');
-            addToast("Authenticated with Biometrics", "success");
+            const passkeyAction = new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    localStorage.setItem('authToken', 'mock-passkey-token-456');
+                    resolve();
+                }, 500);
+            });
+
+            await addPromise(passkeyAction, {
+                loading: 'Verifying passkey...',
+                success: 'Authenticated with Biometrics',
+                error: 'Passkey verification failed.'
+            });
             onLogin();
         }
     } catch (err: any) {
@@ -80,14 +109,22 @@ export const Login = ({ onLogin }: LoginProps) => {
       setIsLoading(true);
       console.log("Google Login Success:", tokenResponse);
       
-      // In a real app, send tokenResponse.access_token to your backend for validation
-      // For this demo, we verify we got a token and proceed
-      setTimeout(() => {
-          localStorage.setItem('authToken', `google-token-${tokenResponse.access_token.substring(0, 10)}`);
-          addToast("Successfully logged in via Google!", "success");
-          setIsLoading(false);
+      const googleAuthAction = new Promise<void>((resolve) => {
+          setTimeout(() => {
+              localStorage.setItem('authToken', `google-token-${tokenResponse.access_token.substring(0, 10)}`);
+              resolve();
+          }, 1000);
+      });
+
+      addPromise(googleAuthAction, {
+          loading: 'Connecting to Google...',
+          success: 'Successfully logged in via Google!',
+          error: 'Google login failed.'
+      }).then(() => {
           onLogin();
-      }, 1000);
+      }).finally(() => {
+          setIsLoading(false);
+      });
     },
     onError: (errorResponse) => {
       console.error("Google Login Error:", errorResponse);
@@ -103,8 +140,21 @@ export const Login = ({ onLogin }: LoginProps) => {
             scopes: ["User.Read", "Calendars.Read"]
         });
         console.log("Microsoft Login Success:", response);
-        localStorage.setItem('authToken', `ms-token-${response.accessToken.substring(0, 10)}`);
-        addToast("Successfully logged in via Microsoft!", "success");
+        
+        const msAuthAction = new Promise<void>((resolve) => {
+             // Simulate backend validation
+             setTimeout(() => {
+                 localStorage.setItem('authToken', `ms-token-${response.accessToken.substring(0, 10)}`);
+                 resolve();
+             }, 800);
+        });
+
+        await addPromise(msAuthAction, {
+            loading: 'Connecting to Microsoft...',
+            success: 'Successfully logged in via Microsoft!',
+            error: 'Microsoft login failed.'
+        });
+        
         onLogin();
     } catch (error) {
         console.error("Microsoft Login Error:", error);

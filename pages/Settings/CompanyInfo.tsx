@@ -7,7 +7,7 @@ import {
 import { useToast } from '../../components/Toast';
 
 export const CompanyInfo = () => {
-  const { addToast } = useToast();
+  const { addToast, addPromise } = useToast();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [shortLogoPreview, setShortLogoPreview] = useState<string | null>(null);
   
@@ -50,9 +50,19 @@ export const CompanyInfo = () => {
     }));
   };
 
-  const handleSave = () => {
-    console.log("Saving Company Info:", formData);
-    addToast("Company information updated successfully.", "success");
+  const handleSave = async () => {
+    const saveAction = new Promise<void>((resolve) => {
+        setTimeout(() => {
+            console.log("Saving Company Info:", formData);
+            resolve();
+        }, 1000);
+    });
+
+    await addPromise(saveAction, {
+        loading: 'Saving company settings...',
+        success: 'Company information updated successfully.',
+        error: 'Failed to save settings.'
+    });
   };
 
   // Mock Image Upload

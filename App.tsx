@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
 import { 
   LayoutDashboard, Users, Briefcase, BarChart2, 
   Settings, LogOut, UserPlus, Building2, CheckCircle, 
@@ -9,7 +7,7 @@ import {
   FileText, Activity, Video, Copy, ClipboardList, FolderOpen,
   Palette, PlusCircle, Shield, CreditCard, Mail, Database, 
   SlidersHorizontal, Tag, Layout, MessageSquare, HelpCircle, LogOut as LogoutIcon, Link as LinkIcon,
-  Calendar, Clock, FolderPlus, Share2, Heart, MapPin, ChevronDown, CheckSquare, Target
+  Calendar, Clock, FolderPlus, Share2, Heart, MapPin, ChevronDown, CheckSquare, Target, Bell
 } from './components/Icons';
 import { useToast } from './components/Toast';
 import { Home } from './pages/Home';
@@ -437,6 +435,7 @@ const MY_ACCOUNT_MENU = [
     { id: 'CALENDAR', label: 'Calendar', icon: Calendar },
     { id: 'ROLES_PERMISSIONS', label: 'Roles & Permissions', icon: Shield },
     { id: 'AUTH_SYNC', label: 'Password & Authentication', icon: Lock },
+    { id: 'USER_NOTIFICATIONS', label: 'User Notifications', icon: Bell },
     { id: 'LAST_LOGIN', label: 'Last Login Sessions', icon: Clock },
 ];
 
@@ -750,7 +749,7 @@ const ProfilesMenuContent = ({ onNavigate, onClose, activeView }: { onNavigate: 
     );
 };
 
-const App = () => {
+export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeView, setActiveView] = useState<ViewState>('DASHBOARD');
   const { addToast } = useToast();
@@ -1016,7 +1015,7 @@ const App = () => {
                         >
                             <div className="flex items-center gap-3">
                                 <Users size={20} className={activePopover === 'profiles' ? 'text-emerald-600 dark:text-emerald-300' : 'text-slate-400 dark:text-slate-500'} />
-                                <span className="isCollapsed ? 'hidden' : 'block'">Profiles</span>
+                                <span className={isCollapsed ? 'hidden' : 'block'}>Profiles</span>
                             </div>
                             {!isCollapsed && <ChevronRight size={16} className={`transition-transform duration-200 ${activePopover === 'profiles' ? 'rotate-90 text-emerald-600' : ''}`} />}
                         </button>
@@ -1378,5 +1377,3 @@ const App = () => {
           </div>
   );
 };
-
-export default App;
