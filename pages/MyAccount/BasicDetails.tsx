@@ -90,21 +90,31 @@ const ColorDropdown = ({ selected, onSelect }: { selected: string, onSelect: (c:
 
 // --- Main Component ---
 
-export const BasicDetails = () => {
+interface BasicDetailsProps {
+    userOverride?: any; // If provided, we are editing this user instead of the logged-in user
+    onSaveOverride?: (data: any) => void; // If provided, calls this instead of global save
+    onBack?: () => void; // If provided, shows back button
+}
+
+export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDetailsProps) => {
   const { addToast, addPromise } = useToast();
-  const { userProfile, clients, saveProfile, updateAvatar } = useUserProfile();
+  const { userProfile, clients, saveProfile } = useUserProfile();
   
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(userProfile);
+  // If userOverride is present, we start in editing mode, otherwise false
+  const [isEditing, setIsEditing] = useState(!!userOverride);
+  
+  // Initialize with override data or global profile data
+  const [formData, setFormData] = useState(userOverride || userProfile);
   const [zoomLevel, setZoomLevel] = useState(1);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Sync formData with global state when not editing or when global state changes externally
+  // Only if NOT using an override
   useEffect(() => {
-      if (!isEditing) {
+      if (!isEditing && !userOverride) {
           setFormData(userProfile);
       }
-  }, [userProfile, isEditing]);
+  }, [userProfile, isEditing, userOverride]);
 
   const selectedCountry = COUNTRIES.find(c => c.code === formData.countryCode) || COUNTRIES[0];
   const selectedColorObj = COLORS.find(c => c.name === formData.color) || COLORS[0];
@@ -132,18 +142,24 @@ export const BasicDetails = () => {
       return;
     }
     
-    // We update local state preview immediately
     const reader = new FileReader();
     reader.onload = (e) => {
-      setFormData(prev => ({ ...prev, avatar: e.target?.result as string }));
+      setFormData((prev: any) => ({ ...prev, avatar: e.target?.result as string }));
       setZoomLevel(1);
     };
     reader.readAsDataURL(file);
   };
 
   const handleSave = async () => {
-    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-    
+    // If override is provided, we delegate saving to parent
+    if (onSaveOverride) {
+        onSaveOverride(formData);
+        // We typically don't toggle isEditing here because the parent controls view state,
+        // but if it's a modal or similar, the parent handles closing.
+        return;
+    }
+
+    // Default behavior: Save to local user profile
     const saveAction = new Promise<void>((resolve) => {
         setTimeout(() => {
             saveProfile({ ...formData });
@@ -164,10 +180,20 @@ export const BasicDetails = () => {
     <div className="p-8 lg:p-12">
       <div className="max-w-5xl mx-auto animate-in fade-in duration-300">
         <div className="flex justify-between items-center mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
-           <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-             <User size={20} className="text-slate-400"/> Basic Details
-           </h2>
-           {!isEditing ? (
+           <div className="flex items-center gap-3">
+               {onBack && (
+                   <button onClick={onBack} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 transition-colors">
+                       <ChevronLeft size={20} />
+                   </button>
+               )}
+               <div>
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                        <User size={20} className="text-slate-400"/> {userOverride ? 'Edit User Profile' : 'Basic Details'}
+                    </h2>
+                    {userOverride && <p className="text-xs text-slate-500 mt-1">Managing settings for {formData.firstName} {formData.lastName}</p>}
+               </div>
+           </div>
+           {!isEditing && !userOverride ? (
              <button 
                onClick={() => setIsEditing(true)}
                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
@@ -179,12 +205,12 @@ export const BasicDetails = () => {
                onClick={handleSave}
                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors shadow-sm"
              >
-               Save
+               Save Changes
              </button>
            )}
         </div>
 
-        {/* --- Render View Mode --- */}
+        {/* --- Render View Mode (Only if NOT in Admin Override Mode) --- */}
         {!isEditing ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
              {/* Avatar Column */}
@@ -281,15 +307,6 @@ export const BasicDetails = () => {
                             {client}
                          </span>
                       ))}
-                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                   <label className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
-                      <Users size={12}/> Teams
-                   </label>
-                   <div className="flex flex-wrap gap-2">
-                      {/* Placeholder for empty teams based on screenshot */}
                    </div>
                 </div>
              </div>
@@ -422,8 +439,9 @@ export const BasicDetails = () => {
                      <input 
                         type="text" 
                         value={formData.email} 
-                        disabled
-                        className="w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-sm cursor-not-allowed"
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        disabled={!userOverride} // Only editable if admin overriding
+                        className={`w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-sm ${userOverride ? 'cursor-text bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200' : 'cursor-not-allowed'}`}
                      />
                   </div>
 
@@ -431,8 +449,16 @@ export const BasicDetails = () => {
                      <div className="space-y-1.5">
                         <label className="text-xs font-medium text-slate-600 dark:text-slate-400">Select Role <span className="text-red-500">*</span></label>
                         <div className="relative">
-                           <select disabled className="w-full appearance-none px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-sm cursor-not-allowed">
-                              <option>{formData.role}</option>
+                           <select 
+                             className={`w-full appearance-none px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg text-sm ${userOverride ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 cursor-pointer' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed'}`}
+                             disabled={!userOverride}
+                             value={formData.role}
+                             onChange={(e) => setFormData({...formData, role: e.target.value})}
+                           >
+                              <option value="Product Admin">Product Admin</option>
+                              <option value="Admin">Admin</option>
+                              <option value="Recruiter">Recruiter</option>
+                              <option value="Hiring Manager">Hiring Manager</option>
                            </select>
                            <ChevronDown size={16} className="absolute right-3 top-3 text-slate-400 pointer-events-none"/>
                         </div>

@@ -5,6 +5,8 @@ import { SETTINGS_CONTENT } from './constants';
 import { PlaceholderView } from './components/PlaceholderView';
 import { ReachOutLayouts } from './ReachOutLayouts';
 import { CompanyInfo } from './CompanyInfo';
+import { RolesPermissions } from './Roles/RolesPermissions';
+import { UsersSettings } from './Users/Users';
 
 export const SettingsPage = ({ activeTab }: { activeTab: string }) => {
   
@@ -16,6 +18,14 @@ export const SettingsPage = ({ activeTab }: { activeTab: string }) => {
 
     if (activeTab === 'COMPANY_INFO') {
         return <CompanyInfo />;
+    }
+
+    if (activeTab === 'ROLES') {
+        return <RolesPermissions />;
+    }
+
+    if (activeTab === 'USERS') {
+        return <UsersSettings />;
     }
 
     // Default to Placeholder for other sections
@@ -50,10 +60,15 @@ export const SettingsPage = ({ activeTab }: { activeTab: string }) => {
 
   return (
     <div className="flex h-full bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-      <div className="flex-1 overflow-y-auto p-8 lg:p-12 custom-scrollbar">
-         <div className="max-w-6xl mx-auto">
-            {renderContent()}
-         </div>
+      <div className="flex-1 overflow-y-auto p-0 custom-scrollbar">
+         {/* Roles and Users pages manage their own padding for full-screen feel */}
+         {['ROLES', 'USERS'].includes(activeTab) ? (
+             renderContent()
+         ) : (
+             <div className="p-8 lg:p-12 max-w-6xl mx-auto">
+                {renderContent()}
+             </div>
+         )}
       </div>
     </div>
   );
