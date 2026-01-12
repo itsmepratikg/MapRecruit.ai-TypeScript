@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   LayoutDashboard, Users, Briefcase, BarChart2, 
@@ -112,13 +113,15 @@ const AccountMenuContent = ({
     closeMenu,
     onNavigate,
     onLogout,
-    userProfile
+    userProfile,
+    setActiveAccountTab
 }: { 
     setIsThemeSettingsOpen: (v: boolean) => void,
     closeMenu?: () => void,
     onNavigate?: (view: any) => void,
     onLogout: () => void,
-    userProfile: any
+    userProfile: any,
+    setActiveAccountTab?: (tab: string) => void
 }) => {
     const userColorObj = COLORS.find(c => c.name === userProfile.color) || COLORS[0];
     
@@ -155,6 +158,7 @@ const AccountMenuContent = ({
         <div className="py-2 bg-white dark:bg-slate-800 rounded-b-lg">
             <button 
                 onClick={() => {
+                    if(setActiveAccountTab) setActiveAccountTab('BASIC_DETAILS');
                     if(onNavigate) onNavigate('MY_ACCOUNT');
                     if(closeMenu) closeMenu();
                 }}
@@ -179,7 +183,14 @@ const AccountMenuContent = ({
             <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                 <UserCog size={16} /> Product Admin Settings
             </button>
-            <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+            <button 
+                onClick={() => {
+                    if(setActiveAccountTab) setActiveAccountTab('AUTH_SYNC');
+                    if(onNavigate) onNavigate('MY_ACCOUNT');
+                    if(closeMenu) closeMenu();
+                }}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
+            >
                 <Lock size={16} /> Change Password
             </button>
 
@@ -215,7 +226,8 @@ const SidebarFooter = ({
   activePopover,
   onHover,
   onLeave,
-  onClosePopover
+  onClosePopover,
+  setActiveAccountTab
 }: { 
   setIsCreateProfileOpen: (v: boolean) => void,
   setIsCreateFolderOpen: (v: boolean) => void,
@@ -229,7 +241,8 @@ const SidebarFooter = ({
   activePopover: string | null,
   onHover: (id: string) => void,
   onLeave: () => void,
-  onClosePopover: () => void
+  onClosePopover: () => void,
+  setActiveAccountTab: (tab: string) => void
 }) => {
     const { isDesktop } = useScreenSize();
     const [mobileMenuOpen, setMobileMenuOpen] = useState<'client' | 'account' | 'create' | null>(null);
@@ -332,6 +345,7 @@ const SidebarFooter = ({
                             onLogout={onLogout}
                             userProfile={userProfile}
                             closeMenu={onClosePopover}
+                            setActiveAccountTab={setActiveAccountTab}
                         />
                     </div>
                 )}
@@ -357,6 +371,7 @@ const SidebarFooter = ({
                                 onNavigate={onNavigate}
                                 onLogout={onLogout}
                                 userProfile={userProfile}
+                                setActiveAccountTab={setActiveAccountTab}
                             />
                         )}
                     </div>
@@ -706,7 +721,7 @@ const ProfilesMenuContent = ({ onNavigate, onClose, activeView }: { onNavigate: 
         <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[80vh] overflow-hidden">
             <div className="py-1">
                 <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 mb-1 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
-                    <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Profiles Module</span>
+                    <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider Profiles Module">Profiles Module</span>
                     <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors lg:hidden"><X size={14}/></button>
                 </div>
                 
@@ -1318,6 +1333,7 @@ export const App = () => {
                      onHover={handlePopoverEnter}
                      onLeave={handlePopoverLeave}
                      onClosePopover={closePopover}
+                     setActiveAccountTab={setActiveAccountTab}
                    />
                )}
             </div>

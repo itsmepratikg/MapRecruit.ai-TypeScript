@@ -107,6 +107,7 @@ export const Play = (props: any) => <Icon {...props} iconClass="fa-solid fa-play
 export const Plus = (props: any) => <Icon {...props} iconClass="fa-solid fa-plus" />;
 export const PlusCircle = (props: any) => <Icon {...props} iconClass="fa-solid fa-circle-plus" />;
 export const Power = (props: any) => <Icon {...props} iconClass="fa-solid fa-power-off" />;
+export const QrCode = (props: any) => <Icon {...props} iconClass="fa-solid fa-qrcode" />;
 export const Redo2 = (props: any) => <Icon {...props} iconClass="fa-solid fa-rotate-right" />;
 export const RefreshCw = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrows-rotate" />;
 export const Repeat = (props: any) => <Icon {...props} iconClass="fa-solid fa-repeat" />;
