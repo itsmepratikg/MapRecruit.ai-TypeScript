@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { 
   Smile, Paperclip, Send, MoreHorizontal, CheckCircle, 
@@ -22,8 +21,41 @@ interface ChatAreaProps {
 
 const AVAILABLE_LABELS = ['Priority', 'Negotiation', 'Technical', 'Culture Fit', 'Offer Sent'];
 
+// Reusable Attachment Card Component
+const AttachmentItem: React.FC<{ attachment: Attachment, onDelete: () => void }> = ({ attachment, onDelete }) => {
+    return (
+        <div className="group relative flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-emerald-500 transition-colors min-w-[180px] max-w-[220px]">
+            {/* Preview/Icon */}
+            <div className="w-10 h-10 shrink-0 rounded bg-white dark:bg-slate-700 overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600">
+                {attachment.type === 'image' && attachment.url ? (
+                    <img src={attachment.url} alt={attachment.name} className="w-full h-full object-cover" />
+                ) : (
+                    <div className="text-slate-400">
+                         {attachment.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />}
+                    </div>
+                )}
+            </div>
+            
+            {/* Info */}
+            <div className="min-w-0 flex-1">
+                <p className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate" title={attachment.name}>{attachment.name}</p>
+                <p className="text-[10px] text-slate-400">{attachment.size}</p>
+            </div>
+
+            {/* Delete Action */}
+            <button 
+                onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:border-red-200 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                title="Remove attachment"
+            >
+                <X size={10} />
+            </button>
+        </div>
+    );
+};
+
 // --- EMAIL THREAD MODAL COMPONENT ---
-const EmailThreadModal = ({ message, onClose }: { message: Message, onClose: () => void }) => {
+const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: Message, onClose: () => void, onDeleteAttachment: (msgId: string, attId: string) => void }) => {
     // Generate Mock History for demonstration
     const threadMessages = useMemo(() => {
         const count = message.threadCount || 1;
@@ -49,9 +81,9 @@ const EmailThreadModal = ({ message, onClose }: { message: Message, onClose: () 
     const [currentIndex, setCurrentIndex] = useState(threadMessages.length - 1); // Default to latest
     const currentMsg = threadMessages[currentIndex];
 
-    // Collect all attachments
-    const allAttachments: Attachment[] = useMemo(() => {
-        return threadMessages.flatMap(m => m.attachments || []);
+    // Collect all attachments for the right panel
+    const allAttachments: { msgId: string, att: Attachment }[] = useMemo(() => {
+        return threadMessages.flatMap(m => (m.attachments || []).map(att => ({ msgId: m.id, att })));
     }, [threadMessages]);
 
     return (
@@ -112,15 +144,11 @@ const EmailThreadModal = ({ message, onClose }: { message: Message, onClose: () 
                                 <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Attachments in this email</h5>
                                 <div className="flex flex-wrap gap-3">
                                     {currentMsg.attachments.map((att, idx) => (
-                                        <div key={idx} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg group hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors cursor-pointer w-64">
-                                            <div className="p-2 bg-white dark:bg-slate-700 rounded border border-slate-100 dark:border-slate-600 text-slate-500 dark:text-slate-400">
-                                                {att.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />}
-                                            </div>
-                                            <div className="min-w-0 flex-1">
-                                                <p className="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">{att.name}</p>
-                                                <p className="text-xs text-slate-400">{att.size}</p>
-                                            </div>
-                                        </div>
+                                        <AttachmentItem 
+                                            key={idx} 
+                                            attachment={att} 
+                                            onDelete={() => onDeleteAttachment(currentMsg.id, att.id)} 
+                                        />
                                     ))}
                                 </div>
                             </div>
@@ -150,11 +178,11 @@ const EmailThreadModal = ({ message, onClose }: { message: Message, onClose: () 
                     </div>
                     
                     <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-3">
-                        {allAttachments.length > 0 ? allAttachments.map((att, idx) => (
-                            <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3 group hover:shadow-md transition-all">
+                        {allAttachments.length > 0 ? allAttachments.map(({ msgId, att }, idx) => (
+                            <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3 group hover:shadow-md transition-all relative">
                                 <div className="flex items-start gap-3">
-                                    <div className="w-10 h-10 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400 shrink-0">
-                                        {att.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />}
+                                    <div className="w-10 h-10 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400 shrink-0 border border-slate-200 dark:border-slate-600 overflow-hidden">
+                                        {att.type === 'image' && att.url ? <img src={att.url} alt="prev" className="w-full h-full object-cover" /> : (att.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />)}
                                     </div>
                                     <div className="min-w-0 flex-1">
                                         <p className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate mb-1" title={att.name}>{att.name}</p>
@@ -169,6 +197,13 @@ const EmailThreadModal = ({ message, onClose }: { message: Message, onClose: () 
                                         </div>
                                     </div>
                                 </div>
+                                <button 
+                                    onClick={(e) => { e.stopPropagation(); onDeleteAttachment(msgId, att.id); }}
+                                    className="absolute top-2 right-2 p-1 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                    title="Remove"
+                                >
+                                    <X size={12} />
+                                </button>
                             </div>
                         )) : (
                             <div className="text-center py-10 text-slate-400">
@@ -277,6 +312,12 @@ export const ChatArea = ({
     onSendMessage(inputText, inputMode === 'NOTE', replyChannel, subjectToSend);
     setInputText('');
     setEmailSubject(''); 
+  };
+
+  const handleDeleteAttachment = (msgId: string, attId: string) => {
+      // Mock deletion
+      addToast("Attachment deleted", "success");
+      // In a real app, this would dispatch an update to the conversation state to remove the attachment.
   };
 
   const handleLabelToggle = (label: string) => {
@@ -449,13 +490,11 @@ export const ChatArea = ({
                                 {msg.attachments && msg.attachments.length > 0 && (
                                     <div className="mt-4 flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
                                         {msg.attachments.map((att, i) => (
-                                            <div key={i} className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-700 rounded border border-slate-100 dark:border-slate-600 min-w-[140px]">
-                                                <div className="p-1 bg-white dark:bg-slate-600 rounded text-slate-400"><File size={14} /></div>
-                                                <div className="min-w-0">
-                                                    <p className="text-xs font-medium truncate">{att.name}</p>
-                                                    <p className="text-[9px] text-slate-400">{att.size}</p>
-                                                </div>
-                                            </div>
+                                            <AttachmentItem 
+                                                key={i} 
+                                                attachment={att} 
+                                                onDelete={() => handleDeleteAttachment(msg.id, att.id)} 
+                                            />
                                         ))}
                                     </div>
                                 )}
@@ -517,7 +556,8 @@ export const ChatArea = ({
         {viewingThread && (
             <EmailThreadModal 
                 message={viewingThread} 
-                onClose={() => setViewingThread(null)} 
+                onClose={() => setViewingThread(null)}
+                onDeleteAttachment={handleDeleteAttachment}
             />
         )}
 

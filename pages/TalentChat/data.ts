@@ -33,7 +33,8 @@ export const MOCK_CONVERSATIONS: Conversation[] = [
         subject: 'Application Follow-up - Senior Software Engineer',
         threadCount: 3,
         attachments: [
-            { id: 'att1', name: 'Job_Description.pdf', type: 'file', size: '1.2 MB' }
+            { id: 'att1', name: 'Design_Mockup.png', type: 'image', size: '2.4 MB', url: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=150&auto=format&fit=crop' },
+            { id: 'att2', name: 'Job_Description.pdf', type: 'file', size: '1.2 MB' }
         ]
       },
       { 
