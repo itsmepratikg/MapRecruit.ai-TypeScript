@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   X, CheckCircle, UserPlus, Briefcase, FolderPlus, Tag, User, 
@@ -5,7 +6,7 @@ import {
   Activity, History, Bell
 } from '../Icons';
 import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from '../../data';
-import { PROFILES_CATEGORIES, SETTINGS_CATEGORIES } from './constants';
+import { PROFILES_CATEGORIES, SETTINGS_CATEGORIES, TALENT_CHAT_MENU } from './constants';
 import { COLORS } from '../../data/profile';
 import { Campaign } from '../../types';
 
@@ -392,6 +393,41 @@ export const ProfilesMenuContent = ({ onNavigate, onClose, activeView }: { onNav
                             </div>
                         );
                     })}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- Talent Chat Menu ---
+export const TalentChatMenuContent = ({ 
+    onNavigate, 
+    onClose, 
+    activeTab 
+}: { 
+    onNavigate: (tab: string) => void, 
+    onClose: () => void, 
+    activeTab: string 
+}) => {
+    return (
+        <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 flex flex-col max-h-[80vh] overflow-hidden">
+            <div className="py-1">
+                 <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 mb-1 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
+                    <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Talent Chat</span>
+                    <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors lg:hidden"><X size={14}/></button>
+                </div>
+                
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-1">
+                    {TALENT_CHAT_MENU.map(item => (
+                        <button 
+                            key={item.id}
+                            onClick={(e) => { e.stopPropagation(); onNavigate(item.id); onClose(); }}
+                            className={`w-full text-left px-4 py-2.5 text-xs flex items-center gap-2 transition-colors rounded-md ${activeTab === item.id ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
+                        >
+                            <item.icon size={14} className={activeTab === item.id ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"} />
+                            {item.label}
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>

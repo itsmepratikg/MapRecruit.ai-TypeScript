@@ -16,6 +16,7 @@ import { Login } from './pages/Login/index';
 import { Activities } from './pages/Activities/index';
 import { PreviousHistory } from './pages/PreviousHistory/index';
 import { Notifications } from './pages/Notifications/index';
+import { TalentChat } from './pages/TalentChat/index';
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 import { CreateFolderModal } from './pages/Profiles/FoldersMetrics/CreateFolderModal';
@@ -37,8 +38,9 @@ import { SettingsMenu } from './components/Menu/SettingsMenu';
 import { MyAccountMenu } from './components/Menu/MyAccountMenu';
 import { CandidateMenu } from './components/Menu/CandidateMenu';
 import { UserAdminMenu } from './components/Menu/UserAdminMenu';
+import { TalentChatMenu } from './components/Menu/TalentChatMenu';
 
-type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS' | 'MY_ACCOUNT' | 'ACTIVITIES' | 'HISTORY' | 'NOTIFICATIONS';
+type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS' | 'MY_ACCOUNT' | 'ACTIVITIES' | 'HISTORY' | 'NOTIFICATIONS' | 'TALENT_CHAT';
 
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,6 +67,7 @@ export const App = () => {
   
   const [activeSettingsTab, setActiveSettingsTab] = useState('COMPANY_INFO');
   const [activeAccountTab, setActiveAccountTab] = useState('BASIC_DETAILS'); 
+  const [activeTalentChatTab, setActiveTalentChatTab] = useState('CONVERSATIONS');
 
   // Admin User Management State
   const [selectedAdminUser, setSelectedAdminUser] = useState<any>(null);
@@ -206,6 +209,7 @@ export const App = () => {
       if (data.accountTab) {
           setActiveAccountTab(data.accountTab);
       }
+      // Handle Talent Chat Deep Link if needed (though global search might not have it yet)
     } else if (type === 'CAMPAIGN') {
       handleNavigateToCampaign(data);
     } else if (type === 'CANDIDATE') {
@@ -323,6 +327,14 @@ export const App = () => {
                           isCollapsed={isCollapsed}
                           setIsSidebarOpen={setIsSidebarOpen}
                       />
+                  ) : activeView === 'TALENT_CHAT' ? (
+                      <TalentChatMenu 
+                          activeTab={activeTalentChatTab}
+                          setActiveTab={setActiveTalentChatTab}
+                          onBack={() => setActiveView('DASHBOARD')}
+                          isCollapsed={isCollapsed}
+                          setIsSidebarOpen={setIsSidebarOpen}
+                      />
                   ) : (
                       // Default Dashboard Menu
                       <DashboardMenu 
@@ -340,6 +352,8 @@ export const App = () => {
                           setActiveProfileSubView={setActiveProfileSubView}
                           activeSettingsTab={activeSettingsTab}
                           setActiveSettingsTab={setActiveSettingsTab}
+                          activeTalentChatTab={activeTalentChatTab}
+                          setActiveTalentChatTab={setActiveTalentChatTab}
                           userProfile={userProfile}
                           onNavigateToCampaign={handleNavigateToCampaign}
                           handleNavigateToCampaignList={handleNavigateToCampaignList}
@@ -412,6 +426,7 @@ export const App = () => {
                {activeView === 'ACTIVITIES' && <Activities />}
                {activeView === 'HISTORY' && <PreviousHistory onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />}
                {activeView === 'NOTIFICATIONS' && <Notifications onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />}
+               {activeView === 'TALENT_CHAT' && <TalentChat activeTab={activeTalentChatTab} />}
             </div>
 
             {/* Create Profile Modal */}

@@ -1,8 +1,8 @@
 
 import React, { useState, useRef } from 'react';
-import { LayoutDashboard, Briefcase, Users, BarChart2, Settings, ChevronRight } from '../Icons';
+import { LayoutDashboard, Briefcase, Users, BarChart2, Settings, ChevronRight, MessageSquare } from '../Icons';
 import { NavItem } from './NavItem';
-import { CampaignMenuContent, ProfilesMenuContent, SettingsMenuContent } from './Flyouts';
+import { CampaignMenuContent, ProfilesMenuContent, SettingsMenuContent, TalentChatMenuContent } from './Flyouts';
 import { useScreenSize } from '../../hooks/useScreenSize';
 
 interface DashboardMenuProps {
@@ -14,6 +14,8 @@ interface DashboardMenuProps {
     setActiveProfileSubView: (v: string) => void;
     activeSettingsTab: string;
     setActiveSettingsTab: (v: string) => void;
+    activeTalentChatTab: string;
+    setActiveTalentChatTab: (v: string) => void;
     userProfile: any;
     onNavigateToCampaign: (campaign: any) => void;
     handleNavigateToCampaignList: (tab: string) => void;
@@ -28,6 +30,8 @@ export const DashboardMenu = ({
     setActiveProfileSubView,
     activeSettingsTab,
     setActiveSettingsTab,
+    activeTalentChatTab,
+    setActiveTalentChatTab,
     userProfile,
     onNavigateToCampaign,
     handleNavigateToCampaignList
@@ -120,7 +124,7 @@ export const DashboardMenu = ({
             >
                 <div className="flex items-center gap-3">
                     <Users size={20} className={activePopover === 'profiles' ? 'text-emerald-600 dark:text-emerald-300' : 'text-slate-400 dark:text-slate-500'} />
-                    <span className={isCollapsed ? 'hidden' : 'block'}>Profiles</span>
+                    <span className="isCollapsed ? 'hidden' : 'block'">Profiles</span>
                 </div>
                 {!isCollapsed && <ChevronRight size={16} className={`transition-transform duration-200 ${activePopover === 'profiles' ? 'rotate-90 text-emerald-600' : ''}`} />}
             </button>
@@ -179,6 +183,41 @@ export const DashboardMenu = ({
                     />
                 </div>
             )}
+            </div>
+
+            {/* Talent Chat Item with Hover Menu */}
+            <div className="relative" onMouseEnter={() => handlePopoverEnter('talentchat')} onMouseLeave={handlePopoverLeave}>
+                <button 
+                    onClick={() => {
+                        onNavigate('TALENT_CHAT');
+                        setActiveTalentChatTab('CONVERSATIONS');
+                    }}
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${activePopover === 'talentchat' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
+                >
+                    <div className="flex items-center gap-3">
+                        <MessageSquare size={20} className={activePopover === 'talentchat' ? 'text-emerald-600 dark:text-emerald-300' : 'text-slate-400 dark:text-slate-500'} />
+                        <span className={isCollapsed ? 'hidden' : 'block'}>Talent Chat</span>
+                    </div>
+                    {!isCollapsed && <ChevronRight size={16} className={`transition-transform duration-200 ${activePopover === 'talentchat' ? 'rotate-90 text-emerald-600' : ''}`} />}
+                </button>
+
+                {/* Desktop Hover Flyout */}
+                {isDesktop && (
+                    <div 
+                        className={getPopoverClass('talentchat')}
+                        onMouseEnter={() => handlePopoverEnter('talentchat')}
+                        onMouseLeave={handlePopoverLeave}
+                    >
+                        <TalentChatMenuContent 
+                            onNavigate={(tabId) => {
+                                onNavigate('TALENT_CHAT');
+                                setActiveTalentChatTab(tabId);
+                            }}
+                            onClose={closePopover}
+                            activeTab={activeView === 'TALENT_CHAT' ? activeTalentChatTab : ''}
+                        />
+                    </div>
+                )}
             </div>
         </>
     );

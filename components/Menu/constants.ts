@@ -2,7 +2,8 @@
 import { 
   User, FileText, Activity, MessageCircle, Briefcase, FolderOpen, Video, ThumbsUp, Copy,
   MessageSquare, SlidersHorizontal, Calendar, Shield, Lock, Bell, Clock,
-  Building2, Search, GitBranch, ClipboardList, Tag, Database, Mail, CreditCard, Palette, Layout
+  Building2, Search, GitBranch, ClipboardList, Tag, Database, Mail, CreditCard, Palette, Layout,
+  Key, BarChart2
 } from '../Icons';
 
 export const PROFILE_TABS = [
@@ -122,5 +123,12 @@ export const PROFILES_CATEGORIES = [
   }
 ];
 
+export const TALENT_CHAT_MENU = [
+  { id: 'CONVERSATIONS', label: 'Conversations', icon: MessageSquare },
+  { id: 'KEYWORDS', label: 'Keywords', icon: Key },
+  { id: 'SCHEDULES', label: 'Schedules', icon: Calendar },
+  { id: 'ANALYTICS', label: 'Analytics', icon: BarChart2 },
+];
+
 // Helper Imports for Icons used above but not directly in arrays (to satisfy TS)
-import { Users, MapPin, Target, BarChart2, Share2, Heart } from '../Icons';
+import { Users, MapPin, Target, Share2, Heart } from '../Icons';

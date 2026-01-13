@@ -63,6 +63,7 @@ export const FolderOpen = (props: any) => <Icon {...props} iconClass="fa-solid f
 export const FolderPlus = (props: any) => <Icon {...props} iconClass="fa-solid fa-folder-plus" />;
 export const GitBranch = (props: any) => <Icon {...props} iconClass="fa-solid fa-code-branch" />;
 export const GitGraph = (props: any) => <Icon {...props} iconClass="fa-solid fa-diagram-project" />;
+export const Github = (props: any) => <Icon {...props} iconClass="fa-brands fa-github" />;
 export const Globe = (props: any) => <Icon {...props} iconClass="fa-solid fa-globe" />;
 export const GripHorizontal = (props: any) => <Icon {...props} iconClass="fa-solid fa-grip-lines" />;
 export const Heart = (props: any) => <Icon {...props} iconClass="fa-solid fa-heart" />;
@@ -126,6 +127,7 @@ export const Shield = (props: any) => <Icon {...props} iconClass="fa-solid fa-sh
 export const Sidebar = (props: any) => <Icon {...props} iconClass="fa-solid fa-table-columns" />;
 export const SlidersHorizontal = (props: any) => <Icon {...props} iconClass="fa-solid fa-sliders" />;
 export const Smartphone = (props: any) => <Icon {...props} iconClass="fa-solid fa-mobile-screen" />;
+export const Smile = (props: any) => <Icon {...props} iconClass="fa-regular fa-face-smile" />;
 export const Sparkles = (props: any) => <Icon {...props} iconClass="fa-solid fa-wand-magic-sparkles" />;
 export const Split = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrows-split-up-and-left" />;
 export const Square = (props: any) => <Icon {...props} iconClass="fa-regular fa-square" />;
