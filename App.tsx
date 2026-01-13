@@ -13,6 +13,9 @@ import { CampaignDashboard } from './pages/Campaign/index';
 import { SettingsPage } from './pages/Settings/index';
 import { MyAccount } from './pages/MyAccount/index'; 
 import { Login } from './pages/Login/index';
+import { Activities } from './pages/Activities/index';
+import { PreviousHistory } from './pages/PreviousHistory/index';
+import { Notifications } from './pages/Notifications/index';
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 import { CreateFolderModal } from './pages/Profiles/FoldersMetrics/CreateFolderModal';
@@ -34,7 +37,7 @@ import { MyAccountMenu } from './components/Menu/MyAccountMenu';
 import { CandidateMenu } from './components/Menu/CandidateMenu';
 import { UserAdminMenu } from './components/Menu/UserAdminMenu';
 
-type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS' | 'MY_ACCOUNT';
+type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS' | 'MY_ACCOUNT' | 'ACTIVITIES' | 'HISTORY' | 'NOTIFICATIONS';
 
 export const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -180,6 +183,9 @@ export const App = () => {
       }
       if (data.settingsTab) {
           setActiveSettingsTab(data.settingsTab);
+      }
+      if (data.accountTab) {
+          setActiveAccountTab(data.accountTab);
       }
     } else if (type === 'CAMPAIGN') {
       handleNavigateToCampaign(data);
@@ -383,6 +389,10 @@ export const App = () => {
                )}
 
                {activeView === 'MY_ACCOUNT' && <MyAccount activeTab={activeAccountTab} />}
+
+               {activeView === 'ACTIVITIES' && <Activities />}
+               {activeView === 'HISTORY' && <PreviousHistory onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />}
+               {activeView === 'NOTIFICATIONS' && <Notifications onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />}
             </div>
 
             {/* Create Profile Modal */}

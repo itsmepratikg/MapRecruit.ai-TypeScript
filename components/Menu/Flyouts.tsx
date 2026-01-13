@@ -1,8 +1,8 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   X, CheckCircle, UserPlus, Briefcase, FolderPlus, Tag, User, 
-  Settings, UserCog, Lock, Palette, LogOut, Search, ChevronRight, ChevronDown 
+  Settings, UserCog, Lock, Palette, LogOut, Search, ChevronRight, ChevronDown,
+  Activity, History, Bell
 } from '../Icons';
 import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from '../../data';
 import { PROFILES_CATEGORIES, SETTINGS_CATEGORIES } from './constants';
@@ -114,7 +114,7 @@ export const AccountMenuContent = ({
             </div>
         </div>
         
-        <div className="py-2 bg-white dark:bg-slate-800 rounded-b-lg">
+        <div className="py-2 bg-white dark:bg-slate-800 rounded-b-lg overflow-y-auto max-h-[600px] custom-scrollbar">
             <button 
                 onClick={() => {
                     if(setActiveAccountTab) setActiveAccountTab('BASIC_DETAILS');
@@ -127,6 +127,21 @@ export const AccountMenuContent = ({
                     <User size={16} /> <span className="font-medium">My Account</span>
                 </div>
             </button>
+
+            {/* New Added Items */}
+            <button onClick={() => { if(onNavigate) onNavigate('ACTIVITIES'); if(closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <Activity size={16} /> Activities
+            </button>
+            
+            <button onClick={() => { if(onNavigate) onNavigate('HISTORY'); if(closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <History size={16} /> History
+            </button>
+
+            <button onClick={() => { if(onNavigate) onNavigate('NOTIFICATIONS'); if(closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <Bell size={16} /> Notifications
+            </button>
+
+            <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
 
             <button onClick={() => { if(onNavigate) onNavigate('SETTINGS'); if(closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                 <Settings size={16} /> Admin Settings
@@ -142,6 +157,7 @@ export const AccountMenuContent = ({
             <button onClick={() => { setIsThemeSettingsOpen(true); if(closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                 <Palette size={16} /> Themes
             </button>
+            
             <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
             <button onClick={() => { onLogout(); if(closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium">
                 <LogOut size={16} /> Logout
