@@ -1,14 +1,16 @@
+
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { 
   Smile, Paperclip, Send, MoreHorizontal, CheckCircle, 
   Clock, Phone, Video, Search, ChevronLeft, Lock, UserPlus, Tag, Trash2, Edit2,
   X, User, Mail, MessageSquare, ChevronDown, AlertTriangle, AlertCircle, ChevronUp, Check, Layers,
-  ChevronRight, File, Image as ImageIcon, Download, ExternalLink
+  ChevronRight, File, Image as ImageIcon, Download, ExternalLink, Shield, Activity, EyeOff
 } from '../../../components/Icons';
 import { Conversation, Message, ChannelType, Attachment } from '../types';
 import { useUserProfile } from '../../../hooks/useUserProfile';
 import { useToast } from '../../../components/Toast';
 import { MOCK_USERS_LIST } from '../../../data';
+import { ConfirmationModal } from '../../../components/ConfirmationModal';
 
 interface ChatAreaProps {
   conversation: Conversation;
@@ -21,41 +23,118 @@ interface ChatAreaProps {
 
 const AVAILABLE_LABELS = ['Priority', 'Negotiation', 'Technical', 'Culture Fit', 'Offer Sent'];
 
+type AttachmentActionType = 'CREATE_PROFILE' | 'MARK_SENSITIVE' | 'DOWNLOAD';
+
 // Reusable Attachment Card Component
-const AttachmentItem: React.FC<{ attachment: Attachment, onDelete: () => void }> = ({ attachment, onDelete }) => {
+const AttachmentItem: React.FC<{ 
+    attachment: Attachment, 
+    onAction: (action: AttachmentActionType, att: Attachment) => void,
+    onDelete: () => void 
+}> = ({ attachment, onAction, onDelete }) => {
+    const [showMenu, setShowMenu] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setShowMenu(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const isSensitive = attachment.isSensitive;
+
     return (
         <div className="group relative flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-emerald-500 transition-colors min-w-[180px] max-w-[220px]">
             {/* Preview/Icon */}
-            <div className="w-10 h-10 shrink-0 rounded bg-white dark:bg-slate-700 overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600">
-                {attachment.type === 'image' && attachment.url ? (
-                    <img src={attachment.url} alt={attachment.name} className="w-full h-full object-cover" />
-                ) : (
-                    <div className="text-slate-400">
-                         {attachment.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />}
+            <div className={`w-10 h-10 shrink-0 rounded bg-white dark:bg-slate-700 overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-600 relative ${isSensitive ? 'bg-slate-100 dark:bg-slate-800' : ''}`}>
+                {isSensitive ? (
+                    <div className="flex items-center justify-center w-full h-full text-slate-400" title="Sensitive Content">
+                        <EyeOff size={16} />
                     </div>
+                ) : (
+                    attachment.type === 'image' && attachment.url ? (
+                        <img src={attachment.url} alt={attachment.name} className="w-full h-full object-cover" />
+                    ) : (
+                        <div className="text-slate-400">
+                            {attachment.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />}
+                        </div>
+                    )
                 )}
             </div>
             
             {/* Info */}
             <div className="min-w-0 flex-1">
-                <p className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate" title={attachment.name}>{attachment.name}</p>
+                <p className={`text-xs font-medium truncate ${isSensitive ? 'text-slate-400 italic' : 'text-slate-700 dark:text-slate-200'}`} title={attachment.name}>
+                    {isSensitive ? 'Hidden Content' : attachment.name}
+                </p>
                 <p className="text-[10px] text-slate-400">{attachment.size}</p>
             </div>
 
-            {/* Delete Action */}
-            <button 
-                onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:border-red-200 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                title="Remove attachment"
-            >
-                <X size={10} />
-            </button>
+            {/* Action Menu Trigger */}
+            <div className="relative" ref={menuRef}>
+                <button 
+                    onClick={(e) => { e.stopPropagation(); setShowMenu(!showMenu); }}
+                    className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full text-slate-400 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                >
+                    <MoreHorizontal size={14} />
+                </button>
+
+                {showMenu && (
+                    <div className="absolute right-0 top-6 w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-100 origin-top-right">
+                        {!isSensitive && (
+                            <button 
+                                onClick={(e) => { e.stopPropagation(); onAction('CREATE_PROFILE', attachment); setShowMenu(false); }}
+                                className="w-full text-left px-3 py-2 text-xs hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-200"
+                            >
+                                <UserPlus size={12} className="text-blue-500" /> Create Profile
+                            </button>
+                        )}
+                        
+                        {!isSensitive && (
+                             <button 
+                                onClick={(e) => { e.stopPropagation(); onAction('DOWNLOAD', attachment); setShowMenu(false); }}
+                                className="w-full text-left px-3 py-2 text-xs hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-200"
+                            >
+                                <Download size={12} className="text-green-500" /> Download
+                            </button>
+                        )}
+
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); onAction('MARK_SENSITIVE', attachment); setShowMenu(false); }}
+                            className="w-full text-left px-3 py-2 text-xs hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-200"
+                        >
+                            <Shield size={12} className={isSensitive ? "text-slate-400" : "text-amber-500"} /> 
+                            {isSensitive ? 'Unmark Sensitive' : 'Mark as Sensitive'}
+                        </button>
+
+                        <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
+                        
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); onDelete(); setShowMenu(false); }}
+                            className="w-full text-left px-3 py-2 text-xs hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2 text-red-600 dark:text-red-400"
+                        >
+                            <Trash2 size={12} /> Delete
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
 
 // --- EMAIL THREAD MODAL COMPONENT ---
-const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: Message, onClose: () => void, onDeleteAttachment: (msgId: string, attId: string) => void }) => {
+const EmailThreadModal = ({ 
+    message, 
+    onClose, 
+    onDeleteAttachment 
+}: { 
+    message: Message, 
+    onClose: () => void, 
+    onDeleteAttachment: (msgId: string, attId: string) => void 
+}) => {
     // Generate Mock History for demonstration
     const threadMessages = useMemo(() => {
         const count = message.threadCount || 1;
@@ -66,7 +145,7 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
             history.push({
                 ...message,
                 id: `${message.id}_hist_${i}`,
-                subject: i === 0 ? message.subject?.replace('Re: ', '') : message.subject, // Original subject for first
+                subject: i === 0 ? message.subject?.replace('Re: ', '') : message.subject, 
                 content: `<p>This is a previous message in the thread sequence (${i + 1}). It contains context relevant to the conversation.</p><p>Best,<br/>Sender ${i+1}</p>`,
                 timestamp: new Date(new Date(message.timestamp).getTime() - (count - i) * 86400000).toISOString(),
                 attachments: i === 0 ? [{ id: `att_h_${i}`, name: 'Original_Req.pdf', size: '2.1 MB', type: 'file' }] : [],
@@ -78,7 +157,7 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
         return history;
     }, [message]);
 
-    const [currentIndex, setCurrentIndex] = useState(threadMessages.length - 1); // Default to latest
+    const [currentIndex, setCurrentIndex] = useState(threadMessages.length - 1); 
     const currentMsg = threadMessages[currentIndex];
 
     // Collect all attachments for the right panel
@@ -86,8 +165,81 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
         return threadMessages.flatMap(m => (m.attachments || []).map(att => ({ msgId: m.id, att })));
     }, [threadMessages]);
 
+    // Handle Actions inside modal (Local state for simplicity in this demo view)
+    const [modalAttachments, setModalAttachments] = useState(allAttachments);
+    const [actionState, setActionState] = useState<{ type: AttachmentActionType, attachment: Attachment, msgId: string } | null>(null);
+    const { addToast } = useToast();
+
+    // Sync if props change (though this is a static demo mostly)
+    useEffect(() => {
+        setModalAttachments(allAttachments);
+    }, [allAttachments]);
+
+    const handleConfirmAction = () => {
+        if (!actionState) return;
+
+        const { type, attachment } = actionState;
+        
+        if (type === 'CREATE_PROFILE') {
+            addToast(`Profile creation started for ${attachment.name}`, 'success');
+            addToast(`Activity Logged: User sent ${attachment.name} to parser`, 'info');
+        } else if (type === 'MARK_SENSITIVE') {
+            const isNowSensitive = !attachment.isSensitive;
+            // Update local state to reflect change visually in the modal
+            setModalAttachments(prev => prev.map(item => 
+                item.att.id === attachment.id ? { ...item, att: { ...item.att, isSensitive: isNowSensitive } } : item
+            ));
+            addToast(isNowSensitive ? "Attachment marked as sensitive" : "Attachment unmarked as sensitive", "success");
+            addToast(`Activity Logged: User marked ${attachment.name} as ${isNowSensitive ? 'Sensitive' : 'Normal'}`, 'info');
+        } else if (type === 'DOWNLOAD') {
+            addToast(`Downloading ${attachment.name}...`, 'success');
+            addToast(`Activity Logged: User downloaded ${attachment.name}`, 'info');
+        }
+
+        setActionState(null);
+    };
+
+    const getConfirmationDetails = () => {
+        if (!actionState) return { title: '', message: '', confirmText: '' };
+        switch (actionState.type) {
+            case 'CREATE_PROFILE':
+                return {
+                    title: 'Create Candidate Profile?',
+                    message: `This will send "${actionState.attachment.name}" to our parsing engine to automatically create a new candidate profile. An activity log will be created.`,
+                    confirmText: 'Create Profile'
+                };
+            case 'MARK_SENSITIVE':
+                const isCurrentlySensitive = actionState.attachment.isSensitive;
+                return {
+                    title: isCurrentlySensitive ? 'Unmark as Sensitive?' : 'Mark as Sensitive Content?',
+                    message: isCurrentlySensitive 
+                        ? `This will make "${actionState.attachment.name}" visible to all users with access to this conversation. Access activity will be logged.`
+                        : `This will block preview and download access for "${actionState.attachment.name}" to protect sensitive data. You can unmark it later. An activity log will be created.`,
+                    confirmText: isCurrentlySensitive ? 'Unmark' : 'Mark Sensitive'
+                };
+            case 'DOWNLOAD':
+                return {
+                    title: 'Download Attachment?',
+                    message: `You are about to download "${actionState.attachment.name}". This action will be logged in the candidate's activity history for compliance.`,
+                    confirmText: 'Download File'
+                };
+        }
+    };
+
+    const confirmDetails = getConfirmationDetails();
+
     return (
         <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+            
+            <ConfirmationModal 
+                isOpen={!!actionState}
+                onClose={() => setActionState(null)}
+                onConfirm={handleConfirmAction}
+                title={confirmDetails.title}
+                message={confirmDetails.message}
+                confirmText={confirmDetails.confirmText}
+            />
+
             <div className="bg-white dark:bg-slate-900 w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-200 dark:border-slate-700 animate-in zoom-in-95 duration-200">
                 
                 {/* COLUMN 1: Email Reader (Carousel) */}
@@ -138,15 +290,17 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
                             <div dangerouslySetInnerHTML={{ __html: currentMsg.content }} />
                         </div>
                         
-                        {/* Attachments for THIS message */}
-                        {currentMsg.attachments && currentMsg.attachments.length > 0 && (
+                        {/* Attachments for THIS message in modal */}
+                        {/* Note: We filter the modalAttachments to show only ones for this message ID */}
+                        {modalAttachments.filter(item => item.msgId === currentMsg.id).length > 0 && (
                             <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
                                 <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Attachments in this email</h5>
                                 <div className="flex flex-wrap gap-3">
-                                    {currentMsg.attachments.map((att, idx) => (
+                                    {modalAttachments.filter(item => item.msgId === currentMsg.id).map(({ att }, idx) => (
                                         <AttachmentItem 
                                             key={idx} 
                                             attachment={att} 
+                                            onAction={(type, a) => setActionState({ type, attachment: a, msgId: currentMsg.id })}
                                             onDelete={() => onDeleteAttachment(currentMsg.id, att.id)} 
                                         />
                                     ))}
@@ -170,7 +324,7 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
                 <div className="w-full md:w-80 bg-slate-50 dark:bg-slate-950/50 flex flex-col border-l border-slate-200 dark:border-slate-800 md:h-auto h-1/3">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900">
                         <h4 className="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2">
-                            <Paperclip size={16} /> Thread Attachments ({allAttachments.length})
+                            <Paperclip size={16} /> Thread Attachments ({modalAttachments.length})
                         </h4>
                         <button onClick={onClose} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-400 transition-colors">
                             <X size={20} />
@@ -178,33 +332,13 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
                     </div>
                     
                     <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-3">
-                        {allAttachments.length > 0 ? allAttachments.map(({ msgId, att }, idx) => (
-                            <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3 group hover:shadow-md transition-all relative">
-                                <div className="flex items-start gap-3">
-                                    <div className="w-10 h-10 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400 shrink-0 border border-slate-200 dark:border-slate-600 overflow-hidden">
-                                        {att.type === 'image' && att.url ? <img src={att.url} alt="prev" className="w-full h-full object-cover" /> : (att.type === 'image' ? <ImageIcon size={20} /> : <File size={20} />)}
-                                    </div>
-                                    <div className="min-w-0 flex-1">
-                                        <p className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate mb-1" title={att.name}>{att.name}</p>
-                                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{att.size}</p>
-                                        <div className="flex gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                            <button className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
-                                                <Download size={12} /> Download
-                                            </button>
-                                            <button className="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1">
-                                                <ExternalLink size={12} /> View
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button 
-                                    onClick={(e) => { e.stopPropagation(); onDeleteAttachment(msgId, att.id); }}
-                                    className="absolute top-2 right-2 p-1 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    title="Remove"
-                                >
-                                    <X size={12} />
-                                </button>
-                            </div>
+                        {modalAttachments.length > 0 ? modalAttachments.map(({ msgId, att }, idx) => (
+                            <AttachmentItem 
+                                key={idx} 
+                                attachment={att} 
+                                onAction={(type, a) => setActionState({ type, attachment: a, msgId })}
+                                onDelete={() => onDeleteAttachment(msgId, att.id)}
+                            />
                         )) : (
                             <div className="text-center py-10 text-slate-400">
                                 <Paperclip size={32} className="mx-auto mb-2 opacity-50" />
@@ -212,14 +346,6 @@ const EmailThreadModal = ({ message, onClose, onDeleteAttachment }: { message: M
                             </div>
                         )}
                     </div>
-                    
-                    {allAttachments.length > 0 && (
-                        <div className="p-4 border-t border-slate-200 dark:border-slate-800">
-                            <button className="w-full py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                                Download All ({allAttachments.length})
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>
@@ -249,6 +375,9 @@ export const ChatArea = ({
   // Thread View State
   const [expandedThreadId, setExpandedThreadId] = useState<string | null>(null);
   const [viewingThread, setViewingThread] = useState<Message | null>(null); // For Modal
+
+  // Action State for Confirmation Modal in main view
+  const [pendingAction, setPendingAction] = useState<{ type: AttachmentActionType, attachment: Attachment, msgId: string } | null>(null);
 
   // UI States
   const [isLabelMenuOpen, setIsLabelMenuOpen] = useState(false);
@@ -319,6 +448,62 @@ export const ChatArea = ({
       addToast("Attachment deleted", "success");
       // In a real app, this would dispatch an update to the conversation state to remove the attachment.
   };
+
+  const handleAttachmentAction = (type: AttachmentActionType, attachment: Attachment, msgId: string) => {
+      setPendingAction({ type, attachment, msgId });
+  };
+
+  const confirmAttachmentAction = () => {
+      if (!pendingAction) return;
+      const { type, attachment } = pendingAction;
+
+      if (type === 'CREATE_PROFILE') {
+          addToast(`Profile creation started for ${attachment.name}`, 'success');
+          addToast(`Activity Logged: User sent ${attachment.name} to parser`, 'info');
+      } else if (type === 'MARK_SENSITIVE') {
+          // This would ideally update the message state in parent, 
+          // here we simulate by just toasting since mock data is static in this scope for deep updates
+          const isNowSensitive = !attachment.isSensitive;
+          addToast(isNowSensitive ? "Attachment marked as sensitive" : "Attachment unmarked as sensitive", "success");
+          addToast(`Activity Logged: User marked ${attachment.name} as ${isNowSensitive ? 'Sensitive' : 'Normal'}`, 'info');
+          
+          // Force re-render trick for demo if needed, but in real app state update triggers it
+      } else if (type === 'DOWNLOAD') {
+          addToast(`Downloading ${attachment.name}...`, 'success');
+          addToast(`Activity Logged: User downloaded ${attachment.name}`, 'info');
+      }
+
+      setPendingAction(null);
+  };
+
+  const getConfirmationDetails = () => {
+        if (!pendingAction) return { title: '', message: '', confirmText: '' };
+        switch (pendingAction.type) {
+            case 'CREATE_PROFILE':
+                return {
+                    title: 'Create Candidate Profile?',
+                    message: `This will send "${pendingAction.attachment.name}" to our parsing engine to automatically create a new candidate profile. An activity log will be created.`,
+                    confirmText: 'Create Profile'
+                };
+            case 'MARK_SENSITIVE':
+                const isCurrentlySensitive = pendingAction.attachment.isSensitive;
+                return {
+                    title: isCurrentlySensitive ? 'Unmark as Sensitive?' : 'Mark as Sensitive Content?',
+                    message: isCurrentlySensitive 
+                        ? `This will make "${pendingAction.attachment.name}" visible to all users with access to this conversation. Access activity will be logged.`
+                        : `This will block preview and download access for "${pendingAction.attachment.name}" to protect sensitive data. You can unmark it later. An activity log will be created.`,
+                    confirmText: isCurrentlySensitive ? 'Unmark' : 'Mark Sensitive'
+                };
+            case 'DOWNLOAD':
+                return {
+                    title: 'Download Attachment?',
+                    message: `You are about to download "${pendingAction.attachment.name}". This action will be logged in the candidate's activity history for compliance.`,
+                    confirmText: 'Download File'
+                };
+        }
+    };
+
+  const confirmDetails = getConfirmationDetails();
 
   const handleLabelToggle = (label: string) => {
       const currentLabels = conversation.labels || [];
@@ -493,6 +678,7 @@ export const ChatArea = ({
                                             <AttachmentItem 
                                                 key={i} 
                                                 attachment={att} 
+                                                onAction={(type, a) => setPendingAction({ type, attachment: a, msgId: msg.id })}
                                                 onDelete={() => handleDeleteAttachment(msg.id, att.id)} 
                                             />
                                         ))}
@@ -560,6 +746,16 @@ export const ChatArea = ({
                 onDeleteAttachment={handleDeleteAttachment}
             />
         )}
+
+        {/* Action Confirmation Modal */}
+        <ConfirmationModal 
+            isOpen={!!pendingAction}
+            onClose={() => setPendingAction(null)}
+            onConfirm={confirmAttachmentAction}
+            title={confirmDetails.title}
+            message={confirmDetails.message}
+            confirmText={confirmDetails.confirmText}
+        />
 
         {/* Header */}
         <div className="px-6 py-3 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center shadow-sm z-10 shrink-0">

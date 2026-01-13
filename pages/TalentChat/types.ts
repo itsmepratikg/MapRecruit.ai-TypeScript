@@ -9,6 +9,7 @@ export interface Attachment {
     type: 'file' | 'image';
     size: string;
     url?: string;
+    isSensitive?: boolean; // New field for sensitive content masking
 }
 
 export interface Message {
