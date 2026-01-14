@@ -126,6 +126,7 @@ export const Settings = (props: any) => <Icon {...props} iconClass="fa-solid fa-
 export const Share2 = (props: any) => <Icon {...props} iconClass="fa-solid fa-share-nodes" />;
 export const Shield = (props: any) => <Icon {...props} iconClass="fa-solid fa-shield-halved" />;
 export const Sidebar = (props: any) => <Icon {...props} iconClass="fa-solid fa-table-columns" />;
+export const Slash = (props: any) => <Icon {...props} iconClass="fa-solid fa-slash" />;
 export const SlidersHorizontal = (props: any) => <Icon {...props} iconClass="fa-solid fa-sliders" />;
 export const Smartphone = (props: any) => <Icon {...props} iconClass="fa-solid fa-mobile-screen" />;
 export const Smile = (props: any) => <Icon {...props} iconClass="fa-regular fa-face-smile" />;

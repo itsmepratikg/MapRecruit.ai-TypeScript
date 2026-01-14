@@ -7,7 +7,8 @@ import { MOCK_CONVERSATIONS } from './data';
 import { useScreenSize } from '../../hooks/useScreenSize';
 import { MessageSquare, Key, Calendar, BarChart2 } from '../../components/Icons';
 import { PlaceholderPage } from '../../components/PlaceholderPage';
-import { ChatAnalytics } from './components/ChatAnalytics'; // New Import
+import { ChatAnalytics } from './components/ChatAnalytics'; 
+import { KeywordsWrapper } from './Keywords/index'; // Explicit index import
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { useToast } from '../../components/Toast';
 import { ChannelType } from './types';
@@ -35,7 +36,6 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
   const [conversations, setConversations] = useState(MOCK_CONVERSATIONS);
   const [filterStatus, setFilterStatus] = useState('open'); 
   
-  // Changed default to false to keep interface clean
   const [isContactPanelOpen, setIsContactPanelOpen] = useState(false);
 
   const activeConversation = conversations.find(c => c.id === activeConversationId);
@@ -45,7 +45,6 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
     setConversations(prev => prev.map(c => 
         c.id === id ? { ...c, unreadCount: 0 } : c
     ));
-    // Note: We do NOT automatically open the contact panel here, keeping the view focused on chat
   };
 
   const handleSendMessage = (text: string, isPrivate: boolean, channel: ChannelType, subject?: string) => {
@@ -60,7 +59,7 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
           senderRole: userProfile.role,
           timestamp: new Date().toISOString(),
           status: 'sent' as const,
-          channel: channel || activeConversation?.channel, // Use selected channel or default to conversation
+          channel: channel || activeConversation?.channel, 
           subject: subject,
           isPrivate: isPrivate
       };
@@ -70,7 +69,7 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
               return {
                   ...c,
                   messages: [...c.messages, newMessage],
-                  lastMessage: isPrivate ? c.lastMessage : text, // Don't update snippet if private note
+                  lastMessage: isPrivate ? c.lastMessage : text, 
                   lastMessageAt: 'Just now'
               };
           }
@@ -78,42 +77,6 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
       }));
   };
 
-  // Logic to simulate incoming message and check for auto-reply
-  const checkAutoReply = (convId: string) => {
-      const conv = conversations.find(c => c.id === convId);
-      if (!conv) return;
-
-      // Check 1: Auto Reply Enabled
-      if (!MOCK_SETTINGS.autoReplyEnabled) return;
-
-      // Check 2: Assignment
-      if (!conv.assigneeId) return; 
-
-      // Check 3: Business Hours
-      const now = new Date();
-      const hour = now.getHours();
-      const isWorkingHours = hour >= MOCK_SETTINGS.businessHours.start && hour < MOCK_SETTINGS.businessHours.end;
-
-      if (!isWorkingHours) {
-          // Send Auto-Reply
-          setTimeout(() => {
-            const autoReplyMsg = {
-                id: `ar_${Date.now()}`,
-                content: `[Auto-Reply]: ${MOCK_SETTINGS.autoReplyText}`,
-                contentType: 'text' as const,
-                senderId: 'system',
-                timestamp: new Date().toISOString(),
-                status: 'delivered' as const,
-                channel: conv.channel
-            };
-            setConversations(prev => prev.map(c => 
-                c.id === convId ? { ...c, messages: [...c.messages, autoReplyMsg] } : c
-            ));
-          }, 1000);
-      }
-  };
-  
-  // Handler for assignment
   const handleAssign = (assigneeId: string | undefined, name: string | undefined) => {
       if (!activeConversationId) return;
       setConversations(prev => prev.map(c => 
@@ -121,7 +84,6 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
       ));
   };
 
-  // Handler for labels
   const handleUpdateLabels = (labels: string[]) => {
       if (!activeConversationId) return;
       setConversations(prev => prev.map(c => 
@@ -129,15 +91,15 @@ export const TalentChat = ({ activeTab = 'CONVERSATIONS' }: TalentChatProps) => 
       ));
   };
 
+  // UPDATED: Render Keywords Wrapper
   if (activeTab === 'KEYWORDS') {
-      return <PlaceholderPage title="Keyword Management" description="Configure auto-replies based on specific keywords detection." icon={Key} />;
+      return <KeywordsWrapper />;
   }
 
   if (activeTab === 'SCHEDULES') {
       return <PlaceholderPage title="Chat Schedules" description="Manage availability schedules for automated chat responses." icon={Calendar} />;
   }
 
-  // UPDATED: Render the actual Analytics Component
   if (activeTab === 'ANALYTICS') {
       return <ChatAnalytics />;
   }
