@@ -1,140 +1,151 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#10b981" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <link rel="manifest" href="/manifest.json" />
-    <title>TalentHub ATS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/gridstack@10.3.1/dist/gridstack.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <style>
-      :root {
-        /* Default Emerald Theme */
-        --color-primary-50: #ecfdf5;
-        --color-primary-100: #d1fae5;
-        --color-primary-200: #a7f3d0;
-        --color-primary-300: #6ee7b7;
-        --color-primary-400: #34d399;
-        --color-primary-500: #10b981;
-        --color-primary-600: #059669;
-        --color-primary-700: #047857;
-        --color-primary-800: #065f46;
-        --color-primary-900: #064e3b;
-        --color-primary-950: #022c22;
 
-        /* Toast Variables */
-        --toast-bg: #ffffff;
-        --toast-text: #0f172a;
-        --toast-border: #e2e8f0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#10b981" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>TalentHub ATS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/gridstack@10.3.1/dist/gridstack.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      /* Default Emerald Theme */
+      --color-primary-50: #ecfdf5;
+      --color-primary-100: #d1fae5;
+      --color-primary-200: #a7f3d0;
+      --color-primary-300: #6ee7b7;
+      --color-primary-400: #34d399;
+      --color-primary-500: #10b981;
+      --color-primary-600: #059669;
+      --color-primary-700: #047857;
+      --color-primary-800: #065f46;
+      --color-primary-900: #064e3b;
+      --color-primary-950: #022c22;
 
-      .dark {
-        --toast-bg: #1e293b;
-        --toast-text: #f1f5f9;
-        --toast-border: #334155;
-      }
+      /* Toast Variables */
+      --toast-bg: #ffffff;
+      --toast-text: #0f172a;
+      --toast-border: #e2e8f0;
+    }
 
-      /* Custom Scrollbar - Polished Look */
-      .custom-scrollbar {
-        scrollbar-width: thin;
-        scrollbar-color: #cbd5e1 transparent;
-      }
-      .dark .custom-scrollbar {
-        scrollbar-color: #475569 transparent;
-      }
+    .dark {
+      --toast-bg: #1e293b;
+      --toast-text: #f1f5f9;
+      --toast-border: #334155;
+    }
 
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #cbd5e1;
-        border-radius: 10px;
-        border: 2px solid transparent; /* Creates padding around thumb */
-        background-clip: content-box;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background-color: #94a3b8;
-      }
-      
-      /* Dark mode scrollbar */
-      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #475569;
-      }
-      .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background-color: #64748b;
-      }
+    /* Custom Scrollbar - Polished Look */
+    .custom-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
 
-      /* Hide Scrollbar Utility */
-      .no-scrollbar::-webkit-scrollbar {
-          display: none;
-      }
-      .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-      }
+    .dark .custom-scrollbar {
+      scrollbar-color: #475569 transparent;
+    }
 
-      /* GridStack Customization */
-      .grid-stack-item-content {
-        border-radius: 0.75rem; /* rounded-xl */
-        overflow: hidden;
-      }
-      /* Hide handles when not editing (controlled via React state class usually, but adding default) */
-      .grid-stack-placeholder > .placeholder-content {
-        background-color: rgba(16, 185, 129, 0.1) !important;
-        border: 2px dashed #10b981 !important;
-        border-radius: 0.75rem;
-      }
-    </style>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              // Map emerald and green to CSS variables for dynamic theming
-              emerald: {
-                50: 'var(--color-primary-50)',
-                100: 'var(--color-primary-100)',
-                200: 'var(--color-primary-200)',
-                300: 'var(--color-primary-300)',
-                400: 'var(--color-primary-400)',
-                500: 'var(--color-primary-500)',
-                600: 'var(--color-primary-600)',
-                700: 'var(--color-primary-700)',
-                800: 'var(--color-primary-800)',
-                900: 'var(--color-primary-900)',
-                950: 'var(--color-primary-950)',
-              },
-              green: {
-                50: 'var(--color-primary-50)',
-                100: 'var(--color-primary-100)',
-                200: 'var(--color-primary-200)',
-                300: 'var(--color-primary-300)',
-                400: 'var(--color-primary-400)',
-                500: 'var(--color-primary-500)',
-                600: 'var(--color-primary-600)',
-                700: 'var(--color-primary-700)',
-                800: 'var(--color-primary-800)',
-                900: 'var(--color-primary-900)',
-                950: 'var(--color-primary-950)',
-              }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      /* Creates padding around thumb */
+      background-clip: content-box;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background-color: #94a3b8;
+    }
+
+    /* Dark mode scrollbar */
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #475569;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background-color: #64748b;
+    }
+
+    /* Hide Scrollbar Utility */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    /* GridStack Customization */
+    .grid-stack-item-content {
+      border-radius: 0.75rem;
+      /* rounded-xl */
+      overflow: hidden;
+    }
+
+    /* Hide handles when not editing (controlled via React state class usually, but adding default) */
+    .grid-stack-placeholder>.placeholder-content {
+      background-color: rgba(16, 185, 129, 0.1) !important;
+      border: 2px dashed #10b981 !important;
+      border-radius: 0.75rem;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            // Map emerald and green to CSS variables for dynamic theming
+            emerald: {
+              50: 'var(--color-primary-50)',
+              100: 'var(--color-primary-100)',
+              200: 'var(--color-primary-200)',
+              300: 'var(--color-primary-300)',
+              400: 'var(--color-primary-400)',
+              500: 'var(--color-primary-500)',
+              600: 'var(--color-primary-600)',
+              700: 'var(--color-primary-700)',
+              800: 'var(--color-primary-800)',
+              900: 'var(--color-primary-900)',
+              950: 'var(--color-primary-950)',
             },
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
+            green: {
+              50: 'var(--color-primary-50)',
+              100: 'var(--color-primary-100)',
+              200: 'var(--color-primary-200)',
+              300: 'var(--color-primary-300)',
+              400: 'var(--color-primary-400)',
+              500: 'var(--color-primary-500)',
+              600: 'var(--color-primary-600)',
+              700: 'var(--color-primary-700)',
+              800: 'var(--color-primary-800)',
+              900: 'var(--color-primary-900)',
+              950: 'var(--color-primary-950)',
             }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
           }
         }
       }
-    </script>
+    }
+  </script>
   <script type="importmap">
 {
   "imports": {
@@ -156,7 +167,10 @@
 }
 </script>
 </head>
-  <body>
-    <div id="root"></div>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>
