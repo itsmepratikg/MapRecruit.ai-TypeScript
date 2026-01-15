@@ -91,7 +91,7 @@ const ConversationsView = () => {
         <div className="flex h-full overflow-hidden bg-white dark:bg-slate-900">
 
             {/* Left Sidebar - List */}
-            <div className={`${(!isDesktop && activeConversationId) ? 'hidden' : 'w-full md:w-80 flex-shrink-0'}`}>
+            <div className={`${(!isDesktop && activeConversationId) ? 'hidden' : 'w-full md:w-80 flex-shrink-0'}`} data-tour="talent-chat-list">
                 <ConversationSidebar
                     conversations={conversations}
                     activeId={activeConversationId}

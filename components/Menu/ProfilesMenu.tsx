@@ -56,7 +56,7 @@ export const ProfilesMenu = ({
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage Candidates & Talent Pools</p>
             </div>
 
-            <div className="space-y-1 overflow-y-visible">
+            <div className="space-y-1 overflow-y-visible" data-tour="profiles-menu">
                 {PROFILES_CATEGORIES.map((cat, idx) => (
                     <div key={cat.id} className={`${idx !== 0 ? 'mt-4 border-t border-slate-100 dark:border-slate-800 pt-4' : ''} animate-in fade-in slide-in-from-left-2 duration-300`} style={{ animationDelay: `${idx * 100}ms` }}>
                         {!isCollapsed && (
@@ -66,6 +66,14 @@ export const ProfilesMenu = ({
                         )}
                         {cat.items.map(item => {
                             const path = getPath(item.id);
+                            const tourId =
+                                item.id === 'SEARCH' ? 'nav-profile-search' :
+                                    item.id === 'NEW_LOCAL' ? 'nav-profile-new' :
+                                        item.id === 'NEW_APPLIES' ? 'nav-profile-new-applies' :
+                                            item.id === 'OPEN_APPLIES' ? 'nav-profile-open-applies' :
+                                                item.id === 'DUPLICATES' ? 'nav-profile-duplicates' :
+                                                    item.id === 'FOLDERS' ? 'nav-profile-folders' : undefined;
+
                             return (
                                 <NavItem
                                     key={item.id}
@@ -78,6 +86,7 @@ export const ProfilesMenu = ({
                                         if (!isDesktop) setIsSidebarOpen(false);
                                     }}
                                     isCollapsed={isCollapsed}
+                                    data-tour={tourId}
                                 />
                             );
                         })}

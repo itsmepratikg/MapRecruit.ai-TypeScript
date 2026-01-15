@@ -1,19 +1,19 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-    Search, Filter, Mail, MessageSquare, Phone, Globe, 
-    ChevronDown, CheckCircle, Clock, UserPlus, XCircle, 
+import {
+    Search, Filter, Mail, MessageSquare, Phone, Globe,
+    ChevronDown, CheckCircle, Clock, UserPlus, XCircle,
     AlertTriangle, Check, AlertCircle, ChevronUp, ChevronRight
 } from '../../../components/Icons';
 import { Conversation } from '../types';
 import { useUserProfile } from '../../../hooks/useUserProfile';
 
 interface ConversationSidebarProps {
-  conversations: Conversation[];
-  activeId: string | null;
-  onSelect: (id: string) => void;
-  filterStatus: string;
-  setFilterStatus: (status: string) => void;
+    conversations: Conversation[];
+    activeId: string | null;
+    onSelect: (id: string) => void;
+    filterStatus: string;
+    setFilterStatus: (status: string) => void;
 }
 
 // Mock Sender Identities (Usually from MyAccount/Communication)
@@ -30,25 +30,25 @@ const SENDER_IDENTITIES = {
     ]
 };
 
-export const ConversationSidebar = ({ 
-    conversations, 
-    activeId, 
-    onSelect, 
-    filterStatus, 
-    setFilterStatus 
+export const ConversationSidebar = ({
+    conversations,
+    activeId,
+    onSelect,
+    filterStatus,
+    setFilterStatus
 }: ConversationSidebarProps) => {
     const { userProfile } = useUserProfile();
     const [search, setSearch] = useState('');
-    
+
     // Sender Filter State
     const [isSenderDropdownOpen, setIsSenderDropdownOpen] = useState(false);
-    const [selectedSender, setSelectedSender] = useState<{type: 'Email' | 'SMS', label: string}>({ type: 'Email', label: 'All Emails' });
+    const [selectedSender, setSelectedSender] = useState<{ type: 'Email' | 'SMS', label: string }>({ type: 'Email', label: 'All Emails' });
     const senderDropdownRef = useRef<HTMLDivElement>(null);
 
     // Accordion State for Dropdown
     const [expandedAccordion, setExpandedAccordion] = useState<'Email' | 'SMS' | null>('Email');
 
-    const filteredConversations = conversations.filter(c => 
+    const filteredConversations = conversations.filter(c =>
         (filterStatus === 'all' || c.status === filterStatus) &&
         (c.contact.name.toLowerCase().includes(search.toLowerCase()) || c.lastMessage.toLowerCase().includes(search.toLowerCase()))
     );
@@ -64,7 +64,7 @@ export const ConversationSidebar = ({
     }, []);
 
     const getChannelIcon = (channel: string) => {
-        switch(channel) {
+        switch (channel) {
             case 'Email': return <Mail size={12} />;
             case 'SMS': return <MessageSquare size={12} />;
             case 'WhatsApp': return <Phone size={12} />;
@@ -116,29 +116,29 @@ export const ConversationSidebar = ({
                     <h2 className="font-bold text-lg text-slate-800 dark:text-slate-100">Conversations</h2>
                     {/* View Filters (Open/Resolved) */}
                     <div className="flex gap-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg">
-                        <button 
+                        <button
                             onClick={() => setFilterStatus('open')}
                             className={`p-1.5 rounded text-xs font-bold transition-colors ${filterStatus === 'open' ? 'bg-white dark:bg-slate-600 shadow text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}
                             title="Open"
                         >
-                           <Clock size={14} />
+                            <Clock size={14} />
                         </button>
-                        <button 
+                        <button
                             onClick={() => setFilterStatus('resolved')}
                             className={`p-1.5 rounded text-xs font-bold transition-colors ${filterStatus === 'resolved' ? 'bg-white dark:bg-slate-600 shadow text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}
                             title="Resolved"
                         >
-                           <CheckCircle size={14} />
+                            <CheckCircle size={14} />
                         </button>
                     </div>
                 </div>
 
                 {/* Sender Dropdown & Search Bar Row */}
                 <div className="flex gap-2 relative z-20">
-                    
+
                     {/* Sender Dropdown Trigger */}
                     <div className="relative" ref={senderDropdownRef}>
-                        <button 
+                        <button
                             onClick={() => setIsSenderDropdownOpen(!isSenderDropdownOpen)}
                             className="h-full px-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                             title="Filter by Sender"
@@ -152,18 +152,18 @@ export const ConversationSidebar = ({
                             <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-100">
                                 {/* Email Accordion */}
                                 <div>
-                                    <button 
+                                    <button
                                         onClick={() => setExpandedAccordion(expandedAccordion === 'Email' ? null : 'Email')}
                                         className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border-b border-slate-100 dark:border-slate-700 text-sm font-bold text-slate-700 dark:text-slate-200"
                                     >
-                                        <div className="flex items-center gap-2"><Mail size={14} className="text-blue-500"/> Email</div>
+                                        <div className="flex items-center gap-2"><Mail size={14} className="text-blue-500" /> Email</div>
                                         {expandedAccordion === 'Email' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                                     </button>
-                                    
+
                                     {expandedAccordion === 'Email' && (
                                         <div className="bg-white dark:bg-slate-800">
                                             {SENDER_IDENTITIES.EMAIL.map(item => (
-                                                <button 
+                                                <button
                                                     key={item.id}
                                                     onClick={() => {
                                                         setSelectedSender({ type: 'Email', label: item.label });
@@ -181,18 +181,18 @@ export const ConversationSidebar = ({
 
                                 {/* SMS Accordion */}
                                 <div>
-                                    <button 
+                                    <button
                                         onClick={() => setExpandedAccordion(expandedAccordion === 'SMS' ? null : 'SMS')}
                                         className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border-b border-slate-100 dark:border-slate-700 text-sm font-bold text-slate-700 dark:text-slate-200"
                                     >
-                                        <div className="flex items-center gap-2"><MessageSquare size={14} className="text-green-500"/> SMS</div>
+                                        <div className="flex items-center gap-2"><MessageSquare size={14} className="text-green-500" /> SMS</div>
                                         {expandedAccordion === 'SMS' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                                     </button>
-                                    
+
                                     {expandedAccordion === 'SMS' && (
                                         <div className="bg-white dark:bg-slate-800">
                                             {SENDER_IDENTITIES.SMS.map(item => (
-                                                <button 
+                                                <button
                                                     key={item.id}
                                                     onClick={() => {
                                                         setSelectedSender({ type: 'SMS', label: item.label });
@@ -214,9 +214,9 @@ export const ConversationSidebar = ({
                     {/* Search Input */}
                     <div className="relative flex-1">
                         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                        <input 
-                            type="text" 
-                            placeholder="Search people..." 
+                        <input
+                            type="text"
+                            placeholder="Search people..."
                             className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:text-slate-200"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -227,11 +227,12 @@ export const ConversationSidebar = ({
 
             {/* List */}
             <div className="flex-1 overflow-y-auto custom-scrollbar">
-                {filteredConversations.map(conv => (
-                    <div 
-                        key={conv.id} 
+                {filteredConversations.map((conv, index) => (
+                    <div
+                        key={conv.id}
                         onClick={() => onSelect(conv.id)}
                         className={`p-3 border-b border-slate-100 dark:border-slate-800 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group relative ${activeId === conv.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10 border-l-4 border-l-emerald-500' : 'border-l-4 border-l-transparent'}`}
+                        {...(index === 0 ? { 'data-tour': 'conversation-item-first' } : {})}
                     >
                         <div className="flex justify-between items-start mb-1">
                             <div className="flex items-center gap-2">
@@ -249,14 +250,14 @@ export const ConversationSidebar = ({
                             </div>
                             <span className="text-[9px] text-slate-400 whitespace-nowrap">{conv.lastMessageAt}</span>
                         </div>
-                        
+
                         <div className="flex justify-between items-center mt-2 pl-11">
                             <div className="flex items-center gap-2">
                                 {/* Channel Indicator */}
                                 <span className="flex items-center gap-1 text-[10px] text-slate-400">
                                     {getChannelIcon(conv.channel)}
                                 </span>
-                                
+
                                 {/* Unread Badge */}
                                 {conv.unreadCount > 0 && (
                                     <span className="bg-emerald-500 text-white text-[9px] font-bold px-1.5 rounded-full min-w-[1.25rem] text-center">
@@ -268,7 +269,7 @@ export const ConversationSidebar = ({
                             {/* Actions & Status */}
                             <div className="flex items-center gap-2">
                                 {/* Assign User Icon */}
-                                <button 
+                                <button
                                     onClick={(e) => handleAssignClick(e, conv)}
                                     className={`p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors ${conv.assigneeId ? 'text-indigo-500' : 'text-slate-300 hover:text-indigo-500'}`}
                                     title={conv.assigneeId ? `Assigned to ${conv.assigneeName}` : "Assign to me"}
@@ -277,7 +278,7 @@ export const ConversationSidebar = ({
                                 </button>
 
                                 {/* Close Icon */}
-                                <button 
+                                <button
                                     onClick={(e) => handleCloseClick(e, conv)}
                                     className="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-300 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
                                     title="Close Conversation"

@@ -91,6 +91,7 @@ export const DashboardMenu = ({
             <div className="relative" onMouseEnter={() => handlePopoverEnter('campaigns')} onMouseLeave={handlePopoverLeave}>
                 <NavLink
                     to="/campaigns"
+                    data-tour="nav-campaigns"
                     className={({ isActive }) => `w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${isActive || activePopover === 'campaigns' ? 'bg-emerald-100 text-emerald-900 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                 >
                     <div className="flex items-center gap-3">
@@ -151,12 +152,13 @@ export const DashboardMenu = ({
                 )}
             </div>
 
-            <NavItem to="/metrics" icon={BarChart2} label="Metrics" isCollapsed={isCollapsed} />
+            <NavItem to="/metrics" icon={BarChart2} label="Metrics" isCollapsed={isCollapsed} data-tour="nav-metrics" />
 
             {/* Main Sidebar Settings Item with Hover Menu */}
             <div className="relative" onMouseEnter={() => handlePopoverEnter('settings')} onMouseLeave={handlePopoverLeave}>
                 <NavLink
                     to="/settings/CompanyInfo"
+                    data-tour="nav-settings"
                     className={({ isActive }) => `w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${isActive || activePopover === 'settings' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                 >
                     <div className="flex items-center gap-3">
@@ -190,6 +192,7 @@ export const DashboardMenu = ({
             <div className="relative" onMouseEnter={() => handlePopoverEnter('talentchat')} onMouseLeave={handlePopoverLeave}>
                 <NavLink
                     to="/talent-chat"
+                    data-tour="nav-talent-chat"
                     className={({ isActive }) => `w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${isActive || activePopover === 'talentchat' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                 >
                     <div className="flex items-center gap-3">

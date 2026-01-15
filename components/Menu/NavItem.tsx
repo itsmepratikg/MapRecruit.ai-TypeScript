@@ -11,6 +11,7 @@ interface NavItemProps {
   isCollapsed: boolean;
   noHighlight?: boolean;
   to?: string;
+  [key: string]: any;
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
@@ -22,7 +23,8 @@ export const NavItem: React.FC<NavItemProps> = ({
   activeView,
   isCollapsed,
   noHighlight,
-  to
+  to,
+  ...rest
 }) => {
   const baseClass = `w-full flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors ${isCollapsed ? 'justify-center' : ''}`;
   const activeClass = 'bg-emerald-100 text-emerald-900 font-bold shadow-sm';
@@ -35,6 +37,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         onClick={onClick}
         className={({ isActive }) => `${baseClass} ${!noHighlight && (isActive || activeTab) ? activeClass : inactiveClass}`}
         title={isCollapsed ? label : ''}
+        {...rest}
       >
         {({ isActive }) => (
           <>
@@ -51,6 +54,7 @@ export const NavItem: React.FC<NavItemProps> = ({
       onClick={onClick}
       className={`${baseClass} ${!noHighlight && ((view && activeView === view) || activeTab) ? activeClass : inactiveClass}`}
       title={isCollapsed ? label : ''}
+      {...rest}
     >
       <Icon size={20} className={!noHighlight && ((view && activeView === view) || activeTab) ? 'text-emerald-700' : 'text-slate-400 dark:text-slate-500'} />
       <span className={isCollapsed ? 'hidden' : 'block'}>{label}</span>

@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Agent OS
+agent-os/
+.claude/
+.agent/
+.agent-os/
+.design-os/
+install_agent_os_temp.cjs
+install_agent_os_temp.js
+install_design_os.cjs
+install_design_os.js

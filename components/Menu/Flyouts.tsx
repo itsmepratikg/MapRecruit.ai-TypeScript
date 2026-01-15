@@ -55,13 +55,13 @@ export const CreateMenuContent = ({
                 <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Create New</div>
                 {closeMenu && <button onClick={(e) => { e.stopPropagation(); closeMenu(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded lg:hidden"><X size={14} /></button>}
             </div>
-            <button onClick={() => handleClick(onCreateProfile)} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
+            <button onClick={() => handleClick(onCreateProfile)} data-tour="create-menu-profile" className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
                 <UserPlus size={16} className="text-emerald-600 dark:text-emerald-400" /> <span>Profile</span>
             </button>
             <button onClick={() => handleClick(() => onOpenPlaceholder('Create Campaign', 'The Campaign creation wizard involves multiple steps including Job Description AI generation. We are working on this module.'))} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
                 <Briefcase size={16} className="text-blue-600 dark:text-blue-400" /> <span>Campaign</span>
             </button>
-            <button onClick={() => handleClick(onCreateFolder)} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
+            <button onClick={() => handleClick(onCreateFolder)} data-tour="create-menu-folder" className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
                 <FolderPlus size={16} className="text-orange-600 dark:text-orange-400" /> <span>Folder</span>
             </button>
             <button onClick={() => handleClick(() => onOpenPlaceholder('Create Tag', 'Global tag management and AI-suggested tagging features will be available in the next release.'))} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
@@ -121,6 +121,7 @@ export const AccountMenuContent = ({
                         if (onNavigate) onNavigate('/account/BasicDetails');
                         if (closeMenu) closeMenu();
                     }}
+                    data-tour="nav-account-details"
                     className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer group/item"
                 >
                     <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300 group-hover/item:text-emerald-600 dark:group-hover/item:text-emerald-400 transition-colors">
@@ -129,21 +130,21 @@ export const AccountMenuContent = ({
                 </button>
 
                 {/* New Added Items */}
-                <button onClick={() => { if (onNavigate) onNavigate('/activities'); if (closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <button onClick={() => { if (onNavigate) onNavigate('/activities'); if (closeMenu) closeMenu(); }} data-tour="nav-activities" className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                     <Activity size={16} /> Activities
                 </button>
 
-                <button onClick={() => { if (onNavigate) onNavigate('/history'); if (closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <button onClick={() => { if (onNavigate) onNavigate('/history'); if (closeMenu) closeMenu(); }} data-tour="nav-history" className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                     <History size={16} /> History
                 </button>
 
-                <button onClick={() => { if (onNavigate) onNavigate('/notifications'); if (closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <button onClick={() => { if (onNavigate) onNavigate('/notifications'); if (closeMenu) closeMenu(); }} data-tour="nav-notifications" className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                     <Bell size={16} /> Notifications
                 </button>
 
                 <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
 
-                <button onClick={() => { if (onNavigate) onNavigate('/settings/CompanyInfo'); if (closeMenu) closeMenu(); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+                <button onClick={() => { if (onNavigate) onNavigate('/settings/CompanyInfo'); if (closeMenu) closeMenu(); }} data-tour="nav-admin-settings" className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
                     <Settings size={16} /> Admin Settings
                 </button>
 
@@ -234,7 +235,7 @@ export const CampaignMenuContent = ({
 
             <div className="flex-1 overflow-y-auto custom-scrollbar p-1 space-y-1">
                 <div>
-                    <button onClick={(e) => handleNavigateToList(e, 'Active')} className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group">
+                    <button onClick={(e) => handleNavigateToList(e, 'Active')} data-tour="nav-campaigns-active" className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group">
                         <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">Active Campaigns</span>
                         <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded-full font-mono font-bold">{SIDEBAR_CAMPAIGN_DATA.activeCount}</span>
                     </button>
@@ -273,11 +274,11 @@ export const CampaignMenuContent = ({
                     </div>
                 </div>
                 <div className="border-t border-slate-100 dark:border-slate-700 my-1"></div>
-                <button onClick={(e) => handleNavigateToList(e, 'Closed')} className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group">
+                <button onClick={(e) => handleNavigateToList(e, 'Closed')} data-tour="nav-campaigns-closed" className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group">
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 uppercase tracking-wide">Closed Campaigns</span>
                     <span className="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded-full font-mono">{SIDEBAR_CAMPAIGN_DATA.closedCount}</span>
                 </button>
-                <button onClick={(e) => handleNavigateToList(e, 'Archived')} className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group">
+                <button onClick={(e) => handleNavigateToList(e, 'Archived')} data-tour="nav-campaigns-archived" className="w-full px-3 py-2 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors group">
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 uppercase tracking-wide">Archived Campaigns</span>
                     <span className="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded-full font-mono">{SIDEBAR_CAMPAIGN_DATA.archivedCount}</span>
                 </button>
@@ -341,10 +342,16 @@ export const SettingsMenuContent = ({
                                 <div className="mt-1 space-y-0.5 animate-in slide-in-from-top-1 duration-200">
                                     {category.items.map(item => {
                                         const path = getPath(item.id);
+                                        const tourId =
+                                            item.id === 'CLIENTS' ? 'nav-settings-clients' :
+                                                item.id === 'USERS' ? 'nav-settings-users' :
+                                                    item.id === 'COMPANY_INFO' ? 'nav-settings-company' : undefined;
+
                                         return (
                                             <button
                                                 key={item.id}
                                                 onClick={(e) => { e.stopPropagation(); onNavigate(path); onClose(); }}
+                                                data-tour={tourId}
                                                 className={`w-full text-left pl-6 pr-3 py-2 text-xs flex items-center gap-2 transition-colors rounded-md ${activeTab === path ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
                                             >
                                                 <item.icon size={14} className={activeTab === path ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"} />
