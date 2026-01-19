@@ -35,9 +35,9 @@ install_design_os.cjs
 install_design_os.js
 
 # Environment Variables
-.env
-.env.local
-backend/.env
+# .env - No Need
+# .env.local - No Need
+# backend/.env  - No Need
 
 # Debug and Seed Scripts
 backend/debug_ids.js
