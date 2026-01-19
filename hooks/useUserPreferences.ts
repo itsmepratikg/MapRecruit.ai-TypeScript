@@ -1,173 +1,175 @@
-
 import { useState, useEffect } from 'react';
 import { DEFAULT_USER_ACCOUNT } from '../data';
-
-// Key for LocalStorage
-const STORAGE_KEY = 'userAccount';
+import { userService } from '../services/api';
+import { useToast } from '../components/Toast';
 
 export const useUserPreferences = () => {
-  // Initialize state from local storage or default
-  const [userAccount, setUserAccount] = useState(() => {
-    if (typeof window === 'undefined') return DEFAULT_USER_ACCOUNT;
-    
+
+  // Use custom hook for consistent toast styling
+  const { addPromise } = useToast();
+
+  // --- Helper: Get State from Auth User or Fallback ---
+  const getInitialState = () => {
+    if (typeof window === 'undefined') return DEFAULT_USER_ACCOUNT.preferences;
+
+    // 1. Try Authenticated User (Source of Truth)
+    const authUserStr = localStorage.getItem('user');
+    if (authUserStr) {
+      try {
+        const user = JSON.parse(authUserStr);
+        if (user.accessibilitySettings && Object.keys(user.accessibilitySettings).length > 0) {
+          // Merge with defaults to ensure structure integrity
+          return {
+            theme: user.accessibilitySettings.theme || DEFAULT_USER_ACCOUNT.preferences.theme,
+            language: user.accessibilitySettings.language || DEFAULT_USER_ACCOUNT.preferences.language,
+            dashboardConfig: {
+              ...DEFAULT_USER_ACCOUNT.preferences.dashboardConfig,
+              ...(user.accessibilitySettings.dashboardConfig || {}),
+              layouts: {
+                ...DEFAULT_USER_ACCOUNT.preferences.dashboardConfig.layouts,
+                ...(user.accessibilitySettings.dashboardConfig?.layouts || {})
+              }
+            }
+          };
+        }
+      } catch (e) { console.error("Error parsing user settings", e); }
+    }
+
+    // 2. Fallback: Legacy LocalStorage
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem('userAccount');
       if (stored) {
         const parsed = JSON.parse(stored);
-        
-        // --- MIGRATION & SAFETY LOGIC ---
-        
-        // 1. Handle Legacy Format (Migration)
-        if (parsed.preferences?.dashboardConfig?.widgets && !parsed.preferences?.dashboardConfig?.layouts) {
-            console.log("Migrating legacy dashboard configuration...");
-            const legacyWidgets = parsed.preferences.dashboardConfig.widgets;
-            
-            return {
-                ...DEFAULT_USER_ACCOUNT, 
-                ...parsed,
-                preferences: {
-                    ...parsed.preferences,
-                    dashboardConfig: {
-                        ...DEFAULT_USER_ACCOUNT.preferences.dashboardConfig,
-                        layouts: {
-                            ...DEFAULT_USER_ACCOUNT.preferences.dashboardConfig.layouts,
-                            desktop: legacyWidgets // Migrate widgets to desktop
-                        }
-                    }
-                }
-            };
-        }
-
-        // 2. Handle Robust Merging (Ensure all modes exist)
-        if (parsed.preferences?.dashboardConfig?.layouts) {
-            return { 
-                ...DEFAULT_USER_ACCOUNT, 
-                ...parsed,
-                preferences: {
-                    ...DEFAULT_USER_ACCOUNT.preferences,
-                    ...parsed.preferences,
-                    dashboardConfig: {
-                        ...DEFAULT_USER_ACCOUNT.preferences.dashboardConfig,
-                        ...parsed.preferences.dashboardConfig,
-                        layouts: {
-                            desktop: parsed.preferences.dashboardConfig.layouts.desktop || DEFAULT_USER_ACCOUNT.preferences.dashboardConfig.layouts.desktop,
-                            tablet: parsed.preferences.dashboardConfig.layouts.tablet || DEFAULT_USER_ACCOUNT.preferences.dashboardConfig.layouts.tablet,
-                            mobile: parsed.preferences.dashboardConfig.layouts.mobile || DEFAULT_USER_ACCOUNT.preferences.dashboardConfig.layouts.mobile
-                        }
-                    }
-                }
-            }; 
-        }
+        if (parsed.preferences) return parsed.preferences;
       }
-    } catch (e) {
-      console.error("Failed to load user preferences", e);
-    }
-    // Fallback to pure default
-    return DEFAULT_USER_ACCOUNT;
-  });
+    } catch (e) { }
 
-  // Save to local storage whenever userAccount changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(userAccount));
-    } catch (e) {
-      console.error("Failed to save user preferences", e);
-    }
-  }, [userAccount]);
+    return DEFAULT_USER_ACCOUNT.preferences;
+  };
 
-  // Apply Theme Effect
-  useEffect(() => {
-    const applyTheme = (t: string) => {
-        let isDark = false;
-        if (t === 'dark') {
-            isDark = true;
-        } else if (t === 'system') {
-            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [preferences, setPreferences] = useState(getInitialState);
+
+  // --- Persistence Logic ---
+  // Accepts PARTIAL updates (e.g., { theme: 'dark' } or { dashboardConfig: ... })
+  const persistPreferences = async (partialPrefs: any) => {
+
+    // 1. Calculate Full New State locally (for immediate UI update)
+    const newState = {
+      ...preferences,
+      ...partialPrefs,
+      // Handle nested dashboardConfig merge if present in partial
+      dashboardConfig: partialPrefs.dashboardConfig ? {
+        ...preferences.dashboardConfig,
+        ...partialPrefs.dashboardConfig,
+        layouts: {
+          ...preferences.dashboardConfig.layouts,
+          ...(partialPrefs.dashboardConfig.layouts || {})
         }
-
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+      } : preferences.dashboardConfig
     };
 
-    const currentTheme = userAccount.preferences.theme;
-    applyTheme(currentTheme);
+    // Update Local State 
+    setPreferences(newState);
+
+    // 2. Update LocalStorage 'user' object (Optimistic Update)
+    const authUserStr = localStorage.getItem('user');
+    if (authUserStr) {
+      try {
+        const user = JSON.parse(authUserStr);
+
+        // We must save the FULL state to local storage so page reloads work correctly
+        user.accessibilitySettings = newState;
+        localStorage.setItem('user', JSON.stringify(user));
+
+        // 3. Send ONLY PARTIAL to Backend (Bandwidth Optimization)
+        const userId = user._id || user.id;
+        if (userId) {
+          await addPromise(
+            userService.update(userId, { accessibilitySettings: partialPrefs }),
+            {
+              loading: 'Saving changes...',
+              success: 'Settings saved',
+              error: 'Could not save settings. Please try again.'
+            }
+          );
+        }
+      } catch (error) {
+        console.error("Failed to save preferences to server", error);
+      }
+    } else {
+      // Guest/Fallback mode
+      localStorage.setItem('userAccount', JSON.stringify({
+        ...DEFAULT_USER_ACCOUNT,
+        preferences: newState
+      }));
+    }
+  };
+
+  // --- Effect: Apply Theme to Document ---
+  useEffect(() => {
+    const applyTheme = (t: string) => {
+      let isDark = false;
+      if (t === 'dark') {
+        isDark = true;
+      } else if (t === 'system') {
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+
+    applyTheme(preferences.theme);
 
     // Listen for system changes if mode is system
-    if (currentTheme === 'system') {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        const handleChange = (e: MediaQueryListEvent) => {
-            if (e.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        };
-        
-        // Standard listener
-        mediaQuery.addEventListener('change', handleChange);
-        
-        return () => {
-            mediaQuery.removeEventListener('change', handleChange);
-        };
+    if (preferences.theme === 'system') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = (e: MediaQueryListEvent) => {
+        if (e.matches) document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+      };
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
     }
-  }, [userAccount.preferences.theme]);
+  }, [preferences.theme]);
 
-  // Helper to update specific preferences
+
+  // --- Updaters (Sending Partials) ---
+
   const updateTheme = (theme: 'light' | 'dark' | 'system') => {
-    setUserAccount(prev => ({
-      ...prev,
-      preferences: {
-        ...prev.preferences,
-        theme
-      }
-    }));
+    persistPreferences({ theme });
   };
 
   const updateLanguage = (lang: string) => {
-    setUserAccount(prev => ({
-        ...prev,
-        preferences: {
-            ...prev.preferences,
-            language: lang
-        }
-    }));
+    persistPreferences({ language: lang });
   };
 
   const updateDashboardLayout = (widgets: any[], viewMode: 'desktop' | 'tablet' | 'mobile') => {
-    setUserAccount(prev => ({
-      ...prev,
-      preferences: {
-        ...prev.preferences,
-        dashboardConfig: {
-          ...prev.preferences.dashboardConfig,
-          layouts: {
-            ...prev.preferences.dashboardConfig.layouts,
-            [viewMode]: widgets
-          }
+    // Construct the partial nested structure
+    const partial = {
+      dashboardConfig: {
+        layouts: {
+          [viewMode]: widgets
         }
       }
-    }));
+    };
+    persistPreferences(partial);
   };
 
   const resetDashboard = () => {
-      setUserAccount(prev => ({
-          ...prev,
-          preferences: {
-              ...prev.preferences,
-              dashboardConfig: DEFAULT_USER_ACCOUNT.preferences.dashboardConfig
-          }
-      }));
+    persistPreferences({
+      dashboardConfig: DEFAULT_USER_ACCOUNT.preferences.dashboardConfig
+    });
   }
 
   return {
-    userAccount,
-    theme: userAccount.preferences.theme,
-    language: userAccount.preferences.language || "English (US)",
-    dashboardLayouts: userAccount.preferences.dashboardConfig.layouts,
+    userAccount: { preferences }, // Maintain backward compatibility shape if needed
+    theme: preferences.theme,
+    language: preferences.language,
+    dashboardLayouts: preferences.dashboardConfig.layouts,
     updateTheme,
     updateLanguage,
     updateDashboardLayout,

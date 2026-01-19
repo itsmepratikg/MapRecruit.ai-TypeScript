@@ -87,7 +87,18 @@ const updateUser = async (req, res) => {
 
         // Update fields
         Object.keys(req.body).forEach(key => {
-            if (key !== 'password' && key !== '_id') {
+            if (key === 'accessibilitySettings') {
+                // Deep merge for accessibilitySettings to allow partial updates
+                user.accessibilitySettings = {
+                    ...user.accessibilitySettings,
+                    ...req.body.accessibilitySettings,
+                    dashboardConfig: {
+                        ...(user.accessibilitySettings?.dashboardConfig || {}),
+                        ...(req.body.accessibilitySettings?.dashboardConfig || {})
+                    }
+                };
+                user.markModified('accessibilitySettings');
+            } else if (key !== 'password' && key !== '_id') {
                 user[key] = req.body[key];
             }
         });

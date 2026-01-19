@@ -32,9 +32,21 @@ const userSchema = mongoose.Schema({
         default: true
     },
     // Flexible Schema for Settings as per "Pratik User Schema Prod Admin.json"
-    accessabilitySettings: {
-        type: mongoose.Schema.Types.Mixed,
-        default: {}
+    accessibilitySettings: {
+        theme: { type: String, default: 'system' },
+        language: { type: String, default: 'English (US)' },
+        dashboardConfig: {
+            type: mongoose.Schema.Types.Mixed,
+            default: {
+                rowHeight: 30,
+                margin: 15,
+                layouts: {
+                    desktop: [],
+                    tablet: [],
+                    mobile: []
+                }
+            }
+        }
     },
     // Other top-level keys from the example schema if necessary
     clients: {
