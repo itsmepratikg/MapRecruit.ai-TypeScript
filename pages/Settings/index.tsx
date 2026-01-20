@@ -9,6 +9,8 @@ import { CompanyInfo } from './CompanyInfo';
 import { RolesPermissions } from './Roles/RolesPermissions';
 import { UsersSettings } from './Users/Users';
 import { UserProfileContainer } from './Users/UserProfileContainer';
+import { ClientsSettings } from './Clients';
+import { ClientProfileContainer } from './ClientProfile/ClientProfileContainer';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -33,16 +35,17 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
         // Simple transform: COMPANY_INFO -> CompanyInfo ... wait, "Company Information" -> CompanyInfo? 
         // The requirement asks for CompanyInfo. Let's make a manual map for now to be safe and explicit.
         const map: Record<string, string> = {
-            'COMPANY_INFO': 'CompanyInfo',
-            'ROLES': 'Roles',
-            'USERS': 'Users',
-            'REACHOUT_LAYOUTS': 'ReachOutLayouts',
+            'COMPANY_INFO': 'companyinfo',
+            'ROLES': 'roles',
+            'USERS': 'users',
+            'CLIENTS': 'clients',
+            'REACHOUT_LAYOUTS': 'reachoutlayouts',
             // Add others as needed, or fallback to TitleCase
         };
         if (map[id]) return map[id];
 
         // Fallback helper to convert SCREAMING_SNAKE to PascalCaseish
-        return id.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+        return id.toLowerCase().replace(/_/g, '');
     }
 
     // Helper to find ID from current Path for legacy props if needed, or title lookup
@@ -75,13 +78,15 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             <Route path={getPath('COMPANY_INFO')} element={<CompanyInfo />} />
             <Route path={getPath('ROLES')} element={<RolesPermissions />} />
             <Route path={getPath('USERS')} element={<UsersSettings onSelectUser={onSelectUser} />} />
+            <Route path={getPath('CLIENTS')} element={<ClientsSettings />} /> {/* Add Route */}
             <Route path={getPath('REACHOUT_LAYOUTS')} element={<ReachOutLayouts />} />
-            <Route path="Users/userprofile/:section/:id" element={<UserProfileContainer />} />
-            <Route path="Users/userprofile/:section" element={<UserProfileContainer />} />
+            <Route path="users/userprofile/:section/:id" element={<UserProfileContainer />} />
+            <Route path="users/userprofile/:section" element={<UserProfileContainer />} />
+            <Route path="clientprofile/:tab/:clientId" element={<ClientProfileContainer />} />
             {/* Add routes for other settings items */}
             {Object.keys(SETTINGS_CONTENT).map(id => {
                 // Only render placeholder for items not explicitly routed above
-                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS'].includes(id)) {
+                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS'].includes(id)) {
                     return <Route key={id} path={getPath(id)} element={<SettingsContentWrapper id={id} />} />;
                 }
                 return null;

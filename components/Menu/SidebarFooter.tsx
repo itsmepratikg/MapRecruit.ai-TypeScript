@@ -16,7 +16,7 @@ interface SidebarFooterProps {
     onNavigate: (view: any) => void;
     onLogout: () => void;
     userProfile: any;
-    clients: string[];
+    clients: any[];
     onSwitchClient: (client: string) => void;
     setActiveAccountTab: (tab: string) => void;
 }

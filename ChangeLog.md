@@ -3,6 +3,30 @@
 
 All notable changes to the **MapRecruit ATS Dashboard** project will be documented in this file.
 
+## [1.5.0] - 2026-01-20
+
+### Client Profile Management Improvements
+- **Client Profile Editor**: Implemented a comprehensive, multi-tabbed editor for Client Profiles, mirroring the User Profile experience.
+    - **Nested Routing**: Defined `/settings/clientprofile/:tab/:clientId` structure for deep linking to specific sections.
+    - **Sub-pages**:
+        - `ClientInformation`: Edit basic details, logo, contact info, and regional settings.
+        - `ClientSettings`: Configure advanced settings like Search Access, Job Seeker defaults, and Weekly Schedule.
+        - Placeholders added for `Users`, `Custom Fields`, and `Screening Rounds`.
+    - **Form Validation**: Added strict validation for "JD Completeness Criteria" to ensure weights sum to exactly 100%.
+    - **Real-time Feedback**: Implemented dynamic visual cues (Green/Red badges) for validation states.
+    - **UI Enhancements**: Fixed icon/text overlap issues in input fields and refined badge styling for Dark Mode.
+
+### Schema & Data Handling
+- **Rich Client Schema**: upgraded `ClientSchema` to support JSX rendering for Logos, Badges, and Status indicators in data tables.
+- **Dynamic Fetching**: Updated `useUserProfile` hooks to fetch client data dynamically from the service layer instead of static mock files.
+- **Improved Filtering**: Added search and filtering capabilities to the Sidebar Client Flyout menu.
+
+### System-Wide Refactoring
+- **Lowercase URL Standardization**: Refactored the entire Settings module routing to strictly enforce lowercase URLs (e.g., `/settings/clients` instead of `/settings/CLIENTS`) for consistency and SEO best practices.
+- **Bug Fixes**:
+    - Resolved `CalendarDays` icon import errors.
+    - Fixed React warnings regarding uncontrolled input components.
+
 ## [1.4.0] - 2026-01-19
 
 ### Campaign Management & MongoDB Integration

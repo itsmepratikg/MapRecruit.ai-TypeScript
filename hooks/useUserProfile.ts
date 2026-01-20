@@ -24,6 +24,7 @@ export const useUserProfile = () => {
                     lastName: authUser.lastName || profile.lastName,
                     role: authUser.role || profile.role,
                     activeClient: authUser.activeClient || profile.activeClient, // Ensure this exists in auth response
+                    clientID: authUser.clientID || profile.clientID,
                     lastLoginAt: authUser.lastLoginAt,
                     loginCount: authUser.loginCount,
                     lastActiveAt: authUser.lastActiveAt,
@@ -54,6 +55,7 @@ export const useUserProfile = () => {
                     lastName: authUser.lastName || profile.lastName,
                     role: authUser.role || profile.role,
                     activeClient: authUser.activeClient || profile.activeClient,
+                    clientID: authUser.clientID || profile.clientID,
                     lastLoginAt: authUser.lastLoginAt,
                     loginCount: authUser.loginCount,
                     lastActiveAt: authUser.lastActiveAt,
@@ -167,10 +169,25 @@ export const useUserProfile = () => {
         }
     };
 
+    const [availableClients, setAvailableClients] = useState<any[]>([]);
+
+    useEffect(() => {
+        // Fetch clients on mount
+        import('../services/clientService').then(({ clientService }) => {
+            clientService.getAll().then(data => {
+                setAvailableClients(data);
+            }).catch(err => {
+                console.error("Failed to fetch clients for profile", err);
+                // Fallback to hardcoded list if API fails, but map them to object structure
+                setAvailableClients(PROFILE_CLIENTS.map(name => ({ clientName: name, clientType: 'Client' })));
+            });
+        });
+    }, []);
+
     return {
         userProfile,
         refetchProfile,
-        clients: PROFILE_CLIENTS,
+        clients: availableClients,
         saveProfile,
         updateAvatar
     };

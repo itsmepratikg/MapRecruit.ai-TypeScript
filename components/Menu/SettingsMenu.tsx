@@ -26,17 +26,18 @@ export const SettingsMenu = ({
     // Helper to map IDs to PascalCase paths
     const getPath = (id: string) => {
         const map: Record<string, string> = {
-            'COMPANY_INFO': 'CompanyInfo',
-            'ROLES': 'Roles',
-            'USERS': 'Users',
-            'REACHOUT_LAYOUTS': 'ReachOutLayouts',
+            'COMPANY_INFO': 'companyinfo',
+            'ROLES': 'roles',
+            'USERS': 'users',
+            'CLIENTS': 'clients',
+            'REACHOUT_LAYOUTS': 'reachoutlayouts',
         };
         if (map[id]) return map[id];
-        return id.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+        return id.toLowerCase().replace(/_/g, '');
     }
 
     // Derive active tab from URL: /settings/CompanyInfo -> CompanyInfo
-    const currentPath = location.pathname.split('/settings/')[1] || 'CompanyInfo';
+    const currentPath = location.pathname.split('/settings/')[1] || 'companyinfo';
 
     return (
         <div className="animate-in slide-in-from-left duration-300 ease-out">

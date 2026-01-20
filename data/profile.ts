@@ -1,4 +1,5 @@
 
+
 export interface UserProfileData {
   firstName: string;
   lastName: string;
@@ -10,9 +11,11 @@ export interface UserProfileData {
   location: string;
   color: string;
   activeClient: string;
+  clientID: string[]; // List of Client IDs user has access to
   avatar: string | null;
   teams: string[];
   lastActiveAt?: string;
+
   lastLoginAt?: string;
   loginCount?: number;
   timeZone?: string;
@@ -46,6 +49,7 @@ export const INITIAL_PROFILE_DATA: UserProfileData = {
   location: "Hyderabad, Telangana, India",
   color: "Blue",
   activeClient: "TRC Talent Solutions",
+  clientID: ["6112806bc9147f673d28c6ec", "69678733d29171da0766d0ae"], // Mock IDs
   avatar: null,
   teams: []
 };

@@ -40,6 +40,7 @@ import { MyAccountMenu } from './components/Menu/MyAccountMenu';
 import { CandidateMenu } from './components/Menu/CandidateMenu';
 import { UserAdminMenu } from './components/Menu/UserAdminMenu';
 import { TalentChatMenu } from './components/Menu/TalentChatMenu';
+import { ClientProfileMenu } from './components/Menu/ClientProfileMenu';
 import { QuickTourManager } from './components/QuickTour/QuickTourManager';
 import { CampaignCreationModal } from './components/Campaign/CampaignCreationModal';
 
@@ -75,6 +76,7 @@ export const App = () => {
   // Admin User Management State
   const [selectedAdminUser, setSelectedAdminUser] = useState<any>(null);
   const [activeAdminUserTab, setActiveAdminUserTab] = useState('BASIC_DETAILS');
+  const [activeClientProfileTab, setActiveClientProfileTab] = useState('clientinformation');
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
   const [isCreateProfileOpen, setIsCreateProfileOpen] = useState(false);
@@ -192,7 +194,7 @@ export const App = () => {
   const handleUserSelect = (user: any) => {
     setSelectedAdminUser(user);
     setActiveAdminUserTab('BASIC_DETAILS');
-    navigate(`/settings/Users/userprofile/basicdetails/${user._id || user.id}`);
+    navigate(`/settings/users/userprofile/basicdetails/${user._id || user.id}`);
     if (!isDesktop) setIsSidebarOpen(false);
   };
 
@@ -330,12 +332,31 @@ export const App = () => {
               {/* Redirect legacy /profiles to view */}
               <Route path="/profiles" element={<Navigate to="/profiles/view/Search" replace />} />
 
-              <Route path="/settings/Users/userprofile/*" element={
+              <Route path="/settings/users/userprofile/*" element={
                 <UserAdminMenu
-                  onBack={() => navigate('/settings/Users')}
+                  onBack={() => navigate('/settings/users')}
                   activeAdminUserTab={''}
                   setActiveAdminUserTab={setActiveAdminUserTab}
                   selectedAdminUser={selectedAdminUser}
+                  isCollapsed={isCollapsed}
+                  setIsSidebarOpen={setIsSidebarOpen}
+                />
+              } />
+              <Route path="/settings/clientprofile/*" element={
+                <ClientProfileMenu
+                  onBack={() => navigate('/settings/clients')}
+                  activeTab={activeClientProfileTab}
+                  setActiveTab={setActiveClientProfileTab}
+                  onNavigate={(tab) => {
+                    // We need the clientId from the URL path. 
+                    // Sidebar doesn't inherently know it unless passed, but we are inside Routes relative to /settings/clientprofile/* 
+                    // ACTUALLY, the route matches /settings/clientprofile/:tab/:clientId
+                    // So we can assume the URL structure.
+                    const parts = location.pathname.split('/');
+                    const clientId = parts[parts.length - 1]; // Last part should be ID
+                    navigate(`/settings/clientprofile/${tab}/${clientId}`);
+                  }}
+                  clientId={location.pathname.split('/').pop()} // Approximate ID extraction
                   isCollapsed={isCollapsed}
                   setIsSidebarOpen={setIsSidebarOpen}
                 />
@@ -378,7 +399,7 @@ export const App = () => {
                       'PROFILES': '/profiles',
                       'CAMPAIGNS': '/campaigns',
                       'METRICS': '/metrics',
-                      'SETTINGS': '/settings/CompanyInfo',
+                      'SETTINGS': '/settings/companyinfo',
                       'MY_ACCOUNT': '/myaccount',
                       'ACTIVITIES': '/activities',
                       'HISTORY': '/history',
@@ -414,7 +435,7 @@ export const App = () => {
               onOpenPlaceholder={openPlaceholder}
               onNavigate={(view) => {
                 const routeMap: Record<string, string> = {
-                  'SETTINGS': '/settings/CompanyInfo',
+                  'SETTINGS': '/settings/companyinfo',
                   'MY_ACCOUNT': '/myaccount/basicdetails',
                   'LOGIN': '/login'
                 };
@@ -462,7 +483,19 @@ export const App = () => {
                 <Campaigns onNavigateToCampaign={(c: any) => {
                   const id = c.id || c._id?.$oid || c._id;
                   navigate(`/campaigns/${id}`);
-                }} initialTab={targetCampaignTab} />
+                }} initialTab={'Active'} />
+              } />
+              <Route path="/closedcampaigns" element={
+                <Campaigns onNavigateToCampaign={(c: any) => {
+                  const id = c.id || c._id?.$oid || c._id;
+                  navigate(`/campaigns/${id}`);
+                }} initialTab={'Closed'} />
+              } />
+              <Route path="/archivedcampaigns" element={
+                <Campaigns onNavigateToCampaign={(c: any) => {
+                  const id = c.id || c._id?.$oid || c._id;
+                  navigate(`/campaigns/${id}`);
+                }} initialTab={'Archived'} />
               } />
 
               <Route path="/campaigns/:id/*" element={

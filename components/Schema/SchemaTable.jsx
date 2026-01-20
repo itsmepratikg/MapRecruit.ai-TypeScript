@@ -10,19 +10,33 @@ const SchemaTable = ({ data = [], columns = [], onEdit, onDelete, title }) => {
         );
     }
 
-    // If no columns provided, try to infer from first item keys (excluding system keys)
-    const tableColumns = columns.length
-        ? columns
-        : Object.keys(data[0] || {})
-            .filter(key => !['_id', '__v', 'tenantId', 'updatedAt', 'password'].includes(key))
-            .map(key => ({ header: key, accessor: key }));
+    // Normalize columns to support both new {title, key, render} and old {header, accessor} formats
+    const tableColumns = (columns.length ? columns : Object.keys(data[0] || {})
+        .filter(key => !['_id', '__v', 'tenantId', 'updatedAt', 'password'].includes(key))
+        .map(key => ({ header: key, accessor: key }))
+    ).map(col => ({
+        header: col.title || col.header, // Support 'title' or 'header'
+        accessor: col.key || col.accessor, // Support 'key' or 'accessor'
+        render: col.render, // Support custom render function
+        width: col.width,
+        sortable: col.sortable
+    }));
 
-    const getValue = (item, accessor) => {
-        if (typeof accessor === 'function') {
-            const val = accessor(item);
-            // Handle some common visual patterns like pill components if they return React elements
-            return val;
+    const getValue = (item, col) => {
+        // If a custom render function exists, use it
+        if (col.render && typeof col.render === 'function') {
+            return col.render(item[col.accessor], item);
         }
+
+        // standard accessor logic
+        const accessor = col.accessor;
+        if (typeof accessor === 'function') {
+            return accessor(item);
+        }
+
+        // safety check for string accessor
+        if (!accessor) return '';
+
         // basic nested support "profile.firstName"
         return accessor.split('.').reduce((obj, key) => (obj && obj[key] ? obj[key] : ''), item);
     };
@@ -35,6 +49,7 @@ const SchemaTable = ({ data = [], columns = [], onEdit, onDelete, title }) => {
                         {tableColumns.map((col, idx) => (
                             <th
                                 key={idx}
+                                style={{ width: col.width }}
                                 className="px-6 py-4 text-left text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800"
                             >
                                 {col.header}
@@ -55,7 +70,7 @@ const SchemaTable = ({ data = [], columns = [], onEdit, onDelete, title }) => {
                         >
                             {tableColumns.map((col, colIdx) => (
                                 <td key={colIdx} className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
-                                    {getValue(item, col.accessor)}
+                                    {getValue(item, col)}
                                 </td>
                             ))}
                             {(onEdit || onDelete) && (
