@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
     X, CheckCircle, UserPlus, Briefcase, FolderPlus, Tag, User,
     Settings, UserCog, Lock, Palette, LogOut, Search, ChevronRight, ChevronDown,
-    Activity, History, Bell, HelpCircle, Globe, Building2
+    Activity, History, Bell, HelpCircle, Globe, Building2, Check
 } from '../Icons';
 import { SIDEBAR_CAMPAIGN_DATA, GLOBAL_CAMPAIGNS } from '../../data';
 import { PROFILES_CATEGORIES, SETTINGS_CATEGORIES, TALENT_CHAT_MENU } from './constants';
@@ -111,8 +111,8 @@ export const ClientMenuContent = ({ activeClient, clients, onSwitchClient, onClo
                                         <span className="truncate max-w-[180px]">{client.name}</span>
                                     </div>
                                     {isActive && (
-                                        <div className="bg-indigo-600 text-white p-0.5 rounded-full shadow-sm flex items-center justify-center">
-                                            <CheckCircle size={10} />
+                                        <div className="bg-indigo-600 text-white w-4 h-4 rounded-full flex items-center justify-center shadow-sm shrink-0 ml-2">
+                                            <Check size={10} strokeWidth={4} />
                                         </div>
                                     )}
                                 </button>
@@ -226,8 +226,8 @@ export const CompanySwitcherContent = ({ onClose, isVisible = true, activeCompan
                                     </div>
                                 </div>
                                 {isActive ? (
-                                    <div className="bg-indigo-600 text-white p-0.5 rounded-full shadow-sm flex items-center justify-center">
-                                        <CheckCircle size={10} />
+                                    <div className="bg-indigo-600 text-white w-5 h-5 rounded-full flex items-center justify-center shadow-sm shrink-0">
+                                        <Check size={12} strokeWidth={4} />
                                     </div>
                                 ) : (
                                     <ChevronRight size={14} className="text-slate-300 dark:text-slate-600 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-1" />

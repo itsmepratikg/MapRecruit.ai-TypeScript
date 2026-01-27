@@ -92,12 +92,17 @@ export const SidebarFooter = ({
         const target = e.currentTarget;
         const rect = target.getBoundingClientRect();
 
-        // Anchor to the bottom of the trigger for bottom-up popovers
-        setPopoverPos({
-            top: rect.top,
-            left: rect.right,
-            bottom: window.innerHeight - rect.bottom
-        });
+        // ONLY set position if we're entering from a trigger element (which has a relative class or specific data-tour)
+        // This stops the flyout from re-calculating its own position when hovered in the Portal
+        const isTrigger = target.classList.contains('relative') || target.tagName === 'BUTTON';
+
+        if (isTrigger) {
+            setPopoverPos({
+                top: rect.top,
+                left: rect.right,
+                bottom: window.innerHeight - rect.bottom
+            });
+        }
 
         if (closeTimeoutRef.current) {
             clearTimeout(closeTimeoutRef.current);
