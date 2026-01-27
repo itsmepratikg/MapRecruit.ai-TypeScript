@@ -13,8 +13,10 @@ import { InterviewsView } from '../components/ProfileInterviews';
 import { ProfileDetails, ActivitiesView, TalentChatView, RecommendedView, SimilarProfilesView } from '../components/ProfileViews';
 import { EditProfileModal } from '../components/EditProfileModal'; // Import Modal
 import { ExportProfileModal } from '../components/ExportProfileModal'; // Import Export Modal
+import { ContactPreviewModal } from '../components/Profile/ContactPreviewModal'; // Import Contact Modal
 import { HeroWidgets } from '../components/HeroWidgets'; // Import Widgets
-import { profileService } from '../services/api';
+import { profileService, clientService, companyService } from '../services/api'; // Added companyService
+import { owningEntityService } from '../services/owningEntityService'; // Added OwningEntityService
 import { useToast } from '../components/Toast';
 
 import { LocalMatchAnalysisModal } from '../components/LocalMatchAnalysisModal';
@@ -24,8 +26,12 @@ import { useCandidateProfile } from '../hooks/useCandidateProfile';
 
 export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
   const { id } = useParams<{ id: string }>();
-  const { profile: liveData, loading, error, refreshProfile } = useCandidateProfile(id || null); // Ensure hook exports refresh
+  const { profile: liveData, loading, error, refresh: refreshProfile } = useCandidateProfile(id || null); // Aliased refresh to refreshProfile
   const { addToast } = useToast();
+
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [owningEntityName, setOwningEntityName] = useState<string | null>(null);
+  const [ownerDisplay, setOwnerDisplay] = useState<{ label: string, name: string } | null>(null);
 
   const [isScrolled, setIsScrolled] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -37,8 +43,124 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
   const [showMatchScore, setShowMatchScore] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Edit State
   const [editModalTab, setEditModalTab] = useState('BASIC');
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false); // Contact Modal State
   const [shortlistStatus, setShortlistStatus] = useState<'shortlisted' | 'rejected' | 'none'>('none');
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+
+  // --- ACCESS CONTROL & OWNING ENTITY LOGIC ---
+  useEffect(() => {
+    const validateAccess = async () => {
+      if (!liveData || loading) return;
+
+      try {
+        const userStr = localStorage.getItem('user');
+        if (!userStr) return;
+        const user = JSON.parse(userStr);
+
+        // Standardized Multi-Tenant IDs
+        const currentUserCompanyId = user.currentCompanyID || user.companyID || user.companyId;
+        const currentUserClientIds = Array.isArray(user.clientID || user.clients)
+          ? (user.clientID || user.clients)
+          : [user.clientID || user.clients].filter(Boolean);
+        const currentActiveClientId = user.activeClientID || user.activeClient || user.clientId;
+
+        const resumeClientId = liveData.clientID || liveData.clientId;
+        const resumeCompanyId = liveData.companyID || liveData.companyId;
+        const resumeFranchiseId = liveData.franchiseID || liveData.franchiseId;
+
+        if (!currentActiveClientId) {
+          console.warn("Current User Active Client ID missing");
+          return;
+        }
+
+        // 1. Fetch Current Company Context (to check Franchise Mode)
+        const activeCompany = await companyService.get();
+        const isFranchiseMode = activeCompany.productSettings?.franchise === true;
+
+        // 2. Fetch Active Client Settings
+        const clientData = await clientService.getById(currentActiveClientId);
+        const searchLevel = clientData.settings?.profileSearchAccessLevel || 'Client';
+
+        // 3. Access Check Logic
+        let isAllowed = false;
+        let displayLabel = isFranchiseMode ? 'Franchise' : 'Client';
+        let displayName = 'Unknown';
+
+        // Fetch Resume Client Data (to get clientName)
+        let resumeClientData = null;
+        if (resumeClientId) {
+          try {
+            resumeClientData = await clientService.getById(resumeClientId);
+            displayName = resumeClientData.clientName || resumeClientData.name || 'Unknown Client';
+          } catch (e) {
+            console.error("Could not fetch resume client details", e);
+          }
+        }
+
+        const isAdmin = ['Product Admin', 'Admin', 'Super Admin'].includes(user.role);
+
+        if (isAdmin) {
+          // Admins have access to everything within their Accessible Companies
+          const accessibleCompanies = user.AccessibleCompanyID || [user.companyID];
+          isAllowed = accessibleCompanies.some((id: string) => id.toString() === resumeCompanyId?.toString());
+        } else if (searchLevel === 'Company') {
+          isAllowed = (resumeCompanyId === currentUserCompanyId);
+          displayLabel = 'Company';
+          displayName = activeCompany.companyProfile?.companyNameAlias?.[0] || activeCompany.companyProfile?.companyName || "Your Company";
+        } else if (searchLevel === 'OwningEntity' && isFranchiseMode) {
+          displayLabel = 'Franchise';
+          // Check if candidate belongs to the same franchise as user's current client
+          const userFranchise = clientData.franchiseID || clientData.franchise;
+          if (userFranchise && resumeFranchiseId) {
+            isAllowed = (userFranchise.toString() === resumeFranchiseId.toString());
+
+            // Try to get Franchise Name
+            if (isAllowed) {
+              const franchiseDoc = await owningEntityService.getByClientId(currentActiveClientId);
+              if (franchiseDoc) {
+                displayName = franchiseDoc.name || franchiseDoc.franchiseName || 'Your Franchise';
+              }
+            }
+          } else {
+            // Fallback to client check if franchise missing
+            isAllowed = currentUserClientIds.some((id: string) => id.toString() === resumeClientId?.toString());
+          }
+        } else {
+          // Default Client Level Access
+          isAllowed = currentUserClientIds.some((id: string) => id.toString() === resumeClientId?.toString());
+          displayLabel = 'Client';
+        }
+
+        setOwnerDisplay({ label: displayLabel, name: displayName });
+        setAccessDenied(!isAllowed);
+
+        // Set owning entity name for the top badge if in franchise mode
+        if (isFranchiseMode && isAllowed && resumeFranchiseId) {
+          const oe = await owningEntityService.getByClientId(resumeClientId);
+          if (oe) setOwningEntityName(oe.name || oe.franchiseName);
+        }
+
+      } catch (err) {
+        console.error("Access Validation Error", err);
+      }
+    };
+
+    validateAccess();
+  }, [liveData, loading]);
+
+  if (accessDenied) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-900">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Access Denied</h2>
+          <p className="text-slate-600 dark:text-slate-400">You do not have permission to view this profile due to Client Access Restrictions.</p>
+          <button onClick={() => window.history.back()} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // Extract Profile Data from liveData (MongoDB Schema)
   const resumeDetails = liveData || {};
@@ -47,8 +169,20 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
   const profileSummary = profileResume.professionalSummary || {};
 
   const candidateName = profileBasic.fullName || "Loading...";
-  const candidateRole = profileSummary.currentRole?.jobTitle || "No Title";
-  const candidateLocation = profileBasic.locations?.[0]?.text || "No Location";
+
+  // Dynamic Job Title Logic
+  const professionalExperience = profileResume.professionalExperience || [];
+  const getCurrentJobTitle = () => {
+    // Find updated/current role (no endDate or isCurrent flag)
+    const currentRole = professionalExperience.find((exp: any) => !exp.endDate || exp.endDate.text?.toLowerCase() === 'present' || exp.currentStatus === 'Working');
+    if (currentRole && currentRole.jobTitle) return currentRole.jobTitle.text;
+
+    // Fallback to summary current role
+    return profileSummary.currentRole?.jobTitle || "No Title";
+  };
+  const candidateRole = getCurrentJobTitle();
+
+  const candidateLocation = profileBasic.locations?.[0]?.text || "No Location"; // Using first location
   const candidateStatus = resumeDetails.personnelStatus || "Pending";
   const candidateType = resumeDetails.employmentStatus || "N/A";
   const candidateAvailability = resumeDetails.availability || "N/A";
@@ -255,36 +389,83 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
         </div>
       )}
 
-      <header className={`bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shrink-0 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'py-2 px-4 md:px-6 shadow-sm' : 'py-4 md:py-6 px-4 md:px-8'}`}>
-        <div className="h-full">
-          <div className={`transition-opacity duration-200 ${isScrolled ? 'hidden opacity-0' : 'block opacity-100'}`}>
+      <header className={`relative shrink-0 sticky top-0 z-30 transition-all duration-500 ${isScrolled ? 'h-16 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-700' : 'h-auto py-4 md:py-6 bg-white dark:bg-slate-800'}`}>
+        {/* Premium Background Mesh (Only when not scrolled) */}
+        {!isScrolled && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-20 transition-opacity duration-700">
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-green-400/20 blur-[100px] rounded-full"></div>
+            <div className="absolute top-1/2 -left-24 w-72 h-72 bg-indigo-400/10 blur-[80px] rounded-full"></div>
+          </div>
+        )}
+        <div className="h-full relative px-4 md:px-8">
+
+          {/* --- MAIN HEADER (Full View) --- */}
+          <div className={`transition-all duration-300 ease-in-out origin-top ${isScrolled ? 'opacity-0 scale-95 pointer-events-none absolute inset-0' : 'opacity-100 scale-100 relative'}`}>
             <div className="flex flex-col md:flex-row justify-between items-start gap-4">
               <div className="flex gap-4 w-full md:w-auto">
                 <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-2xl uppercase shrink-0">
                   {candidateName.charAt(0)}
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 flex-wrap mb-2">
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
                     <h1 className="text-2xl font-bold text-green-600 dark:text-green-400">{candidateName}</h1>
 
-
+                    {owningEntityName && (
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 text-[10px] font-bold border border-indigo-100 dark:border-indigo-800 shadow-sm">
+                        <span className="opacity-60 uppercase tracking-tighter">{displayLabel}:</span>
+                        <span className="truncate max-w-[150px]">{owningEntityName}</span>
+                      </div>
+                    )}
                   </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">{candidateRole}</p>
-                  <div className="flex flex-col gap-1 text-sm text-slate-500 dark:text-slate-400">
-                    <div className="flex items-center gap-2"><MapPin size={14} className="text-green-500 dark:text-green-400" /><span>{candidateLocation}</span><CheckCircle size={14} className="text-green-500 dark:text-green-400" /></div>
-                    <div className="flex items-center gap-2 flex-wrap"><TagIcon size={14} className="text-slate-400" />
-                      {displayTags.length > 0 ? (
-                        displayTags.map((tag: any, i: number) => (<span key={i} className="bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-2 py-0.5 rounded text-xs">{tag}</span>))
-                      ) : (
-                        <span className="text-xs text-slate-400 italic">No Tags</span>
-                      )}
+                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-3">{candidateRole}</p>
+
+                  {/* Contact Details Trigger */}
+                  <div className="mb-3">
+                    <button
+                      onClick={() => setIsContactModalOpen(true)}
+                      className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                    >
+                      <User size={16} /> Contact Details
+                    </button>
+                  </div>
+
+                  <div className="flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-2">
+                      <MapPin size={16} className="text-green-500 dark:text-green-400" />
+                      <span>{candidateLocation}</span>
+                      <CheckCircle size={16} className="text-green-500 dark:text-green-400" />
+                    </div>
+
+                    {/* Smart Tags */}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <TagIcon size={16} className="text-slate-400" />
+                      <div className="flex items-center gap-2">
+                        {displayTags.length > 0 ? (
+                          <>
+                            <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-xs border border-slate-200 dark:border-slate-600">
+                              {displayTags[0]}
+                            </span>
+                            {displayTags.length > 1 && (
+                              <button className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                                +{displayTags.length - 1} more
+                              </button>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-xs text-slate-400 italic">No tags</span>
+                        )}
+                        <button className="px-2 py-0.5 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-600 rounded text-xs text-slate-500 hover:text-green-600 hover:border-green-400 transition-colors flex items-center gap-1">
+                          <span>+ Add Tags</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+
               <div className="flex flex-col items-end gap-4 md:gap-6 w-full md:w-auto">
                 <div className="flex justify-end w-full">
-                  {/* NEW WIDGET SYSTEM */}
                   <HeroWidgets
                     widgets={profileWidgets}
                     metaData={metaData}
@@ -298,11 +479,44 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
                   <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Availability</span><span className="text-slate-500 dark:text-slate-400">{candidateAvailability}</span></div>
                   <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Employment Status</span><span className="text-slate-500 dark:text-slate-400">{candidateType}</span></div>
                   <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Channel</span><span className="text-slate-500 dark:text-slate-400">{metaData.inputChannel || "Manual"}</span></div>
+                  {ownerDisplay && (
+                    <div className="col-span-2 border-t border-slate-100 dark:border-slate-700 mt-1 pt-1">
+                      <span className="text-slate-800 dark:text-slate-200 font-bold block">{ownerDisplay.label}</span>
+                      <span className="text-indigo-600 dark:text-indigo-400 font-medium">{ownerDisplay.name}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-          {/* ... (Scrolled header logic remains same) ... */}
+
+          {/* --- COMPACT HEADER (Sticky View) --- */}
+          <div className={`absolute inset-0 px-4 md:px-6 flex items-center justify-between transition-all duration-300 transform bg-white dark:bg-slate-800 z-50 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-lg uppercase shrink-0">
+                {candidateName.charAt(0)}
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-slate-800 dark:text-white leading-tight">{candidateName}</h3>
+                  {owningEntityName && (
+                    <span className="w-2 h-2 rounded-full bg-indigo-500" title={`Owning Entity: ${owningEntityName}`}></span>
+                  )}
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">{candidateRole}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors shadow-sm">Shortlist</button>
+              <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 transition-colors">
+                <Mail size={18} />
+              </button>
+              <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 transition-colors">
+                <FileEdit size={18} />
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -323,6 +537,17 @@ export const CandidateProfile = ({ activeTab }: { activeTab: string }) => {
           )}
         </div>
       </div>
-    </div>
+
+      {/* Contact Modal */}
+      <ContactPreviewModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+        data={{
+          emails: profileBasic.emails || [],
+          phones: profileBasic.phones || [],
+          socials: profileBasic.socialLinks || []
+        }}
+      />
+    </div >
   );
 };

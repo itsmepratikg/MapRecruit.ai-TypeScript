@@ -44,7 +44,7 @@ export const SidebarFooter = ({
     const { isDesktop } = useScreenSize();
     const [activePopover, setActivePopover] = useState<string | null>(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState<'client' | 'account' | 'create' | 'company' | null>(null);
-    const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0 });
+    const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0, bottom: 0 });
     const [metaKey, setMetaKey] = useState('Ctrl'); // Default
 
     // Helper to safely check permissions even if roleID is not fully populated yet
@@ -89,10 +89,15 @@ export const SidebarFooter = ({
 
     // Desktop Hover Logic
     const handlePopoverEnter = (id: string, e: React.MouseEvent) => {
-        if (e.currentTarget.classList.contains('relative') || e.currentTarget.tagName === 'BUTTON') {
-            const rect = e.currentTarget.getBoundingClientRect();
-            setPopoverPos({ top: rect.top, left: rect.right });
-        }
+        const target = e.currentTarget;
+        const rect = target.getBoundingClientRect();
+
+        // Anchor to the bottom of the trigger for bottom-up popovers
+        setPopoverPos({
+            top: rect.top,
+            left: rect.right,
+            bottom: window.innerHeight - rect.bottom
+        });
 
         if (closeTimeoutRef.current) {
             clearTimeout(closeTimeoutRef.current);
@@ -121,14 +126,14 @@ export const SidebarFooter = ({
         const isAccount = id === 'account';
 
         return {
-            top: isAccount ? 'auto' : `${popoverPos.top}px`,
-            bottom: isAccount ? '16px' : 'auto', // Account menu positions from bottom
+            top: 'auto', // Force bottom-up growth for footer items
+            bottom: isAccount ? '16px' : `${popoverPos.bottom}px`,
             left: `${popoverPos.left}px`,
-            paddingLeft: '8px',
-            marginLeft: '-4px',
+            paddingLeft: '24px', // Much wider bridge for reliable mouse transition
+            marginLeft: '-20px', // Pull bridge even closer to trigger for overlap
             position: 'fixed' as const,
             opacity: isActive ? 1 : 0,
-            transform: isActive ? 'scale(1) translateX(4px)' : 'scale(0.95) translateX(0)',
+            transition: 'opacity 0.2s ease-out, visibility 0.2s',
             visibility: isActive ? 'visible' as const : 'hidden' as const,
             pointerEvents: isActive ? 'auto' as const : 'none' as const,
         };
@@ -189,15 +194,13 @@ export const SidebarFooter = ({
                             onMouseEnter={(e) => handlePopoverEnter('create', e)}
                             onMouseLeave={handlePopoverLeave}
                         >
-                            <div className="w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl">
-                                <CreateMenuContent
-                                    onCreateProfile={() => { setIsCreateProfileOpen(true); setActivePopover(null); }}
-                                    onCreateCampaign={() => { setIsCreateCampaignOpen(true); setActivePopover(null); }}
-                                    onCreateFolder={() => { setIsCreateFolderOpen(true); setActivePopover(null); }}
-                                    onOpenPlaceholder={(t, m) => { onOpenPlaceholder(t, m); setActivePopover(null); }}
-                                    closeMenu={() => setActivePopover(null)}
-                                />
-                            </div>
+                            <CreateMenuContent
+                                onCreateProfile={() => { setIsCreateProfileOpen(true); setActivePopover(null); }}
+                                onCreateCampaign={() => { setIsCreateCampaignOpen(true); setActivePopover(null); }}
+                                onCreateFolder={() => { setIsCreateFolderOpen(true); setActivePopover(null); }}
+                                onOpenPlaceholder={(t, m) => { onOpenPlaceholder(t, m); setActivePopover(null); }}
+                                closeMenu={() => setActivePopover(null)}
+                            />
                         </div>
                     </Portal>
                 )}
@@ -226,9 +229,7 @@ export const SidebarFooter = ({
                                 onMouseEnter={(e) => handlePopoverEnter('client', e)}
                                 onMouseLeave={handlePopoverLeave}
                             >
-                                <div className="w-64 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl">
-                                    <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} onClose={() => setActivePopover(null)} />
-                                </div>
+                                <ClientMenuContent activeClient={userProfile.activeClient} clients={clients} onSwitchClient={handleClientSelect} onClose={() => setActivePopover(null)} />
                             </div>
                         </Portal>
                     )}
@@ -255,12 +256,11 @@ export const SidebarFooter = ({
                                 onMouseEnter={(e) => handlePopoverEnter('company', e)}
                                 onMouseLeave={handlePopoverLeave}
                             >
-                                <div className="w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl">
-                                    <CompanySwitcherContent
-                                        isVisible={activePopover === 'company'}
-                                        onClose={() => setActivePopover(null)}
-                                    />
-                                </div>
+                                <CompanySwitcherContent
+                                    isVisible={activePopover === 'company'}
+                                    onClose={() => setActivePopover(null)}
+                                    activeCompanyID={(userProfile.currentCompanyID || userProfile.companyID || userProfile.companyId)?.toString()}
+                                />
                             </div>
                         </Portal>
                     )}

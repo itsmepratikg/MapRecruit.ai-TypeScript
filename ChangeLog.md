@@ -1,84 +1,31 @@
+# ChangeLOG - Multi-Tenant Schema Standardization
 
-# Changelog
+All changes below were implemented to align the database with the multi-tenant architecture (Scenario A: Hierarchical vs Scenario B: Flat).
 
-All notable changes to the **MapRecruit ATS Dashboard** project will be documented in this file.
+## [v2.0.0] - 2026-01-27
 
-## [Phase 5.1] - Profile Widgets Enhancement - 2026-01-26
+### Added
+- **Multi-Company Access**: Implemented `AccessibleCompanyID` array in `usersDB` to support cross-tenant authenticated switching.
+- **Hierarchical Support (Spherion)**: Created/Standardized Spherion Company (`6181...`), Client (`693c...`), and Franchise (`693c...`) with proper parent-child linkages.
+- **Flat Structure Support (TRC)**: Standardized TRC Company (`6112...`) and Client (`6112...`) with `productSettings.franchise: false`.
+- **Franchise = Owning Entity**: Formally established the equivalence of Franchise and Owning Entity in the data model.
 
-### 🚀 Features & UX
-- **Widget Overflow System**: Implemented a dynamic "More" (`...`) menu for Profile Header widgets, ensuring a clean UI with max 6 visible items regardless of enabled features.
-- **Shortlist Popover**: Added precise Accept/Reject actions when clicking the Shortlist status icon, improving recruiter workflow speed.
-- **Opt-Out Management**: Integrated a comprehensive `OptOutModal` allowing granular opt-out for specific Email IDs and Phone Numbers.
-- **Top-Right Positioning**: Relocated actions to the top-right for better visual hierarchy.
+### Changed
+- **ID Type Standardization**: Converted all ID strings (`companyID`, `clientID`, `franchiseID`, `roleID`) across `usersDB`, `clientsdb`, `franchises`, and `roles` to strict MongoDB **`ObjectId`**.
+- **Field Normalization**: Renamed `clients` to **`clientID`** (Array of ObjectIDs) in the User collection.
+- **Role Scoping**: Updated the "Product Admin" role to include a `companyID` array, linking permissions strictly to authorized tenants.
+- **Client Naming**: Set `clientName` as the immutable source of truth for client identity (distinguishing from Product name).
 
-### 🐛 Bug Fixes
-- **Component Rendering**: Fixed `HeroWidgets.tsx` not updating correctly in previous deployments due to file-write conflicts.
-- **State Management**: Restored missing state handlers for Modals in `CandidateProfile.tsx`.
+### UI & Alignment (Sidebar Footer)
+- **Bottom-Up Anchoring**: Re-engineered flyout positioning to anchor from the bottom, preventing viewport overflow in the sidebar footer.
+- **Ultra-Stable Hover**: Widened the mouse-hover bridge to 24px and removed shifting animations for seamless menu transitions.
+- **Dynamic Auto-Height**: Optimized flyouts to adapt their height to content, removing unnecessary vertical expansion.
+- **Candidate Profile Polish**: Enhanced header with mesh gradients and contextual branch-level badges.
 
-
-## [Phase 5] - Debugging & Stabilization - 2026-01-26
-
-### 🐛 Bug Fixes
-- **Backend Stability**: Fixed a critical 500 Internal Server Error in `getWorkflow` by adding safe handling for invalid MongoDB ObjectIds.
-- **Backend Stability**: Fixed a `ReferenceError` in `workflowController.js` by missing `mongoose` import.
-- **Frontend Syntax**: Resolved an "Adjacent JSX elements" build error in `WorkflowBuilder.tsx`.
-- **Frontend Imports**: Fixed a broken import for `QUICK_FILTERS` in `AttachPeople.tsx`.
-- **Frontend Rendering**: Fixed a crash in `CampaignHeader.tsx` by adding optional chaining for `campaign.members`.
-- **Frontend Hooks**: Fixed a React warning in `useUserProfile.ts` regarding async updates on unmounted components.
-- **Performance**: Applied memoization to `handleCampaignClick` in `App.tsx` (renamed from `handleNavigateToCampaign`) to prevent infinite re-renders.
-
-### 🗄️ Data Operations
-- **Data Patch**: Updated `companyID` for Profile `69774...` to resolve access control issues.
-- **Data Import**: Imported legacy resume JSON files into MongoDB with proper ObjectId casting.
+### Security & Access Control
+- **Scope Validation**: Integrated a mandatory rule to fetch current company/client context dynamically from MongoDB for every session validation.
+- **Access Scoping**: Validated cross-tenant visibility based on `AccessibleCompanyID` and `clientID` arrays.
+- **Database Standardization**: Completed the migration of `InterviewsDB` and `owningentities` to strict `ObjectId` blueprint.
 
 ---
-
-## [Phase 4] - Activity & Timeline - 2025-05-24
-
-### 🕒 Timeline Features
-- **Audit Logs**: Implemented `Activities` collection tracking all user actions (Candidate views, status changes, notes).
-- **Visual Timeline**: Added a vertical timeline widget to `CandidateProfile` showing chronological history of interactions.
-- **Live Updates**: Connected timeline components to real-time socket events for immediate feedback.
-
----
-
-## [Phase 3] - Engage & Automation - 2025-05-23
-
-### 🤖 Workflow Builder
-- **Visual Editor**: Developed a node-based editor for designing recruitment workflows (Announcements, Screening, Interviews).
-- **Node Configuration**: Added modals for configuring automation rules, email templates, and delays.
-- **MongoDB Integration**: Migrated workflow nodes and edges to the `Workflows` collection for persistence.
-
-### 🧠 Engage AI
-- **Job Fit Score**: Implemented backend schema and UI sliders for calibrating candidate match weights.
-- **Interview Management**: Created `ScreeningRound` logic allowing custom question templates for varied interview types.
-- **Permissions**: Added `ShareAccessLevel` to workflows for granular team collaboration.
-
----
-
-## [Phase 2] - Campaigns & Marketplace - 2025-05-22
-
-### 📢 Campaign Management
-- **Dashboard**: Refactored the sidebar to group campaigns by Client/Company dynamically from the database.
-- **Intelligence Hub**: Added overview widgets for Team Notes, Reminders, and Panel Members.
-- **Pipeline Visualization**: Integrated Sourcing Efficiency and Pipeline Health charts using Recharts.
-
-### 🔎 Search Engine
-- **Filters**: Linked Campaign page filters to MongoDB queries (Location, Pay Rate, Skills).
-- **Match AI**: Implemented visual match scores and Radar Charts for candidate-job alignment.
-
----
-
-## [Phase 1] - Foundation & Profiles - 2025-05-20
-
-### 🏗️ Core Architecture
-- **Dashboard Grid**: Implemented `GridStack.js` for a draggable, customizable home dashboard.
-- **Theming**: Added global Theme Switcher (Emerald, Blue, Purple) and dark mode via Tailwind.
-- **Authentication**: Set up basic JWT-based auth flow and user context providers.
-
-### 👤 Candidate Profiles
-- **Data Layer**: Implemented `candidateService` and `useCandidateProfile` hooks for fetching MongoDB data.
-- **Profile View**: Built the comprehensive `CandidateProfile` page with Resume parsing, Tag management, and Hero Widgets.
-- **Resume Parsing**: Integrated logic to map complex JSON resume structures to UI components.
-
----
+*Created by Antigravity AI*
