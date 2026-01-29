@@ -62,7 +62,7 @@ const createUser = async (req, res) => {
         const { email, password, clients } = req.body;
         const { companyID, id: actingUserId } = req.user;
 
-        const userExists = await User.findOne({ email });
+        const userExists = await User.findOne({ email: { $eq: email } });
         if (userExists) {
             console.warn(`User creation failed: ${email} already exists`);
             return res.status(400).json({ message: 'User already exists' });
@@ -124,7 +124,7 @@ const createUser = async (req, res) => {
     } catch (error) {
         console.error('CREATE USER FATAL ERROR:', error);
         console.error('Stack:', error.stack);
-        res.status(500).json({ message: 'Server Error', error: error.message });
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 

@@ -60,7 +60,7 @@ const getCampaignStats = async (req, res) => {
         // Filter by specific active client if provided
         if (req.query.clientID) {
             // Validate it's in the allowed list
-            const requestedClient = req.query.clientID.toString();
+            const requestedClient = String(req.query.clientID);
             const isAllowed = allowedClients.some(c => c.toString() === requestedClient);
             if (isAllowed) {
                 query.clientID = requestedClient; // Override $in with specific ID

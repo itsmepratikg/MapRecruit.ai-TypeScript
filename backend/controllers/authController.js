@@ -90,8 +90,8 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'Please add all fields' });
         }
 
-        // Check if user exists
-        const userExists = await User.findOne({ email });
+        // Check for user exists - Secure against NoSQL Injection
+        const userExists = await User.findOne({ email: { $eq: email } });
         if (userExists) {
             return res.status(400).json({ message: 'User already exists' });
         }
@@ -130,8 +130,8 @@ const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Check for user email
-        const user = await User.findOne({ email });
+        // Check for user email - Secure against NoSQL Injection
+        const user = await User.findOne({ email: { $eq: email } });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

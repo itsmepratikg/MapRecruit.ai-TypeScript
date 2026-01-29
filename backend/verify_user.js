@@ -16,7 +16,7 @@ const run = async () => {
             console.log(`User NOT Found: ${userId}`);
 
             // Search by email to see if ID changed
-            const emailUser = await User.findOne({ email: "pratik.gaurav@maprecruit.ai" });
+            const emailUser = await User.findOne({ email: process.env.TEST_EMAIL || "pratik.gaurav@maprecruit.ai" });
             if (emailUser) {
                 console.log(`User found by email, but ID is: ${emailUser._id}`);
             }

@@ -57,7 +57,7 @@ const getProfiles = async (req, res) => {
 
         // Support for Search
         if (search) {
-            query['profile.fullName'] = { $regex: search, $options: 'i' };
+            query['profile.fullName'] = { $regex: String(search), $options: 'i' };
         }
 
         // Support for Status filtering

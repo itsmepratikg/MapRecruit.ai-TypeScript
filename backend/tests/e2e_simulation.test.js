@@ -9,8 +9,8 @@ const Candidate = require('../models/Candidate');
 describe('End-to-End Schema Architecture Test', () => {
     let token;
     let tenantId = 'tenant_A';
-    let userEmail = 'test.user@trcdemo.com';
-    let expectedPassword = 'Trcdemo12!';
+    let userEmail = process.env.TEST_USER_EMAIL || 'test.user@trcdemo.com';
+    let expectedPassword = process.env.TEST_USER_PASSWORD || 'Trcdemo12!';
 
     beforeAll(async () => {
         // Connect to DB explicitly for testing
