@@ -2,6 +2,14 @@
 
 All changes below were implemented to align the database with the multi-tenant architecture (Scenario A: Hierarchical vs Scenario B: Flat).
 
+
+## [Security Fixes] - 2026-01-29
+### Security
+- **NoSQL Injection**: Secured `authController`, `userController`, `campaignController`, and `profileController` by sanitizing inputs (CWE-943).
+- **Information Disclosure**: Removed stack traces from 500 error responses in `userController` (CWE-209).
+- **Hardcoded Credentials**: Replaced hardcoded credentials in test and debug scripts with environment variables (CWE-798).
+- **Verification**: Added `verify_fixes.js` for testing login vulnerabilities.
+
 ## [v2.0.0] - 2026-01-27
 
 ### Added

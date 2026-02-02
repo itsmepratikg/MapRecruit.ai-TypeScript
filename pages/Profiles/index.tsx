@@ -36,7 +36,7 @@ export const Profiles = ({ onNavigateToProfile }: { onNavigateToProfile: () => v
     <div className="flex-1 overflow-hidden h-full flex flex-col">
       <Routes>
         <Route path="/" element={<Navigate to={getPath('SEARCH')} replace />} />
-        <Route path={getPath('SEARCH')} element={<SearchProfile onNavigateToProfile={onNavigateToProfile} />} />
+        <Route path="Search" element={<SearchProfile onNavigateToProfile={onNavigateToProfile} />} />
         <Route path={getPath('NEW_APPLIES')} element={<NewApplies />} />
         <Route path={getPath('OPEN_APPLIES')} element={<OpenApplies />} />
         <Route path={getPath('NEW_LOCAL')} element={<NewLocalProfiles />} />

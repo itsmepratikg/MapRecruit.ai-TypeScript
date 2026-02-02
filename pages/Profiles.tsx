@@ -1,6 +1,7 @@
 
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
    FolderOpen, Tag as TagIcon, Search, FolderPlus, Users,
    BarChart2, ArrowUpRight, TrendingUp, MoreHorizontal, ChevronRight,
@@ -583,8 +584,11 @@ const TagsView = () => {
 };
 
 export const Profiles = ({ onNavigateToProfile, view }: { onNavigateToProfile: () => void, view: 'SEARCH' | 'FOLDERS' | 'TAGS' }) => {
+   const [searchParams] = useSearchParams();
+   const hasRid = searchParams.get('rid');
+
    const [searchState, setSearchState] = useState<SearchState>({
-      view: 'initial',
+      view: hasRid ? 'results' : 'initial',
       inputValue: '',
       activeFilters: [],
       searchKeywords: [],

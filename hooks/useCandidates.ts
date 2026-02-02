@@ -10,7 +10,7 @@ export const useCandidates = () => {
         setLoading(true);
         try {
             const data = await profileService.getAll();
-            setCandidates(data);
+            setCandidates(data.profiles || []);
             setError(null);
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to fetch candidates');

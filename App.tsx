@@ -289,7 +289,7 @@ export const App = () => {
     if (type === 'NAV') {
       const routeMap: Record<string, string> = {
         'DASHBOARD': '/dashboard',
-        'PROFILES': '/profiles/view/Search',
+        'PROFILES': '/profiles/searchprofiles',
         'CAMPAIGNS': '/campaigns',
         'METRICS': '/metrics',
         'SETTINGS': '/settings/companyinfo',
@@ -307,7 +307,7 @@ export const App = () => {
         const { getProfileViewPath } = await import('./components/Menu/constants');
         const subPath = getProfileViewPath(data.subView);
         setActiveProfileSubView(data.subView);
-        target = `/profiles/view/${subPath}`;
+        target = `/profiles/searchprofiles/${subPath}`;
       }
       if (data.view === 'SETTINGS' && data.settingsTab) {
         setActiveSettingsTab(data.settingsTab);
@@ -429,7 +429,7 @@ export const App = () => {
                       />
                     } />
                     {/* Profiles Menu for List Views */}
-                    <Route path="/profiles/view/*" element={
+                    <Route path="/profiles/searchprofiles/*" element={
                       <ProfilesMenu
                         onBack={() => navigate('/dashboard')}
                         isCollapsed={isCollapsed}
@@ -444,7 +444,7 @@ export const App = () => {
                         selectedCandidateId={selectedCandidateId}
                         activeProfileTab={activeProfileTab}
                         setActiveProfileTab={setActiveProfileTab}
-                        onBack={() => navigate('/profiles/view/Search')}
+                        onBack={() => navigate('/profiles/searchprofiles/Search')}
                         isCollapsed={isCollapsed}
                         setIsSidebarOpen={setIsSidebarOpen}
                       />
@@ -453,8 +453,8 @@ export const App = () => {
                     <Route path="/profile/:id" element={<LegacyProfileRedirect />} />
                     <Route path="/profile/:id/:tab" element={<LegacyProfileRedirect />} />
 
-                    {/* Redirect legacy /profiles to view */}
-                    <Route path="/profiles" element={<Navigate to="/profiles/view/Search" replace />} />
+                    {/* Redirect legacy /profiles to searchprofiles */}
+                    <Route path="/profiles" element={<Navigate to="/profiles/searchprofiles/Search" replace />} />
 
                     <Route path="/settings/users/userprofile/*" element={
                       <UserAdminMenu
@@ -522,7 +522,7 @@ export const App = () => {
                           // Map view names to routes
                           const routeMap: Record<string, string> = {
                             'DASHBOARD': '/dashboard',
-                            'PROFILES': '/profiles',
+                            'PROFILES': '/profiles/searchprofiles',
                             'CAMPAIGNS': '/campaigns',
                             'METRICS': '/metrics',
                             'SETTINGS': '/settings/companyinfo',
@@ -608,7 +608,7 @@ export const App = () => {
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     <Route path="/dashboard" element={<Home onNavigate={(tab) => navigate(`/campaigns?tab=${tab}`)} />} />
 
-                    <Route path="/profiles/view/*" element={
+                    <Route path="/profiles/searchprofiles/*" element={
                       <Profiles onNavigateToProfile={(id) => navigate(`/profile/profile/${id}`)} />
                     } />
                     <Route path="/profile/:tab/:id" element={

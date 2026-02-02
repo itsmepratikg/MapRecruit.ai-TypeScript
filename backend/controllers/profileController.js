@@ -68,7 +68,7 @@ const getProfiles = async (req, res) => {
         const skip = (page - 1) * limit;
 
         const profiles = await Candidate.find(query)
-            .select('profile.fullName profile.emails profile.phones profile.locations professionalSummary.currentRole.jobTitle professionalSummary.yearsOfExperience metaData.mrProfileID personnelStatus employmentStatus availability professionalQualification.skills clientID companyID articleID tagID metaData.newFileName metaData.newFilePath')
+            .select('resume profile.fullName profile.emails profile.phones profile.locations professionalSummary.currentRole.jobTitle professionalSummary.yearsOfExperience professionalExperience metaData.mrProfileID metaData.originalFileName personnelStatus employmentStatus availability professionalQualification.skills clientID companyID articleID tagID metaData.newFileName metaData.newFilePath')
             .sort({ updatedAt: -1 })
             .skip(skip)
             .limit(parseInt(limit));

@@ -15,7 +15,7 @@ import { EditProfileModal } from '../components/EditProfileModal'; // Import Mod
 import { ExportProfileModal } from '../components/ExportProfileModal'; // Import Export Modal
 import { ContactPreviewModal } from '../components/Profile/ContactPreviewModal'; // Import Contact Modal
 import { HeroWidgets } from '../components/HeroWidgets'; // Import Widgets
-import { profileService, clientService, companyService } from '../services/api'; // Added companyService
+import { profileService, clientService, companyService, userService } from '../services/api'; // Added companyService, userService
 import { owningEntityService } from '../services/owningEntityService'; // Added OwningEntityService
 import { useToast } from '../components/Toast';
 
@@ -38,9 +38,10 @@ import { Similar } from './Profile/Similar';
 import { Recommended } from './Profile/Recommended';
 import { Chat } from './Profile/Chat';
 
-export const CandidateProfile = ({ activeTab: propsActiveTab }: { activeTab?: string }) => {
-  const { tab: urlTab, id } = useParams<{ tab?: string; id: string }>();
-  const activeTab = urlTab || propsActiveTab || 'profile';
+export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: propsCandidateId }: { activeTab?: string, candidateId?: string }) => {
+  const { tab: urlTab, id: urlId } = useParams<{ tab?: string; id: string }>();
+  const activeTab = propsActiveTab || urlTab || 'profile';
+  const id = propsCandidateId || urlId;
 
   const { profile: liveData, loading, error, refresh: refreshProfile } = useCandidateProfile(id || null);
   const location = useLocation();

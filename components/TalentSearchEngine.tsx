@@ -1,16 +1,16 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
-  Search, Filter, Plus, X, FolderOpen, Tag as TagIcon,
-  SlidersHorizontal, ArrowRight, XCircle, Send, Star, MapPin, Briefcase, CheckCircle, Clock, Sparkles, ThumbsUp, Trash2, Edit2, History, Bookmark, ArrowUpDown, User,
-  Eye, Share2, ChevronUp, ChevronDown, MessageSquare
+  Search, Filter, X, SlidersHorizontal, ArrowRight, XCircle, Send, MapPin, Briefcase, CheckCircle, Clock, Sparkles, ThumbsUp, Bookmark, User,
+  ChevronUp, ChevronDown, MessageSquare, BookOpen
 } from 'lucide-react';
 // Redundant imports removed
 import { SearchState } from '../types';
-import { EmptyView, ChatBubble } from './Common';
+import { ChatBubble } from './Common';
 import { AdvancedSearchModal } from './AdvancedSearchModal';
+import { ProfileDrawer } from './ProfileDrawer';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCandidates } from '../hooks/useCandidates';
 import { userService } from '../services/api';
 
@@ -45,25 +45,57 @@ export const getCategoryForFilter = (filterValue: string) => {
 
 // Map MongoDB Document to UI Profile Card Structure
 const mapCandidateToCard = (candidate: any) => {
-  const profile = candidate.profile || {};
-  const summary = candidate.professionalSummary || {};
-  const qualification = candidate.professionalQualification || {};
+  // Support both top-level and nested .resume structure
+  const base = candidate.resume || candidate;
+
+  const profile = base.profile || {};
+  const summary = base.professionalSummary || {};
+  const qualification = base.professionalQualification || {};
+  const experience = base.professionalExperience || [];
+
+  // Find most recent job title based on endDate
+  const sortedExperience = Array.isArray(experience) ? [...experience].sort((a: any, b: any) => {
+    const endA = (a.endDate?.text || "").toLowerCase();
+    const endB = (b.endDate?.text || "").toLowerCase();
+
+    // Priority 1: "Present" or "Current" or emptyEndDate
+    const isCurrentA = endA.includes('present') || endA.includes('current') || !endA;
+    const isCurrentB = endB.includes('present') || endB.includes('current') || !endB;
+
+    if (isCurrentA && !isCurrentB) return -1;
+    if (!isCurrentA && isCurrentB) return 1;
+
+    // Priority 2: Latest Start Date
+    const dateA = a.startDate?.text ? new Date(a.startDate.text) : new Date(0);
+    const dateB = b.startDate?.text ? new Date(b.startDate.text) : new Date(0);
+    return dateB.getTime() - dateA.getTime();
+  }) : [];
+
+  const recentTitle = sortedExperience[0]?.jobTitle?.text || summary.currentRole?.jobTitle || "No Job Title";
+
+  // Name: Prioritize resume.profile.fullName
+  const displayName = profile.fullName || candidate.metaData?.originalFileName || "Unnamed Candidate";
+
+  // Location: choose the first location which is present in the array
+  const displayLocation = (Array.isArray(profile.locations) ? profile.locations[0]?.text : null) || summary.location?.text || "Remote / Not Specified";
 
   return {
     id: candidate._id || candidate.metaData?.mrProfileID,
-    name: profile.fullName || "Unnamed Candidate",
-    title: summary.currentRole?.jobTitle || "No Job Title",
-    location: profile.locations?.[0]?.text || "Remote / Not Specified",
-    experience: summary.yearsOfExperience?.finalYears ? `${summary.yearsOfExperience.finalYears} yrs` : "N/A",
-    status: candidate.personnelStatus || "Pending",
-    availability: candidate.availability || "Not Specified",
+    name: displayName,
+    title: recentTitle,
+    location: displayLocation,
+    experience: summary.yearsOfExperience?.finalYears ? `${summary.yearsOfExperience.finalYears} yrs` : "",
+    // Status and Availability prioritizations
+    status: candidate.personnelStatus || candidate.employmentStatus || base.personnelStatus || "Pending Applicant",
+    availability: candidate.availability || base.availability || "Available",
     skills: qualification.skills?.slice(0, 4).map((s: any) => s.text) || [],
-    avatar: (profile.fullName || "U").charAt(0),
-    matchScore: candidate.matchScore || 0 // Match score might come from AI later
+    avatar: (displayName.charAt(0)) || "U",
+    matchScore: candidate.matchScore || 0
   };
 };
 
 export const filterProfilesEngine = (profiles: any[], activeFilters: string[], advancedParams: any = {}, searchKeywords: string[] = []) => {
+  if (!Array.isArray(profiles)) return [];
   let filtered = profiles.map(mapCandidateToCard);
 
   if (Object.keys(advancedParams).length > 0) {
@@ -113,7 +145,7 @@ export const filterProfilesEngine = (profiles: any[], activeFilters: string[], a
 
 // --- SUB-COMPONENTS FOR SEARCH ---
 
-export const ProfileCard: React.FC<{ profile: any, onNavigate: (id: string) => void }> = ({ profile, onNavigate }) => (
+export const ProfileCard: React.FC<{ profile: any, onNavigate: (id: string) => void, onPreview?: (id: string) => void }> = ({ profile, onNavigate, onPreview }) => (
   <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 hover:shadow-md transition-all duration-200 flex flex-col md:flex-row gap-4 group relative">
     <div className="absolute top-4 right-4 flex items-center gap-1 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded-full text-xs font-medium">
       <Sparkles size={12} />
@@ -129,9 +161,21 @@ export const ProfileCard: React.FC<{ profile: any, onNavigate: (id: string) => v
     <div className="flex-grow">
       <div className="flex items-start justify-between">
         <div>
-          <h3 onClick={() => onNavigate(profile.id)} className="text-lg font-bold text-gray-900 dark:text-slate-100 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors cursor-pointer">
-            {profile.name}
-          </h3>
+          <div className="flex items-center gap-2">
+            <h3 onClick={() => onNavigate(profile.id)} className="text-lg font-bold text-gray-900 dark:text-slate-100 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors cursor-pointer">
+              {profile.name}
+            </h3>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onPreview) onPreview(profile.id);
+              }}
+              className="p-1.5 text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-full transition-colors opacity-0 group-hover:opacity-100"
+              title="Quick Preview"
+            >
+              <BookOpen size={16} />
+            </button>
+          </div>
           <p className="text-gray-600 dark:text-slate-400 font-medium">{profile.title}</p>
         </div>
       </div>
@@ -141,10 +185,12 @@ export const ProfileCard: React.FC<{ profile: any, onNavigate: (id: string) => v
           <MapPin size={14} />
           {profile.location}
         </div>
-        <div className="flex items-center gap-1">
-          <Briefcase size={14} />
-          {profile.experience}
-        </div>
+        {profile.experience && (
+          <div className="flex items-center gap-1">
+            <Briefcase size={14} />
+            {profile.experience}
+          </div>
+        )}
         <div className="flex items-center gap-1">
           <CheckCircle size={14} className={profile.status === 'Active' ? "text-green-500" : "text-yellow-500"} />
           {profile.status}
@@ -278,6 +324,16 @@ export const TalentSearchEngine: React.FC<{
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAiEnabled, setIsAiEnabled] = useState(true);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handlePreview = (id: string) => {
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('rid', id);
+      if (!newParams.get('tab')) newParams.set('tab', 'profile');
+      return newParams;
+    });
+  };
 
   const filteredProfiles = useMemo(() => {
     return filterProfilesEngine(candidates, searchState.activeFilters, searchState.advancedParams, searchState.searchKeywords);
@@ -513,6 +569,8 @@ export const TalentSearchEngine: React.FC<{
   return (
     <div className="h-screen bg-gray-50 dark:bg-slate-900 flex flex-col overflow-hidden transition-colors">
 
+      <ProfileDrawer candidateIds={filteredProfiles.map(p => p.id)} />
+
       <FilterPopup
         isOpen={isFilterPopupOpen}
         onClose={() => setIsFilterPopupOpen(false)}
@@ -683,6 +741,7 @@ export const TalentSearchEngine: React.FC<{
                   key={profile.id}
                   profile={profile}
                   onNavigate={onNavigateToProfile}
+                  onPreview={handlePreview}
                   {...(index === 0 ? { 'data-tour': 'candidate-card-first' } : {})}
                 />
               ))}

@@ -24,7 +24,7 @@ export const ProfilesMenu = ({
 
     const getPath = getProfileViewPath;
 
-    const currentPath = location.pathname.split('/profiles/view/')[1] || 'Search';
+    const currentPath = location.pathname.split('/profiles/searchprofiles/')[1] || 'Search';
 
     return (
         <div className="animate-in slide-in-from-left duration-300 ease-out">
@@ -65,7 +65,7 @@ export const ProfilesMenu = ({
                                     icon={item.icon}
                                     label={item.label}
                                     activeTab={currentPath === path}
-                                    to={`/profiles/view/${path}`}
+                                    to={`/profiles/searchprofiles/${path}`}
                                     onClick={() => {
                                         setActiveProfileSubView(item.id);
                                         if (!isDesktop) setIsSidebarOpen(false);

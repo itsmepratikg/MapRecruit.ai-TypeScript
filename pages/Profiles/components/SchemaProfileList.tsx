@@ -18,7 +18,7 @@ export const SchemaProfileList = ({ filterType, onNavigateToProfile }: any) => {
         try {
             setLoading(true);
             const data = await profileService.getAll();
-            setProfiles(data);
+            setProfiles(data.profiles || []);
         } catch (error) {
             console.error(error);
             addToast("Failed to load profiles", "error");

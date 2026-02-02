@@ -12,6 +12,7 @@ interface CandidateMenuProps {
     selectedCandidateId: string | null;
     isCollapsed: boolean;
     setIsSidebarOpen: (v: boolean) => void;
+    onTabChange?: (tab: string) => void;
 }
 
 export const CandidateMenu = ({
@@ -20,7 +21,8 @@ export const CandidateMenu = ({
     setActiveProfileTab,
     selectedCandidateId: propsId,
     isCollapsed,
-    setIsSidebarOpen
+    setIsSidebarOpen,
+    onTabChange
 }: CandidateMenuProps) => {
     const { isDesktop } = useScreenSize();
     const navigate = useNavigate();
@@ -30,6 +32,11 @@ export const CandidateMenu = ({
     const activeTab = currentTab || propsActiveTab || 'profile';
 
     const handleTabClick = (tabId: string) => {
+        if (onTabChange) {
+            onTabChange(tabId);
+            return;
+        }
+
         if (!activeId) return;
         navigate(`/profile/${tabId}/${activeId}`);
         if (!isDesktop) setIsSidebarOpen(false);
