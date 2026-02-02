@@ -110,7 +110,7 @@ const updateInterview = async (req, res) => {
 
         const updatedInterview = await Interview.findByIdAndUpdate(
             req.params.id,
-            updates,
+            { $set: updates },
             { new: true, runValidators: false }
         );
 

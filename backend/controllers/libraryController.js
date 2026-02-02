@@ -75,7 +75,7 @@ const updateLibraryItem = async (req, res) => {
 
         const updatedItem = await Library.findByIdAndUpdate(
             req.params.id,
-            updates,
+            { $set: updates },
             { new: true }
         );
 

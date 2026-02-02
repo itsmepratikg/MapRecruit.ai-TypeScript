@@ -215,7 +215,7 @@ const updateCampaign = async (req, res) => {
 
         const updatedCampaign = await Campaign.findByIdAndUpdate(
             req.params.id,
-            updates,
+            { $set: updates },
             { new: true, runValidators: false } // flexible schema often needs validators off or loose
         );
 
