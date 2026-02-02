@@ -39,6 +39,10 @@ const saveWorkflow = async (req, res) => {
         const { campaignID, name, nodes, edges, jobFitPreferences, sharedWith } = req.body;
         const companyID = req.user.companyID;
 
+        if (!campaignID || typeof campaignID !== 'string') {
+            return res.status(400).json({ message: 'Invalid Campaign ID' });
+        }
+
         let workflow = await Workflow.findOne({ campaignID, companyID });
 
         if (workflow) {

@@ -205,9 +205,17 @@ const updateCampaign = async (req, res) => {
             return res.status(404).json({ message: 'Campaign not found' });
         }
 
+        // Prevent NoSQL operator injection
+        const updates = { ...req.body };
+        for (const key of Object.keys(updates)) {
+            if (key.startsWith('$')) {
+                delete updates[key];
+            }
+        }
+
         const updatedCampaign = await Campaign.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updates,
             { new: true, runValidators: false } // flexible schema often needs validators off or loose
         );
 

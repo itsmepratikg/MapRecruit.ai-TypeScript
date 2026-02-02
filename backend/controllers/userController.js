@@ -147,9 +147,18 @@ const updateUser = async (req, res) => {
         }
 
         // Update fields
+        // Update fields
         const restrictedFields = ['password', '_id', 'clients']; // Handle clients separately
 
-        Object.keys(req.body).forEach(key => {
+        // Prevent NoSQL operator injection in top-level fields
+        const updates = { ...req.body };
+        for (const key of Object.keys(updates)) {
+            if (key.startsWith('$')) {
+                delete updates[key];
+            }
+        }
+
+        Object.keys(updates).forEach(key => {
             if (key === 'accessibilitySettings') {
                 // Deep merge for accessibilitySettings to allow partial updates
                 user.accessibilitySettings = {
@@ -166,7 +175,7 @@ const updateUser = async (req, res) => {
                 };
                 user.markModified('accessibilitySettings');
             } else if (!restrictedFields.includes(key)) {
-                user[key] = req.body[key];
+                user[key] = updates[key];
             }
         });
 
