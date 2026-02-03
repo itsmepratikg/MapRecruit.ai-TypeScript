@@ -48,5 +48,33 @@ export const usePermissions = () => {
         return false;
     };
 
-    return { can, permissions, roleName: user?.roleID?.roleName || user?.role };
+    const canEdit = (...path: string[]): boolean => {
+        if (!user) return false;
+        if (user.role === 'Product Admin') return true;
+
+        let current: any = permissions;
+
+        for (const segment of path) {
+            if (current === undefined || current === null) return false;
+
+            if (typeof current === 'object') {
+                if (current[segment] !== undefined) {
+                    current = current[segment];
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        if (typeof current === 'object') {
+            // Check specific 'editable' flag if present, otherwise default to enabled check or true
+            return current.editable === true;
+        }
+
+        return false;
+    };
+
+    return { can, canEdit, permissions, roleName: user?.roleID?.roleName || user?.role };
 };

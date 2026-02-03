@@ -9,6 +9,8 @@ import {
 import { useToast } from '../../../components/Toast';
 import { SchemaUserList } from './components/SchemaUserList';
 import { userService, clientService } from '../../../services/api';
+import { useUserProfile } from '../../../hooks/useUserProfile';
+import { useRoleHierarchy } from '../../../hooks/useRoleHierarchy';
 
 interface UsersSettingsProps {
     onSelectUser?: (user: any) => void;
@@ -17,6 +19,11 @@ interface UsersSettingsProps {
 export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
     const { t } = useTranslation();
     const { addToast } = useToast();
+
+    // Auth & Hierarchy
+    const { userProfile } = useUserProfile();
+    const { isSeniorTo } = useRoleHierarchy(userProfile?.roleID?._id || userProfile?.roleID, userProfile?.companyID);
+
     const [view, setView] = useState<'LIST' | 'EDITOR'>('LIST');
     const [users, setUsers] = useState<any[]>([]);
     const [clients, setClients] = useState<any[]>([]);
@@ -64,6 +71,16 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
     };
 
     const handleEditUser = (user: any) => {
+        // Hierarchy Check
+        // If user is trying to edit someone senior or equal -> Prevent
+        const targetRoleID = user.role?._id || user.role;
+        // Exception: If current user is modifying themselves? Usually allowed to edit basic info, but role change restricted.
+        // For simplicity, strict hierarchy: Can only manage juniors.
+        if (targetRoleID && !isSeniorTo(targetRoleID)) {
+            addToast(t("Insufficient seniority to modify this user."), "error");
+            return;
+        }
+
         if (onSelectUser) {
             onSelectUser(user);
         } else {
@@ -113,11 +130,26 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
     };
 
     const handleMassUpdate = async (action: 'ACTIVATE' | 'DEACTIVATE') => {
+        // Filter out users that match seniority check
+        const usersToUpdate = users.filter(u => selectedIds.has(u.id));
+        const authorizedUsersRaw = usersToUpdate.filter(u => {
+            const rId = u.role?._id || u.role;
+            return !rId || isSeniorTo(rId); // Allow if no role or senior
+        });
+
+        if (authorizedUsersRaw.length < usersToUpdate.length) {
+            addToast(t("Some users were skipped due to insufficient seniority."), "warning");
+        }
+
+        if (authorizedUsersRaw.length === 0) return;
+
+        const authorizedIds = new Set(authorizedUsersRaw.map(u => u.id));
+
         const newStatus = action === 'ACTIVATE' ? true : false;
         try {
             // Update in UI immediately for responsiveness
-            setUsers(prev => prev.map(u => selectedIds.has(u.id) ? { ...u, status: newStatus } : u));
-            addToast(`${selectedIds.size} ${t("users updated successfully")}`, 'success');
+            setUsers(prev => prev.map(u => authorizedIds.has(u.id) ? { ...u, status: newStatus } : u));
+            addToast(`${authorizedIds.size} ${t("users updated successfully")}`, 'success');
             setSelectedIds(new Set());
         } catch (error) {
             addToast(t("Failed to update users"), 'error');

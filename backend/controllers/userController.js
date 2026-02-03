@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
+const Role = require('../models/Role'); // Import Role model
+
+// Helper to get role rank (lower is senior)
+// Duplicate of logic in authController. ideally valid to move to a utils file.
+const getRoleRank = async (roleId, companyID) => {
+    if (!roleId) return Infinity;
+    const RoleHierarchy = require('../models/RoleHierarchy');
+    const hierarchyDoc = await RoleHierarchy.findOne({ companyID });
+
+    if (!hierarchyDoc || !hierarchyDoc.hierarchy) return Infinity;
+
+    // Find entry
+    const entry = hierarchyDoc.hierarchy.find(h => h.roleID.toString() === roleId.toString());
+    return entry ? entry.rank : Infinity;
+};
 
 // Helper to generate password from domain
 const getDomainPassword = (email) => {
@@ -104,6 +119,23 @@ const createUser = async (req, res) => {
         }
         // --- STRICT CLIENT VALIDATION END ---
 
+        // Hierarchy Check: Cannot create a user with a role senior to or equal to your own (unless Product Admin)
+        if (req.user.role !== 'Product Admin') {
+            const operatorRoleID = req.user.roleID._id || req.user.roleID;
+            const targetRoleID = req.body.role; // The role being assigned
+
+            if (targetRoleID) {
+                const operatorRank = await getRoleRank(operatorRoleID, req.user.currentCompanyID || req.user.companyID);
+                const targetRank = await getRoleRank(targetRoleID, req.user.currentCompanyID || req.user.companyID);
+
+                // If creating someone higher ranked (lower number) -> Deny
+                // If operatorRank is 2 and target is 1 -> 2 >= 1 (True, deny)
+                if (operatorRank >= targetRank) {
+                    return res.status(403).json({ message: 'Insufficient seniority to assign this role.' });
+                }
+            }
+        }
+
         // Process Client ObjectIds (Valid ones only, which we now know are authorized)
         const clientObjectIds = requestedClientIds.map(id => new mongoose.Types.ObjectId(id));
 
@@ -146,6 +178,25 @@ const updateUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        const isSelf = req.user.id.toString() === user._id.toString();
+
+        // Hierarchy Check
+        // Allow if Product Admin OR Self (with restrictions below) OR Senior
+        if (req.user.role !== 'Product Admin' && !isSelf) {
+            const operatorRoleID = req.user.roleID._id || req.user.roleID;
+            const targetRoleID = user.role;
+
+            if (targetRoleID) {
+                const operatorRank = await getRoleRank(operatorRoleID, req.user.currentCompanyID || req.user.companyID);
+                const targetRank = await getRoleRank(targetRoleID, req.user.currentCompanyID || req.user.companyID);
+
+                // If operatorRank >= targetRank -> Deny (unless it's self, handled above)
+                if (operatorRank >= targetRank) {
+                    return res.status(403).json({ message: 'Insufficient seniority to modify this user.' });
+                }
+            }
+        }
+
         // Update fields
         // Update fields
         const restrictedFields = ['password', '_id', 'clients']; // Handle clients separately
@@ -155,6 +206,31 @@ const updateUser = async (req, res) => {
         for (const key of Object.keys(updates)) {
             if (key.startsWith('$')) {
                 delete updates[key];
+            }
+        }
+
+        // Privilege Escalation Check: Role Change
+        // If changing role, MUST be Product Admin OR Senior. Self cannot change role.
+        if (updates.role && updates.role !== user.role) {
+            if (isSelf && req.user.role !== 'Product Admin') {
+                // Self cannot change own role unless Product Admin (maybe?)
+                // Safer: Self NEVER changes role via this endpoint.
+                delete updates.role;
+                console.warn(`User ${req.user.id} attempted to change own role. Ignored.`);
+            } else if (req.user.role !== 'Product Admin') {
+                // Operator changing someone else's role. Checked by hierarchy above, BUT
+                // we must also check if the NEW role is assignable by operator (cannot promote junior to be your boss).
+                // Actually hierarchy check above allows edit. But can I make them a Super Admin?
+                // Ideally check rank of New Role too.
+                const operatorRoleID = req.user.roleID._id || req.user.roleID;
+                const newRoleID = updates.role;
+
+                const operatorRank = await getRoleRank(operatorRoleID, req.user.currentCompanyID || req.user.companyID);
+                const newRoleRank = await getRoleRank(newRoleID, req.user.currentCompanyID || req.user.companyID);
+
+                if (operatorRank >= newRoleRank) {
+                    return res.status(403).json({ message: 'Insufficient seniority to assign this role level.' });
+                }
             }
         }
 
