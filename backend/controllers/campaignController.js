@@ -190,6 +190,32 @@ const createCampaign = async (req, res) => {
     }
 };
 
+// Helper to deeply sanitize update objects and prevent NoSQL operator injection
+const sanitizeForUpdate = (value) => {
+    if (value === null || value === undefined) return value;
+
+    // Primitives are safe as-is
+    if (typeof value !== 'object') {
+        return value;
+    }
+
+    // Arrays: sanitize each element
+    if (Array.isArray(value)) {
+        return value.map((item) => sanitizeForUpdate(item));
+    }
+
+    // Plain objects: remove any keys starting with '$' and sanitize values
+    const sanitized = {};
+    for (const [key, val] of Object.entries(value)) {
+        if (typeof key === 'string' && key.startsWith('$')) {
+            // Skip any operator-like keys
+            continue;
+        }
+        sanitized[key] = sanitizeForUpdate(val);
+    }
+    return sanitized;
+};
+
 // @desc    Update campaign
 // @route   PUT /api/campaigns/:id
 // @access  Private
@@ -205,13 +231,8 @@ const updateCampaign = async (req, res) => {
             return res.status(404).json({ message: 'Campaign not found' });
         }
 
-        // Prevent NoSQL operator injection
-        const updates = { ...req.body };
-        for (const key of Object.keys(updates)) {
-            if (key.startsWith('$')) {
-                delete updates[key];
-            }
-        }
+        // Prevent NoSQL operator injection by deeply sanitizing the update payload
+        const updates = sanitizeForUpdate(req.body);
 
         const updatedCampaign = await Campaign.findByIdAndUpdate(
             req.params.id,

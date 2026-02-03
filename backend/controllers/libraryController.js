@@ -67,11 +67,22 @@ const updateLibraryItem = async (req, res) => {
             return res.status(403).json({ message: 'Not authorized' });
         }
 
-        // Prevent NoSQL operator injection
-        const updates = { ...req.body };
-        Object.keys(updates).forEach(key => {
-            if (key.startsWith('$')) delete updates[key];
-        });
+        // Prevent NoSQL operator injection by sanitizing the update payload
+        const sanitizeUpdatePayload = (source) => {
+            const clean = {};
+            if (source && typeof source === 'object') {
+                Object.keys(source).forEach((key) => {
+                    // Disallow any update/operator-style keys
+                    if (typeof key === 'string' && key.startsWith('$')) {
+                        return;
+                    }
+                    clean[key] = source[key];
+                });
+            }
+            return clean;
+        };
+
+        const updates = sanitizeUpdatePayload(req.body);
 
         const updatedItem = await Library.findByIdAndUpdate(
             req.params.id,

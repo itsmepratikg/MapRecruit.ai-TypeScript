@@ -35,6 +35,23 @@ try {
 
             console.log(`[${i}] ${rule} (${sev}) - ${loc}`);
         });
+
+        const otherSev = alerts.filter(a => {
+            const sev = a.rule.security_severity_level || a.rule.severity || 'unknown';
+            return sev.toLowerCase() !== 'high' && sev.toLowerCase() !== 'critical';
+        });
+
+        console.log(`Medium/Low/Other Severity Alerts: ${otherSev.length}`);
+
+        otherSev.forEach((a, i) => {
+            const rule = a.rule ? a.rule.id : a.ruleId || 'Unknown';
+            const sev = a.rule.security_severity_level || a.rule.severity;
+            let loc = 'Unknown';
+            if (a.most_recent_instance && a.most_recent_instance.location) loc = `${a.most_recent_instance.location.path}:${a.most_recent_instance.location.start_line}`;
+            else if (a.location) loc = `${a.location.path}:${a.location.start_line}`;
+
+            console.log(`[${i}] ${rule} (${sev}) - ${loc}`);
+        });
         alerts.forEach((alert, index) => {
             const rule = alert.rule ? alert.rule.id : 'Unknown Rule';
             const msg = alert.message ? alert.message.text || alert.message : 'No message';

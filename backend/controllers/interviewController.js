@@ -86,8 +86,28 @@ const createInterview = async (req, res) => {
     }
 };
 
+// Recursively remove any keys starting with '$' from an object or array
+const removeDollarPrefixedKeysDeep = (value) => {
+    if (Array.isArray(value)) {
+        return value.map((item) => removeDollarPrefixedKeysDeep(item));
+    }
+    if (value && typeof value === 'object') {
+        const sanitized = {};
+        for (const [key, val] of Object.entries(value)) {
+            if (key.startsWith('$')) {
+                // Skip dangerous operator-like keys
+                continue;
+            }
+            sanitized[key] = removeDollarPrefixedKeysDeep(val);
+        }
+        return sanitized;
+    }
+    return value;
+};
+
 // @desc    Update interview
 // @route   PUT /api/interviews/:id
+// @access  Private
 const updateInterview = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
@@ -100,17 +120,12 @@ const updateInterview = async (req, res) => {
             return res.status(404).json({ message: 'Interview not found or access denied' });
         }
 
-        // Prevent NoSQL operator injection in update body
-        const updates = { ...req.body };
-        for (const key of Object.keys(updates)) {
-            if (key.startsWith('$')) {
-                delete updates[key];
-            }
-        }
+        const updates = req.body;
+        const sanitizedUpdates = removeDollarPrefixedKeysDeep(updates);
 
         const updatedInterview = await Interview.findByIdAndUpdate(
             req.params.id,
-            { $set: updates },
+            { $set: sanitizedUpdates },
             { new: true, runValidators: false }
         );
 
