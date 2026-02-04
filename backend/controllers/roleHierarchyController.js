@@ -1,5 +1,6 @@
 const RoleHierarchy = require('../models/RoleHierarchy');
 const Role = require('../models/Role');
+const { sanitizeNoSQL } = require('../utils/securityUtils');
 
 // @desc    Get Role Hierarchy for current Company
 // @route   GET /api/roles/hierarchy
@@ -8,7 +9,7 @@ const getHierarchy = async (req, res) => {
     try {
         const companyID = req.user.currentCompanyID || req.user.companyID;
 
-        let hierarchyDoc = await RoleHierarchy.findOne({ companyID })
+        let hierarchyDoc = await RoleHierarchy.findOne({ companyID: { $eq: companyID } })
             .populate('hierarchy.roleID', 'roleName description');
 
         if (!hierarchyDoc) {
@@ -18,7 +19,7 @@ const getHierarchy = async (req, res) => {
             const allRoles = await Role.find({
                 $or: [
                     { companyID: companyID },
-                    { companyID: { $ exists: false } } // system roles? need better filtering typically
+                    { companyID: { $exists: false } } // system roles? need better filtering typically
                 ]
             }).select('roleName description');
 
