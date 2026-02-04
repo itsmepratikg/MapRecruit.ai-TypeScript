@@ -2,89 +2,38 @@
 import { useState, useEffect, useRef } from 'react';
 import { INITIAL_PROFILE_DATA, UserProfileData } from '../data/profile';
 
-const STORAGE_KEY = 'user_profile_v1';
 const EVENT_KEY = 'profile-updated';
 
 export const useUserProfile = () => {
-    const [userProfile, setUserProfile] = useState<UserProfileData>(() => {
+    const getAuthUser = () => {
         if (typeof window === 'undefined') return INITIAL_PROFILE_DATA;
         try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            const profile = stored ? JSON.parse(stored) : INITIAL_PROFILE_DATA;
-
-            // Merge with Auth Data
             const authUserStr = localStorage.getItem('user');
             if (authUserStr) {
                 const authUser = JSON.parse(authUserStr);
+                // Map DB fields to UI Profile structure
                 return {
-                    ...profile,
+                    ...INITIAL_PROFILE_DATA,
+                    ...authUser,
                     _id: authUser._id || authUser.id,
-                    email: authUser.email || profile.email,
-                    firstName: authUser.firstName || profile.firstName,
-                    lastName: authUser.lastName || profile.lastName,
-                    phone: authUser.phone || authUser.mobile || profile.phone,
-                    role: authUser.role || profile.role,
-                    roleID: authUser.roleID || profile.roleID,
-                    activeClient: authUser.activeClient || profile.activeClient,
-                    companyID: authUser.companyID || profile.companyID,
-                    activeClientID: authUser.activeClientID || profile.activeClientID,
-                    clientID: authUser.clientID || authUser.clients || profile.clientID,
-                    clients: authUser.clients || authUser.clientID || profile.clients,
-                    teams: Array.isArray(authUser.clients) ? authUser.clients.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c) : (profile.teams || []),
-                    currentCompanyID: authUser.currentCompanyID || profile.currentCompanyID,
-                    lastLoginAt: authUser.lastLoginAt,
-                    loginCount: authUser.loginCount,
-                    lastActiveAt: authUser.lastActiveAt,
-                    timeZone: authUser.timeZone || profile.timeZone,
-                    jobTitle: authUser.jobTitle || profile.jobTitle,
-                    location: authUser.location || profile.location,
-                    color: authUser.color || profile.color,
-                    avatar: authUser.avatar || profile.avatar
+                    phone: authUser.phone || authUser.mobile || authUser.phoneNumber,
+                    teams: Array.isArray(authUser.clientID)
+                        ? authUser.clientID.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c)
+                        : (authUser.teams || []),
                 };
             }
-            return profile;
+            return INITIAL_PROFILE_DATA;
         } catch (e) {
             return INITIAL_PROFILE_DATA;
         }
-    });
+    };
+
+    const [userProfile, setUserProfile] = useState<UserProfileData>(getAuthUser());
 
     // Listen for updates from other components
     useEffect(() => {
         const handleProfileUpdate = () => {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            let profile = stored ? JSON.parse(stored) : INITIAL_PROFILE_DATA;
-
-            // Merge with Auth Data
-            const authUserStr = localStorage.getItem('user');
-            if (authUserStr) {
-                const authUser = JSON.parse(authUserStr);
-                profile = {
-                    ...profile,
-                    _id: authUser._id || authUser.id,
-                    email: authUser.email || profile.email,
-                    firstName: authUser.firstName || profile.firstName,
-                    lastName: authUser.lastName || profile.lastName,
-                    phone: authUser.phone || authUser.mobile || profile.phone,
-                    role: authUser.role || profile.role,
-                    roleID: authUser.roleID || profile.roleID,
-                    activeClient: authUser.activeClient || profile.activeClient,
-                    companyID: authUser.companyID || profile.companyID,
-                    activeClientID: authUser.activeClientID || profile.activeClientID,
-                    clientID: authUser.clientID || authUser.clients || profile.clientID,
-                    clients: authUser.clients || authUser.clientID || profile.clients,
-                    teams: Array.isArray(authUser.clients) ? authUser.clients.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c) : (profile.teams || []),
-                    currentCompanyID: authUser.currentCompanyID || profile.currentCompanyID,
-                    lastLoginAt: authUser.lastLoginAt,
-                    loginCount: authUser.loginCount,
-                    lastActiveAt: authUser.lastActiveAt,
-                    timeZone: authUser.timeZone || profile.timeZone,
-                    jobTitle: authUser.jobTitle || profile.jobTitle,
-                    location: authUser.location || profile.location,
-                    color: authUser.color || profile.color,
-                    avatar: authUser.avatar || profile.avatar
-                };
-            }
-            setUserProfile(profile);
+            setUserProfile(getAuthUser());
         };
 
         window.addEventListener(EVENT_KEY, handleProfileUpdate);
@@ -159,7 +108,13 @@ export const useUserProfile = () => {
 
     const saveProfile = (data: UserProfileData) => {
         setUserProfile(data);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        // Persist to the main auth user object
+        const currentAuthStr = localStorage.getItem('user');
+        if (currentAuthStr) {
+            const currentAuth = JSON.parse(currentAuthStr);
+            const updatedAuth = { ...currentAuth, ...data };
+            localStorage.setItem('user', JSON.stringify(updatedAuth));
+        }
         // Dispatch event to notify other components
         window.dispatchEvent(new Event(EVENT_KEY));
     };
