@@ -1,0 +1,39 @@
+{
+  "roleId": "R-29384",
+  "roleName": "Product Admin",
+  "description": "Full access to product features, campaign management, and candidate sourcing. Restricted access to billing and system-wide security logs.",
+  "lastUpdated": "2025-05-15T10:30:00Z",
+  "accessabilitySettings": {
+    "Campaign Management": {
+      "createCampaign": true,
+      "editCampaign": true,
+      "deleteCampaign": false,
+      "archiveCampaign": true,
+      "viewAnalytics": true
+    },
+    "Candidate Sourcing": {
+      "accessGlobalDatabase": true,
+      "importResumes": true,
+      "exportCandidateData": true,
+      "viewPersonalContactInfo": false
+    },
+    "Engage AI Workflows": {
+      "createWorkflow": true,
+      "editTemplates": true,
+      "configureAutomation": true,
+      "approveMessages": true
+    },
+    "Team Management": {
+      "inviteMembers": true,
+      "assignRoles": false,
+      "removeMembers": false,
+      "viewActivityLogs": true
+    },
+    "System Configuration": {
+      "manageIntegrations": true,
+      "editCompanyProfile": true,
+      "manageBilling": false,
+      "accessAuditLogs": false
+    }
+  }
+}

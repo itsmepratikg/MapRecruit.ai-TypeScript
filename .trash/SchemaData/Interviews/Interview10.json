@@ -1,0 +1,2621 @@
+{
+    "_id": ObjectId("694128681fbbd672bb9a2751"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("6931992db394b307b3b087df"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6916d147a05f57a943bbc6b3"),
+    "userID": ObjectId("614d569f77f21325cdbd314a"),
+    "createdAt": ISODate("2025-12-16T09:37:44.331Z"),
+    "updatedAt": ISODate("2026-01-26T17:13:09.247Z"),
+    "linked": true,
+    "status": "Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 4.5,
+        "comment": "overall feedback",
+        "status": "Shortlisted",
+        "shortlisted": true,
+        "rejected": false,
+        "ratedAt": ISODate("2025-12-17T04:33:22.035Z"),
+        "commentedAt": ISODate("2025-12-17T04:33:22.037Z"),
+        "statusChangedAt": "",
+        "shortlistedAt": ISODate("2026-01-26T17:13:09.247Z"),
+        "reviewed": true,
+        "reviewedBy": ObjectId("67909634dafd08e80fa6f88b"),
+        "reviewedAt": ISODate("2026-01-26T17:13:09.247Z")
+    },
+    "campaign": {
+        "passcode": "40000741",
+        "title": "Ingot Quality Technician",
+        "locations": [
+            {
+                "text": "White,GA 30184,USA",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "White",
+                "district": "",
+                "state": "Georgia",
+                "stateCode": "GA",
+                "countryCode": "US",
+                "postalCode": "30184",
+                "pin": {
+                    "lat": 34.2376205,
+                    "lon": -84.6688348
+                },
+                "cityCanonical": "white",
+                "districtCanonical": "",
+                "stateCanonical": "georgia",
+                "confidenceScore": 0.0,
+                "eligibilityCheck": "Required",
+                "circle": {
+                    "metricUnit": "mi",
+                    "radius": 15
+                },
+                "vacancies": 2,
+                "country": "UnitedStates",
+                "countryCanonical": "united states"
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "Internal Sourcing",
+        "applicationMethod": "Passive Sourcing",
+        "applicationChannel": "Careers",
+        "applicationSource": "TRC Website",
+        "applicationStatus": "Pending",
+        "applicationPlatform": "Linked by Recruiter",
+        "linkedBy": "Recruiter",
+        "linkedByID": "614d569f77f21325cdbd314a",
+        "linkedAt": ISODate("2025-12-16T09:37:44.374Z"),
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": ObjectId("6941283e7dfac525eee8f5c8"),
+        "referenceURL": "https://trcqa.maprecruit.com/v4/showcampaign/sourceai/attachpeople/6931992db394b307b3b087df?searchid=6941283e7dfac525eee8f5c8",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": false,
+    "screeningRounds": [
+        {
+            "roundName": "Assessment (1)",
+            "roundType": "Assessment",
+            "availableMeetTypes": [],
+            "selectedMeetType": "",
+            "roundNumber": 3,
+            "roundID": "",
+            "enabled": true,
+            "deleted": false,
+            "status": "Completed",
+            "updatedAt": "2025-12-16T09:41:41.086Z",
+            "scheduled": true,
+            "scheduledAt": "2025-12-16T09:41:41.051Z",
+            "scheduledBy": "614d569f77f21325cdbd314a",
+            "scheduledMethod": "Manual",
+            "sent": false,
+            "sentAt": "",
+            "scheduleSuccess": true,
+            "scheduleSuccessAt": "2025-12-16T09:41:54.746Z",
+            "bounced": false,
+            "bouncedAt": "",
+            "viewed": true,
+            "viewedAt": "2025-12-16T09:43:39.950Z",
+            "linkClicked": false,
+            "linkClickedAt": "",
+            "linkClickedURL": [],
+            "confirmed": false,
+            "confirmedAt": "",
+            "optOut": false,
+            "optOutAt": "",
+            "cancelled": false,
+            "cancelledAt": "",
+            "progressing": false,
+            "startedAt": "2025-12-16T09:43:39.950Z",
+            "completed": true,
+            "knockout": false,
+            "completedAt": "2025-12-16T10:14:55.215Z",
+            "shortlisted": false,
+            "reviewed": true,
+            "reviewedAt": ISODate("2025-12-17T04:33:08.537Z"),
+            "reviewedBy": ObjectId("614d569f77f21325cdbd314a"),
+            "interviewCompleted": false,
+            "interviewCompletedAt": "",
+            "jobFitScoreEvaluation": "",
+            "jobFitScoreID": "",
+            "chatBotInterviewDurationSec": 1869.21,
+            "overallExpectedResponse": {
+                "score": 0,
+                "calculated": false
+            },
+            "description": {
+                "text": "",
+                "mediaURL": ""
+            },
+            "automate": false,
+            "automateBuffer": 60,
+            "automateDetails": {
+                "tillCampaignClose": true,
+                "startDate": "",
+                "endDate": "",
+                "timeZone": "",
+                "timeZoneName": "",
+                "timeZoneFullName": "",
+                "excludeDays": [
+                    "Saturday",
+                    "Sunday"
+                ],
+                "automationPreference": "After Application Creation",
+                "automateBuffer": 60,
+                "timings": [],
+                "message": []
+            },
+            "communicationMethod": "Inbound",
+            "savedFavouriteID": "",
+            "feedBack": {
+                "rating": 3.5,
+                "comment": "Round Response",
+                "status": "",
+                "ratedAt": "",
+                "commentedAt": "",
+                "statusChangedAt": ""
+            },
+            "eligible": false,
+            "mapToField": false,
+            "expiryAt": "",
+            "timeBound": false,
+            "maxDurationInMinutes": 1000,
+            "channels": [
+                "Chatbot"
+            ],
+            "questions": [
+                {
+                    "_id": "6940e7c2d5a54ffae241ad62",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "MCQ-SINGLE",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>Question Response </div>",
+                        "mediaURL": "",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "",
+                            ""
+                        ],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "Yes"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 3.5,
+                        "comment": "Question Response",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:43:40.034Z",
+                    "completedAt": "2025-12-16T09:43:44.901Z"
+                },
+                {
+                    "_id": "6940e814bfa1ea155bdfdc6d",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "AUDIO",
+                    "responseType": "TEXT",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "",
+                        "mediaURL": "https://trcqa.maprecruit.com/audios/trcstaffingUS/6931992db394b307b3b087df_614d569f77f21325cdbd314a_20251216103312348.mp3",
+                        "options": [],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "ok",
+                        "mediaURL": "",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:43:44.905Z",
+                    "completedAt": "2025-12-16T09:43:51.404Z"
+                },
+                {
+                    "_id": "6940e93e5a7089348779c1f5",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "IMAGE",
+                    "responseType": "MCQ-MULTI",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>Can you see the image above?</div>",
+                        "mediaURL": "https://trcqa.maprecruit.com/images/trcstaffingUS/6931992db394b307b3b087df_614d569f77f21325cdbd314a_20251216103811137.png",
+                        "options": [
+                            "Yes",
+                            "Yes obviously"
+                        ],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "",
+                            ""
+                        ],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "Yes",
+                            "Yes obviously"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 4,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:43:51.407Z",
+                    "completedAt": "2025-12-16T09:44:04.078Z"
+                },
+                {
+                    "_id": "6940ed10bd621d52f705cfc4",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "VIDEO",
+                    "responseType": "VIDEO",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "",
+                        "mediaURL": "https://trcqa.maprecruit.com/videos/trcstaffingUS/6931992db394b307b3b087df_614d569f77f21325cdbd314a_20251216105426700.mp4",
+                        "options": [],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "https://trcqa.maprecruit.com/videos/trcstaffingUS/6112806bc9147f673d28c6eb_691da06875c6659d47d9b3a0_interview_69412a103717bf47f021fbb1_690983bcb7f941d7bdaf0a27_694128681fbbd672bb9a2751_3_6940ed10bd621d52f705cfc4.mp4",
+                        "mediaURL": "https://trcqa.maprecruit.com/videos/trcstaffingUS/6112806bc9147f673d28c6eb_691da06875c6659d47d9b3a0_interview_69412a103717bf47f021fbb1_690983bcb7f941d7bdaf0a27_694128681fbbd672bb9a2751_3_6940ed10bd621d52f705cfc4.mp4",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:44:10.011Z",
+                    "completedAt": "2025-12-16T09:44:49.461Z"
+                },
+                {
+                    "_id": "6940f004fc512fc95a07deaf",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "GIF",
+                    "responseType": "RATING",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>How would you rate its smile?</div>",
+                        "mediaURL": "https://trcqa.maprecruit.com/images/trcstaffingUS/6931992db394b307b3b087df_614d569f77f21325cdbd314a_20251216110704511.gif",
+                        "options": [],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": 4,
+                        "mediaURL": "",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:44:49.466Z",
+                    "completedAt": "2025-12-16T09:44:57.448Z"
+                },
+                {
+                    "_id": "6940f0426dda98f5a949be5b",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "KNOCKOUT",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "MCQ-SINGLE",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>did you rate it good?</div>",
+                        "mediaURL": "",
+                        "options": [
+                            "Yes",
+                            "No"
+                        ],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "Yes"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:44:57.452Z",
+                    "completedAt": "2025-12-16T09:45:00.012Z"
+                },
+                {
+                    "_id": "6940f05a39b2b16da41a754e",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "ANNOUNCEMENT",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "TEXT",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>good job making it this far!!!</div>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": ""
+                },
+                {
+                    "_id": "6940f077c57ccae7180dcd7d",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "FLOWCHART",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "MCQ-SINGLE",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>now pick a choice</div>",
+                        "mediaURL": "",
+                        "options": [
+                            "Choice 1",
+                            "Choice 2"
+                        ],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "Choice 1"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [
+                        {
+                            "_id": "6940f0a36dda98f5a949be75"
+                        },
+                        {
+                            "_id": "6940f0d2bfa1ea155bdfdcac"
+                        }
+                    ],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:45:00.018Z",
+                    "completedAt": "2025-12-16T09:45:03.717Z"
+                },
+                {
+                    "_id": "6940f0a36dda98f5a949be75",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "SINGLE_LOCATION",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>Select A location</div>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            {
+                                "location": "Alexandria West,Alexandria, Virginia,  22311, United States",
+                                "text": "Alexandria West,Alexandria, Virginia,  22311, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Alexandria",
+                                "district": "",
+                                "state": "Virginia",
+                                "stateCode": "VA",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "22311",
+                                "pin": {
+                                    "lat": 38.8330244,
+                                    "lon": -77.1174783
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            },
+                            {
+                                "location": "50th Street,West New York, New Jersey, United States",
+                                "text": "50th Street,West New York, New Jersey, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "West New York",
+                                "district": "",
+                                "state": "New Jersey",
+                                "stateCode": "NJ",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "",
+                                "pin": {
+                                    "lat": 40.7805028,
+                                    "lon": -74.0158405
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            }
+                        ],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": [],
+                        "locationOption": [
+                            "Alexandria West,Alexandria, Virginia,  22311, United States",
+                            "50th Street,West New York, New Jersey, United States"
+                        ]
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            "",
+                            ""
+                        ]
+                    },
+                    "response": {
+                        "text": "QWxleGFuZHJpYSBXZXN0LEFsZXhhbmRyaWEsIFZpcmdpbmlhLCAgMjIzMTEsIFVuaXRlZCBTdGF0ZXM=",
+                        "mediaURL": "",
+                        "options": [
+                            "Alexandria West,Alexandria, Virginia,  22311, United States"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:45:03.725Z",
+                    "completedAt": "2025-12-16T09:45:16.663Z"
+                },
+                {
+                    "_id": "6940f12fc57ccae7180dcd80",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "SINGLE_LOCATION",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>Which Location did you choose?</div>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            {
+                                "location": "Alexandria, Virginia,  22311, United States",
+                                "text": "Alexandria, Virginia,  22311, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Alexandria",
+                                "district": "",
+                                "state": "Virginia",
+                                "stateCode": "VA",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "22311",
+                                "pin": {
+                                    "lat": 38.8363201,
+                                    "lon": -77.1226288
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            },
+                            {
+                                "location": "50th Street,West New York, New Jersey, United States",
+                                "text": "50th Street,West New York, New Jersey, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "West New York",
+                                "district": "",
+                                "state": "New Jersey",
+                                "stateCode": "NJ",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "",
+                                "pin": {
+                                    "lat": 40.7805028,
+                                    "lon": -74.0158405
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            }
+                        ],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": [],
+                        "locationOption": [
+                            "Alexandria, Virginia,  22311, United States",
+                            "50th Street,West New York, New Jersey, United States"
+                        ]
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            "",
+                            ""
+                        ]
+                    },
+                    "response": {
+                        "text": "NTB0aCBTdHJlZXQsV2VzdCBOZXcgWW9yaywgTmV3IEplcnNleSwgVW5pdGVkIFN0YXRlcw==",
+                        "mediaURL": "",
+                        "options": [
+                            "50th Street,West New York, New Jersey, United States"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:45:16.668Z",
+                    "completedAt": "2025-12-16T09:47:01.985Z"
+                },
+                {
+                    "_id": "6940f1938474824cfbb083d5",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "MULTIPLE_LOCATIONS",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>or did you choose multiple?</div>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            {
+                                "location": "Tolbert Lane Southeast,Leesburg, Virginia,  20175, United States"
+                            },
+                            {
+                                "location": "Perry Parkway,Gaithersburg, Maryland, United States",
+                                "text": "Perry Parkway,Gaithersburg, Maryland, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Gaithersburg",
+                                "district": "",
+                                "state": "Maryland",
+                                "stateCode": "MD",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "",
+                                "pin": {
+                                    "lat": 39.1439831,
+                                    "lon": -77.2128181
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            },
+                            {
+                                "location": "Glenn Drive,Sterling, Virginia,  20164, United States",
+                                "text": "Glenn Drive,Sterling, Virginia,  20164, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Sterling",
+                                "district": "",
+                                "state": "Virginia",
+                                "stateCode": "VA",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "20164",
+                                "pin": {
+                                    "lat": 38.997756,
+                                    "lon": -77.4282179
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            }
+                        ],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": [],
+                        "locationOption": [
+                            "Tolbert Lane Southeast,Leesburg, Virginia,  20175, United States",
+                            "Perry Parkway,Gaithersburg, Maryland, United States",
+                            "Glenn Drive,Sterling, Virginia,  20164, United States"
+                        ]
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            "",
+                            "",
+                            ""
+                        ]
+                    },
+                    "response": {
+                        "text": "Glenn Drive,Sterling, Virginia,  20164, United States|Perry Parkway,Gaithersburg, Maryland, United States",
+                        "mediaURL": "",
+                        "options": [
+                            "Glenn Drive,Sterling, Virginia,  20164, United States",
+                            "Perry Parkway,Gaithersburg, Maryland, United States"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-16T09:47:01.990Z",
+                    "completedAt": "2025-12-16T10:14:55.210Z"
+                }
+            ],
+            "EQ": {
+                "MROverallRate": 0,
+                "emotionalQuotientOriginal": [],
+                "emotionalQuotient": []
+            },
+            "flowChartQuestions": [
+                {
+                    "_id": "6940f0a36dda98f5a949be75",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "SINGLE_LOCATION",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>Select A location</div>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            {
+                                "location": "Alexandria West,Alexandria, Virginia,  22311, United States",
+                                "text": "Alexandria West,Alexandria, Virginia,  22311, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Alexandria",
+                                "district": "",
+                                "state": "Virginia",
+                                "stateCode": "VA",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "22311",
+                                "pin": {
+                                    "lat": 38.8330244,
+                                    "lon": -77.1174783
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            },
+                            {
+                                "location": "50th Street,West New York, New Jersey, United States",
+                                "text": "50th Street,West New York, New Jersey, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "West New York",
+                                "district": "",
+                                "state": "New Jersey",
+                                "stateCode": "NJ",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "",
+                                "pin": {
+                                    "lat": 40.7805028,
+                                    "lon": -74.0158405
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            }
+                        ],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": [],
+                        "locationOption": [
+                            "Alexandria West,Alexandria, Virginia,  22311, United States",
+                            "50th Street,West New York, New Jersey, United States"
+                        ]
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            "",
+                            ""
+                        ]
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": false,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": ""
+                },
+                {
+                    "_id": "6940f0d2bfa1ea155bdfdcac",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "MULTIPLE_LOCATIONS",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<div>Pick multiple locations</div>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            {
+                                "location": "Tolbert Lane Southeast,Leesburg, Virginia,  20175, United States",
+                                "text": "Tolbert Lane Southeast,Leesburg, Virginia,  20175, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Leesburg",
+                                "district": "",
+                                "state": "Virginia",
+                                "stateCode": "VA",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "20175",
+                                "pin": {
+                                    "lat": 39.0863713,
+                                    "lon": -77.5513937
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            },
+                            {
+                                "location": "Perry Parkway,Gaithersburg, Maryland,  20877, United States",
+                                "text": "Perry Parkway,Gaithersburg, Maryland,  20877, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Gaithersburg",
+                                "district": "",
+                                "state": "Maryland",
+                                "stateCode": "MD",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "20877",
+                                "pin": {
+                                    "lat": 39.1486721,
+                                    "lon": -77.2108866
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            },
+                            {
+                                "location": "Glenn Drive,Sterling, Virginia,  20164, United States",
+                                "text": "Glenn Drive,Sterling, Virginia,  20164, United States",
+                                "tier": "",
+                                "address": null,
+                                "area": "",
+                                "city": "Sterling",
+                                "district": "",
+                                "state": "Virginia",
+                                "stateCode": "VA",
+                                "country": "United States",
+                                "countryCode": "US",
+                                "postalCode": "20164",
+                                "pin": {
+                                    "lat": 38.9917514,
+                                    "lon": -77.42565
+                                },
+                                "cityCanonical": "",
+                                "districtCanonical": "",
+                                "stateCanonical": "",
+                                "countryCanonical": "",
+                                "confidenceScore": 1,
+                                "eligibilityCheck": "Required",
+                                "circle": {
+                                    "metricUnit": "mi",
+                                    "radius": 50
+                                },
+                                "vacancies": 0
+                            }
+                        ],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": [],
+                        "locationOption": [
+                            "Tolbert Lane Southeast,Leesburg, Virginia,  20175, United States",
+                            "Perry Parkway,Gaithersburg, Maryland,  20877, United States",
+                            "Glenn Drive,Sterling, Virginia,  20164, United States"
+                        ]
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [
+                            "",
+                            "",
+                            ""
+                        ]
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldType": "",
+                            "fieldName": "",
+                            "dataType": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": false,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": ""
+                }
+            ],
+            "groupQuestions": [],
+            "jobFitReviewEntities": [],
+            "roundEligibility": {
+                "eligibilityCriteria": "Any of these",
+                "automationAdditionalCriteria": {
+                    "enabled": false,
+                    "criteria": []
+                },
+                "MRI": {
+                    "enabled": false,
+                    "minMRIScore": 0,
+                    "maxMRIScore": 10
+                },
+                "EQ": {
+                    "enabled": false,
+                    "roundNumber": "0",
+                    "minEQScore": 0,
+                    "maxEQScore": 10
+                },
+                "tags": {
+                    "enabled": false,
+                    "tags": [],
+                    "condition": "Any of these"
+                },
+                "shortlisted": {
+                    "enabled": false
+                },
+                "filters": {
+                    "enabled": false,
+                    "filterID": [],
+                    "condition": "Any of these"
+                },
+                "previousScreeningRound": {
+                    "enabled": false,
+                    "condition": "Any of these",
+                    "criteria": []
+                },
+                "expectedResponseScore": {
+                    "enabled": false,
+                    "minExpectedResponseScore": 0,
+                    "maxExpectedResponseScore": 10
+                }
+            },
+            "reachOutSources": {
+                "SMS": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "5ebfa9c7927db172bf6f9bd6",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "acknowledgementTemplateID": "632815f35def1c319541668f",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "announcementTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "confirmationTemplateSelected": true,
+                    "cancelTemplateSelected": true,
+                    "rescheduleTemplateSelected": true,
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true,
+                    "senderID": "660fadefd251e1ab4d1388a1",
+                    "shortCode": "",
+                    "followUp": {
+                        "selected": true,
+                        "conditional": false,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "email": {
+                    "selected": true,
+                    "sent": true,
+                    "sentAt": "2025-12-16T10:14:59.278Z",
+                    "delivered": true,
+                    "deliveredAt": "2025-12-16T09:41:54.746Z",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "5e982d93c36e91bcad278541",
+                    "acknowledgementTemplateID": "5ee32bb843299dde65f575e9",
+                    "rescheduleTemplateID": "",
+                    "cancelTemplateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "620f71165d50d5d5c2d75cc5",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "announcementTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "confirmationTemplateSelected": true,
+                    "cancelTemplateSelected": true,
+                    "rescheduleTemplateSelected": true,
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "2025-12-18T09:41:41.051Z",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "conditional": false,
+                        "followUps": [
+                            {
+                                "templateID": "5e982d93c36e91bcad278541",
+                                "template": "",
+                                "followUpAt": "",
+                                "followUpBy": "Recruiter",
+                                "sent": false,
+                                "delivered": false,
+                                "viewed": false,
+                                "communicationID": ""
+                            }
+                        ]
+                    }
+                },
+                "whatsApp": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "phone": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                }
+            },
+            "f2fSchedule": {
+                "type": "",
+                "scheduledAt": "",
+                "requestReschedule": false,
+                "autoScheduleURL": "",
+                "scheduledHostID": [],
+                "gapBetweenMeetings": "0",
+                "scheduleBuffer": "0",
+                "blockTime": 24,
+                "bookingBlockTime": 1,
+                "duration": "",
+                "scheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "scheduleTimeZone": "",
+                "scheduleTimeZoneName": "",
+                "scheduleTimeZoneFullName": "",
+                "rescheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "rescheduleTimeZone": "",
+                "rescheduleTimeZoneName": "",
+                "rescheduleTimeZoneFullName": "",
+                "rescheduleCount": 0,
+                "rescheduleReason": "",
+                "cancelledReason": "",
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "phones": [],
+                "liveURL": "",
+                "liveMedia": "Video",
+                "description": "",
+                "subject": "",
+                "jobSeekerConfirmed": "",
+                "hostConfirmed": "",
+                "participants": [],
+                "jobSeekerNotes": "",
+                "sharedDocuments": [],
+                "feedBack": {
+                    "rating": 0,
+                    "comment": "",
+                    "status": ""
+                },
+                "reminderEmail": {
+                    "reminder": true,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "reminderSMS": {
+                    "reminder": true,
+                    "reminderTime": 90,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "autoScheduleEmail": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "autoScheduleTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoScheduleSMS": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "autoScheduleTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoSchedule": []
+            },
+            "announcementCompleted": false
+        },
+        {
+            "roundName": "Interview (2)",
+            "roundType": "Interview",
+            "availableMeetTypes": [
+                "Phone"
+            ],
+            "selectedMeetType": "",
+            "roundNumber": 4,
+            "roundID": "",
+            "enabled": true,
+            "deleted": false,
+            "status": "Not Scheduled",
+            "updatedAt": "",
+            "scheduled": false,
+            "scheduledAt": "",
+            "scheduledBy": "614d569f77f21325cdbd314a",
+            "scheduledMethod": "Auto",
+            "sent": false,
+            "sentAt": "",
+            "scheduleSuccess": false,
+            "scheduleSuccessAt": "",
+            "bounced": false,
+            "bouncedAt": "",
+            "viewed": false,
+            "viewedAt": "",
+            "linkClicked": false,
+            "linkClickedAt": "",
+            "linkClickedURL": [],
+            "confirmed": false,
+            "confirmedAt": "",
+            "optOut": false,
+            "optOutAt": "",
+            "cancelled": false,
+            "cancelledAt": "",
+            "progressing": false,
+            "startedAt": "",
+            "completed": false,
+            "knockout": false,
+            "completedAt": "",
+            "shortlisted": false,
+            "reviewed": false,
+            "reviewedAt": "",
+            "reviewedBy": "",
+            "interviewCompleted": false,
+            "interviewCompletedAt": "",
+            "jobFitScoreEvaluation": "",
+            "jobFitScoreID": "",
+            "chatBotInterviewDurationSec": 0,
+            "overallExpectedResponse": {
+                "score": 0,
+                "calculated": false
+            },
+            "description": {
+                "text": "",
+                "mediaURL": ""
+            },
+            "automate": true,
+            "automateBuffer": 60,
+            "automateDetails": {
+                "tillCampaignClose": true,
+                "startDate": "",
+                "endDate": "",
+                "timeZone": "",
+                "timeZoneName": "",
+                "timeZoneFullName": "",
+                "excludeDays": [
+                    "Saturday",
+                    "Sunday"
+                ],
+                "automationPreference": "After Application Creation",
+                "automateBuffer": 60,
+                "timings": [],
+                "message": []
+            },
+            "communicationMethod": "Inbound",
+            "savedFavouriteID": "",
+            "feedBack": {
+                "rating": 0,
+                "comment": "",
+                "status": "",
+                "ratedAt": "",
+                "commentedAt": "",
+                "statusChangedAt": ""
+            },
+            "eligible": false,
+            "mapToField": false,
+            "expiryAt": "",
+            "timeBound": false,
+            "maxDurationInMinutes": 1000,
+            "channels": [
+                "Chatbot"
+            ],
+            "questions": [],
+            "EQ": {
+                "MROverallRate": 0,
+                "emotionalQuotientOriginal": [],
+                "emotionalQuotient": []
+            },
+            "flowChartQuestions": [],
+            "groupQuestions": [],
+            "jobFitReviewEntities": [],
+            "roundEligibility": {
+                "eligibilityCriteria": "Any of these",
+                "automationAdditionalCriteria": {
+                    "enabled": false,
+                    "criteria": []
+                },
+                "MRI": {
+                    "enabled": false,
+                    "minMRIScore": 0,
+                    "maxMRIScore": 10
+                },
+                "EQ": {
+                    "enabled": false,
+                    "roundNumber": "0",
+                    "minEQScore": 0,
+                    "maxEQScore": 10
+                },
+                "tags": {
+                    "enabled": false,
+                    "tags": [],
+                    "condition": "Any of these"
+                },
+                "shortlisted": {
+                    "enabled": false
+                },
+                "filters": {
+                    "enabled": false,
+                    "filterID": [],
+                    "condition": "Any of these"
+                },
+                "previousScreeningRound": {
+                    "enabled": true,
+                    "condition": "Any of these",
+                    "criteria": [
+                        {
+                            "questionID": "6940e7c2d5a54ffae241ad62",
+                            "roundNumber": 3,
+                            "questionNumber": 0,
+                            "lookingFor": "Response",
+                            "feedBackScore": "",
+                            "response": [
+                                "Yes",
+                                "No"
+                            ]
+                        }
+                    ]
+                },
+                "expectedResponseScore": {
+                    "enabled": false,
+                    "minExpectedResponseScore": 0,
+                    "maxExpectedResponseScore": 10
+                }
+            },
+            "reachOutSources": {
+                "SMS": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [
+                        {
+                            "cancelTemplateID": "",
+                            "conditions": [
+                                {
+                                    "type": "Meet Type",
+                                    "value": "In-Person"
+                                }
+                            ],
+                            "rescheduleTemplateID": "",
+                            "templateID": ""
+                        },
+                        {
+                            "cancelTemplateID": "",
+                            "conditions": [
+                                {
+                                    "type": "Meet Type",
+                                    "value": "Live Video"
+                                }
+                            ],
+                            "rescheduleTemplateID": "",
+                            "templateID": ""
+                        },
+                        {
+                            "cancelTemplateID": "",
+                            "conditions": [
+                                {
+                                    "type": "Meet Type",
+                                    "value": "Phone"
+                                }
+                            ],
+                            "rescheduleTemplateID": "",
+                            "templateID": "649fb70e5def1c319575b41d"
+                        }
+                    ],
+                    "communicationID": "",
+                    "acknowledgementTemplateID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "announcementTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "confirmationTemplateSelected": true,
+                    "cancelTemplateSelected": true,
+                    "rescheduleTemplateSelected": true,
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true,
+                    "senderID": "660fadefd251e1ab4d1388a1",
+                    "shortCode": "",
+                    "followUp": {
+                        "selected": true,
+                        "conditional": false,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "email": {
+                    "selected": true,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "acknowledgementTemplateID": "",
+                    "rescheduleTemplateID": "",
+                    "cancelTemplateID": "",
+                    "conditionalTemplates": [
+                        {
+                            "cancelTemplateID": "",
+                            "conditions": [
+                                {
+                                    "type": "Meet Type",
+                                    "value": "In-Person"
+                                }
+                            ],
+                            "rescheduleTemplateID": "",
+                            "templateID": ""
+                        },
+                        {
+                            "cancelTemplateID": "",
+                            "conditions": [
+                                {
+                                    "type": "Meet Type",
+                                    "value": "Live Video"
+                                }
+                            ],
+                            "rescheduleTemplateID": "",
+                            "templateID": ""
+                        },
+                        {
+                            "cancelTemplateID": "5e982d93c36e91bcad268550",
+                            "conditions": [
+                                {
+                                    "type": "Meet Type",
+                                    "value": "Phone"
+                                }
+                            ],
+                            "rescheduleTemplateID": "5fe586e9d7e72c08bf0fc95b",
+                            "templateID": "649c2a4e5def1c3195c8a7d6"
+                        }
+                    ],
+                    "communicationID": "",
+                    "senderID": "6901af4e19ded20de76a4cef",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "announcementTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "confirmationTemplateSelected": true,
+                    "cancelTemplateSelected": false,
+                    "rescheduleTemplateSelected": false,
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "conditional": false,
+                        "followUps": []
+                    }
+                },
+                "whatsApp": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "phone": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                }
+            },
+            "f2fSchedule": {
+                "type": "Auto Schedule",
+                "scheduledAt": "",
+                "requestReschedule": false,
+                "autoScheduleURL": "",
+                "scheduledHostID": [],
+                "gapBetweenMeetings": "0",
+                "scheduleBuffer": "0",
+                "blockTime": 24,
+                "bookingBlockTime": 1,
+                "duration": "",
+                "scheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "scheduleTimeZone": "+05:30",
+                "scheduleTimeZoneName": "India Standard Time",
+                "scheduleTimeZoneFullName": "Asia/Kolkata",
+                "rescheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "rescheduleTimeZone": "",
+                "rescheduleTimeZoneName": "",
+                "rescheduleTimeZoneFullName": "",
+                "rescheduleCount": 0,
+                "rescheduleReason": "",
+                "cancelledReason": "",
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "phones": [
+                    {
+                        "phoneNumber": "4046234123",
+                        "internationalPhoneCode": "+1"
+                    }
+                ],
+                "liveURL": "",
+                "liveMedia": "Video",
+                "description": "",
+                "subject": "Test for CA",
+                "jobSeekerConfirmed": "",
+                "hostConfirmed": "",
+                "participants": [],
+                "jobSeekerNotes": "",
+                "sharedDocuments": [],
+                "feedBack": {
+                    "rating": 0,
+                    "comment": "",
+                    "status": ""
+                },
+                "reminderEmail": {
+                    "reminder": false,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "reminderSMS": {
+                    "reminder": true,
+                    "reminderTime": 90,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "autoScheduleEmail": {
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "649c2d9a5def1c3195c9d6b8",
+                    "communicationID": "",
+                    "autoScheduleTemplateSelected": false,
+                    "followUp": {
+                        "selected": false,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoScheduleSMS": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "649fb5c65def1c319575113e",
+                    "communicationID": "",
+                    "autoScheduleTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoSchedule": []
+            }
+        }
+    ],
+    "MRI": {
+        "rank": 0.0,
+        "score": 7.5,
+        "actual_mri_score": 7.5,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2026-01-20T11:18:57.109Z"),
+        "genAI": [
+            {
+                "generatedAt": ISODate("2026-01-20T11:05:10.280Z"),
+                "basePrompt": "\n                            <|begin_of_text|>\n                            <|start_header_id|>system<|end_header_id|>\n                            You are a Professional Summarizer and Commentator. \n                            Your task is to evaluate the relevance of a resume profile to a given job description. \n                            Provide a summary of the match.\n                            Ensure accuracy and avoid any misleading or incorrect information.\n\n                            Follow these instructions:\n\n                            1. Read the Job Description and Resume Profile sections separately and carefully.\n                            2. Pay close attention to the requirements and qualifications listed in the job description.\n                            3. Compare these with the information provided in the resume profile.\n                            4. Provide a clear and concise summary of how well the resume matches the job requirements under 300 words.\n                            5. Only evaluate if the resume profile contains basic matching information.\n                            6. Do not Provide score or any metrics for the match.\n                            6. Limit the response to 300 words.\n                            7. job description will be inside of <job description> and </job description> tags.\n                            8. resume will be inside of <resume> and </resume> tags.\n                            <|eot_id|>\n                            <|start_header_id|>user<|end_header_id|>\n                           <job description> ** Job Description ** \n *Location:*\n  • White,GA 30184,USA\n\n*Years Of Experience*: 0-50 Years\n\nRequired Skills:\n  • Quality Control\n  • meet quality\n  • quality standards\n  • safety and quality\n  • Strong attention to detail\n  • Team - oriented\n  • ability to work well\n\nPreferred Skills:\n  • manufacturing processes\n  • perform inspections\n  • perform visual inspections\n  • Conduct visual inspections\n  • compliance\n  • assembly\n  • production lines\n  • ensure productivity\n\n\n\nTRC Talent is Hiring Quality Technician in White, GA\n\nJob Summary:\nTRC Talent is seeking a dedicated and detail-oriented Quality Control Technician to join our team in Cartersville. The FQC Technician will play a crucial role in ensuring that all final assembly products meet high-quality standards before they are delivered to our customers. This position requires a keen eye for detail, the ability to perform visual inspections, and the capacity to work in a fast-paced manufacturing environment.\n\nKey Responsibilities:\nConduct visual inspections to verify product compliance with established quality standards.Identify and reject products that do not meet quality specifications.Monitor production lines to ensure productivity and quality goals are consistently met.Accurately document inspection results, contributing to final product grading.Report any quality issues that require escalation to the Quality Technician or line supervisor.Ensure the production of high-quality products with minimal defects.Monitor and adjust equipment settings as necessary, escalating deviations to the appropriate team.Support fellow operators during breaks and provide coverage for other work areas when needed.Adhere strictly to standardized work procedures, SOPs, and work instructions.Follow company policies and procedures to maintain safety and quality standards.Perform other duties and special projects as assigned by management.\n\nRequired Qualifications:\nHigh school diploma or equivalent.Basic understanding of manufacturing processes and quality control procedures.Ability to work efficiently in a fast-paced environment.Strong attention to detail with the ability to analyze data and perform inspections for extended periods.Ability to remain flexible and adapt to changing priorities.Ability to work irregular hours, including weekends and nights, as needed.Team-oriented with the ability to work well under pressure.\n\nPhysical Requirements:\nAbility to lift up to 50 pounds without restriction.Ability to stand and remain on feet for up to 12 hours per shift. </job description>\n\n<|eot_id|>\n<|start_header_id|>user<|end_header_id|><resume> ** Resume ** \n \nPratik Gaurav\n+91-7004029399 pratik.gaurav@maprecruit.ai </resume>\n\n<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>",
+                "model": "llama3",
+                "temperature": 0.7,
+                "matchSummary": "The resume provided does not contain any relevant information or qualifications related to the job description of a Quality Technician. The job description emphasizes the need for specific skills such as quality control, attention to detail, the ability to perform visual inspections, and experience in a manufacturing environment. Additionally, it calls for a high school diploma or equivalent and the ability to work in a fast-paced setting.\n\nHowever, the resume only includes the name and contact information of the candidate, Pratik Gaurav, without any details on education, experience, or relevant skills. As a result, there is no basis for evaluating the match between the resume and the job requirements. \n\nIn summary, the resume does not meet the basic matching information necessary for the Quality Technician position, as it lacks any content that addresses the qualifications or requirements outlined in the job description."
+            }
+        ],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>Quality Control</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>meet high - quality standards</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>quality control procedures</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Quality Control",
+                            "score": 1
+                        },
+                        {
+                            "text": "meet high - quality standards",
+                            "score": 1
+                        },
+                        {
+                            "text": "quality control procedures",
+                            "score": 0.9
+                        }
+                    ],
+                    "matchedSkill": "Quality Control",
+                    "matchType": "Matched",
+                    "matchFrom": "Experience",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0,
+                        "requiredScore": 1,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 1,
+                        "preferredConfidenceScore": 1
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Strong attention to detail</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>detail - oriented</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Strong attention to detail",
+                            "score": 0.8
+                        },
+                        {
+                            "text": "detail - oriented",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "attention to detail",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0,
+                        "requiredScore": 1,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.8,
+                        "preferredConfidenceScore": 0.8
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>ASSISTING EMPLOYEES</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "ASSISTING EMPLOYEES",
+                            "score": 1
+                        }
+                    ],
+                    "matchedSkill": "ASSISTING EMPLOYEES",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0,
+                        "requiredScore": 1,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 1,
+                        "preferredConfidenceScore": 1
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>TEACH OTHERS</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "TEACH OTHERS",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "TEACH OTHERS",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.7,
+                        "preferredConfidenceScore": 0.7
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>ATTENTION TO DETAIL</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "ATTENTION TO DETAIL",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "ATTENTION TO DETAIL",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.7,
+                        "preferredConfidenceScore": 0.7
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>WAREHOUSE PROCEDURES</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "WAREHOUSE PROCEDURES",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "WAREHOUSE PROCEDURES",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.7,
+                        "preferredConfidenceScore": 0.7
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>SAFETY PROCEDURES</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "SAFETY PROCEDURES",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "SAFETY PROCEDURES",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.7,
+                        "preferredConfidenceScore": 0.7
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "Ingot Quality Technician",
+                "matchedJobTitle": "INGOT QUALITY TECHNICIAN ",
+                "matchedSkill": "",
+                "matchType": "Matched",
+                "relation": "Canonical",
+                "matchScore": 1,
+                "matchSummary": "This Profile has <b>INGOT QUALITY TECHNICIAN</b> experience.",
+                "recent": true
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 10,
+            "matchScore": 10.0,
+            "matchSummary": "Candidate has relevant experience.",
+            "profileRelevance": "Most Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.1,
+            "requiredSkillWeight": 0.9,
+            "preferredSkillWeight": 0.1,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0,
+            "jobTitleWeight": 0.5,
+            "skillWeight": 0.5
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "degreeRelation": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "majorRelation": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Education preference is not required.",
+            "weightage": 0
+        },
+        "industry": {
+            "matchScore": 1.1974857756119,
+            "matchedIndustry": "Administrative Management",
+            "matchedSummary": "This resume primarily belongs to <b>Administrative Management</b> but also has experience in <b>Accounting Finance</b>.",
+            "weightage": 4
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2026-01-20T11:18:57.109Z"),
+        "searchID": "",
+        "page": "",
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000002",
+            "jt_vector_match_time": "0:00:00.000021"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

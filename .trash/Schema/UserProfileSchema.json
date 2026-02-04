@@ -1,0 +1,83 @@
+{
+    "title": "User Profile",
+    "description": "Schema for User Basic Details",
+    "fields": [
+        {
+            "key": "avatar",
+            "label": "Profile Photo",
+            "type": "image",
+            "visible": true
+        },
+        {
+            "key": "firstName",
+            "label": "First Name",
+            "type": "text",
+            "required": true,
+            "visible": true
+        },
+        {
+            "key": "lastName",
+            "label": "Last Name",
+            "type": "text",
+            "required": true,
+            "visible": true
+        },
+        {
+            "key": "phone",
+            "label": "Mobile",
+            "type": "phone",
+            "visible": true
+        },
+        {
+            "key": "email",
+            "label": "Email ID",
+            "type": "email",
+            "required": true,
+            "disabled": true,
+            "visible": true
+        },
+        {
+            "key": "role",
+            "label": "Role",
+            "type": "select",
+            "options": [
+                "Product Admin",
+                "Admin",
+                "Recruiter",
+                "Hiring Manager"
+            ],
+            "required": true,
+            "visible": true
+        },
+        {
+            "key": "color",
+            "label": "User Color",
+            "type": "color",
+            "visible": true
+        },
+        {
+            "key": "jobTitle",
+            "label": "User Job Title",
+            "type": "text",
+            "visible": true
+        },
+        {
+            "key": "location",
+            "label": "Location",
+            "type": "text",
+            "visible": true
+        },
+        {
+            "key": "activeClient",
+            "label": "Active Client",
+            "type": "select",
+            "visible": true
+        },
+        {
+            "key": "teams",
+            "label": "Assigned Clients",
+            "type": "multiselect",
+            "visible": true
+        }
+    ]
+}

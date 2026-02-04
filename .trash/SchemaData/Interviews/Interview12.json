@@ -1,0 +1,291 @@
+{
+    "_id": ObjectId("69453d638236deed68b73bc6"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("69453921710bafba20237de6"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("6364e1a45c484101eaba341d"),
+    "createdAt": ISODate("2025-12-19T11:56:19.667Z"),
+    "updatedAt": ISODate("2025-12-24T10:01:52.912Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "4350393",
+        "title": "test 1k profiles",
+        "locations": [
+            {
+                "text": "U.S. Rte 66,Albuquerque,NM",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "albuquerque",
+                "district": "",
+                "state": "newmexico",
+                "stateCode": "NM",
+                "country": "unitedstatesofamerica",
+                "countryCode": "US",
+                "postalCode": "87101",
+                "pin": {
+                    "lat": 35.084103,
+                    "lon": -106.650985
+                },
+                "cityCanonical": "albuquerque",
+                "districtCanonical": "",
+                "stateCanonical": "new mexico",
+                "countryCanonical": "united states of america",
+                "confidenceScore": 1,
+                "eligibilityCheck": "Preferred",
+                "circle": {
+                    "radius": 50,
+                    "metricUnit": "mi"
+                },
+                "vacancies": 1
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "Internal Sourcing",
+        "applicationMethod": "Passive Sourcing",
+        "applicationChannel": "Profile Search",
+        "applicationSource": "",
+        "applicationStatus": "Pending",
+        "applicationPlatform": "Linked by Recruiter",
+        "linkedBy": "Recruiter",
+        "linkedByID": ObjectId("6364e1a45c484101eaba341d"),
+        "linkedAt": "",
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": ObjectId("69453d3ba031cbf2a4e9118f"),
+        "referenceURL": "https://trcqa.maprecruit.com/v4/profiles/searchprofiles?searchid=69453d3ba031cbf2a4e9118f",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": false,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 3.8,
+        "actual_mri_score": 3.8,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2025-12-19T12:30:07.380Z"),
+        "genAI": [],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>java</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "java",
+                            "score": 1
+                        }
+                    ],
+                    "matchedSkill": "java",
+                    "matchType": "Matched",
+                    "matchFrom": "QualificationSkill",
+                    "relation": "canonical",
+                    "matchScore": 0.5,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.5,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 1,
+                        "preferredConfidenceScore": 1
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "java developer",
+                "matchedJobTitle": "",
+                "matchedSkill": "java",
+                "skill_granularity_level": 2,
+                "matchType": "RELATED",
+                "relation": "skill",
+                "matchScore": 0.8,
+                "matchSummary": "This Profile has <b>JAVA DEVELOPER</b> experience.",
+                "recent": true
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 6,
+            "matchScore": 6.2,
+            "matchSummary": "Candidate has considerable relevant experience and is slightly under qualified.",
+            "profileRelevance": "Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.05,
+            "requiredSkillWeight": 1,
+            "preferredSkillWeight": 0,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0,
+            "jobTitleWeight": 0.4,
+            "skillWeight": 0.6
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "degreeRelation": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "majorRelation": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Education is not mentioned in job description.",
+            "weightage": 10
+        },
+        "industry": {
+            "matchScore": 0.0584033697776074,
+            "matchedIndustry": "Administrative Management",
+            "matchedSummary": "This resume primarily belongs to <b>Administrative Management</b> but also has experience in <b>Accounting Finance</b>.",
+            "weightage": 3
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2025-12-19T12:30:07.380Z"),
+        "searchID": "",
+        "page": "",
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000002",
+            "jt_vector_match_time": "0:00:00.000019"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

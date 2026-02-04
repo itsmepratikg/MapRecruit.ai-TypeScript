@@ -1,0 +1,2735 @@
+/* 1 */
+{
+    "_id" : ObjectId("6905e107bc31f4fc6841897d"),
+    "activityTypeID" : ObjectId("628897484fb42b465fee2a36"),
+    "activityType" : "Email Opt-Out",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("6905e106b49254943b91d1d7"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-01T10:29:27.393Z"),
+    "activityAt" : ISODate("2025-11-01T10:29:27.391Z"),
+    "userName" : "Candidate",
+    "userID" : "",
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-times-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Pratik Gaurav has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "requisitionActivity" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "campaignActivity" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "userActivities" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "commonActivity" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-07T05:23:22.087Z")
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("69098337c497c58534f7da0f"),
+    "activityTypeID" : ObjectId("61e00c9243ce55be414e914e"),
+    "activityType" : "Profile Uploaded",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("68f7cdae322c76d7b59f221a")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983347dfb7c885b43c9ff"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:38:15.129Z"),
+    "activityAt" : ISODate("2025-11-04T04:38:15.128Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-upload\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a> </span>",
+        "requisitionActivity" : "<span> Profile Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a></span>",
+        "campaignActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's profile</a> uploaded to campaign Maint Tech</span>",
+        "userActivities" : "<span>Pratik Gaurav Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-04T04:41:06.545Z")
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("6909833720b61e9c8559be84"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("68f7cdae322c76d7b59f221a")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983347dfb7c885b43c9ff"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:38:15.859Z"),
+    "activityAt" : ISODate("2025-11-04T04:38:15.859Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Maint Tech</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/68f7cdae322c76d7b59f221a' target='_blank'>Maint Tech</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-04T04:41:06.545Z")
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("6909834920b61e9c8559be86"),
+    "activityTypeID" : ObjectId("628897484fb42b465fee2a36"),
+    "activityType" : "Email Opt-Out",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("68f7cdae322c76d7b59f221a")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983347dfb7c885b43c9ff"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:38:33.447Z"),
+    "activityAt" : ISODate("2025-11-04T04:38:33.447Z"),
+    "userName" : "Candidate",
+    "userID" : "",
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-times-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Pratik Gaurav has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "requisitionActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "campaignActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "userActivities" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "commonActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-04T04:41:06.545Z")
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("690983be32c8a9faa35c4d2a"),
+    "activityTypeID" : ObjectId("61e00c9243ce55be414e914e"),
+    "activityType" : "Profile Uploaded",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [ 
+        ObjectId("63d760a9aec60c5e1494a9ea")
+    ],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:40:30.384Z"),
+    "activityAt" : ISODate("2025-11-04T04:40:30.380Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-upload\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Uploaded in folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a> </span>",
+        "requisitionActivity" : "<span> Profile Uploaded in folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a></span>",
+        "campaignActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's profile</a> uploaded in folder Default Folder</span>",
+        "userActivities" : "<span>Pratik Gaurav Uploaded in folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Uploaded in folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a></span>"
+    },
+    "metaData" : {}
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("690983bfabf56a0f5c59be8b"),
+    "activityTypeID" : ObjectId("628897484fb42b465fee2a36"),
+    "activityType" : "Email Opt-Out",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:40:31.551Z"),
+    "activityAt" : ISODate("2025-11-04T04:40:31.550Z"),
+    "userName" : "Candidate",
+    "userID" : "",
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-times-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Pratik Gaurav has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "requisitionActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "campaignActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "userActivities" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>",
+        "commonActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a> has unsubscribed further Email communications from TRC Talent Solutions QA</span>"
+    },
+    "metaData" : {}
+}
+
+/* 7 */
+{
+    "_id" : ObjectId("690983c120b61e9c8559be89"),
+    "activityTypeID" : ObjectId("61e00c8843ce55be414e9144"),
+    "activityType" : "Profile Merged",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983347dfb7c885b43c9ff"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:40:33.588Z"),
+    "activityAt" : ISODate("2025-11-04T04:40:33.586Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-exclamation-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's Profile</a> Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "requisitionActivity" : "",
+        "campaignActivity" : "",
+        "userActivities" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "commonActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-04T04:41:06.545Z")
+}
+
+/* 8 */
+{
+    "_id" : ObjectId("690983c1abf56a0f5c59be8d"),
+    "activityTypeID" : ObjectId("61e00c8843ce55be414e9144"),
+    "activityType" : "Profile Merged",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983347dfb7c885b43c9ff"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:40:33.601Z"),
+    "activityAt" : ISODate("2025-11-04T04:40:33.601Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-exclamation-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's Profile</a> Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "requisitionActivity" : "",
+        "campaignActivity" : "",
+        "userActivities" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "commonActivity" : "<span><a href='/profile/690983347dfb7c885b43c9ff' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-04T04:41:06.545Z")
+}
+
+/* 9 */
+{
+    "_id" : ObjectId("690983c432c8a9faa35c4d2c"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [ 
+        ObjectId("63d760a9aec60c5e1494a9ea")
+    ],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:40:36.165Z"),
+    "activityAt" : ISODate("2025-11-04T04:40:36.164Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a> </span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a> </span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a> </span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to folder <a href='/folder/63d760a9aec60c5e1494a9ea' target='_blank'>Default Folder</a> </span>"
+    },
+    "metaData" : {}
+}
+
+/* 10 */
+{
+    "_id" : ObjectId("6909851520b61e9c8559be8c"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6902185cfd2ad83fcd90a645"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T04:46:13.259Z"),
+    "activityAt" : ISODate("2025-11-04T04:46:13.258Z"),
+    "userName" : "MVP - View Only User",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/showcampaign/sourceai/attachpeople/68f7cdae322c76d7b59f221a",
+        "pageID" : ObjectId("6909850f55469e8816ecdc54")
+    }
+}
+
+/* 11 */
+{
+    "_id" : ObjectId("69098995abf56a0f5c59beaa"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62d1049a074e604a7ab72180"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-04T05:05:25.171Z"),
+    "activityAt" : ISODate("2025-11-04T05:05:25.170Z"),
+    "userName" : "MR dev-team",
+    "userID" : ObjectId("624d16c0c0e61b62afda9669"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profile/690983bcb7f941d7bdaf0a27",
+        "pageID" : ObjectId("690986d71137876e0c6e1bca")
+    }
+}
+
+/* 12 */
+{
+    "_id" : ObjectId("690ad4feabf56a0f5c59c084"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6902185cfd2ad83fcd90a645"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-05T04:39:26.661Z"),
+    "activityAt" : ISODate("2025-11-05T04:39:26.660Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profile/690983bcb7f941d7bdaf0a27",
+        "pageID" : ObjectId("690acf395bd46409edde782c")
+    }
+}
+
+/* 13 */
+{
+    "_id" : ObjectId("690ca710abf56a0f5c59ca4a"),
+    "activityTypeID" : ObjectId("61e00c9043ce55be414e914c"),
+    "activityType" : "Reject Profile",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6902185cfd2ad83fcd90a645"),
+    "campaignID" : [ 
+        ObjectId("68f7cdae322c76d7b59f221a")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-06T13:48:00.737Z"),
+    "activityAt" : ISODate("2025-11-06T13:48:00.737Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-user-times\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Pratik Gaurav has been rejected for the job Maint Tech</span>",
+        "requisitionActivity" : "<span>Pratik Gaurav has been rejected for the job Maint Tech</span>",
+        "campaignActivity" : "<span>Pratik Gaurav has been rejected for the job Maint Tech</span>",
+        "userActivities" : "<span>Pratik Gaurav has been rejected for the job Maint Tech</span>",
+        "commonActivity" : "<span>Pratik Gaurav has been rejected for the job Maint Tech</span>"
+    },
+    "metaData" : {}
+}
+
+/* 14 */
+{
+    "_id" : ObjectId("690d8248abf56a0f5c59cafa"),
+    "activityTypeID" : ObjectId("61e00c8843ce55be414e9144"),
+    "activityType" : "Profile Merged",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("6905e106b49254943b91d1d7"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:23:20.658Z"),
+    "activityAt" : ISODate("2025-11-07T05:23:20.657Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-exclamation-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav's Profile</a> Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "requisitionActivity" : "",
+        "campaignActivity" : "",
+        "userActivities" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "commonActivity" : "<span><a href='/profile/6905e106b49254943b91d1d7' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-11-07T05:23:22.087Z")
+}
+
+/* 15 */
+{
+    "_id" : ObjectId("690d8298abf56a0f5c59cafe"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62fc715f7a56a3e23a512ca3"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:24:40.217Z"),
+    "activityAt" : ISODate("2025-11-07T05:24:40.217Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [ 
+        {
+            "fieldName" : "email communication",
+            "sectionName" : "",
+            "type" : "field",
+            "oldValue" : "Opt-in",
+            "newValue" : "Opt-out"
+        }
+    ],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Opted-out from email communication </span>",
+        "requisitionActivity" : "<span>Opted-out from email communication </span>",
+        "campaignActivity" : "<span>Opted-out from email communication </span>",
+        "userActivities" : "<span>Opted-out from email communication </span>",
+        "commonActivity" : "<span>Opted-out from email communication </span>"
+    },
+    "metaData" : {}
+}
+
+/* 16 */
+{
+    "_id" : ObjectId("690d82b27c48ffa7252cebeb"),
+    "activityTypeID" : ObjectId("61e00c9243ce55be414e914e"),
+    "activityType" : "Profile Uploaded",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("690b60b2ee0e3af66c119ac3")
+    ],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [ 
+        ObjectId("690b60b1ee0e3af66c119ac1")
+    ],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:25:06.701Z"),
+    "activityAt" : ISODate("2025-11-07T05:25:06.701Z"),
+    "userName" : "Bryan Campbell",
+    "userID" : ObjectId("61b825e415f87d014ee8b4a3"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-upload\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a> </span>",
+        "requisitionActivity" : "<span> Profile Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>",
+        "campaignActivity" : "<span><a href='/profile/690d82b126a7044c6fc6c04f' target='_blank'>Pratik Gaurav's profile</a> uploaded to campaign Test JO 11.05 9:34a</span>",
+        "userActivities" : "<span>Pratik Gaurav Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Uploaded to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 17 */
+{
+    "_id" : ObjectId("690d82bc20b61e9c8559cc41"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("690b60b2ee0e3af66c119ac3")
+    ],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:25:16.488Z"),
+    "activityAt" : ISODate("2025-11-07T05:25:16.488Z"),
+    "userName" : "Bryan Campbell",
+    "userID" : ObjectId("61b825e415f87d014ee8b4a3"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Test JO 11.05 9:34a</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 18 */
+{
+    "_id" : ObjectId("690d82e12b61310b3f2cebec"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("690b60b2ee0e3af66c119ac3")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:25:53.644Z"),
+    "activityAt" : ISODate("2025-11-07T05:25:53.644Z"),
+    "userName" : "Bryan Campbell",
+    "userID" : ObjectId("61b825e415f87d014ee8b4a3"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Test JO 11.05 9:34a</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/690b60b2ee0e3af66c119ac3' target='_blank'>Test JO 11.05 9:34a</a></span>"
+    },
+    "metaData" : {}
+}
+
+/* 19 */
+{
+    "_id" : ObjectId("690d869e20b61e9c8559cce5"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:41:50.742Z"),
+    "activityAt" : ISODate("2025-11-07T05:41:50.740Z"),
+    "userName" : "rajeswari dongari",
+    "userID" : ObjectId("6364e1a45c484101eaba341d"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profiles/searchprofiles?searchid=690d863515de4c84494a6a00",
+        "pageID" : ObjectId("690d863245503d8bd772f2cd")
+    },
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 20 */
+{
+    "_id" : ObjectId("690d86c420b61e9c8559cdb5"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:42:28.873Z"),
+    "activityAt" : ISODate("2025-11-07T05:42:28.872Z"),
+    "userName" : "rajeswari dongari",
+    "userID" : ObjectId("6364e1a45c484101eaba341d"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profiles/searchprofiles?searchid=690d863515de4c84494a6a00",
+        "pageID" : ObjectId("690d863245503d8bd772f2cd")
+    },
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 21 */
+{
+    "_id" : ObjectId("690d874ade742ed166151a6e"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62d10535074e604a7ab72184"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:44:42.801Z"),
+    "activityAt" : ISODate("2025-11-07T05:44:42.801Z"),
+    "userName" : "Bot",
+    "userID" : ObjectId("61b825e415f87d014ee8b4a3"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "Profile Edited by Bot",
+        "requisitionActivity" : "Profile Edited by Bot",
+        "campaignActivity" : "Profile Edited by Bot",
+        "userActivities" : "Profile Edited by Bot",
+        "commonActivity" : "Profile Edited by Bot"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 22 */
+{
+    "_id" : ObjectId("690d875fabf56a0f5c59cde5"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("62c5a8c7250281f99ac58215")
+    ],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:45:03.553Z"),
+    "activityAt" : ISODate("2025-11-07T05:45:03.553Z"),
+    "userName" : "Bryan Campbell",
+    "userID" : ObjectId("61b825e415f87d014ee8b4a3"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/62c5a8c7250281f99ac58215' target='_blank'>3rd shift forklift</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/62c5a8c7250281f99ac58215' target='_blank'>3rd shift forklift</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign 3rd shift forklift</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/62c5a8c7250281f99ac58215' target='_blank'>3rd shift forklift</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/62c5a8c7250281f99ac58215' target='_blank'>3rd shift forklift</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 23 */
+{
+    "_id" : ObjectId("690d88e120b61e9c8559cec9"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("667d30e5004ab28fd4bd3af4")
+    ],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T05:51:29.029Z"),
+    "activityAt" : ISODate("2025-11-07T05:51:29.028Z"),
+    "userName" : "Jagadeesh Ginjupalli",
+    "userID" : ObjectId("667d19270192513aea252e0e"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/667d30e5004ab28fd4bd3af4' target='_blank'>Forklift Driver</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/667d30e5004ab28fd4bd3af4' target='_blank'>Forklift Driver</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Forklift Driver</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/667d30e5004ab28fd4bd3af4' target='_blank'>Forklift Driver</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/667d30e5004ab28fd4bd3af4' target='_blank'>Forklift Driver</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 24 */
+{
+    "_id" : ObjectId("690de1433ce5b78ef64c5706"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("6904a1b1fc63a531b40f27ba")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-07T12:08:35.945Z"),
+    "activityAt" : ISODate("2025-11-07T12:08:35.944Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6904a1b1fc63a531b40f27ba' target='_blank'>Job Posting 10.31 7:45am</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6904a1b1fc63a531b40f27ba' target='_blank'>Job Posting 10.31 7:45am</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Job Posting 10.31 7:45am</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6904a1b1fc63a531b40f27ba' target='_blank'>Job Posting 10.31 7:45am</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6904a1b1fc63a531b40f27ba' target='_blank'>Job Posting 10.31 7:45am</a></span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("690ddbd0e011997dabb1ae92")
+    }
+}
+
+/* 25 */
+{
+    "_id" : ObjectId("6911e60b20b61e9c8559d468"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62d10535074e604a7ab72184"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-10T13:18:03.119Z"),
+    "activityAt" : ISODate("2025-11-10T13:18:03.118Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/showcampaign/engageai/690b60b2ee0e3af66c119ac3",
+        "pageID" : ObjectId("6911e6038fb4ebdf66a240ad")
+    }
+}
+
+/* 26 */
+{
+    "_id" : ObjectId("6911e62320b61e9c8559d46a"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62d10535074e604a7ab72184"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-10T13:18:27.636Z"),
+    "activityAt" : ISODate("2025-11-10T13:18:27.636Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [ 
+        {
+            "fieldName" : "Phones",
+            "sectionName" : "",
+            "type" : "List",
+            "oldValue" : [ 
+                "+917004029399"
+            ],
+            "newValue" : [ 
+                "+12272567890"
+            ]
+        }
+    ],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Updated Phones from +917004029399 to +12272567890</span>",
+        "requisitionActivity" : "<span>Updated Phones from +917004029399 to +12272567890</span>",
+        "campaignActivity" : "<span>Updated Phones from +917004029399 to +12272567890</span>",
+        "userActivities" : "<span>Updated Phones from +917004029399 to +12272567890</span>",
+        "commonActivity" : "<span>Updated Phones from +917004029399 to +12272567890</span>"
+    },
+    "metaData" : {}
+}
+
+/* 27 */
+{
+    "_id" : ObjectId("6911e629abf56a0f5c59d4f9"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62d10535074e604a7ab72184"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-10T13:18:33.571Z"),
+    "activityAt" : ISODate("2025-11-10T13:18:33.569Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/showcampaign/engageai/690b60b2ee0e3af66c119ac3",
+        "pageID" : ObjectId("6911e6038fb4ebdf66a240ad")
+    }
+}
+
+/* 28 */
+{
+    "_id" : ObjectId("6911e63020b61e9c8559d46c"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("62d10535074e604a7ab72184"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-10T13:18:39.963Z"),
+    "activityAt" : ISODate("2025-11-10T13:18:39.963Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [ 
+        {
+            "fieldName" : "Phones",
+            "sectionName" : "",
+            "type" : "List",
+            "oldValue" : [ 
+                "+12272567890"
+            ],
+            "newValue" : []
+        }
+    ],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Updated Phones from +12272567890 to empty</span>",
+        "requisitionActivity" : "<span>Updated Phones from +12272567890 to empty</span>",
+        "campaignActivity" : "<span>Updated Phones from +12272567890 to empty</span>",
+        "userActivities" : "<span>Updated Phones from +12272567890 to empty</span>",
+        "commonActivity" : "<span>Updated Phones from +12272567890 to empty</span>"
+    },
+    "metaData" : {}
+}
+
+/* 29 */
+{
+    "_id" : ObjectId("691731816b69449f5a161672"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-14T13:41:21.469Z"),
+    "activityAt" : ISODate("2025-11-14T13:41:21.468Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profile/690983bcb7f941d7bdaf0a27",
+        "pageID" : ObjectId("6917316f5e17005c580bb0e3")
+    }
+}
+
+/* 30 */
+{
+    "_id" : ObjectId("691731ab6b69449f5a161674"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-11-14T13:42:03.335Z"),
+    "activityAt" : ISODate("2025-11-14T13:42:03.334Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profile/duplicateprofiles/690983bcb7f941d7bdaf0a27",
+        "pageID" : ObjectId("6917319db62edcb92569951b")
+    }
+}
+
+/* 31 */
+{
+    "_id" : ObjectId("692d2ddaad8d8bb5e412dde9"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-01T05:55:38.741Z"),
+    "activityAt" : ISODate("2025-12-01T05:55:38.738Z"),
+    "userName" : "Bharadwaj K",
+    "userID" : ObjectId("669b6bbe8e9b66eb9bbeda7a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profiles/searchprofiles?searchid=692d2dd058dfbc3f4673b651",
+        "pageID" : ObjectId("692d2dc44984ed5b78a945cf")
+    }
+}
+
+/* 32 */
+{
+    "_id" : ObjectId("693118349e82ec3a87dc0878"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-04T05:12:20.817Z"),
+    "activityAt" : ISODate("2025-12-04T05:12:20.813Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profiles/searchprofiles?searchid=69311803583b5f800627dc8c&rid=690983bcb7f941d7bdaf0a27",
+        "pageID" : ObjectId("6931180504bcd454e6c23cca"),
+        "searchid" : ObjectId("69311803583b5f800627dc8c"),
+        "rid" : ObjectId("690983bcb7f941d7bdaf0a27")
+    }
+}
+
+/* 33 */
+{
+    "_id" : ObjectId("693118679e82ec3a87dc087c"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-04T05:13:11.214Z"),
+    "activityAt" : ISODate("2025-12-04T05:13:11.211Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profiles/searchprofiles?searchid=6931185ee5c7eeb0a127d8b5",
+        "pageID" : ObjectId("6931180504bcd454e6c23cca"),
+        "searchid" : ObjectId("69311803583b5f800627dc8c"),
+        "rid" : ObjectId("690983bcb7f941d7bdaf0a27")
+    }
+}
+
+/* 34 */
+{
+    "_id" : ObjectId("6936caea81d30187c1c5589a"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("6915cf8c26bd5d74fe99dc7b")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-08T12:56:10.695Z"),
+    "activityAt" : ISODate("2025-12-08T12:56:10.695Z"),
+    "userName" : "Bryan Campbell",
+    "userID" : ObjectId("61b825e415f87d014ee8b4a3"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6915cf8c26bd5d74fe99dc7b' target='_blank'>Ingot Quality Technician</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6915cf8c26bd5d74fe99dc7b' target='_blank'>Ingot Quality Technician</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Ingot Quality Technician</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6915cf8c26bd5d74fe99dc7b' target='_blank'>Ingot Quality Technician</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6915cf8c26bd5d74fe99dc7b' target='_blank'>Ingot Quality Technician</a></span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("6936caa15526516daf5ebb5c")
+    }
+}
+
+/* 35 */
+{
+    "_id" : ObjectId("6937a4af72937ed6c699a9f1"),
+    "activityTypeID" : ObjectId("61e00ca843ce55be414e9165"),
+    "activityType" : "Profile Downloaded",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-09T04:25:19.780Z"),
+    "activityAt" : ISODate("2025-12-09T04:25:19.779Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-download\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Downloaded </span>",
+        "requisitionActivity" : "<span> Profile Downloaded </span>",
+        "campaignActivity" : "<span> Profile Downloaded </span>",
+        "userActivities" : "<span> Profile Downloaded </span>",
+        "commonActivity" : "<span> Profile Downloaded </span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("6937a48e8214d58a46d787c8")
+    }
+}
+
+/* 36 */
+{
+    "_id" : ObjectId("6939034e72937ed6c699ad61"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-10T05:21:18.847Z"),
+    "activityAt" : ISODate("2025-12-10T05:21:18.847Z"),
+    "userName" : "Candidate",
+    "userID" : "",
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [ 
+        {
+            "fieldName" : "",
+            "sectionName" : "Skills",
+            "type" : "",
+            "oldValue" : "",
+            "newValue" : ""
+        }
+    ],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Updated Skills Details</span>",
+        "requisitionActivity" : "<span>Updated Skills Details</span>",
+        "campaignActivity" : "<span>Updated Skills Details</span>",
+        "userActivities" : "<span>Updated Skills Details</span>",
+        "commonActivity" : "<span>Updated Skills Details</span>"
+    },
+    "metaData" : {}
+}
+
+/* 37 */
+{
+    "_id" : ObjectId("6939039572937ed6c699ad65"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-10T05:22:29.017Z"),
+    "activityAt" : ISODate("2025-12-10T05:22:29.017Z"),
+    "userName" : "Candidate",
+    "userID" : "",
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [ 
+        {
+            "fieldName" : "",
+            "sectionName" : "Professional Experience",
+            "type" : "",
+            "oldValue" : "",
+            "newValue" : ""
+        }
+    ],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Updated Professional Experience Details</span>",
+        "requisitionActivity" : "<span>Updated Professional Experience Details</span>",
+        "campaignActivity" : "<span>Updated Professional Experience Details</span>",
+        "userActivities" : "<span>Updated Professional Experience Details</span>",
+        "commonActivity" : "<span>Updated Professional Experience Details</span>"
+    },
+    "metaData" : {}
+}
+
+/* 38 */
+{
+    "_id" : ObjectId("693962f45a51212bfcef40e2"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("69292315e875b71058253412")
+    ],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-10T12:09:24.291Z"),
+    "activityAt" : ISODate("2025-12-10T12:09:24.290Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/69292315e875b71058253412' target='_blank'>truck driver</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/69292315e875b71058253412' target='_blank'>truck driver</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign truck driver</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/69292315e875b71058253412' target='_blank'>truck driver</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/69292315e875b71058253412' target='_blank'>truck driver</a></span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("69394d723e2c9ea30f0849cf")
+    },
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 39 */
+{
+    "_id" : ObjectId("693969d32918fcbf5f3785f6"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("693155d5f2242275bd7148e3")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-10T12:38:43.000Z"),
+    "activityAt" : ISODate("2025-12-10T12:38:42.998Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/693155d5f2242275bd7148e3' target='_blank'>voice call test 1</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/693155d5f2242275bd7148e3' target='_blank'>voice call test 1</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign voice call test 1</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/693155d5f2242275bd7148e3' target='_blank'>voice call test 1</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/693155d5f2242275bd7148e3' target='_blank'>voice call test 1</a></span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("6939509c3636ad597a3d48d9")
+    }
+}
+
+/* 40 */
+{
+    "_id" : ObjectId("693bc0df1306e7bef44df268"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("692922fc67d80b239e4e3ab0")
+    ],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-12T07:14:39.359Z"),
+    "activityAt" : ISODate("2025-12-12T07:14:39.358Z"),
+    "userName" : "QA Team Admin",
+    "userID" : ObjectId("625f8e49924c541edd6a1e6c"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/692922fc67d80b239e4e3ab0' target='_blank'>truck driver</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/692922fc67d80b239e4e3ab0' target='_blank'>truck driver</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign truck driver</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/692922fc67d80b239e4e3ab0' target='_blank'>truck driver</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/692922fc67d80b239e4e3ab0' target='_blank'>truck driver</a></span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("693bac53d502b816b2cae3c0")
+    },
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}
+
+/* 41 */
+{
+    "_id" : ObjectId("69412869d81f71e11ad94a7e"),
+    "activityTypeID" : ObjectId("61e00cb643ce55be414e9173"),
+    "activityType" : "Profile Linked",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("6931992db394b307b3b087df")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-16T09:37:45.002Z"),
+    "activityAt" : ISODate("2025-12-16T09:37:44.998Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fa fa-paperclip\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a> </span>",
+        "requisitionActivity" : "<span> Profile Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "campaignActivity" : "<span>Pratik Gaurav Linked to campaign Ingot Quality Technician</span>",
+        "userActivities" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "commonActivity" : "<span>Pratik Gaurav Linked to campaign <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>"
+    },
+    "metaData" : {
+        "pageID" : ObjectId("69412836032674c4329559e5")
+    }
+}
+
+/* 42 */
+{
+    "_id" : ObjectId("694129230a85fa9d2ac2ec90"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-16T09:40:51.131Z"),
+    "activityAt" : ISODate("2025-12-16T09:40:51.129Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profile/linkedcampaigns/690983bcb7f941d7bdaf0a27?cid=6931992db394b307b3b087df",
+        "pageID" : ObjectId("6941291b09e9d1f25ff06e20"),
+        "cid" : ObjectId("6931992db394b307b3b087df")
+    }
+}
+
+/* 43 */
+{
+    "_id" : ObjectId("6941294458d2d41f24c2eb5c"),
+    "activityTypeID" : ObjectId("65fd53915cbde146d4a7ccca"),
+    "activityType" : "Contact Details Viewed",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-16T09:41:24.325Z"),
+    "activityAt" : ISODate("2025-12-16T09:41:24.324Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : false,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "requisitionActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "campaignActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "userActivities" : "<span> Pratik Gaurav 's Contact Details Viewed </span>",
+        "commonActivity" : "<span> Pratik Gaurav 's Contact Details Viewed </span>"
+    },
+    "metaData" : {
+        "page" : "https://trcqa.maprecruit.com/v4/profile/690983bcb7f941d7bdaf0a27",
+        "pageID" : ObjectId("69412929c73f8552579b271d")
+    }
+}
+
+/* 44 */
+{
+    "_id" : ObjectId("694129630a85fa9d2ac2ec92"),
+    "activityTypeID" : ObjectId("61e00c8a43ce55be414e9146"),
+    "activityType" : "Scheduled Screening Round",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [ 
+        ObjectId("6931992db394b307b3b087df")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [ 
+        ObjectId("694128681fbbd672bb9a2751")
+    ],
+    "roundNumber" : 3,
+    "createdAt" : ISODate("2025-12-16T09:41:55.377Z"),
+    "activityAt" : ISODate("2025-12-16T09:41:55.372Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-clipboard-list\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [ 
+        {
+            "type" : "taskID",
+            "value" : ObjectId("694129553950923ad573827c")
+        }, 
+        {
+            "type" : "communicationID",
+            "value" : ObjectId("6941295887332950454edf65")
+        }
+    ],
+    "activity" : {
+        "profileActivity" : "<span> Scheduled Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span> <i class='fas fa-envelope emailTemplate' style='cursor: pointer;' dataId=694129630a85fa9d2ac2ec92></i>",
+        "requisitionActivity" : "<span> Scheduled Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span> <i class='fas fa-envelope emailTemplate' style='cursor: pointer;' dataId=694129630a85fa9d2ac2ec92></i>",
+        "campaignActivity" : "<span> Scheduled Assessment (1) Round for <a href='/profile/linkedcampaigns/690983bcb7f941d7bdaf0a27?cid=6931992db394b307b3b087df' target='_blank'>Pratik Gaurav</a></span> <i class='fas fa-envelope emailTemplate' style='cursor: pointer;' dataId=694129630a85fa9d2ac2ec92></i>",
+        "userActivities" : "<span> Scheduled Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a> to <a href='/profile/linkedcampaigns/690983bcb7f941d7bdaf0a27?cid=6931992db394b307b3b087df' target='_blank'>Pratik Gaurav</a></span>",
+        "commonActivity" : "<span> Scheduled Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>"
+    },
+    "metaData" : {}
+}
+
+/* 45 */
+{
+    "_id" : ObjectId("694129cd0a85fa9d2ac2ec96"),
+    "activityTypeID" : ObjectId("61e00c8143ce55be414e913d"),
+    "activityType" : "Started Screening Round",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [ 
+        ObjectId("6931992db394b307b3b087df")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [ 
+        ObjectId("63d760a9aec60c5e1494a9ea")
+    ],
+    "interviewID" : [ 
+        ObjectId("694128681fbbd672bb9a2751")
+    ],
+    "roundNumber" : 3,
+    "createdAt" : ISODate("2025-12-16T09:43:41.521Z"),
+    "activityAt" : ISODate("2025-12-16T09:43:41.510Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-clipboard-list\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Candidate  Started Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "requisitionActivity" : "<span> Candidate  Started Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "campaignActivity" : "<span> Candidate  Started Assessment (1) Round for Ingot Quality Technician</span>",
+        "userActivities" : "<span> Candidate  Started Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "commonActivity" : "<span> Candidate Started Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>"
+    },
+    "metaData" : {
+        "startDate" : "",
+        "endDate" : ""
+    }
+}
+
+/* 46 */
+{
+    "_id" : ObjectId("694131200a85fa9d2ac2ecb1"),
+    "activityTypeID" : ObjectId("61e00c7643ce55be414e9132"),
+    "activityType" : "Completed Screening Round",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6916d147a05f57a943bbc6b3"),
+    "campaignID" : [ 
+        ObjectId("6931992db394b307b3b087df")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [ 
+        ObjectId("63d760a9aec60c5e1494a9ea")
+    ],
+    "interviewID" : [ 
+        ObjectId("694128681fbbd672bb9a2751")
+    ],
+    "roundNumber" : 3,
+    "createdAt" : ISODate("2025-12-16T10:14:56.775Z"),
+    "activityAt" : ISODate("2025-12-16T10:14:56.768Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-clipboard-list\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span> Candidate  Completed Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "requisitionActivity" : "<span> Candidate  Completed Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "campaignActivity" : "<span> Candidate  Completed Assessment (1) Round for Ingot Quality Technician</span>",
+        "userActivities" : "<span> Candidate  Completed Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "commonActivity" : "<span> Candidate Completed Assessment (1) Round for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>"
+    },
+    "metaData" : {
+        "startDate" : "",
+        "endDate" : ""
+    }
+}
+
+/* 47 */
+{
+    "_id" : ObjectId("694131300a85fa9d2ac2ecb3"),
+    "activityTypeID" : ObjectId("687e1f45aa2120e38f925555"),
+    "activityType" : "Post Screening Email",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("6931992db394b307b3b087df")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-16T10:15:12.028Z"),
+    "activityAt" : ISODate("2025-12-16T10:15:12.026Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-clipboard-list\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [ 
+        {
+            "type" : "communicationID",
+            "value" : ObjectId("694131206b773aa61f4edf39")
+        }, 
+        {
+            "type" : "taskID",
+            "value" : ObjectId("69413120d413c751c3738057")
+        }, 
+        {
+            "type" : "communicationID",
+            "value" : ObjectId("694131206b773aa61f4edf39")
+        }, 
+        {
+            "type" : "taskID",
+            "value" : ObjectId("69413120d413c751c3738057")
+        }
+    ],
+    "activity" : {
+        "profileActivity" : "<span> Post Screening Email Sent for <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span> <i class='fas fa-envelope emailTemplate' style='cursor: pointer;' dataId=694131300a85fa9d2ac2ecb3></i>",
+        "requisitionActivity" : "<span> Post Screening Email Sent for <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a></span> <i class='fas fa-envelope emailTemplate' style='cursor: pointer;' dataId=694131300a85fa9d2ac2ecb3></i>",
+        "campaignActivity" : "<span> Post Screening Email Sent for <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a></span> <i class='fas fa-envelope emailTemplate' style='cursor: pointer;' dataId=694131300a85fa9d2ac2ecb3></i>",
+        "userActivities" : "<span> Post Screening Email Sent for <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a></span>",
+        "commonActivity" : "<span> Post Screening Email Sent for <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a></span>"
+    },
+    "metaData" : {}
+}
+
+/* 48 */
+{
+    "_id" : ObjectId("694131603717bf47f021fbf1"),
+    "activityTypeID" : ObjectId("61e00c9943ce55be414e9155"),
+    "activityType" : "Profile Edited",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : ObjectId("6112806bc9147f673d28c6ec"),
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-16T10:16:00.845Z"),
+    "activityAt" : ISODate("2025-12-16T10:16:00.845Z"),
+    "userName" : "Bot",
+    "userID" : ObjectId("6821a4dc33d8d7ebe8f918e5"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-edit\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "Profile Edited by Bot",
+        "requisitionActivity" : "Profile Edited by Bot",
+        "campaignActivity" : "Profile Edited by Bot",
+        "userActivities" : "Profile Edited by Bot",
+        "commonActivity" : "Profile Edited by Bot"
+    },
+    "metaData" : {}
+}
+
+/* 49 */
+{
+    "_id" : ObjectId("6941323f58d2d41f24c2eb7b"),
+    "activityTypeID" : "",
+    "activityType" : "Candidate Requested",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [ 
+        ObjectId("6931992db394b307b3b087df")
+    ],
+    "resumeID" : [ 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [ 
+        ObjectId("63d760a9aec60c5e1494a9ea")
+    ],
+    "interviewID" : [ 
+        ObjectId("694128681fbbd672bb9a2751")
+    ],
+    "roundNumber" : 4,
+    "createdAt" : ISODate("2025-12-16T10:19:43.832Z"),
+    "activityAt" : ISODate("2025-12-16T10:19:43.829Z"),
+    "userName" : "",
+    "userID" : "",
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-user-clock\"></i>",
+    "userType" : "",
+    "mergedResumeID" : "",
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : false,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span>Pratik Gaurav proposed slot availability for  <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "requisitionActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a>  proposed slot availability for  <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "campaignActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a>  proposed slot availability for Ingot Quality Technician</span>",
+        "userActivities" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a>  proposed slot availability for  <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>",
+        "commonActivity" : "<span><a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav</a>  proposed slot availability for  <a href='/showcampaign/sourceai/jobdescription/6931992db394b307b3b087df' target='_blank'>Ingot Quality Technician</a></span>"
+    },
+    "metaData" : {
+        "startDate" : "16/12/2025",
+        "endDate" : "26/12/2025"
+    }
+}
+
+/* 50 */
+{
+    "_id" : ObjectId("694232260a85fa9d2ac2edcb"),
+    "activityTypeID" : ObjectId("61e00c8843ce55be414e9144"),
+    "activityType" : "Profile Merged",
+    "activityGroup" : "Standard",
+    "code" : "",
+    "companyID" : ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID" : "",
+    "campaignID" : [],
+    "resumeID" : [ 
+        ObjectId("690d82b126a7044c6fc6c04f"), 
+        ObjectId("690983bcb7f941d7bdaf0a27")
+    ],
+    "articleID" : [],
+    "interviewID" : [],
+    "roundNumber" : 1,
+    "createdAt" : ISODate("2025-12-17T04:31:34.190Z"),
+    "activityAt" : ISODate("2025-12-17T04:31:34.189Z"),
+    "userName" : "Pratik",
+    "userID" : ObjectId("614d569f77f21325cdbd314a"),
+    "version" : "V4",
+    "userIcon" : "",
+    "activityIcon" : "<i class=\"fas fa-exclamation-circle\"></i>",
+    "userType" : "",
+    "mergedResumeID" : ObjectId("690983bcb7f941d7bdaf0a27"),
+    "updatedFields" : [],
+    "interviewResults" : "",
+    "page" : "",
+    "visible" : true,
+    "deleted" : false,
+    "manuallyAdded" : true,
+    "activityTrigger" : true,
+    "activityOf" : [ 
+        "common", 
+        "campaign", 
+        "user", 
+        "profile", 
+        "profile-requisition"
+    ],
+    "activityFields" : [],
+    "activity" : {
+        "profileActivity" : "<span><a href='/profile/690d82b126a7044c6fc6c04f' target='_blank'>Pratik Gaurav's Profile</a> Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "requisitionActivity" : "",
+        "campaignActivity" : "",
+        "userActivities" : "<span><a href='/profile/690d82b126a7044c6fc6c04f' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>",
+        "commonActivity" : "<span><a href='/profile/690d82b126a7044c6fc6c04f' target='_blank'>Pratik Gaurav's Profile</a>Profile Merged into <a href='/profile/690983bcb7f941d7bdaf0a27' target='_blank'>Pratik Gaurav's Profile</a></span>"
+    },
+    "metaData" : {},
+    "updatedAt" : ISODate("2025-12-17T04:31:59.490Z")
+}

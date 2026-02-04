@@ -1,0 +1,2067 @@
+{
+    "_id": ObjectId("6943ebd50980b5aea836ebe1"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("678802b344b68e1a8c7a40eb"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6916d147a05f57a943bbc6b3"),
+    "userID": ObjectId("61b825e415f87d014ee8b4a3"),
+    "createdAt": ISODate("2025-12-18T11:56:05.128Z"),
+    "updatedAt": ISODate("2025-12-24T10:01:52.912Z"),
+    "linked": true,
+    "status": "Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "40000023",
+        "title": "Call Center Job Description",
+        "locations": [
+            {
+                "text": "Athens,GA 30606,USA",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "Athens",
+                "district": "",
+                "state": "Georgia",
+                "stateCode": "GA",
+                "countryCode": "US",
+                "postalCode": "30606",
+                "pin": {
+                    "lat": 33.9448436,
+                    "lon": -83.4323375
+                },
+                "cityCanonical": "athens",
+                "districtCanonical": "",
+                "stateCanonical": "georgia",
+                "confidenceScore": 0.0,
+                "eligibilityCheck": "Required",
+                "circle": {
+                    "metricUnit": "mi",
+                    "radius": 15
+                },
+                "vacancies": 5,
+                "country": "UnitedStates",
+                "countryCanonical": "united states"
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "External Sourcing",
+        "applicationMethod": "Active Sourcing",
+        "applicationChannel": "Careers",
+        "applicationSource": "TRC Website",
+        "applicationStatus": "Applied",
+        "applicationPlatform": "Careers Page",
+        "linkedBy": "Recruiter",
+        "linkedByID": "61b825e415f87d014ee8b4a3",
+        "linkedAt": ISODate("2025-12-18T11:56:05.131Z"),
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "Job Seeker",
+        "statusUpdatedByID": "690983bcb7f941d7bdaf0a27",
+        "statusUpdatedAt": ISODate("2025-12-18T11:57:03.401Z"),
+        "queryJobID": "",
+        "applicationChannelRefID": "",
+        "referenceURL": "",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        },
+        "referenceSource": "TRC Website"
+    },
+    "automateScreeningRounds": true,
+    "screeningRounds": [
+        {
+            "roundName": "",
+            "roundType": "Announcement",
+            "availableMeetTypes": [],
+            "selectedMeetType": "",
+            "roundNumber": 1,
+            "roundID": "",
+            "enabled": true,
+            "deleted": false,
+            "status": "Scheduled",
+            "updatedAt": "2025-12-18T11:57:02.843Z",
+            "scheduled": true,
+            "scheduledAt": "2025-12-18T11:57:02.843Z",
+            "scheduledBy": "",
+            "scheduledMethod": "Manual",
+            "sent": false,
+            "sentAt": "",
+            "scheduleSuccess": false,
+            "scheduleSuccessAt": "",
+            "bounced": false,
+            "bouncedAt": "",
+            "viewed": false,
+            "viewedAt": "",
+            "linkClicked": false,
+            "linkClickedAt": "",
+            "linkClickedURL": [],
+            "confirmed": false,
+            "confirmedAt": "",
+            "optOut": false,
+            "optOutAt": "",
+            "cancelled": false,
+            "cancelledAt": "",
+            "progressing": false,
+            "startedAt": "",
+            "completed": false,
+            "knockout": false,
+            "completedAt": "",
+            "shortlisted": false,
+            "reviewed": false,
+            "reviewedAt": "",
+            "reviewedBy": "",
+            "jobFitScoreEvaluation": "",
+            "jobFitScoreID": "",
+            "chatBotInterviewDurationSec": 0,
+            "description": {
+                "text": "",
+                "mediaURL": ""
+            },
+            "automate": true,
+            "automateBuffer": 60,
+            "automateDetails": {
+                "tillCampaignClose": true,
+                "startDate": "",
+                "endDate": "",
+                "timeZone": "",
+                "timeZoneName": "",
+                "timeZoneFullName": "",
+                "excludeDays": [
+                    "Saturday",
+                    "Sunday"
+                ],
+                "automationPreference": "After Application Creation",
+                "automateBuffer": 1,
+                "timings": [],
+                "message": []
+            },
+            "communicationMethod": "Inbound",
+            "savedFavouriteID": "",
+            "feedBack": {
+                "rating": 0,
+                "comment": "",
+                "status": "",
+                "ratedAt": "",
+                "commentedAt": "",
+                "statusChangedAt": ""
+            },
+            "eligible": false,
+            "mapToField": false,
+            "expiryAt": "",
+            "timeBound": false,
+            "maxDurationInMinutes": 1000,
+            "channels": [
+                "Chatbot"
+            ],
+            "questions": [],
+            "EQ": {
+                "MROverallRate": 0,
+                "emotionalQuotientOriginal": [],
+                "emotionalQuotient": []
+            },
+            "flowChartQuestions": [],
+            "groupQuestions": [],
+            "jobFitReviewEntities": [],
+            "roundEligibility": {
+                "eligibilityCriteria": "Any of these",
+                "MRI": {
+                    "enabled": false,
+                    "minMRIScore": 0,
+                    "maxMRIScore": 10
+                },
+                "EQ": {
+                    "enabled": false,
+                    "roundNumber": "0",
+                    "minEQScore": 0,
+                    "maxEQScore": 10
+                },
+                "tags": {
+                    "enabled": false,
+                    "tags": [],
+                    "condition": "Any of these"
+                },
+                "shortlisted": {
+                    "enabled": false
+                },
+                "filters": {
+                    "enabled": false,
+                    "filterID": [],
+                    "condition": "Any of these"
+                },
+                "previousScreeningRound": {
+                    "enabled": false,
+                    "condition": "Any of these",
+                    "criteria": []
+                },
+                "automationAdditionalCriteria": {
+                    "enabled": false,
+                    "criteria": []
+                }
+            },
+            "reachOutSources": {
+                "SMS": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "acknowledgementTemplateID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "senderID": "660fadefd251e1ab4d1388a1",
+                    "shortCode": "",
+                    "followUp": {
+                        "selected": true,
+                        "conditional": false,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    },
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true
+                },
+                "email": {
+                    "selected": true,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": true,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "acknowledgementTemplateID": "",
+                    "rescheduleTemplateID": "",
+                    "cancelTemplateID": "",
+                    "conditionalTemplates": [
+                        {
+                            "templateID": "67c8427037dc8f06602d9cd6",
+                            "acknowledgementTemplateID": "",
+                            "rescheduleTemplateID": "",
+                            "cancelTemplateID": "",
+                            "boolean": "and",
+                            "conditions": [
+                                {
+                                    "type": "Application Type",
+                                    "value": "External Sourcing"
+                                },
+                                {
+                                    "type": "Application Method",
+                                    "value": "Active Sourcing"
+                                }
+                            ]
+                        }
+                    ],
+                    "communicationID": "",
+                    "senderID": "61f1439364bd11763fccbe80",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "conditional": false,
+                        "followUps": []
+                    },
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true
+                },
+                "whatsApp": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "phone": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                }
+            },
+            "f2fSchedule": {
+                "type": "",
+                "scheduledAt": "",
+                "requestReschedule": false,
+                "autoScheduleURL": "",
+                "scheduledHostID": [],
+                "gapBetweenMeetings": "0",
+                "scheduleBuffer": "0",
+                "blockTime": 24,
+                "bookingBlockTime": 1,
+                "duration": "",
+                "scheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "scheduleTimeZone": "",
+                "scheduleTimeZoneName": "",
+                "scheduleTimeZoneFullName": "",
+                "rescheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "rescheduleTimeZone": "",
+                "rescheduleTimeZoneName": "",
+                "rescheduleTimeZoneFullName": "",
+                "rescheduleCount": 0,
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "phones": [],
+                "liveURL": "",
+                "liveMedia": "Video",
+                "description": "",
+                "subject": "",
+                "jobSeekerConfirmed": "",
+                "hostConfirmed": "",
+                "participants": [],
+                "jobSeekerNotes": "",
+                "sharedDocuments": [],
+                "feedBack": {
+                    "rating": 0,
+                    "comment": "",
+                    "status": ""
+                },
+                "reminderEmail": {
+                    "reminder": true,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "reminderSMS": {
+                    "reminder": true,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "autoScheduleEmail": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoScheduleSMS": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoSchedule": []
+            }
+        },
+        {
+            "roundName": "",
+            "roundType": "Assessment",
+            "availableMeetTypes": [],
+            "selectedMeetType": "",
+            "roundNumber": 2,
+            "roundID": "",
+            "enabled": true,
+            "deleted": false,
+            "status": "Completed",
+            "updatedAt": "2025-12-18T11:57:45.435Z",
+            "scheduled": true,
+            "scheduledAt": "2025-12-18T11:57:45.430Z",
+            "scheduledBy": "614d569f77f21325cdbd314a",
+            "scheduledMethod": "Manual",
+            "sent": false,
+            "sentAt": "",
+            "scheduleSuccess": true,
+            "scheduleSuccessAt": "2025-12-18T11:57:58.840Z",
+            "bounced": false,
+            "bouncedAt": "",
+            "viewed": true,
+            "viewedAt": "2025-12-18T11:58:04.099Z",
+            "linkClicked": false,
+            "linkClickedAt": "",
+            "linkClickedURL": [],
+            "confirmed": false,
+            "confirmedAt": "",
+            "optOut": false,
+            "optOutAt": "",
+            "cancelled": false,
+            "cancelledAt": "",
+            "progressing": false,
+            "startedAt": "2025-12-18T11:58:04.099Z",
+            "completed": true,
+            "knockout": false,
+            "completedAt": "2025-12-18T11:59:04.594Z",
+            "shortlisted": false,
+            "reviewed": true,
+            "reviewedAt": ISODate("2025-12-19T05:58:02.442Z"),
+            "reviewedBy": ObjectId("614d569f77f21325cdbd314a"),
+            "jobFitScoreEvaluation": "",
+            "jobFitScoreID": "",
+            "chatBotInterviewDurationSec": 60.46,
+            "description": {
+                "text": "",
+                "mediaURL": ""
+            },
+            "automate": true,
+            "automateBuffer": 60,
+            "automateDetails": {
+                "tillCampaignClose": true,
+                "startDate": "",
+                "endDate": "",
+                "timeZone": "",
+                "timeZoneName": "",
+                "timeZoneFullName": "",
+                "excludeDays": [
+                    "Saturday",
+                    "Sunday"
+                ],
+                "automationPreference": "After Application Creation",
+                "automateBuffer": 60,
+                "timings": [],
+                "message": []
+            },
+            "communicationMethod": "Inbound",
+            "savedFavouriteID": "",
+            "feedBack": {
+                "rating": 0,
+                "comment": "",
+                "status": "",
+                "ratedAt": "",
+                "commentedAt": "",
+                "statusChangedAt": ""
+            },
+            "eligible": false,
+            "mapToField": false,
+            "expiryAt": "",
+            "timeBound": false,
+            "maxDurationInMinutes": 1000,
+            "channels": [
+                "Chatbot"
+            ],
+            "questions": [
+                {
+                    "_id": "682afbde976043a6c92e5e14",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "MCQ-SINGLE",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<p>Expected Response?</p>",
+                        "mediaURL": "",
+                        "options": [
+                            "Expected",
+                            "Not-Expected"
+                        ],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "Expected",
+                            ""
+                        ],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [
+                            "Expected"
+                        ],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldName": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 4.5,
+                        "comment": "okay",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-18T11:58:04.129Z",
+                    "completedAt": "2025-12-18T11:59:04.589Z"
+                }
+            ],
+            "EQ": {
+                "MROverallRate": 0,
+                "emotionalQuotientOriginal": [],
+                "emotionalQuotient": []
+            },
+            "flowChartQuestions": [],
+            "groupQuestions": [],
+            "jobFitReviewEntities": [],
+            "roundEligibility": {
+                "eligibilityCriteria": "Any of these",
+                "MRI": {
+                    "enabled": false,
+                    "minMRIScore": 0,
+                    "maxMRIScore": 10
+                },
+                "EQ": {
+                    "enabled": false,
+                    "roundNumber": "0",
+                    "minEQScore": 0,
+                    "maxEQScore": 10
+                },
+                "tags": {
+                    "enabled": false,
+                    "tags": [],
+                    "condition": "Any of these"
+                },
+                "shortlisted": {
+                    "enabled": false
+                },
+                "filters": {
+                    "enabled": false,
+                    "filterID": [],
+                    "condition": "Any of these"
+                },
+                "previousScreeningRound": {
+                    "enabled": true,
+                    "condition": "Any of these",
+                    "criteria": []
+                },
+                "automationAdditionalCriteria": {
+                    "enabled": false,
+                    "criteria": []
+                }
+            },
+            "reachOutSources": {
+                "SMS": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "5ebfa9c7927db172bf6f9bd6",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "acknowledgementTemplateID": "632815f35def1c319541668f",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "senderID": "660fadefd251e1ab4d1388a1",
+                    "shortCode": "",
+                    "followUp": {
+                        "selected": true,
+                        "conditional": false,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    },
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true
+                },
+                "email": {
+                    "selected": true,
+                    "sent": true,
+                    "sentAt": "2025-12-18T11:57:45.961Z",
+                    "delivered": true,
+                    "deliveredAt": "2025-12-18T11:57:58.840Z",
+                    "viewed": true,
+                    "viewedAt": "2025-12-18T13:57:40.931Z",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "5e982d93c36e91bcad278541",
+                    "acknowledgementTemplateID": "5ee32bb843299dde65f575e9",
+                    "rescheduleTemplateID": "",
+                    "cancelTemplateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "67dbc8f9c4ab180cdfcec023",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "2025-12-19T11:57:45.430Z",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "conditional": false,
+                        "followUps": [
+                            {
+                                "templateID": "5e982d93c36e91bcad278541",
+                                "template": "",
+                                "followUpAt": "",
+                                "followUpBy": "Recruiter",
+                                "sent": false,
+                                "delivered": false,
+                                "viewed": false,
+                                "communicationID": ""
+                            }
+                        ]
+                    },
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true,
+                    "invitationTemplateSelected": true
+                },
+                "whatsApp": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "phone": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                }
+            },
+            "f2fSchedule": {
+                "type": "",
+                "scheduledAt": "",
+                "requestReschedule": false,
+                "autoScheduleURL": "",
+                "scheduledHostID": [],
+                "gapBetweenMeetings": "0",
+                "scheduleBuffer": "0",
+                "blockTime": 24,
+                "bookingBlockTime": 1,
+                "duration": "",
+                "scheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "scheduleTimeZone": "",
+                "scheduleTimeZoneName": "",
+                "scheduleTimeZoneFullName": "",
+                "rescheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "rescheduleTimeZone": "",
+                "rescheduleTimeZoneName": "",
+                "rescheduleTimeZoneFullName": "",
+                "rescheduleCount": 0,
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "phones": [],
+                "liveURL": "",
+                "liveMedia": "Video",
+                "description": "",
+                "subject": "",
+                "jobSeekerConfirmed": "",
+                "hostConfirmed": "",
+                "participants": [],
+                "jobSeekerNotes": "",
+                "sharedDocuments": [],
+                "feedBack": {
+                    "rating": 0,
+                    "comment": "",
+                    "status": ""
+                },
+                "reminderEmail": {
+                    "reminder": true,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "reminderSMS": {
+                    "reminder": true,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "autoScheduleEmail": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoScheduleSMS": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoSchedule": []
+            },
+            "announcementCompleted": false,
+            "overallExpectedResponse": {
+                "score": 10,
+                "calculated": true
+            }
+        },
+        {
+            "roundName": "",
+            "roundType": "Survey",
+            "availableMeetTypes": [],
+            "selectedMeetType": "",
+            "roundNumber": 3,
+            "roundID": "",
+            "enabled": true,
+            "deleted": false,
+            "status": "Completed",
+            "updatedAt": "2025-12-18T11:59:05.552Z",
+            "scheduled": true,
+            "scheduledAt": "2025-12-18T11:59:05.547Z",
+            "scheduledBy": "614d569f77f21325cdbd314a",
+            "scheduledMethod": "Auto",
+            "sent": false,
+            "sentAt": "",
+            "scheduleSuccess": true,
+            "scheduleSuccessAt": "2025-12-18T11:59:17.562Z",
+            "bounced": false,
+            "bouncedAt": "",
+            "viewed": true,
+            "viewedAt": "2025-12-18T11:59:04.620Z",
+            "linkClicked": false,
+            "linkClickedAt": "",
+            "linkClickedURL": [],
+            "confirmed": false,
+            "confirmedAt": "",
+            "optOut": false,
+            "optOutAt": "",
+            "cancelled": false,
+            "cancelledAt": "",
+            "progressing": false,
+            "startedAt": "2025-12-18T11:59:04.620Z",
+            "completed": true,
+            "knockout": false,
+            "completedAt": "2025-12-18T11:59:11.137Z",
+            "shortlisted": false,
+            "reviewed": false,
+            "reviewedAt": "",
+            "reviewedBy": "",
+            "interviewCompleted": false,
+            "interviewCompletedAt": "",
+            "jobFitScoreEvaluation": "",
+            "jobFitScoreID": "",
+            "chatBotInterviewDurationSec": 6.47,
+            "description": {
+                "text": "",
+                "mediaURL": ""
+            },
+            "automate": true,
+            "automateBuffer": 60,
+            "automateDetails": {
+                "tillCampaignClose": true,
+                "startDate": "",
+                "endDate": "",
+                "timeZone": "",
+                "timeZoneName": "",
+                "timeZoneFullName": "",
+                "excludeDays": [
+                    "Saturday",
+                    "Sunday"
+                ],
+                "automationPreference": "After Application Creation",
+                "automateBuffer": 60,
+                "timings": [],
+                "message": []
+            },
+            "communicationMethod": "Inbound",
+            "savedFavouriteID": "",
+            "feedBack": {
+                "rating": 0,
+                "comment": "",
+                "status": "",
+                "ratedAt": "",
+                "commentedAt": "",
+                "statusChangedAt": ""
+            },
+            "eligible": false,
+            "mapToField": false,
+            "expiryAt": "",
+            "timeBound": false,
+            "maxDurationInMinutes": 1000,
+            "channels": [
+                "Chatbot"
+            ],
+            "questions": [
+                {
+                    "_id": "682afbf0b8739361e858f091",
+                    "labels": [],
+                    "evaluationType": "",
+                    "savedInExisting": false,
+                    "questionCategory": "",
+                    "questionType": "QUESTION",
+                    "questionTopic": "",
+                    "questionFormat": "TEXT",
+                    "responseType": "TEXT",
+                    "reAnswer": false,
+                    "question": {
+                        "text": "<p>Q1</p>",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": [],
+                        "formPlaceHolder": "",
+                        "audioReferenceText": "",
+                        "formType": "TEXT",
+                        "documentTypes": []
+                    },
+                    "expectedResponse": {
+                        "text": "",
+                        "mediaURL": "",
+                        "options": [],
+                        "locations": []
+                    },
+                    "response": {
+                        "text": "what is the pay rate?",
+                        "mediaURL": "",
+                        "options": [],
+                        "duration": 0,
+                        "action": {
+                            "type": "",
+                            "field": "",
+                            "fieldName": ""
+                        }
+                    },
+                    "questionName": "Q1",
+                    "completed": true,
+                    "durationInMinutes": 2,
+                    "feedBack": {
+                        "rating": 0,
+                        "comment": "",
+                        "status": ""
+                    },
+                    "impersonationQuestion": false,
+                    "flowChartNextQuestion": [],
+                    "checkAttributes": [],
+                    "EQ": {
+                        "scaledFeaturesList": [],
+                        "MRRate": 0,
+                        "featuresList": []
+                    },
+                    "groupID": "",
+                    "groupName": "",
+                    "startedAt": "2025-12-18T11:59:04.664Z",
+                    "completedAt": "2025-12-18T11:59:11.134Z"
+                }
+            ],
+            "EQ": {
+                "MROverallRate": 0,
+                "emotionalQuotientOriginal": [],
+                "emotionalQuotient": []
+            },
+            "flowChartQuestions": [],
+            "groupQuestions": [],
+            "jobFitReviewEntities": [],
+            "roundEligibility": {
+                "eligibilityCriteria": "Any of these",
+                "MRI": {
+                    "enabled": false,
+                    "minMRIScore": 0,
+                    "maxMRIScore": 10
+                },
+                "EQ": {
+                    "enabled": false,
+                    "roundNumber": "0",
+                    "minEQScore": 0,
+                    "maxEQScore": 10
+                },
+                "tags": {
+                    "enabled": false,
+                    "tags": [],
+                    "condition": "Any of these"
+                },
+                "shortlisted": {
+                    "enabled": false
+                },
+                "filters": {
+                    "enabled": false,
+                    "filterID": [],
+                    "condition": "Any of these"
+                },
+                "previousScreeningRound": {
+                    "enabled": true,
+                    "condition": "Any of these",
+                    "criteria": [
+                        {
+                            "roundNumber": 1,
+                            "questionNumber": -1,
+                            "lookingFor": "Feedback",
+                            "feedBackScore": 4,
+                            "response": [
+                                null
+                            ]
+                        }
+                    ]
+                },
+                "expectedResponseScore": {
+                    "enabled": true,
+                    "minExpectedResponseScore": 0,
+                    "maxExpectedResponseScore": 10
+                },
+                "automationAdditionalCriteria": {
+                    "enabled": false,
+                    "criteria": []
+                }
+            },
+            "reachOutSources": {
+                "SMS": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "68087e47c7b9b3929111b552",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "acknowledgementTemplateID": "68087ef9c7b9b3929111ed56",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "announcementTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "confirmationTemplateSelected": true,
+                    "cancelTemplateSelected": true,
+                    "rescheduleTemplateSelected": true,
+                    "senderID": "660fadefd251e1ab4d1388a1",
+                    "shortCode": "",
+                    "followUp": {
+                        "selected": true,
+                        "conditional": false,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    },
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true
+                },
+                "email": {
+                    "selected": true,
+                    "sent": true,
+                    "sentAt": "2025-12-18T11:59:12.492Z",
+                    "delivered": true,
+                    "deliveredAt": "2025-12-18T11:59:17.562Z",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "68087d05c7b9b39291114ce2",
+                    "acknowledgementTemplateID": "68087de4c7b9b3929111955f",
+                    "rescheduleTemplateID": "",
+                    "cancelTemplateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "61f1439364bd11763fccbe80",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "invitationTemplateSelected": true,
+                    "announcementTemplateSelected": true,
+                    "acknowledgementTemplateSelected": true,
+                    "confirmationTemplateSelected": true,
+                    "cancelTemplateSelected": true,
+                    "rescheduleTemplateSelected": true,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "2025-12-20T11:59:05.547Z",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "conditional": false,
+                        "followUps": [
+                            {
+                                "templateID": "68087d05c7b9b39291114ce2",
+                                "template": "",
+                                "followUpAt": "",
+                                "followUpBy": "Recruiter",
+                                "sent": false,
+                                "delivered": false,
+                                "viewed": false,
+                                "communicationID": ""
+                            }
+                        ]
+                    },
+                    "invitationSurveyTemplateSelected": true,
+                    "postSurveyTemplateSelected": true
+                },
+                "whatsApp": {
+                    "selected": false,
+                    "sent": false,
+                    "sentAt": "",
+                    "delivered": false,
+                    "deliveredAt": "",
+                    "viewed": false,
+                    "viewedAt": "",
+                    "bounced": false,
+                    "bouncedAt": "",
+                    "optOut": false,
+                    "optOutAt": "",
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "acknowledgementConditionalTemplates": [],
+                    "acknowledgementConditional": false,
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "phone": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "conditional": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "conditionalTemplates": [],
+                    "communicationID": "",
+                    "senderID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 1,
+                        "timeUnit": "Hours",
+                        "duration": 24,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                }
+            },
+            "f2fSchedule": {
+                "type": "",
+                "scheduledAt": "",
+                "requestReschedule": false,
+                "autoScheduleURL": "",
+                "scheduledHostID": [],
+                "gapBetweenMeetings": "0",
+                "scheduleBuffer": "0",
+                "blockTime": 24,
+                "bookingBlockTime": 1,
+                "duration": "",
+                "scheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "scheduleTimeZone": "",
+                "scheduleTimeZoneName": "",
+                "scheduleTimeZoneFullName": "",
+                "rescheduleAt": {
+                    "startTime": "",
+                    "endTime": ""
+                },
+                "rescheduleTimeZone": "",
+                "rescheduleTimeZoneName": "",
+                "rescheduleTimeZoneFullName": "",
+                "rescheduleCount": 0,
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "phones": [],
+                "liveURL": "",
+                "liveMedia": "Video",
+                "description": "",
+                "subject": "",
+                "jobSeekerConfirmed": "",
+                "hostConfirmed": "",
+                "participants": [],
+                "jobSeekerNotes": "",
+                "sharedDocuments": [],
+                "feedBack": {
+                    "rating": 0,
+                    "comment": "",
+                    "status": ""
+                },
+                "reminderEmail": {
+                    "reminder": true,
+                    "reminderTime": 120,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "reminderSMS": {
+                    "reminder": true,
+                    "reminderTime": 90,
+                    "timeUnit": "Minutes",
+                    "selected": true,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": ""
+                },
+                "autoScheduleEmail": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoScheduleSMS": {
+                    "selected": false,
+                    "sent": false,
+                    "delivered": false,
+                    "viewed": false,
+                    "bounced": false,
+                    "sentTime": "",
+                    "template": "",
+                    "templateID": "",
+                    "communicationID": "",
+                    "followUp": {
+                        "selected": true,
+                        "maxCount": 3,
+                        "timeUnit": "Hours",
+                        "duration": 48,
+                        "time": "",
+                        "timeZone": "",
+                        "timeZoneName": "",
+                        "timeZoneFullName": "",
+                        "followUps": []
+                    }
+                },
+                "autoSchedule": []
+            },
+            "announcementCompleted": false
+        }
+    ],
+    "MRI": {
+        "rank": 0.0,
+        "score": 0.1,
+        "actual_mri_score": 0.1,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2025-12-18T11:57:00.030Z"),
+        "genAI": [],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>expertise</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "expertise",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Answer incoming calls promptly</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Answer incoming calls promptly",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Address customer questions</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Address customer questions",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>CRM system</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "CRM system",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Provide product information</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Provide product information",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>pricing details</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "pricing details",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>assistance</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "assistance",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Identify opportunities</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Identify opportunities",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>customer interactions</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "customer interactions",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Proficient computer skills</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Proficient computer skills",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Bilingual proficiency</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Bilingual proficiency",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Call Center</b></span> <span class='ORPreferredspan'>OR</span> <span><b>customer service</b></span> <span class='ORPreferredspan'>OR</span> <span><b>call center environment</b></span> <span class='ORPreferredspan'>OR</span> <span><b>Customer Support</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Call Center",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "customer service",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "call center environment",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "Customer Support",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>customer service team</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "customer service team",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Inbound</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Inbound",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>customer satisfaction</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "customer satisfaction",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "Take incoming calls",
+                "matchedJobTitle": "",
+                "matchedSkill": "",
+                "matchType": "",
+                "relation": "",
+                "matchScore": 0.0,
+                "matchSummary": "Did not find <b>TAKE INCOMING CALLS</b> in this resume.",
+                "recent": false
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 10.0,
+            "matchScore": 0.0,
+            "matchSummary": "Candidate has no relevant experience.",
+            "profileRelevance": "Not Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.0,
+            "requiredSkillWeight": 0.9,
+            "preferredSkillWeight": 0.1,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0,
+            "jobTitleWeight": 0.3,
+            "skillWeight": 0.7
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "Location preference is not required.",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "None",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "degreeRelation": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "majorRelation": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Candidate didn't qualified the desired education criteria.",
+            "weightage": 3.0
+        },
+        "industry": {
+            "matchScore": 0.670694138274739,
+            "matchedIndustry": "Administrative Management",
+            "matchedSummary": "This resume primarily belongs to <b>Administrative Management</b> but also has experience in <b>Accounting Finance</b>.",
+            "weightage": 3.0
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2025-12-18T11:57:00.030Z"),
+        "searchID": "",
+        "page": "",
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000002",
+            "jt_vector_match_time": "0:00:00.000058"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

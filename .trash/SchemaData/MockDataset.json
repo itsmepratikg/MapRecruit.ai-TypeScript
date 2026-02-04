@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "generatedAt": "2025-05-21T14:30:00Z",
+    "version": "1.0.0",
+    "environment": "development"
+  },
+  "candidates": [
+    {
+      "id": "CAND-10234",
+      "fullName": "Elena Rostova",
+      "email": "elena.r@example.com",
+      "phone": "+1 (555) 019-2834",
+      "location": "New York, NY",
+      "skills": ["React", "TypeScript", "Node.js", "GraphQL"],
+      "experienceYears": 6,
+      "status": "Interview",
+      "meta": {
+        "source": "LinkedIn",
+        "matchScore": 94,
+        "lastActive": "2025-05-20T09:15:00Z"
+      }
+    },
+    {
+      "id": "CAND-10235",
+      "fullName": "Marcus Thorne",
+      "email": "m.thorne@example.com",
+      "phone": "+1 (555) 998-2121",
+      "location": "Austin, TX",
+      "skills": ["Python", "Django", "AWS", "Docker"],
+      "experienceYears": 4,
+      "status": "New",
+      "meta": {
+        "source": "Referral",
+        "matchScore": 88,
+        "lastActive": "2025-05-21T11:00:00Z"
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "CAM-2025-FE",
+      "title": "Senior Frontend Engineer",
+      "department": "Engineering",
+      "isActive": true,
+      "workflow": [
+        { "stageName": "Initial Outreach", "type": "Email" },
+        { "stageName": "Technical Screen", "type": "Test" },
+        { "stageName": "Culture Fit", "type": "Interview" }
+      ]
+    },
+    {
+      "id": "CAM-2025-MK",
+      "title": "Growth Marketing Manager",
+      "department": "Marketing",
+      "isActive": false,
+      "workflow": [
+        { "stageName": "Application Review", "type": "Email" },
+        { "stageName": "Manager Interview", "type": "Interview" }
+      ]
+    }
+  ]
+}

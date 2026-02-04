@@ -1,0 +1,344 @@
+{
+    "status": true,
+    "schema": {
+        "mainSchema": {
+            "companyID": "",
+            "clientName": "",
+            "clientNameAlias": "",
+            "clientCode": "",
+            "clientType": "",
+            "clientURL": "",
+            "clientLogo": "",
+            "clientBanner": "",
+            "clientDefaultSource": "",
+            "candidateConversationDays": 180,
+            "registrationConfirmationEmail": true,
+            "description": "",
+            "language": "English",
+            "franchiseID": [],
+            "accountID": [],
+            "country": "",
+            "countryCode": "",
+            "communicationSettings": {
+                "smsShortCode": "",
+                "communicationLogo": "",
+                "defaultEmail": "",
+                "senderID": []
+            },
+            "sourceAI": {
+                "jobBoards": [],
+                "jobBoardID": [],
+                "jobPosting": [],
+                "requestVerificationCode": false,
+                "downloadInterested": false,
+                "chooseAccount": false,
+                "sourceAIArticleID": ""
+            },
+            "settings": {
+                "shareCampaigns": "Self",
+                "CampaignsHM": "None",
+                "skipJSVerification": true,
+                "removeReferFriend": false,
+                "profileSearchAccessLevel": "Client",
+                "profileRecommendationsAccessLevel": "Client",
+                "profileDuplicateAccessLevel": "Client",
+                "showProductDemo": true,
+                "profileActivityDuration": 180,
+                "showInterviewMessages": false,
+                "MRIPreferenceAccessLevel": "Job",
+                "defaultCampaignRecruiters": [],
+                "defaultCampaignHiringManager": [],
+                "defaultCampaignID": "",
+                "defaultTimeZone": "+05:30",
+                "defaultTimeZoneName": "",
+                "defaultTimeZoneFullName": "",
+                "defaultLanguageCode": "en-us",
+                "defaultDateFormat": "en-us",
+                "defaultTimeFormat": "12 hours",
+                "defaultCandidateType": "",
+                "defaultResumeSource": "",
+                "maxLinkedProfiles": 10000,
+                "JobShowDuration": 0,
+                "jdCompletenessCriteria": {
+                    "enabled": true,
+                    "jobTitleWeightage": 10,
+                    "locationWeightage": 10,
+                    "skills": {
+                        "minimumSkillsRequired": 7,
+                        "skillsWeightage": 70
+                    },
+                    "jobDescriptionWeightage": 10,
+                    "yearsOfExperienceWeightage": 0,
+                    "salaryWeightage": 0
+                },
+                "jobseekerPage": {
+                    "similarJobs": {
+                        "visible": true
+                    },
+                    "generatedResumeBuilder": false,
+                    "jobDetails": {
+                        "visible": true,
+                        "location": true,
+                        "experience": true,
+                        "salary": true,
+                        "jobType": true,
+                        "education": true
+                    }
+                },
+                "weeklyHours": [
+                    {
+                        "day": "Sunday",
+                        "timings": [
+                            {
+                                "startTime": "12:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "Monday",
+                        "timings": [
+                            {
+                                "startTime": "09:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "Tuesday",
+                        "timings": [
+                            {
+                                "startTime": "09:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "Wednesday",
+                        "timings": [
+                            {
+                                "startTime": "09:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "Thursday",
+                        "timings": [
+                            {
+                                "startTime": "09:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "Friday",
+                        "timings": [
+                            {
+                                "startTime": "09:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    },
+                    {
+                        "day": "Saturday",
+                        "timings": [
+                            {
+                                "startTime": "09:00",
+                                "endTime": "21:00"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "MRIPreferences": {
+                "rankMethod": [],
+                "experience": {
+                    "matchRelatedEntities": true,
+                    "enable": true,
+                    "weightage": 10
+                },
+                "education": {
+                    "matchRelatedEntities": true,
+                    "enable": true,
+                    "weightage": 3
+                },
+                "skills": {
+                    "matchRelatedEntities": true,
+                    "enable": true,
+                    "weightage": 10
+                },
+                "industry": {
+                    "matchRelatedEntities": true,
+                    "enable": true,
+                    "weightage": 3
+                },
+                "jobTitle": {
+                    "matchRelatedEntities": true,
+                    "enable": true,
+                    "weightage": 10
+                },
+                "location": {
+                    "matchRelatedEntities": false,
+                    "enable": false,
+                    "weightage": 10
+                },
+                "YOE": {
+                    "minYOE": 0,
+                    "maxYOE": 50
+                },
+                "profileRecommendationsMatchScore": {
+                    "minMri": 0,
+                    "maxMri": 5
+                }
+            },
+            "createdAt": "",
+            "updatedAt": "",
+            "enable": true,
+            "createdBy": "",
+            "createdByID": "",
+            "resumeCustomFields": {},
+            "resumeKeys": {},
+            "emailForwardEmails": [],
+            "locations": [],
+            "emails": [],
+            "phones": [],
+            "emailSignature": "",
+            "engageAI": {
+                "calendarSettings": {
+                    "excludeAllDayEvents": {
+                        "enabled": true,
+                        "visible": true
+                    }
+                },
+                "metadata": {
+                    "referenceID": ""
+                }
+            }
+        },
+        "listSchema": {
+            "locations": {
+                "text": "",
+                "tier": "",
+                "address": "",
+                "addressType": "Present",
+                "area": "",
+                "city": "",
+                "district": "",
+                "state": "",
+                "stateCode": "",
+                "country": "",
+                "countryCode": "",
+                "postalCode": "",
+                "pin": {
+                    "lat": "",
+                    "lon": ""
+                },
+                "cityCanonical": "",
+                "districtCanonical": "",
+                "stateCanonical": "",
+                "countryCanonical": "",
+                "foundInResume": true,
+                "confidenceScore": 1
+            },
+            "emails": {
+                "text": "",
+                "email": "",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "subscribeStatus": "Opt-in"
+            },
+            "phones": {
+                "text": "",
+                "phoneNumberOnly": "",
+                "internationalPhoneCode": "",
+                "nationalPhoneCode": "",
+                "country": "",
+                "countryCode": "",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "subscribeStatus": "Opt-in"
+            }
+        },
+        "values": {
+            "defaultLanguageCode": [
+                {
+                    "label": "English",
+                    "value": "en-us"
+                }
+            ],
+            "defaultDateFormat": [
+                {
+                    "label": "DD/MM/YYYY",
+                    "value": "en-in"
+                },
+                {
+                    "label": "MM/DD/YYYY",
+                    "value": "en-us"
+                },
+                {
+                    "label": "YYYY-MM-DD",
+                    "value": "en-ca"
+                }
+            ],
+            "profileActivityDuration": [
+                30,
+                60,
+                90,
+                180
+            ],
+            "profileSearchAccessLevel": [
+                "Company",
+                "Client",
+                "Hybrid"
+            ],
+            "profileRecommendationsAccessLevel": [
+                "Company",
+                "Client",
+                "Hybrid"
+            ],
+            "createdBy": [
+                "Self",
+                "Existing"
+            ],
+            "shareCampaigns": [
+                "All",
+                "Few",
+                "Self",
+                "None"
+            ],
+            "CampaignsHM": [
+                "All",
+                "Few",
+                "Self",
+                "None"
+            ],
+            "defaultTimeFormat": [
+                "12 hours",
+                "24 hours"
+            ],
+            "jobBoards": [
+                "Indeed US",
+                "Indeed UK",
+                "Indeed IN",
+                "CV-Library UK",
+                "Career Builder US",
+                "Indeed DE",
+                "Stepstone DE"
+            ],
+            "clientType": [
+                "Branch",
+                "Client",
+                "Vendor"
+            ],
+            "MRIPreferenceAccessLevel": [
+                "Company",
+                "Client",
+                "Job"
+            ]
+        }
+    }
+}

@@ -1,0 +1,447 @@
+{
+    "_id": ObjectId("695208083aa7699da94c5d64"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("693696b395bfcea522303666"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("614d569f77f21325cdbd314a"),
+    "createdAt": ISODate("2025-12-29T04:48:08.290Z"),
+    "updatedAt": ISODate("2025-12-30T07:48:14.433Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "82415025",
+        "title": "warehouse operator",
+        "locations": [
+            {
+                "text": "Atlantic City,NJ",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "atlanticcity",
+                "district": "",
+                "state": "newjersey",
+                "stateCode": "NJ",
+                "country": "unitedstatesofamerica",
+                "countryCode": "US",
+                "postalCode": "08401",
+                "pin": {
+                    "lat": 39.364285,
+                    "lon": -74.422935
+                },
+                "cityCanonical": "atlantic city",
+                "districtCanonical": "",
+                "stateCanonical": "new jersey",
+                "countryCanonical": "united states of america",
+                "confidenceScore": 1,
+                "eligibilityCheck": "Preferred",
+                "circle": {
+                    "radius": 50,
+                    "metricUnit": "mi"
+                },
+                "vacancies": 1
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "Internal Sourcing",
+        "applicationMethod": "Passive Sourcing",
+        "applicationChannel": "Profile",
+        "applicationSource": "",
+        "applicationStatus": "Pending",
+        "applicationPlatform": "Linked by Recruiter",
+        "linkedBy": "Recruiter",
+        "linkedByID": ObjectId("614d569f77f21325cdbd314a"),
+        "linkedAt": "",
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": ObjectId("690983bcb7f941d7bdaf0a27"),
+        "referenceURL": "https://trcqa.maprecruit.com/v4/profile/recommendedcampaigns/690983bcb7f941d7bdaf0a27",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": false,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 5.0,
+        "actual_mri_score": 5.0,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2025-12-30T07:48:14.433Z"),
+        "genAI": [
+            {
+                "generatedAt": ISODate("2025-12-29T04:48:43.397Z"),
+                "basePrompt": "\n                            <|begin_of_text|>\n                            <|start_header_id|>system<|end_header_id|>\n                            You are a Professional Summarizer and Commentator. \n                            Your task is to evaluate the relevance of a resume profile to a given job description. \n                            Provide a summary of the match.\n                            Ensure accuracy and avoid any misleading or incorrect information.\n\n                            Follow these instructions:\n\n                            1. Read the Job Description and Resume Profile sections separately and carefully.\n                            2. Pay close attention to the requirements and qualifications listed in the job description.\n                            3. Compare these with the information provided in the resume profile.\n                            4. Provide a clear and concise summary of how well the resume matches the job requirements under 300 words.\n                            5. Only evaluate if the resume profile contains basic matching information.\n                            6. Do not Provide score or any metrics for the match.\n                            6. Limit the response to 300 words.\n                            7. job description will be inside of <job description> and </job description> tags.\n                            8. resume will be inside of <resume> and </resume> tags.\n                            <|eot_id|>\n                            <|start_header_id|>user<|end_header_id|>\n                           <job description> ** Job Description ** \n *Location:*\n  • Atlantic City,NJ\n\n*Years Of Experience*: 6-10 Years\n\nRequired Skills:\n  • Warehouse\n  • packing\n  • inventory management\n  • packing and labeling\n  • packing procedures\n  • organized\n  • safe working environment\n\nPreferred Skills:\n  • problem - solving\n  • safety protocols and procedures\n  • Strong attention to detail\n  • ability to lift\n  • Collaborate with team members\n  • Excellent communication skills\n  • proactive\n  • Conduct quality checks\n\n\n\nJob Title: Warehouse Packer\n\nWe are seeking dedicated individuals who are passionate about delivering excellence in every aspect of their work. As a Warehouse Packer, you will play a vital role in ensuring our products are prepared with precision and care for our valued customers.\n\nLocation: Preferred location Atlantic City, NJ.\n\nRoles and Responsibilities:- Accurately pack products for shipment, ensuring quality and consistency.\n- Collaborate with team members to meet daily packing and shipping goals.\n- Maintain a clean and organized workspace to uphold safety and efficiency.\n- Conduct quality checks on products to ensure they meet our high standards.\n- Assist in inventory management and restocking as needed.\n- Follow all safety protocols and procedures to create a safe working environment.\n\nExperience Level: Preferred experience level is 6 to 10 years.\n\nDesired Skills:We are looking for individuals who possess:\n\n- Strong attention to detail to ensure accuracy in packing and labeling.\n- Excellent communication skills to effectively collaborate with colleagues.\n- A proactive approach to problem-solving and a willingness to learn.\n- Physical stamina and the ability to lift and move heavy items safely.\n- Familiarity with warehouse operations and packing procedures.\n\nEmployment Type: Direct hire.\n\nCompany Description:** TRC Talent Solutions is proud to be an Equal Opportunity Employer (EOE). All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, age, national origin, protected veteran status, disability status, sexual orientation, gender identity or expression, marital status, genetic information, or any other characteristic protected by law.\n\nAt TRC, we take pride in fulfilling our opportunity to add value to our clients business as their staffing partner, while working tirelessly to connect thousands of individuals each year with work opportunities where they can meet the needs of their families and have the potential to build their careers. </job description>\n\n<|eot_id|>\n<|start_header_id|>user<|end_header_id|><resume> ** Resume ** \n \nPratik Gaurav\n+91-7004029399 pratik.gaurav@maprecruit.ai </resume>\n\n<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>",
+                "model": "llama3",
+                "temperature": 0.7,
+                "matchSummary": "The resume provided lacks substantive information regarding Pratik Gaurav's qualifications, experiences, or skills that are pertinent to the Warehouse Packer position described in the job listing. There are no details about specific years of experience, relevant skills such as warehouse operations, packing, inventory management, or adherence to safety protocols. \n\nThe job description emphasizes the need for candidates with 6-10 years of experience in warehouse settings, with a focus on packing, organization, and safety. Additionally, preferred skills include problem-solving, strong attention to detail, communication abilities, and physical stamina, none of which are mentioned in the resume.\n\nWithout any relevant content in the resume, it cannot be determined how well Pratik Gaurav matches the qualifications required for the Warehouse Packer position. The absence of critical information means that this resume does not align with the job description at all."
+            }
+        ],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>Warehouse</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>warehouse operations</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Warehouse",
+                            "score": 1
+                        },
+                        {
+                            "text": "warehouse operations",
+                            "score": 1
+                        }
+                    ],
+                    "matchedSkill": "Warehouse",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 0.5,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.5,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 1,
+                        "preferredConfidenceScore": 1
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>packing and labeling</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>packaging procedures</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>packing</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>labeling</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "packing and labeling",
+                            "score": 0.9
+                        },
+                        {
+                            "text": "packaging procedures",
+                            "score": 1
+                        },
+                        {
+                            "text": "packing",
+                            "score": 1
+                        },
+                        {
+                            "text": "labeling",
+                            "score": 1
+                        }
+                    ],
+                    "matchedSkill": "pack",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0,
+                        "requiredScore": 1,
+                        "yoeScore": 0.8,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 1,
+                        "preferredConfidenceScore": 1
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>inventory</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>inventory management</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "inventory",
+                            "score": 1
+                        },
+                        {
+                            "text": "inventory management",
+                            "score": 1
+                        }
+                    ],
+                    "matchedSkill": "inventory",
+                    "matchType": "Matched",
+                    "matchFrom": "Experience",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0,
+                        "requiredScore": 1,
+                        "yoeScore": 0.8,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 1,
+                        "preferredConfidenceScore": 1
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>safety protocols and procedures</b></span> <span class='ORPreferredspan'>OR</span> <span><b>safe working</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "safety protocols and procedures",
+                            "score": 0.7
+                        },
+                        {
+                            "text": "safe working",
+                            "score": 1
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Strong attention to detail</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Strong attention to detail",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "attention to detail",
+                    "matchType": "Matched",
+                    "matchFrom": "ExperienceSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.7,
+                        "preferredConfidenceScore": 0.7
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>ability to lift</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "ability to lift",
+                            "score": 0.7
+                        }
+                    ],
+                    "matchedSkill": "ability to lift",
+                    "matchType": "Matched",
+                    "matchFrom": "QualificationSkill",
+                    "relation": "canonical",
+                    "matchScore": 1.0,
+                    "matchSummary": "Skill found in candidate profile with adequate years of experience and used this skill recently.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 1,
+                        "requiredConfidenceScore": 0.7,
+                        "preferredConfidenceScore": 0.7
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "warehourse packer",
+                "matchedJobTitle": "",
+                "matchedSkill": "",
+                "matchType": "",
+                "relation": "",
+                "matchScore": 0.0,
+                "matchSummary": "Did not find <b>WAREHOURSE PACKER</b> in this resume.",
+                "recent": false
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 8,
+            "matchScore": 4.95833333333333,
+            "matchSummary": "Candidate has considerable relevant experience and is slightly over qualified.",
+            "profileRelevance": "Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.0708333333333333,
+            "requiredSkillWeight": 0.9,
+            "preferredSkillWeight": 0.1,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0,
+            "jobTitleWeight": 0.3,
+            "skillWeight": 0.7
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "degreeRelation": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "majorRelation": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Education is not mentioned in job description.",
+            "weightage": 0
+        },
+        "industry": {
+            "matchScore": 0.0,
+            "matchedIndustry": "",
+            "matchedSummary": "Industry preference is not required.",
+            "weightage": 0
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2025-12-30T07:48:14.433Z"),
+        "searchID": "",
+        "page": "",
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000001",
+            "jt_vector_match_time": "0:00:00.000047"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

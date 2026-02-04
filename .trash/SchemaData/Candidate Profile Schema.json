@@ -1,0 +1,687 @@
+{
+    "profile": {
+      "fullName": "Matthew Antonelli",
+      "firstName": "Matthew",
+      "middleName": "",
+      "lastName": "Antonelli",
+      "nickName": "",
+      "nameSuffix": "",
+      "emails": [
+        {
+          "text": "abc.xyz@gmail.com",
+          "email": "abc.xyz@gmail.com",
+          "type": "Personal",
+          "preferred": "Primary",
+          "confidenceScore": 1.0,
+          "valid": true,
+          "verified": false,
+          "subscribeStatus": "Opt-in"
+        }
+      ],
+      "phones": [
+        {
+          "text": "+1262XX131XX",
+          "phoneNumberOnly": "262XX131XX",
+          "internationalPhoneCode": "+1",
+          "nationalPhoneCode": "",
+          "country": "united states of america",
+          "countryCode": "us",
+          "type": "Mobile",
+          "preferred": "Primary",
+          "confidenceScore": 1.0,
+          "valid": true,
+          "verified": false,
+          "subscribeStatus": "Opt-in"
+        }
+      ],
+      "websites": [
+        {
+          "text": "http://linkedin.com/in/abc-xyz-123456789",
+          "website": "http://linkedin.com/in/abc-xyz-123456789",
+          "type": "Social",
+          "label": "Profile",
+          "socialMedia": "LinkedIn",
+          "confidenceScore": 1.0
+        }
+      ],
+      "locations": [
+        {
+          "text": "Richmond, WI",
+          "tier": "",
+          "address": "",
+          "addressType": "present",
+          "area": "",
+          "city": "Richmond",
+          "district": "",
+          "state": "",
+          "stateCode": "WI",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "richmond",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": "",
+          "foundInResume": true,
+          "confidenceScore": 1.0
+        }
+      ],
+      "gender": {
+        "text": "",
+        "label": "",
+        "found": false
+      },
+      "ethnicity": "",
+      "veteranStatus": "",
+      "languagesKnown": [
+        {
+          "text": "",
+          "language": "",
+          "country": "",
+          "countryCode": "",
+          "native": false,
+          "readProficiency": "Good",
+          "writeProficiency": "Good",
+          "speakProficiency": "Good",
+          "confidenceScore": 1.0
+        }
+      ],
+      "age": {
+        "text": "",
+        "inYears": 0,
+        "found": false,
+        "confidenceScore": 1.0
+      },
+      "dob": {
+        "text": "",
+        "standard": "",
+        "month": "",
+        "date": "",
+        "year": "",
+        "confidenceScore": 1.0
+      },
+      "nationality": {
+        "text": "",
+        "label": "",
+        "canonical": "",
+        "ethnicity": "",
+        "country": "",
+        "countryCode": ""
+      },
+      "maritalStatus": "",
+      "fatherName": "",
+      "motherName": "",
+      "spouseName": "",
+      "passport": {
+        "passportNumber": "",
+        "country": "",
+        "countryCode": "",
+        "expiryDate": {
+          "text": "",
+          "standard": "",
+          "date": "",
+          "month": "",
+          "year": ""
+        }
+      },
+      "profileImage": {
+        "content": "",
+        "fileName": ""
+      }
+    },
+    "professionalSummary": {
+      "objective": "",
+      "summary": "Over 10 years of experience in welding, fabrication, and maintenance. TIG/MIG/STICK and FCAW.\nWilling to relocate: Anywhere\nAuthorized to work in the US for any employer",
+      "noticePeriod": {
+        "text": "",
+        "days": 0,
+        "negotiable": false
+      },
+      "workPermit": {
+        "text": "",
+        "type": "",
+        "status": "Unknown",
+        "country": "",
+        "countryCode": ""
+      },
+      "currentSalary": {
+        "text": "",
+        "period": "Per Hour",
+        "currency": "",
+        "value": 0,
+        "country": "",
+        "countryCode": ""
+      },
+      "expectedSalary": {
+        "text": "",
+        "period": "Per Hour",
+        "currency": "",
+        "minvalue": 0,
+        "maxvalue": 0,
+        "negotiable": false
+      },
+      "preferredLocations": [
+        {
+          "text": "",
+          "tier": "",
+          "address": "",
+          "addressType": "Present",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": "",
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": "",
+          "foundInResume": true,
+          "confidenceScore": 1.0
+        }
+      ],
+      "desiredWorkSchedule": [
+        "Full-Time"
+      ],
+      "availableDate": {
+        "text": "",
+        "standard": "",
+        "year": "",
+        "month": "",
+        "date": ""
+      },
+      "yearsOfExperience": {
+        "text": "17.7",
+        "derivedYears": 17.7,
+        "mentionedYears": 17.7,
+        "finalYears": 17.7,
+        "confidenceScore": 1.0
+      },
+      "currentRole": {
+        "jobTitle": "MIG Welder",
+        "entityID": "",
+        "jobProfile": "",
+        "jobLevel": "senior",
+        "jobType": "",
+        "jobCategory": "",
+        "canonical": [
+          "mig welder"
+        ],
+        "canonicalID": [
+          "5bc70e455e801c57a520e183"
+        ],
+        "confidenceScore": 1.0
+      },
+      "currentCompany": {
+        "company": "Argus Technical Services",
+        "canonical": ["argus technical services"],
+        "canonicalID": ["62a88d565c934489d819fc94"],
+        "confidenceScore": 1.0
+      },
+      "preferredRoles": [
+        {
+          "jobTitle": "mig welder",
+          "entityID": "",
+          "jobProfile": "welder",
+          "jobLevel": "senior",
+          "jobType": "",
+          "jobCategory": "",
+          "jobTitleCanonical": ["mig welder"],
+          "canonicalID": ["5bc70e455e801c57a520e183"],
+          "confidenceScore": 1.0
+        }
+      ],
+      "highestDegree": "Bachelor's Degree",
+      "highestDegreeYear": "2013",
+      "currentlyWorking": true,
+      "gapYears": {
+        "experienceGapYears": 0,
+        "recentExperienceGap": 0,
+        "longestExperienceGapYears": 0,
+        "educationExperienceGapYears": 0
+      },
+      "avgExperiencePerCompany": 0.0
+    },
+    "professionalQualification": {
+      "education": [
+        {
+          "campus": {
+            "text": "Lincoln Electric",
+            "redFlag": false,
+            "entityID": "",
+            "canonical": ["lincoln electric"],
+            "canonicalID": ["5bbb58ebef29be4f56d0c4d9"],
+            "type": "Unknown",
+            "confidenceScore": 1.0
+          },
+          "university": {
+            "text": "Lincoln Electric",
+            "entityID": "",
+            "canonical": ["lincoln electric"],
+            "canonicalID": ["5bbb58ebef29be4f56d0c4d9"],
+            "type": "University",
+            "confidenceScore": 1.0
+          },
+          "degree": {
+            "text": "Bachelor's Degree",
+            "entityID": "",
+            "canonical": ["bachelor degree"],
+            "canonicalID": ["5bbb58ebef29be4f56d0c4d9"],
+            "level": "",
+            "confidenceScore": 1.0
+          },
+          "major": [
+            {
+              "text": "Computer Science",
+              "entityID": "5bbb58ebef29be4f56d0c4d9",
+              "canonical": ["computer science"],
+              "canonicalID": ["5bbb58ebef29be4f56d0c4d9"],
+              "confidenceScore": 1.0
+            }
+          ],
+          "minor": [
+            {
+              "text": "AI",
+              "entityID": "5bbb58ebef29be4f56d0c4d9",
+              "canonical": ["artificial intelligence"],
+              "canonicalID": ["5bbb58ebef29be4f56d0c4d9"],
+              "confidenceScore": 1.0
+            }
+          ],
+          "merit": {
+            "percentage": 0.0,
+            "GPA": 0.0,
+            "GPAOutOf": 10.0
+          },
+          "currentStatus": "Passed",
+          "startDate": {
+            "text": "",
+            "standard": "",
+            "year": "",
+            "month": "",
+            "date": ""
+          },
+          "endDate": {
+            "text": "",
+            "standard": "",
+            "year": "",
+            "month": "",
+            "date": ""
+          },
+          "duration": {
+            "text": "",
+            "inYears": 0.0,
+            "years": 0,
+            "months": 0,
+            "days": 0
+          },
+          "location": {
+            "text": "",
+            "tier": "",
+            "address": "",
+            "area": "",
+            "city": "",
+            "district": "",
+            "state": "",
+            "stateCode": "",
+            "country": "",
+            "countryCode": "",
+            "postalCode": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "cityCanonical": "",
+            "districtCanonical": "",
+            "stateCanonical": "",
+            "countryCanonical": ""
+          }
+        }
+      ],
+      "certifications": [
+        {
+            "campus": {
+                "text": "",
+                "canonical": [""],
+                "canonicalID": [""],
+                "type": "Unknown",
+                "confidenceScore": 1
+            },
+            "course": {
+                "text": "",
+                "entityID": "",
+                "canonical": [""],
+                "canonicalID": [""],
+                "type": ""
+            },
+            "merit": {
+                "percentage": 0.0,
+                "GPA": 0.0,
+                "GPAOutOf": 10.0
+            },
+            "currentStatus": "Passed",
+            "startDate": {
+                "text": "",
+                "standard": "",
+                "year": "",
+                "month": "",
+                "date": ""
+            },
+            "endDate": {
+                "text": "",
+                "standard": "",
+                "year": "",
+                "month": "",
+                "date": ""
+            },
+            "expiryDate": {
+                "text": "",
+                "standard": "",
+                "year": "",
+                "month": "",
+                "date": ""
+            },
+            "duration": {
+                "text": "",
+                "inYears": 0.0,
+                "years": 0,
+                "months": 0,
+                "days": 0
+            },
+            "location": {
+                "text": "",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "",
+                "district": "",
+                "state": "",
+                "stateCode": "",
+                "country": "",
+                "countryCode": "",
+                "postalCode": "",
+                "pin": {
+                    "lat": "",
+                    "lon": "",
+                },
+                "cityCanonical": "",
+                "districtCanonical": "",
+                "stateCanonical": "",
+                "countryCanonical": ""
+            },
+            "description": ""
+        }
+      ],
+      "skills": [
+        {
+          "text": "FCAW",
+          "canonical": [
+            "flux cored arc welding"
+          ],
+          "canonicalID": [
+            "62a88cdc5c934489d819fc89"
+          ],
+          "confidenceScore": 1.0,
+          "entityID": "62a88d565c934489d819fc94",
+          "importance": "High",
+          "lastUsedYear": "2025",
+          "score": 0.75,
+          "yearsOfExperience": 10.0
+        }
+      ],
+      "licences": [
+        {
+            "label": "",
+            "text": "",
+            "type": "",
+            "canonical": [],
+            "canonicalID": [],
+            "issuedBy": "",
+            "issuedOn": {
+                            "text": "",
+                            "standard": "",
+                            "date": "",
+                            "month": "",
+                            "year": ""
+                        },
+            "expiryDate": {
+                            "text": "",
+                            "standard": "",
+                            "date": "",
+                            "month": "",
+                            "year": ""
+                        }
+        }
+      ]
+    },
+    "professionalExperience": [
+      {
+        "company": {
+          "text": "Argus Technical Services",
+          "redFlag": false,
+          "entityID": "",
+          "canonical": ["argus technical services"],
+          "canonicalID": ["62a88d565c934489d819fc94"],
+          "confidenceScore": 1.0
+        },
+        "jobTitle": {
+          "text": "MIG Welder",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [
+            {
+              "jobTitle": "MIG Welder",
+              "entityID": "",
+              "canonical": [
+                "mig welder"
+              ],
+              "canonicalID": [
+                "5bc70e455e801c57a520e183"
+              ]
+            }
+          ],
+          "confidenceScore": 1.0
+        },
+        "workSchedule": "Full-Time",
+        "startDate": {
+          "text": "10/31/2025",
+          "standard": "2025-10-31",
+          "year": "2025",
+          "month": "10",
+          "date": "31",
+        },
+        "endDate": {
+          "text": "03/12/2025",
+          "standard": "2025-12-03",
+          "year": "2025",
+          "month": "12",
+          "date": "03",
+        },
+        "duration": {
+          "text": "1 months 3 days",
+          "inYears": 0.1,
+          "years": 0,
+          "months": 1,
+          "days": 3
+        },
+        "currentStatus": "Worked",
+        "location": {
+          "text": "",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "",
+        "skills": [
+          {
+            "text": "FCAW",
+            "canonical": [
+              "flux cored arc welding"
+            ],
+            "canonicalID": [
+                "62a88cdc5c934489d819fc89"
+            ],
+            "confidenceScore": 1,
+            "entityID": "62a88d565c934489d819fc94",
+            "importance": "High",
+            "lastUsedYear": "2025",
+            "score": 0.75,
+            "yearsOfExperience": 10
+          }
+        ],
+        "supervisor": {
+          "text": "",
+          "jobTitles": ["site manager"],
+          "name": "",
+          "confidenceScore": 1.0
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0.0
+        },
+        "reasonForLeave": ""
+      }
+    ],
+    "otherInformation": {
+      "references": [
+        {
+          "fullName": "",
+          "jobTitle": "",
+          "phone": [""],
+          "email": [""],
+          "company": "",
+          "startDate": {
+           "text": "",
+           "standard": "",
+           "year": "",
+           "month": "",
+           "date": ""
+          },
+          "endDate": {
+            "text": "",
+            "standard": "",
+            "year": "",
+            "month": "",
+            "date": ""
+          },
+          "review": "",
+          "comment": "",
+          "location": {
+            "text": "",
+            "tier": "",
+            "address": "",
+            "addressType": "Present",
+            "area": "",
+            "city": "",
+            "district": "",
+            "state": "",
+            "stateCode": "",
+            "country": "",
+            "countryCode": "",
+            "postalCode": "",
+            "pin": {
+              "lat": "",
+               "lon": "",
+            },
+            "cityCanonical": "",
+            "districtCanonical": "",
+            "stateCanonical": "",
+            "countryCanonical": ""
+          }
+        }
+      ],
+      "sectionsText": {
+        "personalDetails": "",
+        "summary": "",
+        "education": "",
+        "experience": "",
+        "certification": "",
+        "others": "",
+        "unknown": ""
+      },
+      "militaryHistory": [
+        {
+          "countryServed": "",
+          "rankAchieved": "",
+          "startDate": {
+            "text": "",
+            "standard": "",
+            "year": "",
+            "month": "",
+            "date": ""
+          },
+          "endDate": {
+            "text": "",
+            "standard": "",
+            "year": "",
+            "month": "",
+            "date": ""
+          },
+          "duration": {
+            "text": "",
+            "inYears": 0.0,
+            "years": 0,
+            "months": 0,
+            "days": 0
+          },
+          "description": ""
+        }
+      ],
+      "accomplishments": [""],
+      "extracurricularActivities": [""],
+      "declaration": "",
+      "curriculumVitae": "",
+      "publications": [],
+      "additionalInformation": "",
+      "fullText": "\nMatthew Antonelli\nWelder\nRichmond, WI matthew.antonelli@gmail.com\n+1 262 581 3155\nProfessional Summary\nOver 10 years of experience in welding, fabrication, and maintenance. TIG/MIG/STICK and FCAW.\nWilling to relocate: Anywhere\nAuthorized to work in the US for any employer\nWork Experience\nMIG Welder\nArgus Technical Services-Jefferson, WI\nNovember 2025 to Present\n2nd Shift Production MIG on steel beams using Metal core wire\nTIG Welder/Fabricator\nM.A.C.'s MetalCrafts-Delavan, WI\nDecember 2023 to October 2025\nTIG MIG STICK & FCAW welding steel and aluminum projects and repairs\nTIG Welder/Fabricator\nCorporate Services, Inc.-Janesville, WI\nJanuary 2022 to November 2023\nTemp Agency\nMIG & TIG welding\nCertified Welder\nBlue Scope Buildings-Evansville, WI\nAugust 2021 to September 2021\nMIG, structural building fabrication\nMaintenance/Welder/Fabricator\nU.S. Army\n2014 to 2019\nFleet and Personnel Management\nMIG TIG STICK & FCAW experience / certifications light machining plasma\nEducation\nAssociate's Degree\nCentral Texas College\n2019 to 2021\nWelding (Technical school)\nLincoln Electric-Cleveland, OH\n2012 to 2013\nSkills\n* Mechanical troubleshooting \n* Reading weld symbols \n* Welding (10+ years) \n* Manufacturing \n* Fabrication (5 years) \n* Basic math \n* Blueprint dimension interpretation \n* Hand tools \n* Identifying materials in blueprints \n* Plasma Cutting \nCertifications and Licenses\nTS/SCI\nUA Pipe Welding\nJanuary 2019 to January 2019\nASME 6G certification Lincoln Electric\nJuly 2012 to July 2012\nWelding Certification\nOSHA 30",
+      "industry": [
+        {
+          "industryLabel": "Engineering and Manufacturing",
+          "percentage": 53.79
+        },
+        {
+          "industryLabel": "General Services",
+          "percentage": 46.21
+        }
+      ]
+    },
+    "metaData": {
+      "originalFileName": "",
+      "fileExtension": "",
+      "parserTimeTaken": "",
+      "version": "7.5.1",
+      "languageCode": "en",
+      "owningEntity": "",
+      "globalId": "",
+      "mrProfileID": "",
+      "duplicateFlag": false,
+      "originalProfileID": ["32435435454", "3243435454545"]
+    }
+  }

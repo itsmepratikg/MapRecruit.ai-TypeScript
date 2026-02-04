@@ -1,0 +1,144 @@
+{
+    "_id": ObjectId("693c61cf97a010153dc4d4b2"),
+    "MRIPreferences": {
+        "rankMethod": [],
+        "experience": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "education": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 3
+        },
+        "skills": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "industry": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 3
+        },
+        "jobTitle": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "location": {
+            "matchRelatedEntities": false,
+            "enable": false,
+            "weightage": 10
+        },
+        "YOE": {
+            "minYOE": 0,
+            "maxYOE": 50
+        }
+    },
+    "companyID": ObjectId("61814138c98444344034ca8c"),
+    "clientName": "75859 - SSL GSOP Best Buy OP",
+    "clientNameAlias": "SSL GSOP Best Buy OP",
+    "clientCode": "75859",
+    "clientType": "Branch",
+    "clientURL": "",
+    "clientLogo": "/images/spherionstaffingllcIN/logos/61814138c98444344034ca8c_61814138c98444344034ca8d_16d7d936a92b3405c7d30af6bdc2797e.png",
+    "clientBanner": "/images/spherionstaffingllcIN/logos/61814138c98444344034ca8c_61814138c98444344034ca8d_banner_spherion_banner.png",
+    "description": "SSL GSOP Best Buy OP",
+    "candidateConversationDays": 180,
+    "registrationConfirmationEmail": true,
+    "language": "English",
+    "franchiseID": [ 
+        ObjectId("693c5f4897a010153dc4d4af")
+    ],
+    "accountID": [],
+    "country": "United States",
+    "countryCode": "us",
+    "communicationSettings": {
+        "smsShortCode": "",
+        "communicationLogo": "",
+        "defaultEmail": "",
+        "senderID": []
+    },
+    "sourceAI": {
+        "jobBoards": [
+            "CareerBuilder US",
+            "LinkedIn",
+            "ZipRecruiter",
+            "Indeed US"
+        ],
+        "jobBoardID": [ 
+            ObjectId("6177daa01f76a068f3a23c50"), 
+            ObjectId("605dc8feb81746dc0f9eb294"), 
+            ObjectId("616fca18b8f8eb4f97f999a5"), 
+            ObjectId("6171452003717d39d7bb3610")
+        ],
+        "jobPosting": [],
+        "requestVerificationCode": false,
+        "downloadInterested": false,
+        "chooseAccount": true
+    },
+    "settings": {
+        "shareCampaigns": "Self",
+        "CampaignsHM": "None",
+        "skipJSVerification": true,
+        "removeReferFriend": false,
+        "profileSearchAccessLevel": "Company",
+        "profileRecommendationsAccessLevel": "Company",
+        "profileDuplicateAccessLevel": "Company",
+        "defaultCampaignRecruiters": [],
+        "defaultCampaignHiringManager": [],
+        "showProductDemo": false,
+        "jobseekerPage": {
+            "similarJobs": {
+                "visible": true
+            },
+            "jobDetails": {
+                "visible": true,
+                "location": true,
+                "experience": true,
+                "salary": true,
+                "jobType": true,
+                "education": true
+            }
+        },
+        "jdCompletenessCriteria": {
+            "enabled": false,
+            "jobTitleWeightage": 10.0,
+            "locationWeightage": 10.0,
+            "skills": {
+                "minimumSkillsRequired": 7.0,
+                "skillsWeightage": 70.0
+            },
+            "jobDescriptionWeightage": 10.0,
+            "yearsOfExperienceWeightage": 0.0,
+            "salaryWeightage": 0.0
+        },
+        "defaultArticleID": ObjectId("693c61cf97a010153dc4d4b3"),
+        "defaultCampaignID": ObjectId("693c61cf97a010153dc4d4b5")
+    },
+    "createdAt": ISODate("2025-12-12T18:41:19.716Z"),
+    "updatedAt": ISODate("2025-12-12T18:41:19.790Z"),
+    "enable": true,
+    "createdBy": "",
+    "createdByID": "",
+    "resumeCustomFields": {},
+    "resumeKeys": {},
+    "emailForwardEmails": [],
+    "locations": [],
+    "emails": [],
+    "phones": [],
+    "emailSignature": "",
+    "engageAI": {
+        "calendarSettings": {
+            "excludeAllDayEvents": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "metadata": {
+            "referenceID": ""
+        }
+    }
+}

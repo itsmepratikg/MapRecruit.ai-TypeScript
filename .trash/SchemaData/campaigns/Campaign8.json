@@ -1,0 +1,1798 @@
+{
+    "_id": ObjectId("692922fc67d80b239e4e3ab0"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("669b6bbe8e9b66eb9bbeda7a"),
+    "teams": {
+        "ownerID": [],
+        "managerID": [],
+        "recruiterID": []
+    },
+    "sharedUserID": [],
+    "favouriteUserID": [],
+    "visibility": "Few",
+    "logoURL": "",
+    "articleID": [ 
+        ObjectId("692922fc67d80b239e4e3ab1")
+    ],
+    "vendorID": [],
+    "originalArticleID": ObjectId("692922fc67d80b239e4e3ab1"),
+    "title": "truck driver",
+    "displayName": "Job Title",
+    "passcode": "60483378",
+    "type": "",
+    "tags": [],
+    "tagID": [],
+    "status": "Closed",
+    "jobStatus": "Closed",
+    "jobCategory": [],
+    "createdAt": ISODate("2025-11-28T04:20:12.740Z"),
+    "closedAt": ISODate("2025-12-28T03:30:23.679Z"),
+    "closingReason": "",
+    "updatedAt": ISODate("2026-01-26T11:11:33.925Z"),
+    "archivedAt": "",
+    "openJob": false,
+    "jobPosting": {
+        "enabled": false,
+        "startDate": "",
+        "endDate": "",
+        "jobBoards": []
+    },
+    "openPositions": 1,
+    "packageOpted": "Basic",
+    "scheduleFlag": "N",
+    "notifications": true,
+    "approverID": "",
+    "managerID": [],
+    "ownerID": [ 
+        ObjectId("669b6bbe8e9b66eb9bbeda7a")
+    ],
+    "approvedAt": "",
+    "hiredAt": "",
+    "job": {
+        "requirements": {
+            "education": [
+                {
+                    "text": "",
+                    "eligibilityCheck": "Required",
+                    "campus": {
+                        "text": "",
+                        "canonical": "",
+                        "type": "Unknown",
+                        "confidenceScore": 1
+                    },
+                    "degree": {
+                        "text": "diploma for education",
+                        "entityID": "",
+                        "canonical": "",
+                        "similar": [],
+                        "type": "",
+                        "level": "Secondary School",
+                        "confidenceScore": 1
+                    },
+                    "major": [],
+                    "minor": [],
+                    "merit": {
+                        "percentage": 0,
+                        "GPA": 0,
+                        "GPAOutOf": 10
+                    },
+                    "endDate": []
+                }
+            ],
+            "skills": [
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "trucks"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "186",
+                                    "canonical_name": "trucks",
+                                    "category": [
+                                        [
+                                            "others"
+                                        ]
+                                    ],
+                                    "skill": "trucks",
+                                    "skill_fine_text": "trucks",
+                                    "source": "Manually Annotated",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "others"
+                                            ]
+                                        ]
+                                    ],
+                                    "syntactical": true,
+                                    "syntacticalID": "",
+                                    "syntacticalName": "Trucks",
+                                    "type": [
+                                        "Professional Keywords"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "job title : truck driver"
+                                }
+                            ],
+                            "confidenceScore": 0.75,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "67b7ea6106159750dcf3124d",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "Job Title : Truck Driver",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 1,
+                            "text": "Truck",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "truck drivers"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "165_138015",
+                                    "canonical_name": "truck drivers",
+                                    "category": [
+                                        [
+                                            "others"
+                                        ]
+                                    ],
+                                    "skill": "truck drivers",
+                                    "skill_fine_text": "truck drivers",
+                                    "source": "Manually Annotated",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "others"
+                                            ]
+                                        ]
+                                    ],
+                                    "syntactical": true,
+                                    "syntacticalID": "",
+                                    "syntacticalName": "Truck Drivers",
+                                    "type": [
+                                        "Professional Keywords"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "we are seeking dedicated and skilled truck drivers who are committed to delivering excellence in every mile they drive."
+                                }
+                            ],
+                            "confidenceScore": 0.75,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "67b7ea6306159750dcf31292",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "We are seeking dedicated and skilled Truck Drivers who are committed to delivering excellence in every mile they drive.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 1,
+                            "text": "Truck Drivers",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "vehicle maintenance"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "5315_168550",
+                                    "canonical_name": "vehicle maintenance",
+                                    "category": [
+                                        [
+                                            "Others"
+                                        ]
+                                    ],
+                                    "frequency": 0,
+                                    "granularity_level": 1,
+                                    "industries": [],
+                                    "industry": [],
+                                    "pickle_version": "141.0.0.0",
+                                    "similar_skills": {},
+                                    "skill": "vehicle maintenance",
+                                    "skill_fine_text": "vehicle maintenance",
+                                    "source": "",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "Others"
+                                            ]
+                                        ]
+                                    ],
+                                    "synonyms": [],
+                                    "type": [
+                                        "Professional Skills and Knowledge"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "maintain accurate records of deliveries and vehicle maintenance."
+                                }
+                            ],
+                            "confidenceScore": 1,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "6622219b1ab30eea1ca3b6bf",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "- Maintain accurate records of deliveries and vehicle maintenance.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 1,
+                            "text": "vehicle maintenance",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "professional ethics"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "188261_142155",
+                                    "canonical_name": "professional ethics",
+                                    "category": [
+                                        [
+                                            "Others"
+                                        ]
+                                    ],
+                                    "frequency": 267865,
+                                    "granularity_level": 1,
+                                    "industries": [],
+                                    "industry": [],
+                                    "pickle_version": "127.0.0.0",
+                                    "skill": "professional ethics",
+                                    "skill_fine_text": "professional ethics",
+                                    "source": "GPT",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "Others"
+                                            ]
+                                        ]
+                                    ],
+                                    "synonyms": [],
+                                    "type": [
+                                        "Others"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Others",
+                                    "sentence": "join our team where collaboration and professionalism are at the heart of what we do."
+                                }
+                            ],
+                            "confidenceScore": 0.75,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "664aef46d2b91f9168bf153a",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "Join our team where collaboration and professionalism are at the heart of what we do.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 0.9,
+                            "text": "professionalism",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "legislation governing travel on roads"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "165726_151436_216090_178249_197154",
+                                    "canonical_name": "legislation governing travel on roads",
+                                    "category": [
+                                        [
+                                            "others"
+                                        ]
+                                    ],
+                                    "skill": "legislation governing travel on roads",
+                                    "skill_fine_text": "legislation governing travel on roads",
+                                    "source": "Manually Annotated",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "others"
+                                            ]
+                                        ]
+                                    ],
+                                    "syntactical": true,
+                                    "syntacticalID": "",
+                                    "syntacticalName": "legislation governing travel on roads",
+                                    "type": [
+                                        "Professional Keywords"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "ensure timely and accurate deliveries while adhering to all traffic laws and safety regulations."
+                                }
+                            ],
+                            "confidenceScore": 0.75,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "64c252edca5278a60637579e",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "- Ensure timely and accurate deliveries while adhering to all traffic laws and safety regulations.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 0.9,
+                            "text": "traffic laws",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "dispatch"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "136264",
+                                    "canonical_name": "dispatch",
+                                    "category": [
+                                        [
+                                            "Others"
+                                        ]
+                                    ],
+                                    "frequency": 3977,
+                                    "granularity_level": 1,
+                                    "industries": [],
+                                    "industry": [
+                                        "information_technology",
+                                        "sales"
+                                    ],
+                                    "pickle_version": "87.0.0.0",
+                                    "skill": "dispatch",
+                                    "skill_fine_text": "dispatch",
+                                    "source": "",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "Others"
+                                            ]
+                                        ]
+                                    ],
+                                    "synonyms": [],
+                                    "type": [
+                                        "Roles and Responsibilities"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "collaborate with dispatch and other team members to optimize routes and schedules."
+                                }
+                            ],
+                            "confidenceScore": 1,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "5bbb5b60f1134a371287b2ad",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "- Collaborate with dispatch and other team members to optimize routes and schedules.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 0.9,
+                            "text": "dispatch",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "create and build relationships"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "129760_142391_24037_194216",
+                                    "canonical_name": "create and build relationships",
+                                    "category": [
+                                        [
+                                            "Others"
+                                        ]
+                                    ],
+                                    "frequency": 819198,
+                                    "granularity_level": 1,
+                                    "industries": [],
+                                    "industry": [
+                                        "banking_insurance",
+                                        "sales",
+                                        "accounting_finance"
+                                    ],
+                                    "pickle_version": "87.0.0.0",
+                                    "similar_skills": {
+                                        "scores": [],
+                                        "skills": []
+                                    },
+                                    "skill": "create and build relationships",
+                                    "skill_fine_text": "create and build relationships",
+                                    "source": [
+                                        "timesjobs.com"
+                                    ],
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "Others"
+                                            ]
+                                        ]
+                                    ],
+                                    "synonyms": [],
+                                    "syntactical": true,
+                                    "syntacticalID": "5bbb5b3ff1134a371287a26b",
+                                    "syntacticalName": "Create and Build Relationships",
+                                    "type": [
+                                        "Roles and Responsibilities"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "create and build relationships with clients and colleagues."
+                                }
+                            ],
+                            "confidenceScore": 1,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "5bbb5b3ff1134a371287a26b",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "- Create and build relationships with clients and colleagues.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 0.8,
+                            "text": "Create and build relationships",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "cloud packet core"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "82758_180665_118392",
+                                    "canonical_name": "cloud packet core",
+                                    "category": [
+                                        [
+                                            "Others"
+                                        ]
+                                    ],
+                                    "frequency": 123144,
+                                    "granularity_level": 1,
+                                    "industries": [],
+                                    "industry": [
+                                        "information_technology"
+                                    ],
+                                    "pickle_version": "87.0.0.0",
+                                    "skill": "cloud packet core",
+                                    "skill_fine_text": "cloud packet core",
+                                    "source": "",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "Others"
+                                            ]
+                                        ]
+                                    ],
+                                    "synonyms": [
+                                        "cpc"
+                                    ],
+                                    "type": [
+                                        "Tools and Technologies"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "certified professional coder ( cpc ) is a plus."
+                                }
+                            ],
+                            "confidenceScore": 0.5,
+                            "derived": [],
+                            "eligibilityCheck": "Preferred",
+                            "entityID": "5bbb5b9df1134a371287c726",
+                            "importance": "High",
+                            "industry": {},
+                            "line": "- Certified Professional Coder ( CPC ) is a plus.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Preferred",
+                            "relations": [],
+                            "score": 0.8,
+                            "text": "CPC",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                },
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "maintaining accurate records"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "168548_185690_192649",
+                                    "canonical_name": "maintaining accurate records",
+                                    "category": [
+                                        [
+                                            "Others"
+                                        ]
+                                    ],
+                                    "frequency": 175240,
+                                    "granularity_level": 1,
+                                    "industries": [],
+                                    "industry": [
+                                        "sales"
+                                    ],
+                                    "pickle_version": "87.0.0.0",
+                                    "similar_skills": {
+                                        "scores": [],
+                                        "skills": []
+                                    },
+                                    "skill": "maintaining accurate records",
+                                    "skill_fine_text": "maintaining accurate records",
+                                    "source": [
+                                        "timesjobs.com"
+                                    ],
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "Others"
+                                            ]
+                                        ]
+                                    ],
+                                    "synonyms": [
+                                        "maintain accurate records",
+                                        "maintains accurate records",
+                                        "maintain accurate record",
+                                        "keep accurate records",
+                                        "keep accurate record",
+                                        "prepare and maintain accurate record",
+                                        "prepare and maintain accurate records",
+                                        "keep accurate and detailed records"
+                                    ],
+                                    "syntactical": true,
+                                    "syntacticalID": "5bbb5b63f1134a371287b3c3",
+                                    "syntacticalName": "Maintaining Accurate Records",
+                                    "type": [
+                                        "Roles and Responsibilities"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "maintain accurate records of deliveries and vehicle maintenance."
+                                }
+                            ],
+                            "confidenceScore": 1,
+                            "derived": [],
+                            "eligibilityCheck": "Preferred",
+                            "entityID": "5bbb5bb0f1134a371287cc60",
+                            "importance": "Medium",
+                            "industry": {},
+                            "line": "- Maintain accurate records of deliveries and vehicle maintenance.",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Preferred",
+                            "relations": [],
+                            "score": 0.5,
+                            "text": "Maintain accurate records",
+                            "yearsOfExperienceMax": 4,
+                            "yearsOfExperienceMin": 2
+                        }
+                    ]
+                }
+            ],
+            "certifications": [
+                {
+                    "label": "",
+                    "text": "Certified Professional Coder",
+                    "canonical": ""
+                }
+            ],
+            "licences": [],
+            "noticePeriod": {
+                "eligibilityCheck": "Not Required",
+                "text": "",
+                "days": 0,
+                "negotiable": false
+            },
+            "workPermit": [],
+            "yearsOfExperience": {
+                "text": "2-4 Years",
+                "eligibilityCheck": "Preferred",
+                "minYears": 2,
+                "maxYears": 4,
+                "negotiable": true,
+                "confidenceScore": 1
+            },
+            "gender": {
+                "text": "Any",
+                "label": "Any",
+                "eligibilityCheck": "Required"
+            },
+            "languagesKnown": [],
+            "age": {
+                "text": "",
+                "eligibilityCheck": "Not Required",
+                "minInYears": 0,
+                "maxInYears": 0,
+                "confidenceScore": 1
+            },
+            "nationality": [],
+            "maritalStatus": {
+                "eligibilityCheck": "Not Required",
+                "status": "Any"
+            },
+            "passport": {
+                "eligibilityCheck": "Not Required",
+                "mandatory": false
+            },
+            "physicalRequirement": {
+                "text": "",
+                "height": {
+                    "eligibilityCheck": "Not Required",
+                    "minHeight": 0,
+                    "maxHeight": 0,
+                    "unit": "cm"
+                },
+                "weight": {
+                    "eligibilityCheck": "Not Required",
+                    "unit": "kgs",
+                    "minWeight": 0,
+                    "maxWeight": 0
+                },
+                "moveObjects": {
+                    "eligibilityCheck": "Not Required",
+                    "upTo": 0,
+                    "unit": "kgs"
+                },
+                "liftObjects": {
+                    "eligibilityCheck": "Not Required",
+                    "upTo": 0,
+                    "unit": "kgs"
+                }
+            },
+            "vehicleRequirement": {
+                "twoWheeler": false,
+                "fourWheeler": false,
+                "eligibilityCheck": "Not Required"
+            },
+            "militaryHistory": {
+                "eligibilityCheck": "Not Required",
+                "status": false
+            }
+        },
+        "details": {
+            "jobTitle": {
+                "text": "truck driver",
+                "entityID": "",
+                "jobType": "direct hire",
+                "jobTitles": [],
+                "found": false,
+                "confidenceScore": 1
+            },
+            "jobTiming": [],
+            "workingHours": {
+                "eligibilityCheck": "Not Required",
+                "minHours": 7,
+                "maxHours": 9,
+                "period": "Per Day",
+                "minDays": 5,
+                "maxDays": 6,
+                "daysPeriod": "Per Week"
+            },
+            "company": {
+                "text": "TRC Talent Solutions QA",
+                "description": "At TRC, we take pride in fulfilling our opportunity to add value to our clients business as their staffing partner, while working tirelessly to connect thousands of individuals each year with work opportunities where they can meet the needs of their families and have the potential to build their careers.",
+                "canonical": [],
+                "canonicalDetails": []
+            },
+            "locations": [
+                {
+                    "text": "Hyannis, Barnstable, MA 02601",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": "",
+                    "confidenceScore": 1,
+                    "eligibilityCheck": "Preferred",
+                    "circle": {
+                        "radius": 50,
+                        "metricUnit": "mi"
+                    },
+                    "vacancies": 1
+                }
+            ],
+            "offeredSalary": {
+                "text": "10-14",
+                "period": "Per Hour",
+                "currency": "USD",
+                "minvalue": 10,
+                "maxvalue": 14,
+                "negotiable": false,
+                "eligibilityCheck": "Not Required"
+            },
+            "offshore": {
+                "eligibilityCheck": "Not Required",
+                "chance": "No"
+            },
+            "travel": {
+                "eligibilityCheck": "Not Required",
+                "chance": "No",
+                "percentage": 0
+            },
+            "onField": {
+                "eligibilityCheck": "Not Required",
+                "chance": "No",
+                "percentage": 0
+            },
+            "benefits": {
+                "text": "",
+                "benefits": []
+            },
+            "jobDescription": {
+                "text": "<div><strong>Job Title:</strong> Truck Driver <br><br>We are seeking dedicated and skilled Truck Drivers who are committed to delivering excellence in every mile they drive. Join our team where collaboration and professionalism are at the heart of what we do.<br><br><strong>Location:</strong> Preferred location Hyannis, Barnstable, MA 02601. <br><br><strong>Salary:</strong> 10 to 14 USD Per Hour <br><br><strong>Roles and Responsibilities:</strong> <br>- Safely operate a commercial vehicle to transport goods to various locations. <br>- Ensure timely and accurate deliveries while adhering to all traffic laws and safety regulations. <br>- Conduct pre-trip and post-trip inspections of the vehicle to ensure it is in good working condition. <br>- Maintain accurate records of deliveries and vehicle maintenance. <br>- Build and nurture positive relationships with clients and team members. <br>- Collaborate with dispatch and other team members to optimize routes and schedules. <br><br><strong>Preferred Skills:</strong> <br>- Create and build relationships with clients and colleagues. <br>- Certified Professional Coder (CPC) is a plus. <br><br><strong>Education Required:</strong> Diploma <br><br><strong>Experience Level:</strong> Preferred experience level is 2 to 4 years. <br><br><strong>Company Working Hours:</strong> 7 to 9 hours Per Day <br><br><strong>Employment Type:</strong> Direct Hire <br><br><strong>Company Description:</strong>** TRC Talent Solutions is proud to be an Equal Opportunity Employer (EOE). All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, age, national origin, protected veteran status, disability status, sexual orientation, gender identity or expression, marital status, genetic information, or any other characteristic protected by law.<br><br>At TRC, we take pride in fulfilling our opportunity to add value to our clients business as their staffing partner, while working tirelessly to connect thousands of individuals each year with work opportunities where they can meet the needs of their families and have the potential to build their careers.</div>"
+            },
+            "responsibilities": {
+                "text": "",
+                "responsibilities": []
+            },
+            "requirements": {
+                "text": "",
+                "requirements": []
+            },
+            "fullText": "",
+            "htmlText": ""
+        },
+        "otherInformation": {
+            "documents": [],
+            "industry": {
+                "scores": {
+                    "accounting_finance": 0.0004,
+                    "administrative_management": 0.005,
+                    "agriculture_horticulture": 0.0048,
+                    "airport_aviation": 0.0011,
+                    "arts_media": 0.0001,
+                    "banking_insurance": 0.0006,
+                    "education_training": 0,
+                    "energy_mining": 0.0054,
+                    "engineering_manufacturing": 0.0013,
+                    "general_services": 7.6956,
+                    "healthcare_medical": 0.0002,
+                    "hospitality_tourism": 0.0006,
+                    "information_technology": 0.0005,
+                    "legal_law": 0.0001,
+                    "logistics_warehouse": 92.273,
+                    "pharma_drugs": 0.0005,
+                    "sales_marketing": 0.0042,
+                    "sports_club": 0.0033,
+                    "staffing_hr": 0.0004,
+                    "support_service": 0.0028
+                },
+                "classified": [
+                    {
+                        "industryLabel": "Logistics and Warehouse",
+                        "industryName": "logistics_warehouse",
+                        "percentage": 100,
+                        "score": 92.273
+                    }
+                ],
+                "userModified": false
+            },
+            "newKeys": [
+                "roles and responsibilities",
+                "preferred skills"
+            ],
+            "contextual_derived_skills": [],
+            "possibleSkills": [
+                {
+                    "fine_text": "maintain accurate records",
+                    "line": "- Maintain accurate records of deliveries and vehicle maintenance.",
+                    "matchPattern": "pattern_0",
+                    "matchType": "VerbMatch",
+                    "pos": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "score": 1,
+                    "text": "Maintain accurate records"
+                },
+                {
+                    "fine_text": "build and nurture positive relationships",
+                    "line": "- Build and nurture positive relationships with clients and team members.",
+                    "matchPattern": "pattern_3",
+                    "matchType": "VerbMatch",
+                    "pos": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                    ],
+                    "score": 1,
+                    "text": "Build and nurture positive relationships"
+                }
+            ],
+            "suggestedSkills": [
+                {
+                    "canonical": [
+                        "certified professional coder"
+                    ],
+                    "canonicalDetails": [],
+                    "confidenceScore": 1,
+                    "derived": [],
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "importance": "High",
+                    "ontology": true,
+                    "originalEC": "Suggested",
+                    "relations": [],
+                    "score": 1,
+                    "text": "certified professional coder",
+                    "yearsOfExperienceMax": 50,
+                    "yearsOfExperienceMin": 0
+                }
+            ],
+            "similarSkills": [],
+            "similarJobTitles": [],
+            "contextualSkills": [
+                {
+                    "all_scores": [
+                        0.841
+                    ],
+                    "canonical_name": "truck drivers",
+                    "display_name": "Truck Drivers",
+                    "entity": [
+                        "truck drivers"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.841,
+                    "score": 0.841,
+                    "skill_scores": 0.64775,
+                    "text": "truck driver",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.7476
+                    ],
+                    "canonical_name": "nurturing client relationships",
+                    "display_name": "nurturing client relationships",
+                    "entity": [
+                        "nurturing client relationships"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.7476,
+                    "score": 0.7476,
+                    "skill_scores": 0.6869,
+                    "text": "create and build relationships with clients and colleagues.",
+                    "type": "Roles and Responsibilities"
+                },
+                {
+                    "all_scores": [
+                        0.7417
+                    ],
+                    "canonical_name": "construct business relationships",
+                    "display_name": "Develop Client Relationships",
+                    "entity": [
+                        "develop client relationships"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.7417,
+                    "score": 0.7417,
+                    "skill_scores": 0.68545,
+                    "text": "create and build relationships with clients and colleagues.",
+                    "type": "Professional Skills and Knowledge"
+                },
+                {
+                    "all_scores": [
+                        0.7389
+                    ],
+                    "canonical_name": "truck driving",
+                    "display_name": "truck driving",
+                    "entity": [
+                        "truck driving"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.7389,
+                    "score": 0.7389,
+                    "skill_scores": 0.68475,
+                    "text": "truck driver",
+                    "type": "Professional Skills and Knowledge"
+                },
+                {
+                    "all_scores": [
+                        0.7134
+                    ],
+                    "canonical_name": "develop good working relationships",
+                    "display_name": "build and nurture positive working relationships",
+                    "entity": [
+                        "build and nurture positive working relationships"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.7134,
+                    "score": 0.7134,
+                    "skill_scores": 0.428357833985963,
+                    "text": "build and nurture positive relationships with clients and team members.",
+                    "type": "Roles and Responsibilities"
+                },
+                {
+                    "all_scores": [
+                        0.6203
+                    ],
+                    "canonical_name": "ensure essential components of airport vehicles function correctly",
+                    "display_name": "undertake checks on essential vehicle components",
+                    "entity": [
+                        "undertake checks on essential vehicle components"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.6203,
+                    "score": 0.6203,
+                    "skill_scores": 0.59255,
+                    "text": "conduct pre - trip and post - trip inspections of the vehicle to ensure it is in good working condition.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.6076
+                    ],
+                    "canonical_name": "operate a truck",
+                    "display_name": "operate a truck",
+                    "entity": [
+                        "operate a truck"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.6076,
+                    "score": 0.6076,
+                    "skill_scores": 0.5894,
+                    "text": "job title : truck driver",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.6041
+                    ],
+                    "canonical_name": "ensure vehicle remains operational",
+                    "display_name": "ensure maintenance of vehicle",
+                    "entity": [
+                        "ensure maintenance of vehicle"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.6041,
+                    "score": 0.6041,
+                    "skill_scores": 0.5885,
+                    "text": "conduct pre - trip and post - trip inspections of the vehicle to ensure it is in good working condition.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5821
+                    ],
+                    "canonical_name": "safe transportation practices",
+                    "display_name": "safe transportation practices",
+                    "entity": [
+                        "safe transportation practices"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5821,
+                    "score": 0.5821,
+                    "skill_scores": 0.64555,
+                    "text": "safely operate a commercial vehicle to transport goods to various locations.",
+                    "type": "Professional Skills and Knowledge"
+                },
+                {
+                    "all_scores": [
+                        0.5801
+                    ],
+                    "canonical_name": "transporting vehicles",
+                    "display_name": "transporting vehicles",
+                    "entity": [
+                        "transporting vehicles"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5801,
+                    "score": 0.5801,
+                    "skill_scores": 0.5825,
+                    "text": "safely operate a commercial vehicle to transport goods to various locations.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5742
+                    ],
+                    "canonical_name": "handling deliveries",
+                    "display_name": "handling deliveries",
+                    "entity": [
+                        "handling deliveries"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5742,
+                    "score": 0.5742,
+                    "skill_scores": 0.58105,
+                    "text": "ensure timely and accurate deliveries while adhering to all traffic laws and safety regulations.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5694
+                    ],
+                    "canonical_name": "ensure safe and timely arrival of passengers and goods through coordination of road haulage",
+                    "display_name": "ensure safe and timely arrival of passengers and goods through coordination of road haulage",
+                    "entity": [
+                        "ensure safe and timely arrival of passengers and goods through coordination of road haulage"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5694,
+                    "score": 0.5694,
+                    "skill_scores": 0.57985,
+                    "text": "ensure timely and accurate deliveries while adhering to all traffic laws and safety regulations.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5581
+                    ],
+                    "canonical_name": "dispatch management",
+                    "display_name": "Dispatch Management",
+                    "entity": [
+                        "dispatch management"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5581,
+                    "score": 0.5581,
+                    "skill_scores": 0.788637832049038,
+                    "text": "collaborate with dispatch and other team members to optimize routes and schedules.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5451
+                    ],
+                    "canonical_name": "maintain records that are related to vehicle operation",
+                    "display_name": "maintain records that are related to vehicle operation",
+                    "entity": [
+                        "maintain records that are related to vehicle operation"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5451,
+                    "score": 0.5451,
+                    "skill_scores": 0.5738,
+                    "text": "maintain accurate records of deliveries and vehicle maintenance.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5357
+                    ],
+                    "canonical_name": "investigate educational institutions",
+                    "display_name": "check education institutions",
+                    "entity": [
+                        "check education institutions"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5357,
+                    "score": 0.5357,
+                    "skill_scores": 0.5714,
+                    "text": "education required : diploma",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5292
+                    ],
+                    "canonical_name": "maintenance , compliance",
+                    "display_name": "maintenance , compliance",
+                    "entity": [
+                        "maintenance , compliance"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5292,
+                    "score": 0.5292,
+                    "skill_scores": 0.5698,
+                    "text": "maintain accurate records of deliveries and vehicle maintenance.",
+                    "type": "Professional Keywords"
+                },
+                {
+                    "all_scores": [
+                        0.5037
+                    ],
+                    "canonical_name": "education and training",
+                    "display_name": "Education And Training",
+                    "entity": [
+                        "education and training"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5037,
+                    "score": 0.5037,
+                    "skill_scores": 0.382094233280318,
+                    "text": "education required : diploma",
+                    "type": "Professional Skills and Knowledge"
+                },
+                {
+                    "all_scores": [
+                        0.5006
+                    ],
+                    "canonical_name": "conduct operational performance management for truck drivers",
+                    "display_name": "manage truck drivers",
+                    "entity": [
+                        "manage truck drivers"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.5006,
+                    "score": 0.5006,
+                    "skill_scores": 0.56265,
+                    "text": "we are seeking dedicated and skilled truck drivers who are committed to delivering excellence in every mile they drive.",
+                    "type": "Professional Keywords"
+                }
+            ],
+            "removedSkills": [
+                {
+                    "removedAt": ISODate("2025-11-28T04:18:38.000Z"),
+                    "removedBy": "",
+                    "skill": {
+                        "canonical": [
+                            "transport"
+                        ],
+                        "canonicalDetails": [
+                            {
+                                "acronym": false,
+                                "canonical": false,
+                                "canonical_id": "5315_215999",
+                                "canonical_name": "vehicle transport",
+                                "category": [
+                                    [
+                                        "Others"
+                                    ]
+                                ],
+                                "frequency": 37634,
+                                "granularity_level": 0,
+                                "industries": [],
+                                "industry": [],
+                                "pickle_version": "87.0.0.0",
+                                "skill": "transportation",
+                                "skill_fine_text": "transportation",
+                                "source": "Manually Annotated",
+                                "subcategory": [
+                                    [
+                                        [
+                                            "Others"
+                                        ]
+                                    ]
+                                ],
+                                "synonyms": [],
+                                "type": [
+                                    "General Keywords"
+                                ]
+                            }
+                        ],
+                        "confidenceScore": 1,
+                        "derived": [],
+                        "eligibilityCheck": "Required",
+                        "entityID": "",
+                        "importance": "High",
+                        "ontology": true,
+                        "originalEC": "Required",
+                        "relations": [],
+                        "score": 0,
+                        "text": "transport",
+                        "yearsOfExperienceMax": 50,
+                        "yearsOfExperienceMin": 0
+                    }
+                },
+                {
+                    "removedAt": ISODate("2025-11-28T04:18:38.000Z"),
+                    "removedBy": "",
+                    "skill": {
+                        "canonical": [
+                            "safety regulations"
+                        ],
+                        "canonicalDetails": [
+                            {
+                                "acronym": false,
+                                "canonical": true,
+                                "canonical_id": "198374_193803",
+                                "canonical_name": "safety regulations",
+                                "category": [
+                                    [
+                                        "Others"
+                                    ]
+                                ],
+                                "frequency": 146718,
+                                "granularity_level": 0,
+                                "industries": [],
+                                "industry": [
+                                    "sales"
+                                ],
+                                "pickle_version": "87.0.0.0",
+                                "similar_skills": {
+                                    "scores": [],
+                                    "skills": []
+                                },
+                                "skill": "safety regulations",
+                                "skill_fine_text": "safety regulations",
+                                "source": [
+                                    "framed_skill"
+                                ],
+                                "subcategory": [
+                                    [
+                                        [
+                                            "Others"
+                                        ]
+                                    ]
+                                ],
+                                "synonyms": [],
+                                "type": [
+                                    "General Keywords"
+                                ]
+                            }
+                        ],
+                        "confidenceScore": 1,
+                        "derived": [],
+                        "eligibilityCheck": "Required",
+                        "entityID": "",
+                        "importance": "High",
+                        "ontology": true,
+                        "originalEC": "Required",
+                        "relations": [],
+                        "score": 0,
+                        "text": "safety regulations",
+                        "yearsOfExperienceMax": 50,
+                        "yearsOfExperienceMin": 0
+                    }
+                },
+                {
+                    "removedAt": ISODate("2025-11-28T04:18:38.000Z"),
+                    "removedBy": "",
+                    "skill": {
+                        "canonical": [
+                            "inspections"
+                        ],
+                        "canonicalDetails": [
+                            {
+                                "acronym": false,
+                                "canonical": true,
+                                "canonical_id": "160429",
+                                "canonical_name": "inspections",
+                                "category": [
+                                    [
+                                        "Others"
+                                    ]
+                                ],
+                                "frequency": 11443,
+                                "granularity_level": 1,
+                                "industries": [],
+                                "industry": [
+                                    "information_technology"
+                                ],
+                                "pickle_version": "87.0.0.0",
+                                "skill": "inspections",
+                                "skill_fine_text": "inspections",
+                                "source": "",
+                                "subcategory": [
+                                    [
+                                        [
+                                            "Others"
+                                        ]
+                                    ]
+                                ],
+                                "synonyms": [],
+                                "type": [
+                                    "General Keywords"
+                                ]
+                            }
+                        ],
+                        "confidenceScore": 1,
+                        "derived": [],
+                        "eligibilityCheck": "Required",
+                        "entityID": "",
+                        "importance": "High",
+                        "ontology": true,
+                        "originalEC": "Required",
+                        "relations": [],
+                        "score": 0,
+                        "text": "inspections",
+                        "yearsOfExperienceMax": 50,
+                        "yearsOfExperienceMin": 0
+                    }
+                },
+                {
+                    "removedAt": ISODate("2025-11-28T04:18:38.000Z"),
+                    "removedBy": "",
+                    "skill": {
+                        "canonical": [
+                            "operating room"
+                        ],
+                        "canonicalDetails": [
+                            {
+                                "acronym": false,
+                                "canonical": true,
+                                "canonical_id": "178432_197459",
+                                "canonical_name": "operating room",
+                                "category": [
+                                    [
+                                        "Others"
+                                    ]
+                                ],
+                                "granularity_level": 1,
+                                "industries": [],
+                                "skill": "operating room",
+                                "skill_fine_text": "operating room",
+                                "source": "Manually Annotated",
+                                "subcategory": [
+                                    [
+                                        [
+                                            "Others"
+                                        ]
+                                    ]
+                                ],
+                                "syntactical": true,
+                                "syntacticalID": "",
+                                "syntacticalName": "Operating Room",
+                                "type": [
+                                    "Professional Skills and Knowledge"
+                                ]
+                            }
+                        ],
+                        "confidenceScore": 1,
+                        "derived": [],
+                        "eligibilityCheck": "Required",
+                        "entityID": "",
+                        "importance": "High",
+                        "ontology": true,
+                        "originalEC": "Required",
+                        "relations": [],
+                        "score": 0,
+                        "text": "or",
+                        "yearsOfExperienceMax": 50,
+                        "yearsOfExperienceMin": 0
+                    }
+                },
+                {
+                    "removedAt": ISODate("2025-11-28T04:18:38.000Z"),
+                    "removedBy": "",
+                    "skill": {
+                        "canonical": [
+                            "staffing"
+                        ],
+                        "canonicalDetails": [
+                            {
+                                "acronym": false,
+                                "canonical": true,
+                                "canonical_id": "207396",
+                                "canonical_name": "staffing",
+                                "category": [
+                                    [
+                                        "Others"
+                                    ]
+                                ],
+                                "frequency": 46945,
+                                "granularity_level": 0,
+                                "industries": [
+                                    "staffing_hr"
+                                ],
+                                "industry": [
+                                    "sales",
+                                    "banking_insurance",
+                                    "information_technology",
+                                    "accounting_finance"
+                                ],
+                                "pickle_version": "87.0.0.0",
+                                "skill": "staffing",
+                                "skill_fine_text": "staffing",
+                                "source": "",
+                                "subcategory": [
+                                    [
+                                        [
+                                            "Others"
+                                        ]
+                                    ]
+                                ],
+                                "synonyms": [],
+                                "type": [
+                                    "General Keywords"
+                                ]
+                            }
+                        ],
+                        "confidenceScore": 1,
+                        "derived": [],
+                        "eligibilityCheck": "Required",
+                        "entityID": "",
+                        "importance": "High",
+                        "ontology": true,
+                        "originalEC": "Required",
+                        "relations": [],
+                        "score": 0,
+                        "text": "staffing",
+                        "yearsOfExperienceMax": 50,
+                        "yearsOfExperienceMin": 0
+                    }
+                },
+                {
+                    "removedAt": ISODate("2025-11-28T04:18:38.000Z"),
+                    "removedBy": "",
+                    "skill": {
+                        "canonical": [
+                            "controller area network protocol"
+                        ],
+                        "canonicalDetails": [
+                            {
+                                "acronym": false,
+                                "canonical": true,
+                                "canonical_id": "113571_158789_175371_188931",
+                                "canonical_name": "controller area network protocol",
+                                "category": [
+                                    [
+                                        "Others"
+                                    ]
+                                ],
+                                "granularity_level": 1,
+                                "industries": [],
+                                "skill": "controller area network protocol",
+                                "skill_fine_text": "controller area network protocol",
+                                "source": "Manually Annotated",
+                                "subcategory": [
+                                    [
+                                        [
+                                            "Others"
+                                        ]
+                                    ]
+                                ],
+                                "syntactical": true,
+                                "syntacticalID": "",
+                                "syntacticalName": "controller area network protocol",
+                                "type": [
+                                    "Tools and Technologies"
+                                ]
+                            }
+                        ],
+                        "confidenceScore": 1,
+                        "derived": [],
+                        "eligibilityCheck": "Required",
+                        "entityID": "",
+                        "importance": "High",
+                        "ontology": true,
+                        "originalEC": "Required",
+                        "relations": [],
+                        "score": 0,
+                        "text": "can",
+                        "yearsOfExperienceMax": 50,
+                        "yearsOfExperienceMin": 0
+                    }
+                }
+            ],
+            "importantLines": [],
+            "department": "",
+            "organizationUnit": "",
+            "grade": "",
+            "reasonForOpening": "",
+            "bufferEntities": []
+        },
+        "metaData": {
+            "jobPortalURL": "",
+            "jobPortal": "",
+            "jobID": "",
+            "recruiterName": "",
+            "recruiterEmail": [],
+            "recruiterPhone": [],
+            "postedDate": {
+                "text": "",
+                "standard": "",
+                "date": "",
+                "month": "",
+                "year": ""
+            },
+            "expiryDate": {
+                "text": "",
+                "standard": "",
+                "date": "",
+                "month": "",
+                "year": ""
+            },
+            "openDurationInDays": 0,
+            "applyURL": []
+        }
+    },
+    "jobLogo": "/images/trcstaffingUS/logos/6112806bc9147f673d28c6eb_logo_TRC_Logo_PNG_Full_Size.png",
+    "jobBanner": "/images/trcstaffingUS/logos/6112806bc9147f673d28c6eb_6112806bc9147f673d28c6ec_banner_unnamed.png",
+    "flowName": "",
+    "flowID": "",
+    "screeningRounds": [],
+    "qualifyingRounds": [],
+    "customData": {},
+    "faq": [],
+    "activities": [],
+    "notes": [],
+    "reminders": [],
+    "vendorDetails": [],
+    "MRIPreferences": {
+        "rankMethod": [],
+        "experience": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 6
+        },
+        "education": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "skills": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "industry": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 3
+        },
+        "jobTitle": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "location": {
+            "matchRelatedEntities": false
+        },
+        "YOE": {
+            "minYOE": 0,
+            "maxYOE": 50
+        }
+    },
+    "mriupdated": false,
+    "stats": {
+        "netPromoterScore": {
+            "score": 0,
+            "comment": ""
+        },
+        "profilesCount": {
+            "total": 2550,
+            "candidates": 0,
+            "applicants": 0,
+            "sourced": 0,
+            "internalSourced": 0,
+            "externalSourced": 0,
+            "sourcedRejections": 0,
+            "sourcedApplies": 0,
+            "shortlists": 0
+        },
+        "openings": {
+            "total": 1,
+            "hired": 0,
+            "cancelled": 0,
+            "open": 1
+        }
+    },
+    "clientName": "TRC Talent Solutions",
+    "collections": {
+        "articles": "",
+        "resumes": "",
+        "campaigns": "",
+        "interviews": ""
+    },
+    "metaData": {
+        "companyName": "TRC Talent Solutions QA",
+        "country": {
+            "origin": "US",
+            "name": "United States"
+        },
+        "countryCode": "US",
+        "language": "English",
+        "languageCode": "en",
+        "phoneCode": "",
+        "referenceID": "",
+        "jobSynced": false,
+        "showInterviewMessages": false,
+        "summarizedJD": "",
+        "syncedAt": ""
+    },
+    "healthReport": {
+        "healthy": true,
+        "report": "",
+        "optOutRate": 0,
+        "optOutCount": 0,
+        "lowEngageAIResponse": true,
+        "highOptOutRate": false
+    },
+    "campaignModules": {
+        "enabled": true,
+        "sourceAI": {
+            "enabled": true,
+            "portalSourcing": {
+                "enabled": true,
+                "reachOutMessages": []
+            }
+        },
+        "matchAI": {
+            "enabled": true
+        },
+        "engageAI": {
+            "enabled": true,
+            "calculateJobFitScore": false,
+            "calculateImpersonation": false,
+            "impersonationLevel": "roundLevel",
+            "jobFitPreferences": {
+                "answerContext": {
+                    "enable": true,
+                    "weightage": 10
+                },
+                "accentNeutrality": {
+                    "enable": true,
+                    "weightage": 10
+                },
+                "fluencyFillers": {
+                    "enable": true,
+                    "weightage": 10,
+                    "fillersThresholdCount": 10,
+                    "pauseThresholdTime": 1000
+                },
+                "fluencyResponsiveness": {
+                    "enable": true,
+                    "weightage": 10,
+                    "thresholdFluencyResponseStartIgnoreTime": 2
+                },
+                "spokenProficiency": {
+                    "enable": true,
+                    "weightage": 10
+                },
+                "pronunciation": {
+                    "enable": true,
+                    "weightage": 10
+                }
+            }
+        },
+        "qualifyAI": {
+            "enabled": true
+        }
+    }
+}

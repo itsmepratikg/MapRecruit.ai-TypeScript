@@ -1,0 +1,2388 @@
+{
+    "_id": ObjectId("69453921710bafba20237de6"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("6364e1a45c484101eaba341d"),
+    "teams": {
+        "ownerID": [],
+        "managerID": [],
+        "recruiterID": []
+    },
+    "sharedUserID": [ 
+        ObjectId("6112806bc9147f673d28c6f0"), 
+        ObjectId("611ca7e326151f2a0ca0329b"), 
+        ObjectId("6128dd51bbb23f0568922677"), 
+        ObjectId("6128dd83bbb23f0568922678"), 
+        ObjectId("6128dda6bbb23f0568922679"), 
+        ObjectId("6128ddbfbbb23f056892267a"), 
+        ObjectId("6128dddbbbb23f056892267b"), 
+        ObjectId("6128ddf6bbb23f056892267c"), 
+        ObjectId("6128de15bbb23f056892267d"), 
+        ObjectId("6128de2dbbb23f056892267e"), 
+        ObjectId("613ed1058953fb0e698c36b2"), 
+        ObjectId("614d569f77f21325cdbd314a"), 
+        ObjectId("6180e583da65df3f05595f62"), 
+        ObjectId("61b825e415f87d014ee8b4a3"), 
+        ObjectId("61bcbe270251db5da69a98c4"), 
+        ObjectId("61dfe250a88ec421e7f22ecf"), 
+        ObjectId("620f713af95b3d6e783a3b2e"), 
+        ObjectId("624d16c0c0e61b62afda9669"), 
+        ObjectId("625f8e49924c541edd6a1e6c"), 
+        ObjectId("625f8e91924c541edd6a1e6d"), 
+        ObjectId("62710ac3a64e3e363e1a825a"), 
+        ObjectId("6274aa8e0eeb622be8d53cfe"), 
+        ObjectId("6364e1a45c484101eaba341d"), 
+        ObjectId("637318214eb3176064b430f1"), 
+        ObjectId("6391039d8361736af1251957"), 
+        ObjectId("62a0a564cbcc2c1263b20d3b"), 
+        ObjectId("62a896c0034dc444366fc47d"), 
+        ObjectId("62a9f2769a16d875d43fde7b"), 
+        ObjectId("62a9f2929a16d875d43fde7d"), 
+        ObjectId("62ac039bd3a0f87f1d32cf1c"), 
+        ObjectId("62b2abd9edfc8d4b8be8ddf6"), 
+        ObjectId("62bb207ec5d18a1afbb1c4fc"), 
+        ObjectId("62cd9151e254d7b66c53356d"), 
+        ObjectId("62d6ba12690055c35b52b1f5"), 
+        ObjectId("62d955763c902bfcb4da8749"), 
+        ObjectId("62d955a7092cde7a3bce3e88"), 
+        ObjectId("62d955f3143b769a99fa1369"), 
+        ObjectId("62d95618143b769a99fa136a"), 
+        ObjectId("62d9563c143b769a99fa136b"), 
+        ObjectId("62e1743cafb3c6b0ad119ae5"), 
+        ObjectId("62e38cfc957c96595849ba8c"), 
+        ObjectId("62e94d2e7a95b15eda3fa428"), 
+        ObjectId("630784cab661f59175a11610"), 
+        ObjectId("630785d8bf3e378b187809a2"), 
+        ObjectId("6307b2eeb661f59175a14b49"), 
+        ObjectId("631a2c4551a9d2029ffcf5f4"), 
+        ObjectId("6329bda691fdf986d0830049"), 
+        ObjectId("6329cbfec3f7affdd76e2722"), 
+        ObjectId("6336f54ccf24affd7ebd67c2"), 
+        ObjectId("634585324942707a83612e9c"), 
+        ObjectId("634585f0b06509026e760bcc"), 
+        ObjectId("6347082bb06509026e771a89"), 
+        ObjectId("63470decf5ef5cd0933af812"), 
+        ObjectId("63514ba0ffb69f7f272f902a"), 
+        ObjectId("6356e07207c1e07f01bd9f11"), 
+        ObjectId("6356e0a207c1e07f01bd9f1c"), 
+        ObjectId("6356e0ba909e10bcca68ac8a"), 
+        ObjectId("6356e14c909e10bcca68aca1"), 
+        ObjectId("6356ea19f2b6e0e8c95ddaaf"), 
+        ObjectId("635bfbe6915f81c0414110e8"), 
+        ObjectId("6375068f5ff3c123452c22dc"), 
+        ObjectId("639337d89a99cf4d3d5590f7"), 
+        ObjectId("639338ea184dda422a013ce8"), 
+        ObjectId("6393395ddb296f66b790c8d0"), 
+        ObjectId("6393395ddb296f66b790c8d1"), 
+        ObjectId("6393395fdb296f66b790c8d2"), 
+        ObjectId("63933961db296f66b790c8d3"), 
+        ObjectId("63933963db296f66b790c8d5"), 
+        ObjectId("63933966db296f66b790c8d8"), 
+        ObjectId("63933967db296f66b790c8d9"), 
+        ObjectId("63933968db296f66b790c8da"), 
+        ObjectId("63933968db296f66b790c8db"), 
+        ObjectId("63933969db296f66b790c8dc"), 
+        ObjectId("6393396bdb296f66b790c8de"), 
+        ObjectId("6393396cdb296f66b790c8e0"), 
+        ObjectId("6393396ddb296f66b790c8e1"), 
+        ObjectId("6393396ddb296f66b790c8e2"), 
+        ObjectId("6393396fdb296f66b790c8e4"), 
+        ObjectId("63933971db296f66b790c8e5"), 
+        ObjectId("63933972db296f66b790c8e7"), 
+        ObjectId("63933974db296f66b790c8e9"), 
+        ObjectId("63933977db296f66b790c8eb"), 
+        ObjectId("63933978db296f66b790c8ec"), 
+        ObjectId("63933978db296f66b790c8ed"), 
+        ObjectId("63933979db296f66b790c8ee"), 
+        ObjectId("63933979db296f66b790c8ef"), 
+        ObjectId("6393397adb296f66b790c8f0"), 
+        ObjectId("6393397bdb296f66b790c8f1"), 
+        ObjectId("6393397ddb296f66b790c8f3"), 
+        ObjectId("6393397ddb296f66b790c8f4"), 
+        ObjectId("6393397edb296f66b790c8f5"), 
+        ObjectId("63933980db296f66b790c8f7"), 
+        ObjectId("63933980db296f66b790c8f8"), 
+        ObjectId("63933981db296f66b790c8f9"), 
+        ObjectId("63933982db296f66b790c8fa"), 
+        ObjectId("63933982db296f66b790c8fb"), 
+        ObjectId("63933984db296f66b790c8fe"), 
+        ObjectId("63933986db296f66b790c900"), 
+        ObjectId("63933987db296f66b790c901"), 
+        ObjectId("63933987db296f66b790c902"), 
+        ObjectId("63933988db296f66b790c903"), 
+        ObjectId("63933989db296f66b790c904"), 
+        ObjectId("6393398adb296f66b790c905"), 
+        ObjectId("6393398bdb296f66b790c906"), 
+        ObjectId("6393398ddb296f66b790c907"), 
+        ObjectId("63933990db296f66b790c908"), 
+        ObjectId("63933990db296f66b790c909"), 
+        ObjectId("63933991db296f66b790c90a"), 
+        ObjectId("63933992db296f66b790c90b"), 
+        ObjectId("63933994db296f66b790c90c"), 
+        ObjectId("63933994db296f66b790c90d"), 
+        ObjectId("63933995db296f66b790c90e"), 
+        ObjectId("63933995db296f66b790c90f"), 
+        ObjectId("63933996db296f66b790c910"), 
+        ObjectId("63933997db296f66b790c911"), 
+        ObjectId("63933998db296f66b790c913"), 
+        ObjectId("6393399adb296f66b790c914"), 
+        ObjectId("6393399bdb296f66b790c915"), 
+        ObjectId("6393399fdb296f66b790c916"), 
+        ObjectId("639339a0db296f66b790c917"), 
+        ObjectId("639339a2db296f66b790c919"), 
+        ObjectId("639339a3db296f66b790c91a"), 
+        ObjectId("639339a4db296f66b790c91b"), 
+        ObjectId("639339a4db296f66b790c91c"), 
+        ObjectId("639339a5db296f66b790c91d"), 
+        ObjectId("639339a6db296f66b790c91e"), 
+        ObjectId("639339a7db296f66b790c91f"), 
+        ObjectId("639339a7db296f66b790c920"), 
+        ObjectId("639339a8db296f66b790c921"), 
+        ObjectId("639339a9db296f66b790c922"), 
+        ObjectId("639339aadb296f66b790c923"), 
+        ObjectId("639339abdb296f66b790c924"), 
+        ObjectId("639339abdb296f66b790c925"), 
+        ObjectId("639339addb296f66b790c926"), 
+        ObjectId("639339b0db296f66b790c928"), 
+        ObjectId("639339b3db296f66b790c92b"), 
+        ObjectId("639339b4db296f66b790c92c"), 
+        ObjectId("639339b5db296f66b790c92d"), 
+        ObjectId("639339b5db296f66b790c92e"), 
+        ObjectId("639339b6db296f66b790c92f"), 
+        ObjectId("639339b7db296f66b790c930"), 
+        ObjectId("639339b8db296f66b790c931"), 
+        ObjectId("639339b9db296f66b790c932"), 
+        ObjectId("639339badb296f66b790c934"), 
+        ObjectId("639339badb296f66b790c935"), 
+        ObjectId("639339bbdb296f66b790c936"), 
+        ObjectId("639339bcdb296f66b790c937"), 
+        ObjectId("639339bedb296f66b790c939"), 
+        ObjectId("639339bedb296f66b790c93a"), 
+        ObjectId("639339bfdb296f66b790c93b"), 
+        ObjectId("639339c0db296f66b790c93d"), 
+        ObjectId("639339c1db296f66b790c93e"), 
+        ObjectId("639339c1db296f66b790c93f"), 
+        ObjectId("639339c3db296f66b790c940"), 
+        ObjectId("639339c4db296f66b790c941"), 
+        ObjectId("639339c5db296f66b790c943"), 
+        ObjectId("639339c6db296f66b790c944"), 
+        ObjectId("639339c7db296f66b790c945"), 
+        ObjectId("639339cadb296f66b790c947"), 
+        ObjectId("639339cadb296f66b790c948"), 
+        ObjectId("639339ccdb296f66b790c94a"), 
+        ObjectId("639339cddb296f66b790c94b"), 
+        ObjectId("639339cfdb296f66b790c94c"), 
+        ObjectId("63c839dabaae019ede05620c"), 
+        ObjectId("63c8d10e6e70c78e4fbe5f30"), 
+        ObjectId("63e35769d1d844a751ac8fd4"), 
+        ObjectId("63e35782d1d844a751ac8fd5"), 
+        ObjectId("6400c3b291d48e74b86bd600"), 
+        ObjectId("6406182e1083c4936828eef9"), 
+        ObjectId("6407935e239ddee09828fa21"), 
+        ObjectId("641fae8822112c238fe4f11b"), 
+        ObjectId("641fae8822112c238fe4f11f"), 
+        ObjectId("641fae8922112c238fe4f125"), 
+        ObjectId("6422627d22112c238fe76508"), 
+        ObjectId("642c3dfb73a9ae83e0e38d8d"), 
+        ObjectId("642c3dfc3164d2a8c8e37c76"), 
+        ObjectId("643ea7434ab61d706fcaabc3"), 
+        ObjectId("64516cabc0984a105ad015db"), 
+        ObjectId("645327d97c1cb800c4cab1e6"), 
+        ObjectId("6457346d2039a9f8da912cff"), 
+        ObjectId("6469b867d0b268e34094288b"), 
+        ObjectId("6470295e5396bb1bf6f4a644"), 
+        ObjectId("647622c51f4267ed2205de2a"), 
+        ObjectId("648a176cb0cdc20599075574"), 
+        ObjectId("648a176db0cdc20599075578"), 
+        ObjectId("648c89c30ab292c42706076a"), 
+        ObjectId("65b750af5d1c861117955b0a"), 
+        ObjectId("65b7ccc8999193485b8c6f79"), 
+        ObjectId("660c6abc81c6b306bbe8be6f"), 
+        ObjectId("660c6ac581c6b306bbe8be73"), 
+        ObjectId("663da42c5e900a8237eda70d"), 
+        ObjectId("6642b77e5e900a8237edac8a"), 
+        ObjectId("664aa2e7388b3944ef509286"), 
+        ObjectId("66557e79c50b4cbb5cedaafa"), 
+        ObjectId("665f77042bf73ed90feb6839"), 
+        ObjectId("665f77092bf73ed90feb683d"), 
+        ObjectId("66630412fec305ee7f493206"), 
+        ObjectId("66630c46fec305ee7f493218"), 
+        ObjectId("6666825621a4d73aaab77d29"), 
+        ObjectId("6669b54f407365630c49348c"), 
+        ObjectId("666b02f8073edefd4d4937fa"), 
+        ObjectId("666bce750a26598bcf9784c3"), 
+        ObjectId("668309225eb99e619e1e67a3"), 
+        ObjectId("668309355eb99e619e1e67a7"), 
+        ObjectId("66830938ef45c84f071e6209"), 
+        ObjectId("668316115eb99e619e1e67b8"), 
+        ObjectId("668ed77a5eb99e619e1e759c"), 
+        ObjectId("669b6bbe8e9b66eb9bbeda7a"), 
+        ObjectId("66a7d6f59ee40697c7c0b166"), 
+        ObjectId("66aa46ad7cb352cda0c0b56b"), 
+        ObjectId("66ab87338c57a26005523886"), 
+        ObjectId("66c64a2d7c4bd270ccdc8bc9"), 
+        ObjectId("66cf2b200a5777864da86ee1"), 
+        ObjectId("66d09f40fdcd9324061581ab"), 
+        ObjectId("66da1d07236a85bb23a9f2db"), 
+        ObjectId("66eb076009343ccdc5e974d1"), 
+        ObjectId("66eb077e707b331bfbb2322c"), 
+        ObjectId("66eb078309343ccdc5e974d5"), 
+        ObjectId("66eb0784707b331bfbb23230"), 
+        ObjectId("66eb079609343ccdc5e974d9"), 
+        ObjectId("66eb079a09343ccdc5e974dd"), 
+        ObjectId("66f41fbe5074dcd232d3aaf2"), 
+        ObjectId("66f41ff136ae232f14ebd77a"), 
+        ObjectId("671f45201eef5d22d55f8fe9"), 
+        ObjectId("67227be4816a86b336d49c6a"), 
+        ObjectId("672280fb3955e71f0356a3af"), 
+        ObjectId("67228116816a86b336d49c74"), 
+        ObjectId("672b9623816a86b336d4ae27"), 
+        ObjectId("6734fcaeb97f4a1582cd2b54"), 
+        ObjectId("676088100c6b0e1df8f18800"), 
+        ObjectId("678e6f4ddcda5dba11a44be5"), 
+        ObjectId("67909634dafd08e80fa6f88b"), 
+        ObjectId("67bcfa560a1ce2bd591f84bf"), 
+        ObjectId("67c717b898be1695951b5e26"), 
+        ObjectId("67c717c0b7bcf99c8fbef712"), 
+        ObjectId("67d09cbd9e6e6fcf19e89059"), 
+        ObjectId("67d2e8390c864a19dd66053b"), 
+        ObjectId("67d98a1da8d85be9628f8cb3"), 
+        ObjectId("67d98a30a8d85be9628f8cb9"), 
+        ObjectId("67e6fa15349a84521b847ea0"), 
+        ObjectId("67e6fa20dde5a2a1a75e9100"), 
+        ObjectId("67f52df225abf6818da1e055"), 
+        ObjectId("6808753f3b7dbb5c3492b86c"), 
+        ObjectId("6808f31aa977d5e348d79aa6"), 
+        ObjectId("681a25c4e8a280451b2eb9f8"), 
+        ObjectId("6821961d73c096bcf04748fc"), 
+        ObjectId("6821a4dc33d8d7ebe8f918e5"), 
+        ObjectId("6821e2cc03e05ab019369629"), 
+        ObjectId("6822f32622c0a7d8f23351cd"), 
+        ObjectId("682f29daa454ca7c64b0b214"), 
+        ObjectId("68343d310687ebed6db94e82"), 
+        ObjectId("683754a3487d7bc10c3a4579"), 
+        ObjectId("683754b8487d7bc10c3a457f"), 
+        ObjectId("683754b9a454ca7c64b0b7b6"), 
+        ObjectId("68387840a454ca7c64b0bad8"), 
+        ObjectId("684fb3cfd08947c4d9568258"), 
+        ObjectId("6858c518d54e6042b0bbb095"), 
+        ObjectId("685c213223cc378fbde81377"), 
+        ObjectId("685eb7f3cc9125479c3ad0e0"), 
+        ObjectId("686229bf2a26b9235f135465"), 
+        ObjectId("686e99ffe7035839ffcd0d6c"), 
+        ObjectId("687a4e57dc3570b6ad01ae87"), 
+        ObjectId("6883b31cb2eb61c0dc01b44e"), 
+        ObjectId("689ac9cfc65da4bfcae8d2e4"), 
+        ObjectId("68a3415a3e721ca285a8badc"), 
+        ObjectId("68b54f82937b1d0c62100ed3"), 
+        ObjectId("68b811e3b5206507a6198067"), 
+        ObjectId("68c7bc18c23b1ec7371b138e"), 
+        ObjectId("68cd165f49489648a878810f"), 
+        ObjectId("68cd264a8eba19e1e4788126"), 
+        ObjectId("68cd26a2ffbddc509bde87f4"), 
+        ObjectId("68cd47af79176117987f4a9e"), 
+        ObjectId("68cd602daf03fd95107f4ab4"), 
+        ObjectId("68cd602daf03fd95107f4ab7"), 
+        ObjectId("68ce43e20dd51efa571cf32b"), 
+        ObjectId("68ce496b8dcc55ec908c1709"), 
+        ObjectId("68d3e91665eda4dbfd3c2f3a"), 
+        ObjectId("68e6893c0d2efd0c5a5637cf"), 
+        ObjectId("68e8a9e186ddc3ffe3633208"), 
+        ObjectId("68e8a9e186ddc3ffe363320b"), 
+        ObjectId("68e8ee96c75e75e405d9a1fc"), 
+        ObjectId("68fb607e29091f5b9b4f8321"), 
+        ObjectId("68fb69428eb920a23eab2604"), 
+        ObjectId("68fc741d729f0167c7b1358f"), 
+        ObjectId("68ff4582143042fbd9a8a231"), 
+        ObjectId("690060c0bfe1603c2cc86e84"), 
+        ObjectId("6901aac6e4ff868ce9cd7ca6"), 
+        ObjectId("6901ac5876cc15e362bdc434"), 
+        ObjectId("6901af4e9b2c5c2080e91551"), 
+        ObjectId("6901bcf390298a71b8360d5a"), 
+        ObjectId("6901bcf390298a71b8360d5d"), 
+        ObjectId("6901bde590298a71b8360d62"), 
+        ObjectId("690309e94d24da66a5b2c344"), 
+        ObjectId("690484bfc22406c7900f7ac0"), 
+        ObjectId("69048af683daf0818e43ee1c"), 
+        ObjectId("69048c1f9ee1496031f1358c"), 
+        ObjectId("690a0d0487e1829af30e50ba"), 
+        ObjectId("690b5de5ebe09c2b3c03382f"), 
+        ObjectId("690c966402295ded8afbab70"), 
+        ObjectId("690c9ffcda41b71eb264d3d7"), 
+        ObjectId("690dc1e661b91276dbc485c2"), 
+        ObjectId("690dcab7096e1442c66e1004"), 
+        ObjectId("690dcb869bd5423b4c2ee386"), 
+        ObjectId("691ebcb122c082f20be35ad5"), 
+        ObjectId("69281a7c75114f11542ce917"), 
+        ObjectId("69327afef52376d20c9b0913"), 
+        ObjectId("6128de44bbb23f056892267f"), 
+        ObjectId("61dd8c0238e8585a5af6fa7b"), 
+        ObjectId("62ab40a79a16d875d4403056"), 
+        ObjectId("62ab418d9a16d875d440305a"), 
+        ObjectId("62b2aa4a3deec91af56bc47f"), 
+        ObjectId("62d19c827b1526b6aeeee428"), 
+        ObjectId("62d95580092cde7a3bce3e87"), 
+        ObjectId("62e1745fafb3c6b0ad119ae7"), 
+        ObjectId("62e1747e59beb26a7e514cec"), 
+        ObjectId("62e81faf3155057007577412"), 
+        ObjectId("62f3f74d0154ea8ec4df5c9e"), 
+        ObjectId("6308d712b661f59175a18740"), 
+        ObjectId("631a2c40be0a3171fbd636ad"), 
+        ObjectId("6329ef4891fdf986d0832aa0"), 
+        ObjectId("63470df9b06509026e772343"), 
+        ObjectId("6356e235909e10bcca68adb5"), 
+        ObjectId("6363a6edf57df6e2baa8e71b"), 
+        ObjectId("638f8e678361736af1251531"), 
+        ObjectId("6393395cdb296f66b790c8cf"), 
+        ObjectId("63933961db296f66b790c8d4"), 
+        ObjectId("63933964db296f66b790c8d6"), 
+        ObjectId("6393396adb296f66b790c8dd"), 
+        ObjectId("6393396bdb296f66b790c8df"), 
+        ObjectId("6393396fdb296f66b790c8e3"), 
+        ObjectId("63933971db296f66b790c8e6"), 
+        ObjectId("63933976db296f66b790c8ea"), 
+        ObjectId("63933983db296f66b790c8fc"), 
+        ObjectId("63933984db296f66b790c8fd"), 
+        ObjectId("63933997db296f66b790c912"), 
+        ObjectId("639339a1db296f66b790c918"), 
+        ObjectId("639339aedb296f66b790c927"), 
+        ObjectId("639339b1db296f66b790c929"), 
+        ObjectId("639339b9db296f66b790c933"), 
+        ObjectId("639339bddb296f66b790c938"), 
+        ObjectId("639339c0db296f66b790c93c"), 
+        ObjectId("639c7fc934d8388678202722"), 
+        ObjectId("63a219cefd250e7db0c8b228"), 
+        ObjectId("63a220effd250e7db0c8b277"), 
+        ObjectId("63aee9461b70f88203e538b7"), 
+        ObjectId("63bdda2c90ae6d169e6ce190"), 
+        ObjectId("63c04c2a565712feb3f6d411"), 
+        ObjectId("63c6e79e1f80a5bccd1b0912"), 
+        ObjectId("63e3569fd26b19282b43d53b"), 
+        ObjectId("63e35785d1d844a751ac8fd6"), 
+        ObjectId("63e35786d1d844a751ac8fd7"), 
+        ObjectId("63e3578dd1d844a751ac8fd8"), 
+        ObjectId("63e35792d1d844a751ac8fd9"), 
+        ObjectId("63e3579ad1d844a751ac8fda"), 
+        ObjectId("63e3579bd1d844a751ac8fdb"), 
+        ObjectId("63e357cdd1d844a751ac8fdc"), 
+        ObjectId("63e357d5d1d844a751ac8fdd"), 
+        ObjectId("63e357ded1d844a751ac8fde"), 
+        ObjectId("63e357dfd1d844a751ac8fdf"), 
+        ObjectId("63e357e1d1d844a751ac8fe0"), 
+        ObjectId("63e357e2d1d844a751ac8fe1"), 
+        ObjectId("63e357e2d1d844a751ac8fe2"), 
+        ObjectId("63e357e5d1d844a751ac8fe3"), 
+        ObjectId("63e358f48318893dd70702fc"), 
+        ObjectId("63e35922b421bccce1dc8d70"), 
+        ObjectId("63e35923b421bccce1dc8d71"), 
+        ObjectId("63e35924b421bccce1dc8d72"), 
+        ObjectId("63e35925b421bccce1dc8d73"), 
+        ObjectId("63e35926b421bccce1dc8d74"), 
+        ObjectId("63e35926b421bccce1dc8d75"), 
+        ObjectId("63e35928b421bccce1dc8d76"), 
+        ObjectId("63e35929b421bccce1dc8d77"), 
+        ObjectId("63e3592bb421bccce1dc8d78"), 
+        ObjectId("63e3592bb421bccce1dc8d79"), 
+        ObjectId("63e3592cb421bccce1dc8d7a"), 
+        ObjectId("63e3592db421bccce1dc8d7b"), 
+        ObjectId("63e3592db421bccce1dc8d7c"), 
+        ObjectId("63e3592eb421bccce1dc8d7d"), 
+        ObjectId("63e3592fb421bccce1dc8d7e"), 
+        ObjectId("63e35930b421bccce1dc8d7f"), 
+        ObjectId("63e35930b421bccce1dc8d80"), 
+        ObjectId("63e35931b421bccce1dc8d81"), 
+        ObjectId("63e35932b421bccce1dc8d82"), 
+        ObjectId("63e35933b421bccce1dc8d83"), 
+        ObjectId("63e35933b421bccce1dc8d84"), 
+        ObjectId("63e35934b421bccce1dc8d85"), 
+        ObjectId("63e35935b421bccce1dc8d86"), 
+        ObjectId("63e35935b421bccce1dc8d87"), 
+        ObjectId("63e35936b421bccce1dc8d88"), 
+        ObjectId("63e35937b421bccce1dc8d89"), 
+        ObjectId("63e35938b421bccce1dc8d8a"), 
+        ObjectId("63e35939b421bccce1dc8d8b"), 
+        ObjectId("63e3593bb421bccce1dc8d8c"), 
+        ObjectId("63e3593cb421bccce1dc8d8d"), 
+        ObjectId("63e3593db421bccce1dc8d8e"), 
+        ObjectId("63e3593db421bccce1dc8d8f"), 
+        ObjectId("63e3593eb421bccce1dc8d90"), 
+        ObjectId("63e3593fb421bccce1dc8d91"), 
+        ObjectId("63e35940b421bccce1dc8d92"), 
+        ObjectId("63e35941b421bccce1dc8d93"), 
+        ObjectId("63e35943b421bccce1dc8d94"), 
+        ObjectId("63e35943b421bccce1dc8d95"), 
+        ObjectId("63e35944b421bccce1dc8d96"), 
+        ObjectId("63e35945b421bccce1dc8d97"), 
+        ObjectId("63e35946b421bccce1dc8d98"), 
+        ObjectId("63e35947b421bccce1dc8d99"), 
+        ObjectId("63e35947b421bccce1dc8d9a"), 
+        ObjectId("63e35948b421bccce1dc8d9b"), 
+        ObjectId("63e35948b421bccce1dc8d9c"), 
+        ObjectId("63e35949b421bccce1dc8d9d"), 
+        ObjectId("63e35949b421bccce1dc8d9e"), 
+        ObjectId("63e3594ab421bccce1dc8d9f"), 
+        ObjectId("63e3594ab421bccce1dc8da0"), 
+        ObjectId("63e3594bb421bccce1dc8da1"), 
+        ObjectId("63e3594cb421bccce1dc8da2"), 
+        ObjectId("63e3594cb421bccce1dc8da3"), 
+        ObjectId("63e3594db421bccce1dc8da4"), 
+        ObjectId("63e3594fb421bccce1dc8da5"), 
+        ObjectId("63e35950b421bccce1dc8da6"), 
+        ObjectId("63e35951b421bccce1dc8da7"), 
+        ObjectId("63e35952b421bccce1dc8da8"), 
+        ObjectId("63e35952b421bccce1dc8da9"), 
+        ObjectId("63e35953b421bccce1dc8daa"), 
+        ObjectId("63e35953b421bccce1dc8dab"), 
+        ObjectId("63e35954b421bccce1dc8dac"), 
+        ObjectId("63e35954b421bccce1dc8dad"), 
+        ObjectId("63e35957b421bccce1dc8dae"), 
+        ObjectId("63e35958b421bccce1dc8daf"), 
+        ObjectId("63e35959b421bccce1dc8db0"), 
+        ObjectId("63e3595ab421bccce1dc8db1"), 
+        ObjectId("63e3595bb421bccce1dc8db2"), 
+        ObjectId("63e3595cb421bccce1dc8db3"), 
+        ObjectId("63e3595cb421bccce1dc8db4"), 
+        ObjectId("63e3595db421bccce1dc8db5"), 
+        ObjectId("63e3595db421bccce1dc8db6"), 
+        ObjectId("63e3595fb421bccce1dc8db7"), 
+        ObjectId("63e35960b421bccce1dc8db8"), 
+        ObjectId("63e35961b421bccce1dc8db9"), 
+        ObjectId("63e35962b421bccce1dc8dba"), 
+        ObjectId("63e35963b421bccce1dc8dbb"), 
+        ObjectId("63e35964b421bccce1dc8dbc"), 
+        ObjectId("63e35964b421bccce1dc8dbd"), 
+        ObjectId("63e35966b421bccce1dc8dbe"), 
+        ObjectId("63e35967b421bccce1dc8dbf"), 
+        ObjectId("63e35968b421bccce1dc8dc0"), 
+        ObjectId("63e35969b421bccce1dc8dc1"), 
+        ObjectId("63e3596ab421bccce1dc8dc2"), 
+        ObjectId("63e3596bb421bccce1dc8dc3"), 
+        ObjectId("63e3596bb421bccce1dc8dc4"), 
+        ObjectId("63e3596db421bccce1dc8dc5"), 
+        ObjectId("63e3596db421bccce1dc8dc6"), 
+        ObjectId("63e3596eb421bccce1dc8dc7"), 
+        ObjectId("63e3596fb421bccce1dc8dc8"), 
+        ObjectId("63e3596fb421bccce1dc8dc9"), 
+        ObjectId("63e35970b421bccce1dc8dca"), 
+        ObjectId("63e35970b421bccce1dc8dcb"), 
+        ObjectId("63e35971b421bccce1dc8dcc"), 
+        ObjectId("63e35972b421bccce1dc8dcd"), 
+        ObjectId("63e35973b421bccce1dc8dce"), 
+        ObjectId("63e35974b421bccce1dc8dcf"), 
+        ObjectId("63e35975b421bccce1dc8dd0"), 
+        ObjectId("63e35975b421bccce1dc8dd1"), 
+        ObjectId("63e35976b421bccce1dc8dd2"), 
+        ObjectId("63e35977b421bccce1dc8dd3"), 
+        ObjectId("63e35977b421bccce1dc8dd4"), 
+        ObjectId("63e35978b421bccce1dc8dd5"), 
+        ObjectId("63e35979b421bccce1dc8dd6"), 
+        ObjectId("63e3597ab421bccce1dc8dd7"), 
+        ObjectId("63e3597bb421bccce1dc8dd8"), 
+        ObjectId("63e3597bb421bccce1dc8dd9"), 
+        ObjectId("63e3597cb421bccce1dc8dda"), 
+        ObjectId("63e3597db421bccce1dc8ddb"), 
+        ObjectId("63e3597db421bccce1dc8ddc"), 
+        ObjectId("63e3597eb421bccce1dc8ddd"), 
+        ObjectId("63e3597fb421bccce1dc8dde"), 
+        ObjectId("63e3597fb421bccce1dc8ddf"), 
+        ObjectId("63e35980b421bccce1dc8de0"), 
+        ObjectId("63e35981b421bccce1dc8de1"), 
+        ObjectId("63e35982b421bccce1dc8de2"), 
+        ObjectId("63e35983b421bccce1dc8de3"), 
+        ObjectId("63e35983b421bccce1dc8de4"), 
+        ObjectId("63e35984b421bccce1dc8de5"), 
+        ObjectId("63e35985b421bccce1dc8de6"), 
+        ObjectId("63e35985b421bccce1dc8de7"), 
+        ObjectId("63e35985b421bccce1dc8de8"), 
+        ObjectId("63e35986b421bccce1dc8de9"), 
+        ObjectId("63e35987b421bccce1dc8dea"), 
+        ObjectId("63e35987b421bccce1dc8deb"), 
+        ObjectId("63e35988b421bccce1dc8dec"), 
+        ObjectId("63e35988b421bccce1dc8ded"), 
+        ObjectId("63e35989b421bccce1dc8dee"), 
+        ObjectId("63e35989b421bccce1dc8def"), 
+        ObjectId("63e3598ab421bccce1dc8df0"), 
+        ObjectId("63e3598bb421bccce1dc8df1"), 
+        ObjectId("63e3598bb421bccce1dc8df2"), 
+        ObjectId("63e3598cb421bccce1dc8df3"), 
+        ObjectId("63e3598db421bccce1dc8df4"), 
+        ObjectId("63e3598db421bccce1dc8df5"), 
+        ObjectId("63e3598eb421bccce1dc8df6"), 
+        ObjectId("63e3598fb421bccce1dc8df7"), 
+        ObjectId("63e3598fb421bccce1dc8df8"), 
+        ObjectId("63e35990b421bccce1dc8df9"), 
+        ObjectId("63e35990b421bccce1dc8dfa"), 
+        ObjectId("63e35991b421bccce1dc8dfb"), 
+        ObjectId("63e35991b421bccce1dc8dfc"), 
+        ObjectId("63e35991b421bccce1dc8dfd"), 
+        ObjectId("63e35992b421bccce1dc8dfe"), 
+        ObjectId("63e35992b421bccce1dc8dff"), 
+        ObjectId("63e35993b421bccce1dc8e00"), 
+        ObjectId("63e35994b421bccce1dc8e01"), 
+        ObjectId("63e35994b421bccce1dc8e02"), 
+        ObjectId("63e35995b421bccce1dc8e03"), 
+        ObjectId("63e35996b421bccce1dc8e04"), 
+        ObjectId("63e35997b421bccce1dc8e05"), 
+        ObjectId("63e35998b421bccce1dc8e06"), 
+        ObjectId("63e35998b421bccce1dc8e07"), 
+        ObjectId("63e35999b421bccce1dc8e08"), 
+        ObjectId("63e35999b421bccce1dc8e09"), 
+        ObjectId("63e3599ab421bccce1dc8e0a"), 
+        ObjectId("63e3599ab421bccce1dc8e0b"), 
+        ObjectId("63e3599bb421bccce1dc8e0c"), 
+        ObjectId("63e3599cb421bccce1dc8e0d"), 
+        ObjectId("63e3599db421bccce1dc8e0e"), 
+        ObjectId("63e3599eb421bccce1dc8e0f"), 
+        ObjectId("63e3599eb421bccce1dc8e10"), 
+        ObjectId("63e3599fb421bccce1dc8e11"), 
+        ObjectId("63e359a0b421bccce1dc8e12"), 
+        ObjectId("63e359a0b421bccce1dc8e13"), 
+        ObjectId("63e359a1b421bccce1dc8e14"), 
+        ObjectId("63e359a1b421bccce1dc8e15"), 
+        ObjectId("63e359a2b421bccce1dc8e16"), 
+        ObjectId("63e359a3b421bccce1dc8e17"), 
+        ObjectId("63e359a4b421bccce1dc8e18"), 
+        ObjectId("63e359a5b421bccce1dc8e19"), 
+        ObjectId("63e359a7b421bccce1dc8e1a"), 
+        ObjectId("63e359a8b421bccce1dc8e1b"), 
+        ObjectId("63e359a9b421bccce1dc8e1c"), 
+        ObjectId("6406182d1083c4936828eeef"), 
+        ObjectId("640618341083c4936828ef1d"), 
+        ObjectId("640618341083c4936828ef20"), 
+        ObjectId("640618346e539ff92628e4ce"), 
+        ObjectId("640618346e539ff92628e4d1"), 
+        ObjectId("640618346e539ff92628e4d4"), 
+        ObjectId("640618356e539ff92628e4da"), 
+        ObjectId("64080b27c99ad845e229087c"), 
+        ObjectId("64088825322594d50cc1d568"), 
+        ObjectId("6410c98ae25f637ae2495c19"), 
+        ObjectId("6458986cc8af7cf767f7bcbe"), 
+        ObjectId("659cd4e6efb57b0e7a1f28df"), 
+        ObjectId("65b74eb8a0a1d7c03d955d33"), 
+        ObjectId("66684f42cf6111b65f9fb36a"), 
+        ObjectId("687733c408aa3cf94482f03b"), 
+        ObjectId("68c82052557d48aecb93f00c"), 
+        ObjectId("68c9314c0677d0a857c0ebad"), 
+        ObjectId("68ca3e8145db4ab41cb89ebe"), 
+        ObjectId("68cd165f49489648a878810c"), 
+        ObjectId("68ce43e20dd51efa571cf328"), 
+        ObjectId("68f2462f86ddc3ffe3651fa8"), 
+        ObjectId("68f7cc2968bf2f963a9f0bf8"), 
+        ObjectId("694627e76a774bd638f49543"), 
+        ObjectId("694650800e985c4c29e5832c"), 
+        ObjectId("694bd484426ff8380f5a3fc7")
+    ],
+    "favouriteUserID": [],
+    "visibility": "Few",
+    "logoURL": "",
+    "articleID": [ 
+        ObjectId("69453922710bafba20237de8")
+    ],
+    "vendorID": [],
+    "originalArticleID": ObjectId("69453922710bafba20237de8"),
+    "title": "test 1k profiles",
+    "displayName": "Job Title",
+    "passcode": "4350393",
+    "type": "",
+    "tags": [],
+    "tagID": [],
+    "status": "Closed",
+    "jobStatus": "Closed",
+    "jobCategory": [],
+    "createdAt": ISODate("2025-12-19T11:38:09.491Z"),
+    "closedAt": ISODate("2026-01-18T03:30:20.703Z"),
+    "closingReason": "",
+    "updatedAt": ISODate("2026-01-26T11:11:33.661Z"),
+    "archivedAt": "",
+    "openJob": false,
+    "jobPosting": {
+        "enabled": false,
+        "startDate": "",
+        "endDate": "",
+        "jobBoards": []
+    },
+    "openPositions": 1,
+    "packageOpted": "Basic",
+    "scheduleFlag": "N",
+    "notifications": true,
+    "approverID": ObjectId("6364e1a45c484101eaba341d"),
+    "managerID": [ 
+        ObjectId("6112806bc9147f673d28c6f0"), 
+        ObjectId("611ca7e326151f2a0ca0329b"), 
+        ObjectId("6128dd51bbb23f0568922677"), 
+        ObjectId("6128dd83bbb23f0568922678"), 
+        ObjectId("6128dda6bbb23f0568922679"), 
+        ObjectId("6128ddbfbbb23f056892267a"), 
+        ObjectId("6128dddbbbb23f056892267b"), 
+        ObjectId("6128ddf6bbb23f056892267c"), 
+        ObjectId("6128de15bbb23f056892267d"), 
+        ObjectId("6128de2dbbb23f056892267e"), 
+        ObjectId("613ed1058953fb0e698c36b2"), 
+        ObjectId("614d569f77f21325cdbd314a"), 
+        ObjectId("6180e583da65df3f05595f62"), 
+        ObjectId("61b825e415f87d014ee8b4a3"), 
+        ObjectId("61bcbe270251db5da69a98c4"), 
+        ObjectId("61dfe250a88ec421e7f22ecf"), 
+        ObjectId("620f713af95b3d6e783a3b2e"), 
+        ObjectId("624d16c0c0e61b62afda9669"), 
+        ObjectId("625f8e49924c541edd6a1e6c"), 
+        ObjectId("625f8e91924c541edd6a1e6d"), 
+        ObjectId("62710ac3a64e3e363e1a825a"), 
+        ObjectId("6274aa8e0eeb622be8d53cfe"), 
+        ObjectId("6364e1a45c484101eaba341d"), 
+        ObjectId("637318214eb3176064b430f1"), 
+        ObjectId("6391039d8361736af1251957"), 
+        ObjectId("62a0a564cbcc2c1263b20d3b"), 
+        ObjectId("62a896c0034dc444366fc47d"), 
+        ObjectId("62a9f2769a16d875d43fde7b"), 
+        ObjectId("62a9f2929a16d875d43fde7d"), 
+        ObjectId("62ac039bd3a0f87f1d32cf1c"), 
+        ObjectId("62b2abd9edfc8d4b8be8ddf6"), 
+        ObjectId("62bb207ec5d18a1afbb1c4fc"), 
+        ObjectId("62cd9151e254d7b66c53356d"), 
+        ObjectId("62d6ba12690055c35b52b1f5"), 
+        ObjectId("62d955763c902bfcb4da8749"), 
+        ObjectId("62d955a7092cde7a3bce3e88"), 
+        ObjectId("62d955f3143b769a99fa1369"), 
+        ObjectId("62d95618143b769a99fa136a"), 
+        ObjectId("62d9563c143b769a99fa136b"), 
+        ObjectId("62e1743cafb3c6b0ad119ae5"), 
+        ObjectId("62e38cfc957c96595849ba8c"), 
+        ObjectId("62e94d2e7a95b15eda3fa428"), 
+        ObjectId("630784cab661f59175a11610"), 
+        ObjectId("630785d8bf3e378b187809a2"), 
+        ObjectId("6307b2eeb661f59175a14b49"), 
+        ObjectId("631a2c4551a9d2029ffcf5f4"), 
+        ObjectId("6329bda691fdf986d0830049"), 
+        ObjectId("6329cbfec3f7affdd76e2722"), 
+        ObjectId("6336f54ccf24affd7ebd67c2"), 
+        ObjectId("634585324942707a83612e9c"), 
+        ObjectId("634585f0b06509026e760bcc"), 
+        ObjectId("6347082bb06509026e771a89"), 
+        ObjectId("63470decf5ef5cd0933af812"), 
+        ObjectId("63514ba0ffb69f7f272f902a"), 
+        ObjectId("6356e07207c1e07f01bd9f11"), 
+        ObjectId("6356e0a207c1e07f01bd9f1c"), 
+        ObjectId("6356e0ba909e10bcca68ac8a"), 
+        ObjectId("6356e14c909e10bcca68aca1"), 
+        ObjectId("6356ea19f2b6e0e8c95ddaaf"), 
+        ObjectId("635bfbe6915f81c0414110e8"), 
+        ObjectId("6375068f5ff3c123452c22dc"), 
+        ObjectId("639337d89a99cf4d3d5590f7"), 
+        ObjectId("639338ea184dda422a013ce8"), 
+        ObjectId("6393395ddb296f66b790c8d0"), 
+        ObjectId("6393395ddb296f66b790c8d1"), 
+        ObjectId("6393395fdb296f66b790c8d2"), 
+        ObjectId("63933961db296f66b790c8d3"), 
+        ObjectId("63933963db296f66b790c8d5"), 
+        ObjectId("63933966db296f66b790c8d8"), 
+        ObjectId("63933967db296f66b790c8d9"), 
+        ObjectId("63933968db296f66b790c8da"), 
+        ObjectId("63933968db296f66b790c8db"), 
+        ObjectId("63933969db296f66b790c8dc"), 
+        ObjectId("6393396bdb296f66b790c8de"), 
+        ObjectId("6393396cdb296f66b790c8e0"), 
+        ObjectId("6393396ddb296f66b790c8e1"), 
+        ObjectId("6393396ddb296f66b790c8e2"), 
+        ObjectId("6393396fdb296f66b790c8e4"), 
+        ObjectId("63933971db296f66b790c8e5"), 
+        ObjectId("63933972db296f66b790c8e7"), 
+        ObjectId("63933974db296f66b790c8e9"), 
+        ObjectId("63933977db296f66b790c8eb"), 
+        ObjectId("63933978db296f66b790c8ec"), 
+        ObjectId("63933978db296f66b790c8ed"), 
+        ObjectId("63933979db296f66b790c8ee"), 
+        ObjectId("63933979db296f66b790c8ef"), 
+        ObjectId("6393397adb296f66b790c8f0"), 
+        ObjectId("6393397bdb296f66b790c8f1"), 
+        ObjectId("6393397ddb296f66b790c8f3"), 
+        ObjectId("6393397ddb296f66b790c8f4"), 
+        ObjectId("6393397edb296f66b790c8f5"), 
+        ObjectId("63933980db296f66b790c8f7"), 
+        ObjectId("63933980db296f66b790c8f8"), 
+        ObjectId("63933981db296f66b790c8f9"), 
+        ObjectId("63933982db296f66b790c8fa"), 
+        ObjectId("63933982db296f66b790c8fb"), 
+        ObjectId("63933984db296f66b790c8fe"), 
+        ObjectId("63933986db296f66b790c900"), 
+        ObjectId("63933987db296f66b790c901"), 
+        ObjectId("63933987db296f66b790c902"), 
+        ObjectId("63933988db296f66b790c903"), 
+        ObjectId("63933989db296f66b790c904"), 
+        ObjectId("6393398adb296f66b790c905"), 
+        ObjectId("6393398bdb296f66b790c906"), 
+        ObjectId("6393398ddb296f66b790c907"), 
+        ObjectId("63933990db296f66b790c908"), 
+        ObjectId("63933990db296f66b790c909"), 
+        ObjectId("63933991db296f66b790c90a"), 
+        ObjectId("63933992db296f66b790c90b"), 
+        ObjectId("63933994db296f66b790c90c"), 
+        ObjectId("63933994db296f66b790c90d"), 
+        ObjectId("63933995db296f66b790c90e"), 
+        ObjectId("63933995db296f66b790c90f"), 
+        ObjectId("63933996db296f66b790c910"), 
+        ObjectId("63933997db296f66b790c911"), 
+        ObjectId("63933998db296f66b790c913"), 
+        ObjectId("6393399adb296f66b790c914"), 
+        ObjectId("6393399bdb296f66b790c915"), 
+        ObjectId("6393399fdb296f66b790c916"), 
+        ObjectId("639339a0db296f66b790c917"), 
+        ObjectId("639339a2db296f66b790c919"), 
+        ObjectId("639339a3db296f66b790c91a"), 
+        ObjectId("639339a4db296f66b790c91b"), 
+        ObjectId("639339a4db296f66b790c91c"), 
+        ObjectId("639339a5db296f66b790c91d"), 
+        ObjectId("639339a6db296f66b790c91e"), 
+        ObjectId("639339a7db296f66b790c91f"), 
+        ObjectId("639339a7db296f66b790c920"), 
+        ObjectId("639339a8db296f66b790c921"), 
+        ObjectId("639339a9db296f66b790c922"), 
+        ObjectId("639339aadb296f66b790c923"), 
+        ObjectId("639339abdb296f66b790c924"), 
+        ObjectId("639339abdb296f66b790c925"), 
+        ObjectId("639339addb296f66b790c926"), 
+        ObjectId("639339b0db296f66b790c928"), 
+        ObjectId("639339b3db296f66b790c92b"), 
+        ObjectId("639339b4db296f66b790c92c"), 
+        ObjectId("639339b5db296f66b790c92d"), 
+        ObjectId("639339b5db296f66b790c92e"), 
+        ObjectId("639339b6db296f66b790c92f"), 
+        ObjectId("639339b7db296f66b790c930"), 
+        ObjectId("639339b8db296f66b790c931"), 
+        ObjectId("639339b9db296f66b790c932"), 
+        ObjectId("639339badb296f66b790c934"), 
+        ObjectId("639339badb296f66b790c935"), 
+        ObjectId("639339bbdb296f66b790c936"), 
+        ObjectId("639339bcdb296f66b790c937"), 
+        ObjectId("639339bedb296f66b790c939"), 
+        ObjectId("639339bedb296f66b790c93a"), 
+        ObjectId("639339bfdb296f66b790c93b"), 
+        ObjectId("639339c0db296f66b790c93d"), 
+        ObjectId("639339c1db296f66b790c93e"), 
+        ObjectId("639339c1db296f66b790c93f"), 
+        ObjectId("639339c3db296f66b790c940"), 
+        ObjectId("639339c4db296f66b790c941"), 
+        ObjectId("639339c5db296f66b790c943"), 
+        ObjectId("639339c6db296f66b790c944"), 
+        ObjectId("639339c7db296f66b790c945"), 
+        ObjectId("639339cadb296f66b790c947"), 
+        ObjectId("639339cadb296f66b790c948"), 
+        ObjectId("639339ccdb296f66b790c94a"), 
+        ObjectId("639339cddb296f66b790c94b"), 
+        ObjectId("639339cfdb296f66b790c94c"), 
+        ObjectId("63c839dabaae019ede05620c"), 
+        ObjectId("63c8d10e6e70c78e4fbe5f30"), 
+        ObjectId("63e35769d1d844a751ac8fd4"), 
+        ObjectId("63e35782d1d844a751ac8fd5"), 
+        ObjectId("6400c3b291d48e74b86bd600"), 
+        ObjectId("6406182e1083c4936828eef9"), 
+        ObjectId("6407935e239ddee09828fa21"), 
+        ObjectId("641fae8822112c238fe4f11b"), 
+        ObjectId("641fae8822112c238fe4f11f"), 
+        ObjectId("641fae8922112c238fe4f125"), 
+        ObjectId("6422627d22112c238fe76508"), 
+        ObjectId("642c3dfb73a9ae83e0e38d8d"), 
+        ObjectId("642c3dfc3164d2a8c8e37c76"), 
+        ObjectId("643ea7434ab61d706fcaabc3"), 
+        ObjectId("64516cabc0984a105ad015db"), 
+        ObjectId("645327d97c1cb800c4cab1e6"), 
+        ObjectId("6457346d2039a9f8da912cff"), 
+        ObjectId("6469b867d0b268e34094288b"), 
+        ObjectId("6470295e5396bb1bf6f4a644"), 
+        ObjectId("647622c51f4267ed2205de2a"), 
+        ObjectId("648a176cb0cdc20599075574"), 
+        ObjectId("648a176db0cdc20599075578"), 
+        ObjectId("648c89c30ab292c42706076a"), 
+        ObjectId("65b750af5d1c861117955b0a"), 
+        ObjectId("65b7ccc8999193485b8c6f79"), 
+        ObjectId("660c6abc81c6b306bbe8be6f"), 
+        ObjectId("660c6ac581c6b306bbe8be73"), 
+        ObjectId("663da42c5e900a8237eda70d"), 
+        ObjectId("6642b77e5e900a8237edac8a"), 
+        ObjectId("664aa2e7388b3944ef509286"), 
+        ObjectId("66557e79c50b4cbb5cedaafa"), 
+        ObjectId("665f77042bf73ed90feb6839"), 
+        ObjectId("665f77092bf73ed90feb683d"), 
+        ObjectId("66630412fec305ee7f493206"), 
+        ObjectId("66630c46fec305ee7f493218"), 
+        ObjectId("6666825621a4d73aaab77d29"), 
+        ObjectId("6669b54f407365630c49348c"), 
+        ObjectId("666b02f8073edefd4d4937fa"), 
+        ObjectId("666bce750a26598bcf9784c3"), 
+        ObjectId("668309225eb99e619e1e67a3"), 
+        ObjectId("668309355eb99e619e1e67a7"), 
+        ObjectId("66830938ef45c84f071e6209"), 
+        ObjectId("668316115eb99e619e1e67b8"), 
+        ObjectId("668ed77a5eb99e619e1e759c"), 
+        ObjectId("669b6bbe8e9b66eb9bbeda7a"), 
+        ObjectId("66a7d6f59ee40697c7c0b166"), 
+        ObjectId("66aa46ad7cb352cda0c0b56b"), 
+        ObjectId("66ab87338c57a26005523886"), 
+        ObjectId("66c64a2d7c4bd270ccdc8bc9"), 
+        ObjectId("66cf2b200a5777864da86ee1"), 
+        ObjectId("66d09f40fdcd9324061581ab"), 
+        ObjectId("66da1d07236a85bb23a9f2db"), 
+        ObjectId("66eb076009343ccdc5e974d1"), 
+        ObjectId("66eb077e707b331bfbb2322c"), 
+        ObjectId("66eb078309343ccdc5e974d5"), 
+        ObjectId("66eb0784707b331bfbb23230"), 
+        ObjectId("66eb079609343ccdc5e974d9"), 
+        ObjectId("66eb079a09343ccdc5e974dd"), 
+        ObjectId("66f41fbe5074dcd232d3aaf2"), 
+        ObjectId("66f41ff136ae232f14ebd77a"), 
+        ObjectId("671f45201eef5d22d55f8fe9"), 
+        ObjectId("67227be4816a86b336d49c6a"), 
+        ObjectId("672280fb3955e71f0356a3af"), 
+        ObjectId("67228116816a86b336d49c74"), 
+        ObjectId("672b9623816a86b336d4ae27"), 
+        ObjectId("6734fcaeb97f4a1582cd2b54"), 
+        ObjectId("676088100c6b0e1df8f18800"), 
+        ObjectId("678e6f4ddcda5dba11a44be5"), 
+        ObjectId("67909634dafd08e80fa6f88b"), 
+        ObjectId("67bcfa560a1ce2bd591f84bf"), 
+        ObjectId("67c717b898be1695951b5e26"), 
+        ObjectId("67c717c0b7bcf99c8fbef712"), 
+        ObjectId("67d09cbd9e6e6fcf19e89059"), 
+        ObjectId("67d2e8390c864a19dd66053b"), 
+        ObjectId("67d98a1da8d85be9628f8cb3"), 
+        ObjectId("67d98a30a8d85be9628f8cb9"), 
+        ObjectId("67e6fa15349a84521b847ea0"), 
+        ObjectId("67e6fa20dde5a2a1a75e9100"), 
+        ObjectId("67f52df225abf6818da1e055"), 
+        ObjectId("6808753f3b7dbb5c3492b86c"), 
+        ObjectId("6808f31aa977d5e348d79aa6"), 
+        ObjectId("681a25c4e8a280451b2eb9f8"), 
+        ObjectId("6821961d73c096bcf04748fc"), 
+        ObjectId("6821a4dc33d8d7ebe8f918e5"), 
+        ObjectId("6821e2cc03e05ab019369629"), 
+        ObjectId("6822f32622c0a7d8f23351cd"), 
+        ObjectId("682f29daa454ca7c64b0b214"), 
+        ObjectId("68343d310687ebed6db94e82"), 
+        ObjectId("683754a3487d7bc10c3a4579"), 
+        ObjectId("683754b8487d7bc10c3a457f"), 
+        ObjectId("683754b9a454ca7c64b0b7b6"), 
+        ObjectId("68387840a454ca7c64b0bad8"), 
+        ObjectId("684fb3cfd08947c4d9568258"), 
+        ObjectId("6858c518d54e6042b0bbb095"), 
+        ObjectId("685c213223cc378fbde81377"), 
+        ObjectId("685eb7f3cc9125479c3ad0e0"), 
+        ObjectId("686229bf2a26b9235f135465"), 
+        ObjectId("686e99ffe7035839ffcd0d6c"), 
+        ObjectId("687a4e57dc3570b6ad01ae87"), 
+        ObjectId("6883b31cb2eb61c0dc01b44e"), 
+        ObjectId("689ac9cfc65da4bfcae8d2e4"), 
+        ObjectId("68a3415a3e721ca285a8badc"), 
+        ObjectId("68b54f82937b1d0c62100ed3"), 
+        ObjectId("68b811e3b5206507a6198067"), 
+        ObjectId("68c7bc18c23b1ec7371b138e"), 
+        ObjectId("68cd165f49489648a878810f"), 
+        ObjectId("68cd264a8eba19e1e4788126"), 
+        ObjectId("68cd26a2ffbddc509bde87f4"), 
+        ObjectId("68cd47af79176117987f4a9e"), 
+        ObjectId("68cd602daf03fd95107f4ab4"), 
+        ObjectId("68cd602daf03fd95107f4ab7"), 
+        ObjectId("68ce43e20dd51efa571cf32b"), 
+        ObjectId("68ce496b8dcc55ec908c1709"), 
+        ObjectId("68d3e91665eda4dbfd3c2f3a"), 
+        ObjectId("68e6893c0d2efd0c5a5637cf"), 
+        ObjectId("68e8a9e186ddc3ffe3633208"), 
+        ObjectId("68e8a9e186ddc3ffe363320b"), 
+        ObjectId("68e8ee96c75e75e405d9a1fc"), 
+        ObjectId("68fb607e29091f5b9b4f8321"), 
+        ObjectId("68fb69428eb920a23eab2604"), 
+        ObjectId("68fc741d729f0167c7b1358f"), 
+        ObjectId("68ff4582143042fbd9a8a231"), 
+        ObjectId("690060c0bfe1603c2cc86e84"), 
+        ObjectId("6901aac6e4ff868ce9cd7ca6"), 
+        ObjectId("6901ac5876cc15e362bdc434"), 
+        ObjectId("6901af4e9b2c5c2080e91551"), 
+        ObjectId("6901bcf390298a71b8360d5a"), 
+        ObjectId("6901bcf390298a71b8360d5d"), 
+        ObjectId("6901bde590298a71b8360d62"), 
+        ObjectId("690309e94d24da66a5b2c344"), 
+        ObjectId("690484bfc22406c7900f7ac0"), 
+        ObjectId("69048af683daf0818e43ee1c"), 
+        ObjectId("69048c1f9ee1496031f1358c"), 
+        ObjectId("690a0d0487e1829af30e50ba"), 
+        ObjectId("690b5de5ebe09c2b3c03382f"), 
+        ObjectId("690c966402295ded8afbab70"), 
+        ObjectId("690c9ffcda41b71eb264d3d7"), 
+        ObjectId("690dc1e661b91276dbc485c2"), 
+        ObjectId("690dcab7096e1442c66e1004"), 
+        ObjectId("690dcb869bd5423b4c2ee386"), 
+        ObjectId("691ebcb122c082f20be35ad5"), 
+        ObjectId("69281a7c75114f11542ce917"), 
+        ObjectId("69327afef52376d20c9b0913")
+    ],
+    "ownerID": [ 
+        ObjectId("6364e1a45c484101eaba341d")
+    ],
+    "approvedAt": ISODate("2025-12-19T11:38:12.251Z"),
+    "hiredAt": "",
+    "job": {
+        "requirements": {
+            "education": [],
+            "skills": [
+                {
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "canonical": [
+                                "java ( computer programming )"
+                            ],
+                            "canonicalDetails": [
+                                {
+                                    "acronym": false,
+                                    "canonical": true,
+                                    "canonical_id": "91846_10616_99957_188371_10617",
+                                    "canonical_name": "java ( computer programming )",
+                                    "category": [
+                                        [
+                                            "others"
+                                        ]
+                                    ],
+                                    "skill": "java ( computer programming )",
+                                    "skill_fine_text": "java ( computer programming )",
+                                    "source": "Manually Annotated",
+                                    "subcategory": [
+                                        [
+                                            [
+                                                "others"
+                                            ]
+                                        ]
+                                    ],
+                                    "syntactical": true,
+                                    "syntacticalID": "",
+                                    "syntacticalName": "Java (computer programming)",
+                                    "type": [
+                                        "Professional Keywords"
+                                    ]
+                                }
+                            ],
+                            "classifications": [
+                                {
+                                    "prediction": "Job Requirement",
+                                    "sentence": "java developer"
+                                }
+                            ],
+                            "confidenceScore": 1,
+                            "derived": [],
+                            "eligibilityCheck": "Required",
+                            "entityID": "5bbb5cccf1134a3712880518",
+                            "importance": "High",
+                            "industry": {
+                                "information_technology": 1
+                            },
+                            "line": "java developer",
+                            "matchType": "Matcher",
+                            "ontology": true,
+                            "originalEC": "Required",
+                            "relations": [],
+                            "score": 1,
+                            "text": "java",
+                            "yearsOfExperienceMax": 50,
+                            "yearsOfExperienceMin": 0
+                        }
+                    ]
+                }
+            ],
+            "certifications": [],
+            "licences": [],
+            "noticePeriod": {
+                "eligibilityCheck": "Not Required",
+                "text": "",
+                "days": 0,
+                "negotiable": false
+            },
+            "workPermit": [],
+            "yearsOfExperience": {
+                "text": "0-50 Years",
+                "eligibilityCheck": "Preferred",
+                "minYears": 0,
+                "maxYears": 50,
+                "negotiable": true,
+                "confidenceScore": 1
+            },
+            "gender": {
+                "text": "Any",
+                "label": "Any",
+                "eligibilityCheck": "Required"
+            },
+            "languagesKnown": [],
+            "age": {
+                "text": "",
+                "eligibilityCheck": "Not Required",
+                "minInYears": 0,
+                "maxInYears": 0,
+                "confidenceScore": 1
+            },
+            "nationality": [],
+            "maritalStatus": {
+                "eligibilityCheck": "Not Required",
+                "status": "Any"
+            },
+            "passport": {
+                "eligibilityCheck": "Not Required",
+                "mandatory": false
+            },
+            "physicalRequirement": {
+                "text": "",
+                "height": {
+                    "eligibilityCheck": "Not Required",
+                    "minHeight": 0,
+                    "maxHeight": 0,
+                    "unit": "cm"
+                },
+                "weight": {
+                    "eligibilityCheck": "Not Required",
+                    "unit": "kgs",
+                    "minWeight": 0,
+                    "maxWeight": 0
+                },
+                "moveObjects": {
+                    "eligibilityCheck": "Not Required",
+                    "upTo": 0,
+                    "unit": "kgs"
+                },
+                "liftObjects": {
+                    "eligibilityCheck": "Not Required",
+                    "upTo": 0,
+                    "unit": "kgs"
+                }
+            },
+            "vehicleRequirement": {
+                "twoWheeler": false,
+                "fourWheeler": false,
+                "eligibilityCheck": "Not Required"
+            },
+            "militaryHistory": {
+                "eligibilityCheck": "Not Required",
+                "status": false
+            }
+        },
+        "details": {
+            "jobTitle": {
+                "text": "java developer",
+                "entityID": "5bc70dbd5e801c57a520aad8",
+                "jobType": "direct hire",
+                "jobTitles": [
+                    {
+                        "jobTitle": "java developer",
+                        "details": {
+                            "job_title": "java developer",
+                            "canonical": true,
+                            "job_level_canonical": true,
+                            "canonical_name": "java developer",
+                            "job_level_canonical_name": "",
+                            "acronym": false,
+                            "plural": false,
+                            "job_profiles": [
+                                "developer"
+                            ],
+                            "job_profiles_type": [
+                                []
+                            ],
+                            "job_profiles_canonical": [
+                                "developer"
+                            ],
+                            "job_levels": [],
+                            "job_levels_type": [],
+                            "job_levels_canonical": [],
+                            "keywords": [
+                                "java"
+                            ],
+                            "specializations": [],
+                            "synonyms": [],
+                            "skills": [],
+                            "skills_frequencies": [],
+                            "total_skills": [],
+                            "total_skills_fequencies": [],
+                            "similar_titles": {
+                                "titles": [],
+                                "scores": []
+                            },
+                            "job_type_code": "H:Professional Roles",
+                            "base_role": false,
+                            "main_role": false,
+                            "base_role_name": [
+                                "java enterprise edition developer"
+                            ],
+                            "main_role_name": [
+                                "java enterprise edition developer"
+                            ],
+                            "industries": [],
+                            "syntactical": true,
+                            "syntacticalID": "5bc70dbd5e801c57a520aad8",
+                            "syntacticalName": "Java Developer",
+                            "pickle_version": "87.0.0.0",
+                            "onet_data": {
+                                "Code": "",
+                                "Occupation": "",
+                                "SingularizedOccupation": "",
+                                "Industries": [
+                                    {
+                                        "industry": "Information",
+                                        "score": ""
+                                    },
+                                    {
+                                        "industry": "Professional, Scientific, and Technical Services",
+                                        "score": ""
+                                    }
+                                ],
+                                "Projected Growth": "",
+                                "Projected Job Openings": "",
+                                "Job Family": "Computer and Mathematical",
+                                "Occupation Types": "",
+                                "Job Zone": ""
+                            },
+                            "granularity_level": 1.0,
+                            "canonical_id": "91846_134507",
+                            "mongo_id": "5bc70dbd5e801c57a520aad8"
+                        },
+                        "canonical": "java developer",
+                        "canonicalDetails": {
+                            "job_title": "java developer",
+                            "canonical": true,
+                            "job_level_canonical": true,
+                            "canonical_name": "java developer",
+                            "job_level_canonical_name": "",
+                            "acronym": false,
+                            "plural": false,
+                            "job_profiles": [
+                                "developer"
+                            ],
+                            "job_profiles_type": [
+                                []
+                            ],
+                            "job_profiles_canonical": [
+                                "developer"
+                            ],
+                            "job_levels": [],
+                            "job_levels_type": [],
+                            "job_levels_canonical": [],
+                            "keywords": [
+                                "java"
+                            ],
+                            "specializations": [],
+                            "synonyms": [],
+                            "skills": [],
+                            "skills_frequencies": [],
+                            "total_skills": [],
+                            "total_skills_fequencies": [],
+                            "similar_titles": {
+                                "titles": [],
+                                "scores": []
+                            },
+                            "job_type_code": "H:Professional Roles",
+                            "base_role": false,
+                            "main_role": false,
+                            "base_role_name": [
+                                "java enterprise edition developer"
+                            ],
+                            "main_role_name": [
+                                "java enterprise edition developer"
+                            ],
+                            "industries": [],
+                            "syntactical": true,
+                            "syntacticalID": "5bc70dbd5e801c57a520aad8",
+                            "syntacticalName": "Java Developer",
+                            "pickle_version": "87.0.0.0",
+                            "onet_data": {
+                                "Code": "",
+                                "Occupation": "",
+                                "SingularizedOccupation": "",
+                                "Industries": [
+                                    {
+                                        "industry": "Information",
+                                        "score": ""
+                                    },
+                                    {
+                                        "industry": "Professional, Scientific, and Technical Services",
+                                        "score": ""
+                                    }
+                                ],
+                                "Projected Growth": "",
+                                "Projected Job Openings": "",
+                                "Job Family": "Computer and Mathematical",
+                                "Occupation Types": "",
+                                "Job Zone": ""
+                            },
+                            "granularity_level": 1.0,
+                            "canonical_id": "91846_134507",
+                            "mongo_id": "5bc70dbd5e801c57a520aad8"
+                        },
+                        "relations": [],
+                        "profile": [
+                            "developer"
+                        ],
+                        "profileType": [],
+                        "profileDetails": [
+                            {
+                                "vocab": "developer",
+                                "formats": [
+                                    [
+                                        "singular",
+                                        "plural"
+                                    ]
+                                ],
+                                "vocab_type": [
+                                    "DICTIONARY"
+                                ],
+                                "skip": false,
+                                "root_form": "developer",
+                                "id": "134507",
+                                "entities": {},
+                                "pos_tag": [
+                                    "noun"
+                                ],
+                                "data": [
+                                    {
+                                        "job_title": "developer",
+                                        "canonical": false,
+                                        "job_level_canonical": true,
+                                        "canonical_name": "software engineer",
+                                        "job_level_canonical_name": "",
+                                        "acronym": false,
+                                        "plural": false,
+                                        "job_profiles": [
+                                            "developer"
+                                        ],
+                                        "job_profiles_type": [
+                                            []
+                                        ],
+                                        "job_profiles_canonical": [
+                                            "developer"
+                                        ],
+                                        "job_levels": [],
+                                        "job_levels_type": [],
+                                        "job_levels_canonical": [],
+                                        "keywords": [],
+                                        "specializations": [],
+                                        "synonyms": [],
+                                        "skills_details": [
+                                            {
+                                                "skill": "",
+                                                "freq": 1,
+                                                "canonical_freq": 1,
+                                                "job_level_canonical_freq": 1,
+                                                "industries": {
+                                                    "information_technology": {
+                                                        "freq": 1,
+                                                        "canonical_freq": 1,
+                                                        "job_level_canonical_freq": 1
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "skills": [],
+                                        "skills_frequencies": [],
+                                        "total_skills": [],
+                                        "total_skills_fequencies": [],
+                                        "similar_titles": {
+                                            "titles": [],
+                                            "scores": []
+                                        },
+                                        "job_type_code": "H:Professional Roles",
+                                        "translations": [
+                                            {
+                                                "entity": "desarrollador",
+                                                "language": "Spanish",
+                                                "languageCode": "ES"
+                                            },
+                                            {
+                                                "entity": "entwickler",
+                                                "language": "German",
+                                                "languageCode": "DE"
+                                            },
+                                            {
+                                                "entity": "développeur",
+                                                "language": "French",
+                                                "languageCode": "FR"
+                                            },
+                                            {
+                                                "entity": "deweloper",
+                                                "language": "Polish",
+                                                "languageCode": "PL"
+                                            },
+                                            {
+                                                "entity": "sviluppatore",
+                                                "language": "Italian",
+                                                "languageCode": "IT"
+                                            },
+                                            {
+                                                "entity": "مطور",
+                                                "language": "Arabic",
+                                                "languageCode": "AR"
+                                            },
+                                            {
+                                                "entity": "開発者",
+                                                "language": "Japanese",
+                                                "languageCode": "JA"
+                                            },
+                                            {
+                                                "entity": "kehittäjä",
+                                                "language": "Finnish",
+                                                "languageCode": "FI"
+                                            },
+                                            {
+                                                "entity": "projectontwikkelaar",
+                                                "language": "Dutch",
+                                                "languageCode": "NL"
+                                            }
+                                        ],
+                                        "base_role": false,
+                                        "main_role": false,
+                                        "base_role_name": [
+                                            "information technology programmer"
+                                        ],
+                                        "main_role_name": [
+                                            "information technology programmer"
+                                        ],
+                                        "industries": [],
+                                        "pickle_version": "87.0.0.0",
+                                        "onet_data": {
+                                            "Code": "",
+                                            "Occupation": "",
+                                            "SingularizedOccupation": "",
+                                            "Industries": [
+                                                {
+                                                    "industry": "Information",
+                                                    "score": ""
+                                                },
+                                                {
+                                                    "industry": "Professional, Scientific, and Technical Services",
+                                                    "score": ""
+                                                }
+                                            ],
+                                            "Projected Growth": "",
+                                            "Projected Job Openings": "",
+                                            "Job Family": "Computer and Mathematical",
+                                            "Occupation Types": "",
+                                            "Job Zone": ""
+                                        },
+                                        "granularity_level": 1.0,
+                                        "canonical_id": "205352_140748",
+                                        "mongo_id": "5bc70e5b5e801c57a520e71a"
+                                    },
+                                    {
+                                        "job_profile": "developer",
+                                        "canonical": true,
+                                        "acronym": false,
+                                        "plural": false,
+                                        "canonical_name": "developer",
+                                        "similar_profiles": [],
+                                        "profile_categories": [],
+                                        "job_type_code": "H:Professional Roles",
+                                        "translations": [
+                                            {
+                                                "entity": "entwickler",
+                                                "language": "German",
+                                                "languageCode": "DE"
+                                            }
+                                        ],
+                                        "granularity_level": 1,
+                                        "canonical_id": "134507",
+                                        "mongo_id": "5bbb455e5e801c2f4ddc5c67"
+                                    },
+                                    {
+                                        "job_specialization": "developer",
+                                        "canonical": true,
+                                        "canonical_name": "developer",
+                                        "profiles": [
+                                            "analyst"
+                                        ],
+                                        "profiles_count": [
+                                            1
+                                        ],
+                                        "count": 1,
+                                        "translations": [
+                                            {
+                                                "entity": "entwickler",
+                                                "language": "German",
+                                                "languageCode": "DE"
+                                            }
+                                        ],
+                                        "canonical_id": "134507",
+                                        "mongo_id": "5bd1ad675e801c56e6484647"
+                                    },
+                                    {
+                                        "organisation_sector": "developer",
+                                        "canonical": true,
+                                        "acronym": false,
+                                        "canonical_name": "developer",
+                                        "canonical_id": "134507",
+                                        "mongo_id": "5bbf3bdd5e801c24b0f17fcd"
+                                    }
+                                ],
+                                "values": [
+                                    "developer",
+                                    "developer",
+                                    "developer",
+                                    "developer"
+                                ],
+                                "display_name": "developer",
+                                "has_relations": [
+                                    false,
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "check_context": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "entity_type": [
+                                    "job_title",
+                                    "job_profile",
+                                    "job_specialization",
+                                    "organisation_sector"
+                                ],
+                                "language": [
+                                    "English",
+                                    "English",
+                                    "English",
+                                    "English"
+                                ],
+                                "canonical": [
+                                    false,
+                                    true,
+                                    true,
+                                    true
+                                ]
+                            }
+                        ],
+                        "level": [],
+                        "levelDetails": [],
+                        "jobTitleNoLevel": "",
+                        "jobCategory": "",
+                        "jobSpecialization": [],
+                        "jobSpecializationCanonical": [],
+                        "confidenceScore": 1
+                    }
+                ],
+                "found": false,
+                "confidenceScore": 1
+            },
+            "jobTiming": [],
+            "workingHours": {
+                "eligibilityCheck": "Not Required",
+                "minHours": 8,
+                "maxHours": 9,
+                "period": "Per Day",
+                "minDays": 5,
+                "maxDays": 6,
+                "daysPeriod": "Per Week"
+            },
+            "company": {
+                "text": "TRC Talent Solutions QA",
+                "description": "At TRC, we take pride in fulfilling our opportunity to add value to our clients business as their staffing partner, while working tirelessly to connect thousands of individuals each year with work opportunities where they can meet the needs of their families and have the potential to build their careers.",
+                "canonical": [],
+                "canonicalDetails": []
+            },
+            "locations": [
+                {
+                    "text": "U.S. Rte 66,Albuquerque,NM",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "albuquerque",
+                    "district": "",
+                    "state": "newmexico",
+                    "stateCode": "NM",
+                    "country": "unitedstatesofamerica",
+                    "countryCode": "US",
+                    "postalCode": "87101",
+                    "pin": {
+                        "lat": 35.084103,
+                        "lon": -106.650985
+                    },
+                    "cityCanonical": "albuquerque",
+                    "districtCanonical": "",
+                    "stateCanonical": "new mexico",
+                    "countryCanonical": "united states of america",
+                    "confidenceScore": 1,
+                    "eligibilityCheck": "Preferred",
+                    "circle": {
+                        "radius": 50,
+                        "metricUnit": "mi"
+                    },
+                    "vacancies": 1
+                }
+            ],
+            "offeredSalary": {
+                "text": "",
+                "period": "Per Hour",
+                "currency": "USD",
+                "minvalue": 0,
+                "maxvalue": 0,
+                "negotiable": false,
+                "eligibilityCheck": "Not Required"
+            },
+            "offshore": {
+                "eligibilityCheck": "Not Required",
+                "chance": "No"
+            },
+            "travel": {
+                "eligibilityCheck": "Not Required",
+                "chance": "No",
+                "percentage": 0
+            },
+            "onField": {
+                "eligibilityCheck": "Not Required",
+                "chance": "No",
+                "percentage": 0
+            },
+            "benefits": {
+                "text": "",
+                "benefits": []
+            },
+            "jobDescription": {
+                "text": "<div>java developer</div>"
+            },
+            "responsibilities": {
+                "text": "",
+                "responsibilities": []
+            },
+            "requirements": {
+                "text": "",
+                "requirements": []
+            },
+            "fullText": "",
+            "htmlText": ""
+        },
+        "otherInformation": {
+            "documents": [],
+            "industry": {
+                "scores": {
+                    "accounting_finance": 0.0001,
+                    "administrative_management": 0.0002,
+                    "agriculture_horticulture": 0.0002,
+                    "airport_aviation": 0.0002,
+                    "arts_media": 0.0007,
+                    "banking_insurance": 0.0001,
+                    "education_training": 0.0002,
+                    "energy_mining": 0.0002,
+                    "engineering_manufacturing": 0.0005,
+                    "general_services": 0.0001,
+                    "healthcare_medical": 0,
+                    "hospitality_tourism": 0.001,
+                    "information_technology": 99.9911,
+                    "legal_law": 0,
+                    "logistics_warehouse": 0.0005,
+                    "pharma_drugs": 0.0003,
+                    "sales_marketing": 0.0017,
+                    "sports_club": 0.0017,
+                    "staffing_hr": 0.0009,
+                    "support_service": 0.0002
+                },
+                "classified": [
+                    {
+                        "industryLabel": "Information Technology",
+                        "industryName": "information_technology",
+                        "percentage": 100,
+                        "score": 99.9911
+                    }
+                ],
+                "userModified": false
+            },
+            "newKeys": [],
+            "contextual_derived_skills": [
+                {
+                    "line": "java developer",
+                    "entity": "java development",
+                    "entity_type": "skill",
+                    "canonical_name": "java ( computer programming )",
+                    "score": 0.8899,
+                    "entity_id": "5bbb5b5ef1134a371287b211"
+                },
+                {
+                    "line": "java developer",
+                    "entity": "sun certified java programmer",
+                    "entity_type": "skill",
+                    "canonical_name": "sun certified java developer",
+                    "score": 0.6802,
+                    "entity_id": "64c252ddca5278a60637571b"
+                },
+                {
+                    "line": "java developer",
+                    "entity": "java / ee",
+                    "entity_type": "skill",
+                    "canonical_name": "java 2 enterprise edition",
+                    "score": 0.666,
+                    "entity_id": "6051b96e757ec7d5214f6ab5"
+                },
+                {
+                    "line": "java developer",
+                    "entity": "java technologies",
+                    "entity_type": "skill",
+                    "canonical_name": "java technologies",
+                    "score": 0.6643,
+                    "entity_id": "6051b96d757ec7d5214f6ab4"
+                },
+                {
+                    "line": "java developer",
+                    "entity": "jdk",
+                    "entity_type": "skill",
+                    "canonical_name": "jdk",
+                    "score": 0.6587,
+                    "entity_id": "5bbb5ca6f1134a371287feb0"
+                }
+            ],
+            "possibleSkills": [],
+            "suggestedSkills": [
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9076,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "application programming"
+                        ],
+                        "skill_score": 0.9076,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "application programming"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9018,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "linux shell scripting"
+                        ],
+                        "skill_score": 0.9018,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "linux shell scripting"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9073,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "agile / scrum development process"
+                        ],
+                        "skill_score": 0.9073,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "scrum methodology"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9038,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "javaserver pages"
+                        ],
+                        "skill_score": 0.9038,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "java server pages"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9131,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "spring - boot"
+                        ],
+                        "skill_score": 0.9131,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "spring - boot"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9064,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "soap"
+                        ],
+                        "skill_score": 0.9064,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "soap"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9052,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "json"
+                        ],
+                        "skill_score": 0.9052,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "json"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9078,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "unit testing"
+                        ],
+                        "skill_score": 0.9078,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "unit testing"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9144,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "full - stack"
+                        ],
+                        "skill_score": 0.9144,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "full stack"
+                },
+                {
+                    "eligibilityCheck": "Suggested",
+                    "entityID": "",
+                    "originalEC": "Suggested",
+                    "score": 0.9034,
+                    "skills_details": {
+                        "category": [],
+                        "found": true,
+                        "skill_canonicals": [
+                            "debugging skills"
+                        ],
+                        "skill_score": 0.9034,
+                        "skill_similar": [],
+                        "skill_yoe": [
+                            0,
+                            50
+                        ],
+                        "subcategory": []
+                    },
+                    "text": "debugging skills"
+                }
+            ],
+            "similarSkills": [
+                [
+                    {
+                        "entity": [
+                            "java swing"
+                        ],
+                        "all_scores": [
+                            0.7307
+                        ],
+                        "score": 0.7307,
+                        "avg_score": 0.7307,
+                        "text": "java",
+                        "canonical_name": "java swing"
+                    },
+                    {
+                        "entity": [
+                            "oracle java"
+                        ],
+                        "all_scores": [
+                            0.6991
+                        ],
+                        "score": 0.6991,
+                        "avg_score": 0.6991,
+                        "text": "java",
+                        "canonical_name": "oracle java"
+                    },
+                    {
+                        "entity": [
+                            "javasc"
+                        ],
+                        "all_scores": [
+                            0.6878
+                        ],
+                        "score": 0.6878,
+                        "avg_score": 0.6878,
+                        "text": "java",
+                        "canonical_name": "javasc"
+                    },
+                    {
+                        "entity": [
+                            "java / ee"
+                        ],
+                        "all_scores": [
+                            0.6584
+                        ],
+                        "score": 0.6584,
+                        "avg_score": 0.6584,
+                        "text": "java",
+                        "canonical_name": "java 2 enterprise edition"
+                    },
+                    {
+                        "entity": [
+                            "javac"
+                        ],
+                        "all_scores": [
+                            0.6542
+                        ],
+                        "score": 0.6542,
+                        "avg_score": 0.6542,
+                        "text": "java",
+                        "canonical_name": "javac"
+                    },
+                    {
+                        "entity": [
+                            "java technologies"
+                        ],
+                        "all_scores": [
+                            0.6457
+                        ],
+                        "score": 0.6457,
+                        "avg_score": 0.6457,
+                        "text": "java",
+                        "canonical_name": "java technologies"
+                    },
+                    {
+                        "entity": [
+                            "jdk"
+                        ],
+                        "all_scores": [
+                            0.6388
+                        ],
+                        "score": 0.6388,
+                        "avg_score": 0.6388,
+                        "text": "java",
+                        "canonical_name": "jdk"
+                    },
+                    {
+                        "entity": [
+                            "javabeans"
+                        ],
+                        "all_scores": [
+                            0.6353
+                        ],
+                        "score": 0.6353,
+                        "avg_score": 0.6353,
+                        "text": "java",
+                        "canonical_name": "enterprise javabeans"
+                    },
+                    {
+                        "entity": [
+                            "java se"
+                        ],
+                        "all_scores": [
+                            0.6198
+                        ],
+                        "score": 0.6198,
+                        "avg_score": 0.6198,
+                        "text": "java",
+                        "canonical_name": "java standard edition"
+                    },
+                    {
+                        "entity": [
+                            "javahelp"
+                        ],
+                        "all_scores": [
+                            0.6179
+                        ],
+                        "score": 0.6179,
+                        "avg_score": 0.6179,
+                        "text": "java",
+                        "canonical_name": "javahelp"
+                    },
+                    {
+                        "entity": [
+                            "java scripts"
+                        ],
+                        "all_scores": [
+                            0.6143
+                        ],
+                        "score": 0.6143,
+                        "avg_score": 0.6143,
+                        "text": "java",
+                        "canonical_name": "client - side javascript"
+                    },
+                    {
+                        "entity": [
+                            "sun microsystems java"
+                        ],
+                        "all_scores": [
+                            0.5949
+                        ],
+                        "score": 0.5949,
+                        "avg_score": 0.5949,
+                        "text": "java",
+                        "canonical_name": "sun microsystems java"
+                    },
+                    {
+                        "entity": [
+                            "programming"
+                        ],
+                        "all_scores": [
+                            0.5798
+                        ],
+                        "score": 0.5798,
+                        "avg_score": 0.5798,
+                        "text": "java",
+                        "canonical_name": "programming skills"
+                    },
+                    {
+                        "entity": [
+                            "jvm"
+                        ],
+                        "all_scores": [
+                            0.5785
+                        ],
+                        "score": 0.5785,
+                        "avg_score": 0.5785,
+                        "text": "java",
+                        "canonical_name": "jvm"
+                    },
+                    {
+                        "entity": [
+                            "javap"
+                        ],
+                        "all_scores": [
+                            0.5747
+                        ],
+                        "score": 0.5747,
+                        "avg_score": 0.5747,
+                        "text": "java",
+                        "canonical_name": "javap"
+                    },
+                    {
+                        "entity": [
+                            "c#"
+                        ],
+                        "all_scores": [
+                            0.5743
+                        ],
+                        "score": 0.5743,
+                        "avg_score": 0.5743,
+                        "text": "java",
+                        "canonical_name": "c#"
+                    },
+                    {
+                        "entity": [
+                            "apex programming"
+                        ],
+                        "all_scores": [
+                            0.5543
+                        ],
+                        "score": 0.5543,
+                        "avg_score": 0.5543,
+                        "text": "java",
+                        "canonical_name": "apex programming"
+                    },
+                    {
+                        "entity": [
+                            "netbeans"
+                        ],
+                        "all_scores": [
+                            0.5465
+                        ],
+                        "score": 0.5465,
+                        "avg_score": 0.5465,
+                        "text": "java",
+                        "canonical_name": "netbeans ide"
+                    },
+                    {
+                        "entity": [
+                            "javaos"
+                        ],
+                        "all_scores": [
+                            0.5395
+                        ],
+                        "score": 0.5395,
+                        "avg_score": 0.5395,
+                        "text": "java",
+                        "canonical_name": "javaos"
+                    }
+                ]
+            ],
+            "similarJobTitles": [],
+            "contextualSkills": [
+                {
+                    "all_scores": [
+                        0.8899
+                    ],
+                    "canonical_name": "java ( computer programming )",
+                    "display_name": "Java Development",
+                    "eligibilityCheck": "Contextual",
+                    "entity": [
+                        "java development"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.8899,
+                    "originalEC": "Contextual",
+                    "score": 0.8899,
+                    "skill_scores": 0.72245,
+                    "text": "java developer",
+                    "type": "Tools and Technologies"
+                },
+                {
+                    "all_scores": [
+                        0.6802
+                    ],
+                    "canonical_name": "sun certified java developer",
+                    "display_name": "Sun Certified Java Programmer",
+                    "eligibilityCheck": "Contextual",
+                    "entity": [
+                        "sun certified java programmer"
+                    ],
+                    "entity_type": [
+                        "skill"
+                    ],
+                    "max_score": 0.6802,
+                    "originalEC": "Contextual",
+                    "score": 0.6802,
+                    "skill_scores": 0.79504999977646,
+                    "text": "java developer",
+                    "type": "Professional Abilities"
+                }
+            ],
+            "removedSkills": [],
+            "importantLines": [
+                "java developer",
+                "test 1k profiles"
+            ],
+            "department": "",
+            "organizationUnit": "",
+            "grade": "",
+            "reasonForOpening": "",
+            "bufferEntities": []
+        },
+        "metaData": {
+            "jobPortalURL": "",
+            "jobPortal": "",
+            "jobID": "",
+            "recruiterName": "",
+            "recruiterEmail": [],
+            "recruiterPhone": [],
+            "postedDate": {
+                "text": "",
+                "standard": "",
+                "date": "",
+                "month": "",
+                "year": ""
+            },
+            "expiryDate": {
+                "text": "",
+                "standard": "",
+                "date": "",
+                "month": "",
+                "year": ""
+            },
+            "openDurationInDays": 0,
+            "applyURL": []
+        }
+    },
+    "jobLogo": "/images/trcstaffingUS/logos/6112806bc9147f673d28c6eb_logo_TRC_Logo_PNG_Full_Size.png",
+    "jobBanner": "/images/trcstaffingUS/logos/6112806bc9147f673d28c6eb_6112806bc9147f673d28c6ec_banner_unnamed.png",
+    "flowName": "",
+    "flowID": "",
+    "screeningRounds": [],
+    "qualifyingRounds": [],
+    "customData": {
+        "6112806bc9147f673d28c6eb": {
+            "64b2486aff0f2d44ad1cb85f": {
+                "label": "AppCast",
+                "format": "Drop Down",
+                "value": ""
+            },
+            "64b248832dccefb4fb31c1ec": {
+                "label": "LinkedIn",
+                "format": "Drop Down",
+                "value": ""
+            },
+            "6667dd0c7f508ed12401cdca": {
+                "label": "Parent Account (Only for Manually Created Campaign)",
+                "format": "Text",
+                "value": ""
+            },
+            "68cd4bcf8129b2448a9a53b0": {
+                "label": "Pipeline",
+                "format": "Drop Down",
+                "value": ""
+            },
+            "621f1a121e6fe269da81d31b": {
+                "label": "Account",
+                "format": "Text",
+                "value": ""
+            },
+            "6630a0253ebf904b625acade": {
+                "label": "Job Order Link",
+                "format": "Link",
+                "value": ""
+            },
+            "621f5b82a348b26edabc6543": {
+                "label": "Ordered By",
+                "format": "Text",
+                "value": ""
+            },
+            "621f5bf3a348b26edabc654a": {
+                "label": "SBU1",
+                "format": "Text",
+                "value": ""
+            },
+            "6220bd9d2bb15f268b870e73": {
+                "label": "Estimated Start Date",
+                "format": "Date",
+                "value": ""
+            },
+            "6225d29538ca594ff130f0bf": {
+                "label": "Job Order ID",
+                "format": "Text",
+                "value": ""
+            },
+            "64abb309db7899f5908c77aa": {
+                "label": "Industry Vertical",
+                "format": "Drop Down",
+                "value": ""
+            },
+            "6220c2ef2bb15f268b870e88": {
+                "label": "Worksite",
+                "format": "Text",
+                "value": ""
+            },
+            "67ef929489deea264577e2c6": {
+                "label": "VMS Campaign",
+                "format": "Drop Down",
+                "value": ""
+            },
+            "68c3bdcc8ffead0252fd8f8f": {
+                "label": "Industry",
+                "format": "List",
+                "value": ""
+            }
+        }
+    },
+    "faq": [],
+    "activities": [],
+    "notes": [],
+    "reminders": [],
+    "vendorDetails": [],
+    "MRIPreferences": {
+        "rankMethod": [],
+        "experience": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 6
+        },
+        "education": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "skills": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "industry": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 3
+        },
+        "jobTitle": {
+            "matchRelatedEntities": true,
+            "enable": true,
+            "weightage": 10
+        },
+        "location": {
+            "matchRelatedEntities": false
+        },
+        "YOE": {
+            "minYOE": 0,
+            "maxYOE": 50
+        }
+    },
+    "mriupdated": false,
+    "stats": {
+        "netPromoterScore": {
+            "score": 0,
+            "comment": ""
+        },
+        "profilesCount": {
+            "total": 1666,
+            "candidates": 0,
+            "applicants": 0,
+            "sourced": 0,
+            "internalSourced": 0,
+            "externalSourced": 0,
+            "sourcedRejections": 0,
+            "sourcedApplies": 0,
+            "shortlists": 0
+        },
+        "openings": {
+            "total": 1,
+            "hired": 0,
+            "cancelled": 0,
+            "open": 1
+        }
+    },
+    "clientName": "TRC Talent Solutions",
+    "collections": {
+        "articles": "",
+        "resumes": "",
+        "campaigns": "",
+        "interviews": ""
+    },
+    "metaData": {
+        "companyName": "TRC Talent Solutions QA",
+        "country": {
+            "origin": "US",
+            "name": "United States"
+        },
+        "countryCode": "US",
+        "language": "English",
+        "languageCode": "en",
+        "phoneCode": "",
+        "referenceID": "",
+        "jobSynced": false,
+        "showInterviewMessages": false,
+        "summarizedJD": "",
+        "syncedAt": ""
+    },
+    "healthReport": {
+        "healthy": true,
+        "report": "",
+        "optOutRate": 0,
+        "optOutCount": 0,
+        "lowEngageAIResponse": true,
+        "highOptOutRate": false
+    },
+    "campaignModules": {
+        "enabled": true,
+        "sourceAI": {
+            "enabled": true,
+            "portalSourcing": {
+                "enabled": true,
+                "reachOutMessages": []
+            }
+        },
+        "matchAI": {
+            "enabled": true
+        },
+        "engageAI": {
+            "enabled": true,
+            "calculateJobFitScore": false,
+            "calculateImpersonation": false,
+            "impersonationLevel": "roundLevel",
+            "jobFitPreferences": {
+                "answerContext": {
+                    "enable": true,
+                    "weightage": 10
+                },
+                "accentNeutrality": {
+                    "enable": true,
+                    "weightage": 10
+                },
+                "fluencyFillers": {
+                    "enable": true,
+                    "weightage": 10,
+                    "fillersThresholdCount": 10,
+                    "pauseThresholdTime": 1000
+                },
+                "fluencyResponsiveness": {
+                    "enable": true,
+                    "weightage": 10,
+                    "thresholdFluencyResponseStartIgnoreTime": 2
+                },
+                "spokenProficiency": {
+                    "enable": true,
+                    "weightage": 10
+                },
+                "pronunciation": {
+                    "enable": true,
+                    "weightage": 10
+                }
+            }
+        },
+        "qualifyAI": {
+            "enabled": true
+        }
+    },
+    "createdFrom": {
+        "UI": true,
+        "systemip": "10.50.21.33",
+        "userid": "6364e1a45c484101eaba341d"
+    }
+}

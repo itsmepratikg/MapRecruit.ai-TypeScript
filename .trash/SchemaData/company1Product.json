@@ -1,0 +1,17 @@
+[
+    {
+        "_id": "6112806bc9147f673d28c6eb",
+        "productSettings": {
+            "productDomain": "https://trcqa.maprecruit.com",
+            "jobSeekerDomain": "https://trcqa.maprecruit.com",
+            "landingPageURL": "https://www.maprecruit.ai",
+            "acceptedEmailDomains": [],
+            "productTitle": "Maprecruit",
+            "registrationConfirmationEmail": false,
+            "referralLimit": null
+        },
+        "communicationSettings": {
+            "supportEmail": "customersuccess@trctalent.com"
+        }
+    }
+]

@@ -1,0 +1,238 @@
+{
+    "_id": ObjectId("693950cb2f7228dcaad69bdf"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("693155d5f2242275bd7148e3"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("625f8e49924c541edd6a1e6c"),
+    "createdAt": ISODate("2025-12-10T10:51:55.882Z"),
+    "updatedAt": ISODate("2025-12-24T10:01:52.912Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "54805866",
+        "title": "voice call test 1",
+        "locations": [
+            {
+                "text": "Atlanta,GA",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "atlanta",
+                "district": "",
+                "state": "georgia",
+                "stateCode": "GA",
+                "country": "unitedstatesofamerica",
+                "countryCode": "US",
+                "postalCode": "30301",
+                "pin": {
+                    "lat": 33.76,
+                    "lon": -84.42
+                },
+                "cityCanonical": "atlanta",
+                "districtCanonical": "",
+                "stateCanonical": "georgia",
+                "countryCanonical": "united states of america",
+                "confidenceScore": 1,
+                "eligibilityCheck": "Preferred",
+                "circle": {
+                    "radius": 50,
+                    "metricUnit": "mi"
+                },
+                "vacancies": 1
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "Internal Sourcing",
+        "applicationMethod": "Passive Sourcing",
+        "applicationChannel": "Profile Search",
+        "applicationSource": "",
+        "applicationStatus": "Pending",
+        "applicationPlatform": "Linked by Recruiter",
+        "linkedBy": "Recruiter",
+        "linkedByID": ObjectId("625f8e49924c541edd6a1e6c"),
+        "linkedAt": "",
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": "",
+        "referenceURL": "https://trcqa.maprecruit.com/v4/showcampaign/sourceai/attachpeople/693155d5f2242275bd7148e3?searchid=693950a7de5c22fce152156d",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": false,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 0.0,
+        "actual_mri_score": 0.0,
+        "context_match_score": 0.0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": "",
+        "genAI": [],
+        "experience": {
+            "skills": [],
+            "jobTitle": {
+                "jobTitle": "",
+                "matchedJobTitle": "",
+                "matchType": "",
+                "matchRelation": "",
+                "matchScore": 0.0,
+                "matchSummary": ""
+            },
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.0,
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "profileRelevance": "",
+            "weightage": 10
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchRadius": 0.0,
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "weigtage": 10
+        },
+        "education": {
+            "jobDegreeLevel": "",
+            "matchedDegreelevel": "",
+            "jobDegree": "",
+            "matchedDegree": "",
+            "major": [],
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "weightage": 10
+        },
+        "industry": {
+            "matchedIndustry": "",
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "weightage": 10
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": false,
+        "mriCalculatedDate": "",
+        "searchID": "",
+        "page": ""
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

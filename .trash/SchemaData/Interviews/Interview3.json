@@ -1,0 +1,654 @@
+{
+    "_id": ObjectId("690d875fd977f5066029f21e"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("62c5a8c7250281f99ac58215"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("61b825e415f87d014ee8b4a3"),
+    "createdAt": ISODate("2025-11-07T05:45:03.366Z"),
+    "updatedAt": ISODate("2025-12-24T10:01:52.912Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "40000019",
+        "title": "3rd shift forklift",
+        "locations": [
+            {
+                "text": "Lawrenceville,GA 30044,USA",
+                "tier": "",
+                "address": "Gwinnett County",
+                "area": "",
+                "city": "Lawrenceville",
+                "district": "",
+                "state": "Georgia",
+                "stateCode": "GA",
+                "countryCode": "US",
+                "postalCode": "30044",
+                "pin": {
+                    "lat": 33.9327331,
+                    "lon": -84.0695961
+                },
+                "cityCanonical": "lawrenceville",
+                "districtCanonical": "",
+                "stateCanonical": "georgia",
+                "confidenceScore": 0.0,
+                "eligibilityCheck": "Required",
+                "circle": {
+                    "metricUnit": "mi",
+                    "radius": 15
+                },
+                "vacancies": 5,
+                "country": "UnitedStates",
+                "countryCanonical": "united states"
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "External Sourcing",
+        "applicationMethod": "Active Sourcing",
+        "applicationChannel": "ChatBot",
+        "applicationSource": "TRC Website",
+        "applicationStatus": "Applied",
+        "applicationPlatform": "Careers Page",
+        "linkedBy": "JobSeeker",
+        "linkedByID": ObjectId("690d82b126a7044c6fc6c04f"),
+        "linkedAt": "",
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": "",
+        "referenceURL": "",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": false,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 0.0,
+        "actual_mri_score": 0.0,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2025-12-04T14:17:22.385Z"),
+        "genAI": [
+            {
+                "generatedAt": ISODate("2026-01-05T10:38:19.606Z"),
+                "basePrompt": "\n                            <|begin_of_text|>\n                            <|start_header_id|>system<|end_header_id|>\n                            You are a Professional Summarizer and Commentator. \n                            Your task is to evaluate the relevance of a resume profile to a given job description. \n                            Provide a summary of the match.\n                            Ensure accuracy and avoid any misleading or incorrect information.\n\n                            Follow these instructions:\n\n                            1. Read the Job Description and Resume Profile sections separately and carefully.\n                            2. Pay close attention to the requirements and qualifications listed in the job description.\n                            3. Compare these with the information provided in the resume profile.\n                            4. Provide a clear and concise summary of how well the resume matches the job requirements under 300 words.\n                            5. Only evaluate if the resume profile contains basic matching information.\n                            6. Do not Provide score or any metrics for the match.\n                            6. Limit the response to 300 words.\n                            7. job description will be inside of <job description> and </job description> tags.\n                            8. resume will be inside of <resume> and </resume> tags.\n                            <|eot_id|>\n                            <|start_header_id|>user<|end_header_id|>\n                           <job description> ** Job Description ** \n *Job Title*: Forklift Op\n\n*Location:*\n  • Lawrenceville,GA 30044,USA\n\n*Years Of Experience*: 1.0 to 50.0\n\nRequired Skills:\n  • Packing\n  • create bulk orders\n  • Perform cycle counting\n  • Computer knowledge\n  • forklift\n  • Picking , Packing\n  • Inventory control\n\nPreferred Skills:\n  • warehouse\n  • integrity\n  • Good hand - eye coordination\n  • RF scanners\n  • pallet jack\n  • cherry picker\n  • professional manner\n  • punctuality\n\n\n*Job Timings*: 1st shift&6 : 30am - 3pm&2nd shift&3pm - 11 : 30pm\n\n*Certifications*:\n  • ACA\n\nJob Title: Forklift Operator \nJob Type: Full-time Hours \nJob Summary: \nAre you an experienced and skilled Forklift Operator seeking a rewarding opportunity? Look no What We Offer: Joining our team as a Forklift Operator comes with a range of benefits and perks: Competitive market wages: We believe in fair compensation that recognizes your expertise and dedication. Clean and safe work environments: Our commitment to cleanliness and safety ensures a pleasant and secure workplace for our employees. Health, dental, and vision insurance: Your well-being is important to us, and we provide comprehensive coverage to support your health needs. Earned paid time off: We understand the value of work-life balance and offer paid time off so you can recharge and enjoy your personal time. Responsibilities: \nAs a valued Forklift Operator, your duties will include: Safely operating forklifts, pallet jacks, and hand trucks to efficiently move, stack, load, and unload materials, products, or equipment. Transporting goods to designated storage areas or loading docks, adhering to established procedures and safety guidelines. Verifying and meticulously documenting incoming and outgoing materials to ensure accuracy and completeness. Regularly inspecting and maintaining equipment, promptly reporting any mechanical issues or malfunctions to supervisors. Strictly adhering to safety regulations and operating procedures to prevent accidents, injuries, or damage to equipment or property.Maintaining a clean and organized work environment, including proper storage and labeling of materials and supplies. Collaborating effectively with warehouse staff, truck drivers, and other team members to ensure smooth and efficient operations. Assisting in inventory management by conducting cycle counts and providing accurate information on stock levels. Following company policies and procedures, particularly those related to quality control and compliance. Requirements: \nHigh school diploma or equivalent. Verifiable previous forklift operator certification/license. Strong knowledge of forklift operations and safety procedures. Ability to operate forklifts and other heavy machinery with precision and efficiency.Excellent hand-eye coordination and spatial awareness..Attention to detail and accuracy in recording information and handling materials. Physical stamina and strength to perform tasks involving heavy lifting, prolonged standing, bending, and reaching. Familiarity with warehouse operations and inventory management is preferred. Flexibility to work extended shifts and occasional weekends, as needed. Targeted Skills: \nIn addition to being a skilled forklift operator, proficiency in the following areas is advantageous: Stand-up lift, reach truck, cherry picker operation. RF scanners for order picking and put away. Receiving and pallet building expertise. Industrial truck operation. To apply, please submit your resume, along with any relevant certifications or licenses, to: Resume@trcstaffing.com.  \n\n \nTRC Talent Solutions is proud to be an Equal Opportunity Employer (EOE). All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, age, national origin, protected veteran status, disability status, sexual orientation, gender identity or expression, marital status, genetic information, or any other characteristic protected by law. </job description>\n\n<|eot_id|>\n<|start_header_id|>user<|end_header_id|><resume> ** Resume ** \n \nPratik Gaurav\n+91-7004029399 pratik.gaurav@maprecruit.ai </resume>\n\n<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>",
+                "model": "llama3",
+                "temperature": 0.7,
+                "matchSummary": "The resume provided does not contain any relevant information that matches the requirements and qualifications outlined in the job description for the Forklift Operator position. \n\nKey elements from the job description include specific required skills such as packing, creating bulk orders, cycle counting, computer knowledge, and proficiency in operating forklifts and other warehouse machinery. Additionally, there are preferred skills and certifications, such as ACA certification and experience with RF scanners and pallet jacks, which are important for the role. \n\nHowever, the resume only includes the candidate's name and contact information, lacking any details about their experience, skills, or certifications relevant to the forklift operation or warehouse management. Without this critical information, it is impossible to assess the candidate's suitability for the position or their alignment with the job requirements.\n\nIn summary, the resume does not provide any matching information that would suggest a fit for the Forklift Operator role as described in the job posting."
+            }
+        ],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>Packing</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Packing",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>create bulk orders</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "create bulk orders",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Perform cycle counting</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Perform cycle counting",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Computer knowledge</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Computer knowledge",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>forklift</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "forklift",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Picking , Packing</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Picking , Packing",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Inventory control</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Inventory control",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>warehouse</b></span> <span class='ORPreferredspan'>OR</span> <span><b>warehouse experience</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "warehouse",
+                            "score": 0.8
+                        },
+                        {
+                            "text": "warehouse experience",
+                            "score": 0.8
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>integrity</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "integrity",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "integrity",
+                    "matchType": "Matched",
+                    "matchFrom": "Experience",
+                    "relation": "canonical",
+                    "matchScore": 0.75,
+                    "matchSummary": "Skill found in candidate profile with less experience than required and used this skill long ago.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 1,
+                        "requiredScore": 0,
+                        "yoeScore": 1,
+                        "durationScore": 0.5,
+                        "requiredConfidenceScore": 0.75,
+                        "preferredConfidenceScore": 0.75
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Good hand - eye coordination</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Good hand - eye coordination",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>RF scanners</b></span> <span class='ORPreferredspan'>OR</span> <span><b>RF scanner</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "RF scanners",
+                            "score": 0.5
+                        },
+                        {
+                            "text": "RF scanner",
+                            "score": 0.5
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>pallet jack</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "pallet jack",
+                            "score": 0.5
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>cherry picker</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "cherry picker",
+                            "score": 0.5
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>professional manner</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "professional manner",
+                            "score": 0.25
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>punctuality</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "punctuality",
+                            "score": 0.25
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "Forklift Op",
+                "matchedJobTitle": "",
+                "matchedSkill": "",
+                "matchType": "",
+                "relation": "",
+                "matchScore": 0.0,
+                "matchSummary": "Did not find <b>FORKLIFT OP</b> in this resume.",
+                "recent": false
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 6,
+            "matchScore": 0.122093023255814,
+            "matchSummary": "Candidate has no relevant experience.",
+            "profileRelevance": "Not Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.00174418604651163,
+            "requiredSkillWeight": 0.9,
+            "preferredSkillWeight": 0.1,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0,
+            "jobTitleWeight": 0.3,
+            "skillWeight": 0.7
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "None",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "degreeRelation": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "majorRelation": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Candidate didn't qualified the desired education criteria.",
+            "weightage": 10
+        },
+        "industry": {
+            "matchScore": 0.0327926256331496,
+            "matchedIndustry": "Information Technology",
+            "matchedSummary": "This resume belongs to <b>Information Technology</b> industry.",
+            "weightage": 3
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2025-12-04T14:17:22.385Z"),
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000002",
+            "jt_vector_match_time": "0:00:00.000019"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

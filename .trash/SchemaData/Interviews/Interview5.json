@@ -1,0 +1,638 @@
+{
+    "_id": ObjectId("690de143f19afdf0b75e971e"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("6904a1b1fc63a531b40f27ba"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("6112806bc9147f673d28c6ec"),
+    "userID": ObjectId("614d569f77f21325cdbd314a"),
+    "createdAt": ISODate("2025-11-07T12:08:35.071Z"),
+    "updatedAt": ISODate("2026-01-15T12:12:35.569Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "40000720",
+        "title": "Job Posting 10.31 7:45am",
+        "locations": [
+            {
+                "text": "Walnut Grove,GA 30052,USA",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "WalnutGrove",
+                "district": "",
+                "state": "Georgia",
+                "stateCode": "GA",
+                "countryCode": "US",
+                "postalCode": "30052",
+                "pin": {
+                    "lat": 33.8026812,
+                    "lon": -83.9108968
+                },
+                "cityCanonical": "walnut grove",
+                "districtCanonical": "",
+                "stateCanonical": "georgia",
+                "confidenceScore": 0.0,
+                "eligibilityCheck": "Required",
+                "circle": {
+                    "metricUnit": "mi",
+                    "radius": 15
+                },
+                "vacancies": 1,
+                "country": "UnitedStates",
+                "countryCanonical": "united states"
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "Internal Sourcing",
+        "applicationMethod": "Passive Sourcing",
+        "applicationChannel": "Profile Search",
+        "applicationSource": "",
+        "applicationStatus": "Pending",
+        "applicationPlatform": "Linked by Recruiter",
+        "linkedBy": "Recruiter",
+        "linkedByID": ObjectId("614d569f77f21325cdbd314a"),
+        "linkedAt": "",
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": "",
+        "referenceURL": "https://trcqa.maprecruit.com/v4/vms/showcampaign/sourceai/attachpeople/6904a1b1fc63a531b40f27ba?searchid=690de08bb0859aad4b4a6562",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": false,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 0.1,
+        "actual_mri_score": 0.1,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2026-01-15T12:12:35.569Z"),
+        "genAI": [],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>routine inspections</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "routine inspections",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>preventive maintenance</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "preventive maintenance",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>power distribution</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "power distribution",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>CDA</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "CDA",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Electrical Maintenance</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Electrical Maintenance",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>manufacturing facility</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "manufacturing facility",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Electrical</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Electrical",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Instrumentation</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Instrumentation",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>process instruments</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "process instruments",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>measurement devices</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "measurement devices",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>water systems</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "water systems",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>blowers</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "blowers",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>HVAC systems</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "HVAC systems",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>instrumentation equipment</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "instrumentation equipment",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>solar panel</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "solar panel",
+                            "score": 0.5
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "ELECTRICAL MAINTENANCE TECHNICIAN",
+                "matchedJobTitle": "",
+                "matchedSkill": "",
+                "matchType": "",
+                "relation": "",
+                "matchScore": 0.0,
+                "matchSummary": "Did not find <b>ELECTRICAL MAINTENANCE TECHNICIAN</b> in this resume.",
+                "recent": false
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 10.0,
+            "matchScore": 0.0,
+            "matchSummary": "Candidate has no relevant experience and is slightly over qualified.",
+            "profileRelevance": "Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.0,
+            "requiredSkillWeight": 0.9,
+            "preferredSkillWeight": 0.1,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0,
+            "jobTitleWeight": 0.3,
+            "skillWeight": 0.7
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "Location preference is not required.",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "None",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "degreeRelation": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "majorRelation": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Candidate didn't qualified the desired education criteria.",
+            "weightage": 3.0
+        },
+        "industry": {
+            "matchScore": 0.294718864605067,
+            "matchedIndustry": "Administrative Management",
+            "matchedSummary": "This resume primarily belongs to <b>Administrative Management</b> but also has experience in <b>Accounting Finance</b>.",
+            "weightage": 3.0
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2026-01-15T12:12:35.569Z"),
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000002",
+            "jt_vector_match_time": "0:00:00.000029"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

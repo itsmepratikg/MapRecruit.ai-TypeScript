@@ -1,0 +1,236 @@
+{
+    "_id": ObjectId("690d88e00a4268545e7fd9e8"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("667d30e5004ab28fd4bd3af4"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("667d190c0192513aea252e0c"),
+    "userID": ObjectId("667d19270192513aea252e0e"),
+    "createdAt": ISODate("2025-11-07T05:51:28.824Z"),
+    "updatedAt": ISODate("2025-12-24T10:01:52.912Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "JobSeeker",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "231894",
+        "title": "Forklift Driver",
+        "locations": [
+            {
+                "text": "Indianapolis,IN,USA.",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "indianapolis",
+                "district": "",
+                "state": "indiana",
+                "stateCode": "IN",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "46201",
+                "pin": {
+                    "lat": 39.768333,
+                    "lon": -86.15835
+                },
+                "cityCanonical": "indianapolis",
+                "districtCanonical": "",
+                "stateCanonical": "indiana",
+                "countryCanonical": "united states of america",
+                "confidenceScore": 1,
+                "eligibilityCheck": "Preferred",
+                "circle": {
+                    "radius": 50,
+                    "metricUnit": "mi"
+                },
+                "vacancies": 1
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "External Sourcing",
+        "applicationMethod": "Active Sourcing",
+        "applicationChannel": "ChatBot",
+        "applicationSource": "TRC Website",
+        "applicationStatus": "Applied",
+        "applicationPlatform": "Linked by Recruiter",
+        "linkedBy": "JobSeeker",
+        "linkedByID": "",
+        "linkedAt": ISODate("2025-11-07T05:51:03.562Z"),
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": "",
+        "referenceURL": "",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        }
+    },
+    "automateScreeningRounds": true,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 0.0,
+        "actual_mri_score": 0.0,
+        "context_match_score": 0.0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": "",
+        "genAI": [],
+        "experience": {
+            "skills": [],
+            "jobTitle": {
+                "jobTitle": "Forklift Driver",
+                "matchedJobTitle": "",
+                "matchType": "",
+                "matchRelation": "",
+                "matchScore": 0.0,
+                "matchSummary": ""
+            },
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.0,
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "profileRelevance": "",
+            "weightage": 10
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchRadius": 0.0,
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "weigtage": 10
+        },
+        "education": {
+            "jobDegreeLevel": "",
+            "matchedDegreelevel": "",
+            "jobDegree": "",
+            "matchedDegree": "",
+            "major": [],
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "weightage": 10
+        },
+        "industry": {
+            "matchedIndustry": "",
+            "matchScore": 0.0,
+            "matchSummary": "",
+            "weightage": 10
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": false,
+        "mriCalculatedDate": ""
+    },
+    "userFeedback": [],
+    "reviewDone": []
+}

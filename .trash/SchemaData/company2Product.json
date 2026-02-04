@@ -1,0 +1,39 @@
+[
+    {
+        "_id": "61814138c98444344034ca8c",
+        "productSettings": {
+            "productDomain": "https://spherionqa.maprecruit.com",
+            "jobSeekerDomain": "https://spherionqa.maprecruit.com",
+            "landingPageURL": "https://spherionqa.maprecruit.com",
+            "acceptedEmailDomains": [
+                ""
+            ],
+            "productTitle": "Maprecruit",
+            "registrationConfirmationEmail": true,
+            "referralLimit": 5000
+        },
+        "communicationSettings": {
+            "supportEmail": "CallCenter@spherion.com"
+        },
+        "themesdata": [
+            {
+                "_id": "61814138c98444344034ca8e",
+                "partnerID": "",
+                "companyID": [
+                    "61814138c98444344034ca8c",
+                    "644a1da67d633990aab094c0"
+                ],
+                "recruiterLangingPage": {
+                    "backGroundImage": "/images/maprecruitincdemoUS/logos/644a1da67d633990aab094c0_61814138c98444344034ca8e_mr_background.png",
+                    "favIcon": "/images/maprecruitincdemoUS/logos/644a1da67d633990aab094c0_61814138c98444344034ca8e_banner_mr_recruiter_favicon.png"
+                },
+                "jobSeekerLandingPage": {
+                    "favIcon": "/images/maprecruitincdemoUS/logos/644a1da67d633990aab094c0_61814138c98444344034ca8e_mr_recruiter_favicon.png"
+                },
+                "themeVariables": {
+                    "mainColor": "#e1671c"
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MapRecruit Core Schemas",
+  "definitions": {
+    "Candidate": {
+      "type": "object",
+      "description": "A potential hire profile within the ATS",
+      "properties": {
+        "id": { "type": "string", "pattern": "^CAND-\\d+$" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "skills": { 
+          "type": "array", 
+          "items": { "type": "string" } 
+        },
+        "experienceYears": { "type": "number" },
+        "status": { 
+          "type": "string", 
+          "enum": ["New", "Screening", "Interview", "Offer", "Hired", "Rejected"] 
+        },
+        "meta": {
+          "type": "object",
+          "properties": {
+            "source": { "type": "string" },
+            "matchScore": { "type": "number" },
+            "lastActive": { "type": "string", "format": "date-time" }
+          }
+        }
+      },
+      "required": ["id", "fullName", "email", "status"]
+    },
+    "Campaign": {
+      "type": "object",
+      "description": "A recruitment campaign or job requisition",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "department": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "workflow": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "stageName": { "type": "string" },
+              "type": { "type": "string", "enum": ["Email", "SMS", "Interview", "Test"] }
+            }
+          }
+        }
+      },
+      "required": ["id", "title"]
+    }
+  }
+}

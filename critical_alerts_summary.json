@@ -1,0 +1,290 @@
+{
+  "backend/controllers/interviewController.js": [
+    {
+      "id": "js/sql-injection",
+      "line": 128,
+      "message": "This query object depends on a user-provided value."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 144,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 114,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 54,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/campaignController.js": [
+    {
+      "id": "js/sql-injection",
+      "line": 239,
+      "message": "This query object depends on a user-provided value."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 256,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 255,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 225,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 224,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 144,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 143,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/workflowController.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 40,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 17,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/verify_user.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 19,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/passkeyController.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 277,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 113,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 54,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/verify_phase1_v3.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 42,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/verify_phase1_v2.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 38,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/verify_phase1.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 35,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/test_access_control.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 56,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/scripts/fix_missing_client_company_ids.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 25,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/scripts/check_client_existence.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 18,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/migrate_standard_types.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 55,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/debug_switch_logic.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 33,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 33,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/debug_full_check.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 54,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/debug_company_name.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 11,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 10,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/debug_company_clients.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 11,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 10,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/debug_admin_access.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 20,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 11,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/userController.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 233,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 230,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 140,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 41,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/profileController.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 167,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 138,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 97,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "js/sql-injection",
+      "line": 149,
+      "message": "This query object depends on a user-provided value."
+    }
+  ],
+  "backend/controllers/clientController.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 112,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 12,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/authController.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 370,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    },
+    {
+      "id": "node_nosqli_injection",
+      "line": 202,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/analyze_client_franchise.js": [
+    {
+      "id": "node_nosqli_injection",
+      "line": 33,
+      "message": "Untrusted user input in findOne() function can result in NoSQL Injection."
+    }
+  ],
+  "backend/controllers/companyController.js": [
+    {
+      "id": "js/sql-injection",
+      "line": 18,
+      "message": "This query object depends on a user-provided value."
+    }
+  ],
+  "backend/controllers/activityController.js": [
+    {
+      "id": "js/sql-injection",
+      "line": 14,
+      "message": "This query object depends on a user-provided value.\nThis query object depends on a user-provided value."
+    }
+  ]
+}

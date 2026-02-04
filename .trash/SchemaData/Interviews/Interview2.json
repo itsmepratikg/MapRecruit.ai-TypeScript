@@ -1,0 +1,669 @@
+{
+    "_id": ObjectId("690d82e150127bb52a6a11ad"),
+    "resumeID": ObjectId("690983bcb7f941d7bdaf0a27"),
+    "campaignID": ObjectId("690b60b2ee0e3af66c119ac3"),
+    "companyID": ObjectId("6112806bc9147f673d28c6eb"),
+    "clientID": ObjectId("62d10535074e604a7ab72184"),
+    "userID": ObjectId("61b825e415f87d014ee8b4a3"),
+    "createdAt": ISODate("2025-11-07T05:25:53.159Z"),
+    "updatedAt": ISODate("2025-12-24T10:01:52.912Z"),
+    "linked": true,
+    "status": "Not Initiated",
+    "offerStatus": "",
+    "offerID": "",
+    "active": true,
+    "applicationType": "Applied",
+    "linkedBy": "Recruiter",
+    "feedBack": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "campaign": {
+        "passcode": "40000726",
+        "title": "Test JO 11.05 9:34a",
+        "locations": [
+            {
+                "text": "Johns Creek,GA 30097,USA",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "JohnsCreek",
+                "district": "",
+                "state": "Georgia",
+                "stateCode": "GA",
+                "countryCode": "US",
+                "postalCode": "30097",
+                "pin": {
+                    "lat": 34.0488408,
+                    "lon": -84.1751648
+                },
+                "cityCanonical": "johns creek",
+                "districtCanonical": "",
+                "stateCanonical": "georgia",
+                "confidenceScore": 0.0,
+                "eligibilityCheck": "Required",
+                "circle": {
+                    "metricUnit": "mi",
+                    "radius": 15
+                },
+                "vacancies": 1,
+                "country": "UnitedStates",
+                "countryCanonical": "united states"
+            }
+        ]
+    },
+    "profile": {
+        "fullName": "Pratik Gaurav",
+        "firstName": "Pratik",
+        "middleName": "",
+        "lastName": "Gaurav",
+        "emails": [
+            {
+                "text": "pratik.gaurav@maprecruit.ai",
+                "email": "pratik.gaurav@maprecruit.ai",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            }
+        ],
+        "phones": [
+            {
+                "text": "+917004029399",
+                "phoneNumberOnly": "7004029399",
+                "internationalPhoneCode": "+91",
+                "nationalPhoneCode": "",
+                "country": "INDIA",
+                "countryCode": "IN",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in",
+                "ontology": true
+            }
+        ],
+        "locations": [
+            {
+                "text": "san diego,california,united states of america,92101",
+                "tier": "",
+                "address": "",
+                "addressType": "present",
+                "area": "",
+                "city": "san diego",
+                "district": "",
+                "state": "california",
+                "stateCode": "CA",
+                "country": "united states of america",
+                "countryCode": "US",
+                "postalCode": "92101",
+                "pin": {
+                    "lat": 32.717421,
+                    "lon": -117.162771
+                },
+                "cityCanonical": "san diego",
+                "districtCanonical": "",
+                "stateCanonical": "california",
+                "countryCanonical": "united states of america",
+                "foundInResume": true,
+                "confidenceScore": 1,
+                "ontology": true
+            }
+        ]
+    },
+    "optinStatus": {
+        "email": true,
+        "phone": true,
+        "whatsapp": true,
+        "notReachable": false
+    },
+    "sourceAI": {
+        "applicationType": "External Sourcing",
+        "applicationMethod": "Active Sourcing",
+        "applicationChannel": "Careers",
+        "applicationSource": "TRC Website",
+        "applicationStatus": "Applied",
+        "applicationPlatform": "Careers Page",
+        "linkedBy": "JobSeeker",
+        "linkedByID": ObjectId("61b825e415f87d014ee8b4a3"),
+        "linkedAt": ISODate("2025-11-07T05:25:53.159Z"),
+        "unlinkedBy": "",
+        "unlinkedByID": "",
+        "unlinkedAt": "",
+        "statusUpdatedBy": "",
+        "statusUpdatedByID": "",
+        "statusUpdatedAt": "",
+        "queryJobID": "",
+        "applicationChannelRefID": "",
+        "referenceURL": "",
+        "feedBack": {
+            "comments": [],
+            "status": ""
+        },
+        "referenceSource": "TRC Website"
+    },
+    "automateScreeningRounds": true,
+    "screeningRounds": [],
+    "MRI": {
+        "rank": 0.0,
+        "score": 0.2,
+        "actual_mri_score": 0.2,
+        "context_match_score": 0,
+        "contextual_match_insights": {
+            "matched_skills": [],
+            "overall_match_score": 0,
+            "relation_matching_duration": "",
+            "vector_matching_duration": ""
+        },
+        "calculatedAt": ISODate("2025-11-18T14:41:01.953Z"),
+        "genAI": [],
+        "experience": {
+            "skills": [
+                {
+                    "jobSkill": "<span><b>unload materials</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "unload materials",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>loading docks</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "loading docks",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>heavy machinery</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "heavy machinery",
+                            "score": 1.0
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Forklift</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>operating forklifts</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>operate forklifts</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>forklift certification</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Forklift",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "operating forklifts",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "operate forklifts",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "forklift certification",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>machinery</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "machinery",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>loading and unloading</b></span> <span class='ORRequiredspan' style='color: white'>OR</span> <span><b>load , and unload</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "loading and unloading",
+                            "score": 0.75
+                        },
+                        {
+                            "text": "load , and unload",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>hand trucks</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "hand trucks",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Transporting goods</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Transporting goods",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Required",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>safety guidelines</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "safety guidelines",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>maintaining equipment</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "maintaining equipment",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>reporting</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "reporting",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>safety procedures</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "safety procedures",
+                            "score": 0.75
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>pallet jacks</b></span> <span class='ORPreferredspan'>OR</span> <span><b>pallet jack</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "pallet jacks",
+                            "score": 0.5
+                        },
+                        {
+                            "text": "pallet jack",
+                            "score": 0.5
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>documenting</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "documenting",
+                            "score": 0.5
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                },
+                {
+                    "jobSkill": "<span><b>Attention to detail</b></span>",
+                    "bool": "OR",
+                    "skills": [
+                        {
+                            "text": "Attention to detail",
+                            "score": 0.25
+                        }
+                    ],
+                    "matchedSkill": "",
+                    "matchType": "Not Matched",
+                    "matchFrom": "",
+                    "relation": "",
+                    "matchScore": 0.0,
+                    "matchSummary": "Skill not found in candidate profile.",
+                    "eligibilityCheck": "Preferred",
+                    "scoreDistribution": {
+                        "preferredScore": 0.0,
+                        "requiredScore": 0.0,
+                        "yoeScore": 0.0,
+                        "durationScore": 0.0,
+                        "requiredConfidenceScore": 0.0,
+                        "preferredConfidenceScore": 0.0
+                    }
+                }
+            ],
+            "jobTitle": {
+                "jobTitle": "Accountant",
+                "matchedJobTitle": "",
+                "matchType": "",
+                "relation": "",
+                "matchScore": 0.0,
+                "matchSummary": "Did not find <b>ACCOUNTANT</b> in this resume."
+            },
+            "lines": {
+                "matchScore": 0.0,
+                "matchedLines": [],
+                "matchedCount": 0
+            },
+            "weightage": 10.0,
+            "matchScore": 0.0,
+            "matchSummary": "Candidate has no relevant experience.",
+            "profileRelevance": "Not Relevant",
+            "jobYOE": [],
+            "resumeYOE": 0.0,
+            "skillsMatchScore": 0.0,
+            "requiredSkillWeight": 0.9,
+            "preferredSkillWeight": 0.1,
+            "preferredRoleMatchStatus": "Not Matched",
+            "preferredRoleMatchScore": 0.0,
+            "jobTitleWeight": 0.3,
+            "skillWeight": 0.7
+        },
+        "location": {
+            "jobLocation": "",
+            "matchedLocation": "",
+            "matchSummary": "Location preference is not required.",
+            "radius": 50.0,
+            "weightage": 0,
+            "matchScore": 0
+        },
+        "education": {
+            "jobDegree": "",
+            "matchedDegree": "",
+            "matchDegreeType": "",
+            "jobDegreeLevel": "",
+            "matchedLevel": "",
+            "matchLevelType": "",
+            "jobMajor": "",
+            "matchedMajor": "",
+            "matchMajorType": "",
+            "matchScore": 0.0,
+            "matchedSummary": "Candidate didn't qualified the desired education criteria.",
+            "weightage": 3.0
+        },
+        "industry": {
+            "matchScore": 1.31939535328833,
+            "matchedIndustry": "Administrative Management",
+            "matchedSummary": "This resume primarily belongs to <b>Administrative Management</b> but also has experience in <b>Accounting Finance</b>.",
+            "weightage": 3.0
+        }
+    },
+    "tags": [],
+    "tagID": [],
+    "customData": {},
+    "exportDetails": {
+        "status": "",
+        "message": "",
+        "lastExportedAt": "",
+        "exportID": []
+    },
+    "communications": {
+        "sms": [],
+        "email": [],
+        "whatsApp": [],
+        "liveChat": []
+    },
+    "metaData": {
+        "mriCalculated": true,
+        "mriCalculatedDate": ISODate("2025-11-18T14:41:01.953Z"),
+        "process_steps": {
+            "resume_entities": 0,
+            "campaign_skill_vector_entities": 0.0,
+            "campaign_jt_vector_entities": 1,
+            "skill_vector_match_time": "0:00:00.000001",
+            "jt_vector_match_time": "0:00:00.000018"
+        }
+    },
+    "userFeedback": [],
+    "reviewDone": [],
+    "feedback": {
+        "rating": 0.0,
+        "comment": "",
+        "status": "Pending",
+        "shortlisted": false,
+        "rejected": false,
+        "ratedAt": "",
+        "commentedAt": "",
+        "statusChangedAt": "",
+        "shortlistedAt": "",
+        "reviewed": false,
+        "reviewedBy": ""
+    },
+    "tagIDs": []
+}

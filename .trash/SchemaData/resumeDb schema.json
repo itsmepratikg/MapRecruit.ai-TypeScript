@@ -1,0 +1,1165 @@
+{
+    "schema": {
+        "mainSchema": {
+            "companyID": "",
+            "clientID": [],
+            "userID": [],
+            "sharedUserID": [],
+            "favouriteUserID": [],
+            "articleID": [],
+            "campaignID": [],
+            "attachedCampaigns": [],
+            "jobSeekerID": "",
+            "sharedArticleID": [],
+            "status": "SUCCESS",
+            "personnelStatus": "Pending Applicant",
+            "employmentStatus": "Active",
+            "availability": "Available",
+            "tagID": [],
+            "active": true,
+            "openApply": false,
+            "resume": {
+                "profile": {
+                    "fullName": "",
+                    "firstName": "",
+                    "middleName": "",
+                    "lastName": "",
+                    "nickName": "",
+                    "nameSuffix": "",
+                    "emails": [],
+                    "phones": [],
+                    "websites": [],
+                    "skypeID": "",
+                    "locations": [],
+                    "gender": {
+                        "text": "",
+                        "label": "",
+                        "found": false
+                    },
+                    "ethnicity": "",
+                    "veteranStatus": "",
+                    "languagesKnown": [],
+                    "age": {
+                        "text": "",
+                        "inYears": 0,
+                        "found": false,
+                        "confidenceScore": 1
+                    },
+                    "dob": {
+                        "text": "",
+                        "standard": "",
+                        "month": "",
+                        "date": "",
+                        "year": "",
+                        "confidenceScore": 1
+                    },
+                    "nationality": {
+                        "text": "",
+                        "label": "",
+                        "nationalityCanonical": "",
+                        "ethnicity": "",
+                        "country": "",
+                        "countryCode": ""
+                    },
+                    "maritalStatus": "",
+                    "fatherName": "",
+                    "motherName": "",
+                    "spouseName": "",
+                    "passport": {
+                        "passportNumber": "",
+                        "country": "",
+                        "countryCode": "",
+                        "expiryDate": {
+                            "text": "",
+                            "standard": "",
+                            "date": "",
+                            "month": "",
+                            "year": ""
+                        }
+                    },
+                    "profileImage": {
+                        "content": "",
+                        "fileName": ""
+                    }
+                },
+                "professionalSummary": {
+                    "objective": "",
+                    "summary": "",
+                    "noticePeriod": {
+                        "text": "",
+                        "days": 0,
+                        "negotiable": false
+                    },
+                    "workPermit": {
+                        "text": "",
+                        "type": "",
+                        "status": "Unknown",
+                        "country": "",
+                        "countryCode": ""
+                    },
+                    "currentSalary": {
+                        "text": "",
+                        "period": "Per Hour",
+                        "currency": "",
+                        "value": 0,
+                        "country": "",
+                        "countryCode": ""
+                    },
+                    "expectedSalary": {
+                        "text": "",
+                        "period": "Per Hour",
+                        "currency": "",
+                        "minvalue": 0,
+                        "maxvalue": 0,
+                        "negotiable": false
+                    },
+                    "preferredLocations": [],
+                    "desiredWorkSchedule": [],
+                    "availableDate": {
+                        "text": "",
+                        "standard": "",
+                        "year": "",
+                        "month": "",
+                        "date": ""
+                    },
+                    "yearsOfExperience": {
+                        "text": "",
+                        "derivedYears": 0,
+                        "mentionedYears": 0,
+                        "finalYears": 0,
+                        "confidenceScore": 1
+                    },
+                    "currentRole": {
+                        "jobTitle": "",
+                        "entityID": "",
+                        "jobProfile": "",
+                        "jobLevel": "",
+                        "jobType": "",
+                        "jobCategory": "",
+                        "jobTitleCanonical": [],
+                        "canonicalID": [],
+                        "confidenceScore": 1
+                    },
+                    "currentCompany": {
+                        "company": "",
+                        "companyCanonical": "",
+                        "confidenceScore": 1
+                    },
+                    "preferredRoles": [],
+                    "currentlyWorking": true,
+                    "gapYears": {
+                        "experienceGapYears": 0,
+                        "recentExperienceGap": 0,
+                        "longestExperienceGapYears": 0,
+                        "educationExperienceGapYears": 0
+                    },
+                    "avgExperiencePerCompany": 0
+                },
+                "professionalQualification": {
+                    "education": [],
+                    "certifications": [],
+                    "academicProjects": [],
+                    "skills": [],
+                    "licences": []
+                },
+                "professionalExperience": [],
+                "otherInformation": {
+                    "references": [],
+                    "sectionsText": {
+                        "personal_details": "",
+                        "summary": "",
+                        "education": "",
+                        "experience": "",
+                        "certification": "",
+                        "others": "",
+                        "unknown": ""
+                    },
+                    "contextual_derived_skills": [],
+                    "militaryHistory": [],
+                    "accomplishments": [],
+                    "bufferEntities": [],
+                    "contextualSkills": [],
+                    "extracurricularActivities": [],
+                    "declaration": "",
+                    "curriculumVitae": "",
+                    "publications": [],
+                    "additionalInformation": "",
+                    "fullText": "",
+                    "profileSummary": "",
+                    "industryScores": {},
+                    "textBySections": [],
+                    "unusedLines": []
+                },
+                "metaData": {
+                    "originalFileName": "",
+                    "fileExtension": "",
+                    "timeTaken": "",
+                    "version": "",
+                    "wordsCount": 0,
+                    "linesCount": 0,
+                    "languageCode": ""
+                }
+            },
+            "genAISummary": [],
+            "createdAt": "",
+            "updatedAt": "",
+            "lastActiveAt": "",
+            "verifiedAt": "",
+            "verified": false,
+            "customData": {},
+            "avoidActivities": [],
+            "exportDetails": {
+                "status": "",
+                "message": "",
+                "lastExportedAt": "",
+                "exportID": []
+            },
+            "metaData": {
+                "originalFileName": "",
+                "profileImageURL": "",
+                "fileType": "",
+                "inputSource": "",
+                "inputSourceCategory": "",
+                "originalSource": "",
+                "originalSourceCategory": "",
+                "referenceID": "",
+                "originalReferenceID": "",
+                "inputChannel": "",
+                "origin": "",
+                "originType": "",
+                "newFileName": "",
+                "newFilePath": "",
+                "newHTMLFileName": "",
+                "newHTMLFilePath": "",
+                "newPDFFileName": "",
+                "newPDFFilePath": "",
+                "attention": [],
+                "missingMandatoryFields": [],
+                "uploadedAt": "",
+                "resumes": [],
+                "version": "v6",
+                "maprecruitVersion": "v2",
+                "createdBy": "Recruiter",
+                "originalID": "",
+                "duplicateVerified": false,
+                "duplicateVerifiedAt": "",
+                "originCountry": "",
+                "originCountryCode": "",
+                "originInternationalPhoneCode": "",
+                "queryJobID": [],
+                "referral": false,
+                "referralCode": "",
+                "deletedBy": "",
+                "deletedByID": "",
+                "mergedBy": "",
+                "mergedByID": "",
+                "resumeParsed": false,
+                "resumeReviewed": false,
+                "resumeSynced": false,
+                "syncedAt": "",
+                "reviewPipeline": [],
+                "parsedDetails": [],
+                "converterMessage": "",
+                "processTime": {}
+            }
+        },
+        "values": {
+            "genderLabels": [
+                "Male",
+                "Female",
+                "Others",
+                "Unknown"
+            ],
+            "salaryPeriod": [
+                "Per Hour",
+                "Per Month",
+                "Per Year",
+                "Per Week",
+                "Per Day",
+                "Per Bi-Weekly",
+                "Per 3 months",
+                "Per 15 Days",
+                "Per 6 Months"
+            ],
+            "salaryCurrency": [
+                "USD",
+                "CAD",
+                "EUR",
+                "GBP",
+                "INR",
+                "AED",
+                "SGD",
+                "MYR",
+                "JPY"
+            ],
+            "languageProficiency": [
+                "No",
+                "Beginner",
+                "Intermediate",
+                "Good",
+                "Fluent"
+            ],
+            "emailsPreferred": [
+                "Primary",
+                "Secondary"
+            ],
+            "emailsType": [
+                "Personal",
+                "Work",
+                "Other"
+            ],
+            "phonesType": [
+                "Mobile",
+                "Landline",
+                "Fax",
+                "Business",
+                "Home",
+                "Other",
+                "Campus",
+                "Emergency",
+                "Main",
+                "Pager"
+            ],
+            "phonesPreferred": [
+                "Primary",
+                "Secondary"
+            ],
+            "websitesType": [
+                "Social",
+                "Personal",
+                "Blog",
+                "Unknown"
+            ],
+            "socialMedia": [
+                "LinkedIn",
+                "Twitter",
+                "Github",
+                "Facebook",
+                "Unknown"
+            ],
+            "websitesLabel": [
+                "Profile",
+                "Reference",
+                "Unknown"
+            ],
+            "locationsType": [
+                "Present",
+                "Permanent",
+                "Preferred"
+            ],
+            "maritalStatus": [
+                "Single",
+                "Married",
+                "Divorced",
+                "Unknown"
+            ],
+            "workPermitStatus": [
+                "Active",
+                "Expired",
+                "Unknown"
+            ],
+            "educationCurrentStatus": [
+                "Studying",
+                "Passed",
+                "Unknown",
+                "Failed"
+            ],
+            "experienceCurrentStatus": [
+                "Worked",
+                "Working",
+                "Gap"
+            ],
+            "skillsImportance": [
+                "Low",
+                "Medium",
+                "High"
+            ],
+            "campusType": [
+                "School",
+                "College",
+                "University",
+                "Board",
+                "Unknown"
+            ],
+            "jobType": [
+                "Permanent",
+                "Contract",
+                "Internship",
+                "Unknown"
+            ],
+            "degreeType": [
+                "Science & Technology",
+                "Arts & Literature",
+                "Medicine",
+                "Pharmacy",
+                "Law",
+                "Commerce",
+                "Management"
+            ],
+            "degreeLevel": [
+                "Secondary School",
+                "Higher Secondary School",
+                "Diploma",
+                "Vocational Education",
+                "Bachelors",
+                "Masters",
+                "PHD",
+                "Law"
+            ],
+            "workSchedule": [
+                "Full-Time",
+                "Part-Time"
+            ],
+            "personnelStatus": [
+                "Pending Applicant",
+                "Applicant",
+                "Employee",
+                "Direct Hire",
+                "Contractor",
+                "Internal"
+            ],
+            "employmentStatus": [
+                "Active",
+                "Inactive",
+                "Leave",
+                "Terminated",
+                "Unknown"
+            ],
+            "availability": [
+                "New",
+                "Available",
+                "On Assignment",
+                "Vetting in Progress",
+                "Unavailable",
+                "DNU",
+                "FMLA",
+                "LOA"
+            ],
+            "avoidActivities": [
+                "Link Campaign",
+                "Link Folder",
+                "Mass Email",
+                "Mass SMS",
+                "Export Profile",
+                "EngageAI",
+                "Merge Profile"
+            ],
+            "attachedCampaignsStatus": [
+                "Reviewed",
+                "Duplicate"
+            ],
+            "referencesReview": [
+                "Satisfactory",
+                "Unsatisfactory"
+            ],
+            "exportStatus": [
+                "Not Started",
+                "Progressing",
+                "Completed"
+            ],
+            "status": [
+                "SUCCESS",
+                "FAILED",
+                "DUPLICATE",
+                "DELETED",
+                "MERGED",
+                "PROGRESSING",
+                "PENDING",
+                "DISQUALIFIED",
+                "BLOCKED"
+            ],
+            "profileType": [
+                "Employee",
+                "Talent"
+            ],
+            "metaDataCreatedBy": [
+                "Recruiter",
+                "JobSeeker"
+            ],
+            "metaDatadeletedBy": [
+                "Recruiter",
+                "JobSeeker"
+            ],
+            "attachedBy": [
+                "Recruiter",
+                "JobSeeker"
+            ],
+            "originalSource": [],
+            "inputChannel": [
+                "Upload",
+                "Form",
+                "API",
+                "Email",
+                "Integrations",
+                "ChatBot",
+                "SourceAI",
+                "JobSeeker",
+                "Careers"
+            ],
+            "originType": [
+                "Articles",
+                "Campaigns",
+                "ParseIt",
+                "ChatBot",
+                "API",
+                "Referral",
+                "Attachment",
+                "SourceAI",
+                "Integrations",
+                "JobSeeker"
+            ],
+            "origin": [
+                "Recruiter",
+                "Vendor",
+                "Job Seeker",
+                "Others",
+                "RPA"
+            ],
+            "sourcingMethod": [
+                "Sourced",
+                "Applied",
+                "Referral",
+                "Others"
+            ],
+            "subscribeStatus": [
+                "Opt-in",
+                "Opt-out"
+            ],
+            "fileType": [
+                "DOC",
+                "DOCX",
+                "PDF",
+                "RTF",
+                "TXT",
+                "HTML",
+                "ODT",
+                "OTT",
+                "ODS",
+                "XLS",
+                "XLSX"
+            ]
+        },
+        "listSchema": {
+            "preferredRoles": {
+                "jobTitle": "",
+                "jobProfile": "",
+                "jobLevel": "",
+                "jobType": "",
+                "jobCategory": "",
+                "jobTitleCanonical": [],
+                "canonicalID": [],
+                "confidenceScore": 1
+            },
+            "unusedLines": {
+                "line": "",
+                "sections": []
+            },
+            "bufferEntities": {
+                "entity_type": "",
+                "entity": "",
+                "matchType": "",
+                "pattern": "",
+                "score": 0
+            },
+            "languagesKnown": {
+                "text": "",
+                "language": "",
+                "country": "",
+                "countryCode": "",
+                "native": false,
+                "readProficiency": "Good",
+                "writeProficiency": "Good",
+                "speakProficiency": "Good",
+                "confidenceScore": 1
+            },
+            "emails": {
+                "text": "",
+                "email": "",
+                "type": "Personal",
+                "preferred": "Primary",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            },
+            "phones": {
+                "text": "",
+                "phoneNumberOnly": "",
+                "internationalPhoneCode": "",
+                "nationalPhoneCode": "",
+                "country": "",
+                "countryCode": "",
+                "type": "Mobile",
+                "preferred": "Primary",
+                "DNDStatus": "",
+                "confidenceScore": 1,
+                "valid": true,
+                "verified": false,
+                "subscribeStatus": "Opt-in"
+            },
+            "websites": {
+                "text": "",
+                "website": "",
+                "type": "Unknown",
+                "label": "Unknown",
+                "socialMedia": "Unknown",
+                "confidenceScore": 1
+            },
+            "locations": {
+                "text": "",
+                "tier": "",
+                "address": "",
+                "addressType": "Present",
+                "area": "",
+                "city": "",
+                "district": "",
+                "state": "",
+                "stateCode": "",
+                "country": "",
+                "countryCode": "",
+                "postalCode": "",
+                "pin": {
+                    "lat": "",
+                    "lon": ""
+                },
+                "cityCanonical": "",
+                "districtCanonical": "",
+                "stateCanonical": "",
+                "countryCanonical": "",
+                "foundInResume": true,
+                "confidenceScore": 1
+            },
+            "education": {
+                "campus": {
+                    "text": "",
+                    "redFlag": false,
+                    "canonical": "",
+                    "type": "Unknown",
+                    "confidenceScore": 1
+                },
+                "university": {
+                    "text": "",
+                    "canonical": "",
+                    "type": "University",
+                    "confidenceScore": 1
+                },
+                "degree": {
+                    "text": "",
+                    "entityID": "",
+                    "canonical": "",
+                    "canonicalID": "",
+                    "similar": [],
+                    "type": "",
+                    "level": "",
+                    "confidenceScore": 1
+                },
+                "major": [],
+                "minor": [],
+                "merit": {
+                    "percentage": 0,
+                    "GPA": 0,
+                    "GPAOutOf": 10
+                },
+                "currentStatus": "Passed",
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "duration": {
+                    "text": "",
+                    "inYears": 0,
+                    "years": 0,
+                    "months": 0,
+                    "days": 0
+                },
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                }
+            },
+            "educationMajor": {
+                "text": "",
+                "entityID": "",
+                "canonical": [],
+                "canonicalID": [],
+                "similar": [],
+                "confidenceScore": 1
+            },
+            "certifications": {
+                "campus": {
+                    "text": "",
+                    "canonical": "",
+                    "type": "Unknown",
+                    "confidenceScore": 1
+                },
+                "course": {
+                    "text": "",
+                    "entityID": "",
+                    "canonical": [],
+                    "canonicalID": [],
+                    "type": ""
+                },
+                "merit": {
+                    "percentage": 0,
+                    "GPA": 0,
+                    "GPAOutOf": 10
+                },
+                "currentStatus": "Passed",
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "expiryDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "duration": {
+                    "text": "",
+                    "inYears": 0,
+                    "years": 0,
+                    "months": 0,
+                    "days": 0
+                },
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "description": ""
+            },
+            "academicProjects": {
+                "campus": {
+                    "text": "",
+                    "canonical": "",
+                    "type": "Unknown",
+                    "confidenceScore": 1
+                },
+                "university": {
+                    "text": "",
+                    "canonical": "",
+                    "type": "University",
+                    "confidenceScore": 1
+                },
+                "projectTitle": "",
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "duration": {
+                    "text": "",
+                    "inYears": 0,
+                    "years": 0,
+                    "months": 0,
+                    "days": 0
+                },
+                "skills": [],
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "description": ""
+            },
+            "licences": {
+                "label": "",
+                "text": "",
+                "type": "",
+                "canonical": "",
+                "issuedBy": "",
+                "issuedOn": {
+                    "text": "",
+                    "standard": "",
+                    "date": "",
+                    "month": "",
+                    "year": ""
+                },
+                "expiryDate": {
+                    "text": "",
+                    "standard": "",
+                    "date": "",
+                    "month": "",
+                    "year": ""
+                }
+            },
+            "skills": {
+                "text": "",
+                "entityID": "",
+                "canonical": [],
+                "canonicalID": [],
+                "canonicalDetails": [],
+                "relations": [],
+                "derived": [],
+                "yearsOfExperience": 0,
+                "score": 0,
+                "confidenceScore": 1,
+                "ontology": true,
+                "importance": "High",
+                "lastUsedAgo": ""
+            },
+            "relations": {
+                "relation": "",
+                "entity": "",
+                "entity_type": "",
+                "score": 0
+            },
+            "derivedSkills": {
+                "skill": "",
+                "details": [],
+                "canonical": [],
+                "canonicalDetails": [],
+                "derived": false
+            },
+            "jobTitles": {
+                "jobTitle": "",
+                "details": {},
+                "canonical": [],
+                "canonicalID": [],
+                "canonicalDetails": [],
+                "relations": [],
+                "profile": [],
+                "profileType": [],
+                "profileDetails": [],
+                "level": "",
+                "levelDetails": [],
+                "jobTitleNoLevel": "",
+                "jobCategory": "",
+                "jobSpecialization": [],
+                "jobSpecializationCanonical": []
+            },
+            "professionalExperience": {
+                "company": {
+                    "text": "",
+                    "redFlag": false,
+                    "canonical": [],
+                    "canonicalDetails": [],
+                    "confidenceScore": 1
+                },
+                "jobTitle": {
+                    "text": "",
+                    "jobType": "Premanent",
+                    "jobCategory": "",
+                    "jobTitles": [],
+                    "confidenceScore": 1
+                },
+                "workSchedule": "",
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "duration": {
+                    "text": "",
+                    "inYears": 0,
+                    "years": 0,
+                    "months": 0,
+                    "days": 0
+                },
+                "projects": [],
+                "currentStatus": "Worked",
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                },
+                "description": "",
+                "skills": [],
+                "supervisor": {
+                    "text": "",
+                    "jobTitles": [],
+                    "name": "",
+                    "confidenceScore": 1
+                },
+                "previousGapYears": {
+                    "years": 0,
+                    "months": 0,
+                    "days": 0,
+                    "inYears": 0
+                },
+                "reasonForLeave": ""
+            },
+            "projects": {
+                "clients": {
+                    "text": "",
+                    "canonical": [],
+                    "canonicalDetails": [],
+                    "confidenceScore": 1
+                },
+                "projectTitle": "",
+                "role": {
+                    "text": "",
+                    "jobTitles": [],
+                    "confidenceScore": 1
+                },
+                "teamSize": 0,
+                "description": "",
+                "skills": [],
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "duration": {
+                    "text": "",
+                    "inYears": 0,
+                    "years": 0,
+                    "months": 0,
+                    "days": 0
+                },
+                "supervisor": {
+                    "text": "",
+                    "jobTitles": [],
+                    "name": "",
+                    "confidenceScore": 1
+                }
+            },
+            "textBySections": {
+                "text": "",
+                "heading": {
+                    "text": "",
+                    "canonical": ""
+                },
+                "sections": []
+            },
+            "references": {
+                "fullName": "",
+                "jobTitle": "",
+                "phone": [],
+                "email": [],
+                "company": "",
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "review": "",
+                "comment": "",
+                "location": {
+                    "text": "",
+                    "tier": "",
+                    "address": "",
+                    "addressType": "Present",
+                    "area": "",
+                    "city": "",
+                    "district": "",
+                    "state": "",
+                    "stateCode": "",
+                    "country": "",
+                    "countryCode": "",
+                    "postalCode": "",
+                    "pin": {
+                        "lat": "",
+                        "lon": ""
+                    },
+                    "cityCanonical": "",
+                    "districtCanonical": "",
+                    "stateCanonical": "",
+                    "countryCanonical": ""
+                }
+            },
+            "militaryHistory": {
+                "countryServed": "",
+                "rankAchieved": "",
+                "startDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "endDate": {
+                    "text": "",
+                    "standard": "",
+                    "year": "",
+                    "month": "",
+                    "date": ""
+                },
+                "duration": {
+                    "text": "",
+                    "inYears": 0,
+                    "years": 0,
+                    "months": 0,
+                    "days": 0
+                },
+                "description": ""
+            },
+            "sharedUserID": {
+                "userID": "",
+                "role": ""
+            },
+            "genAISummary": {
+                "generatedAt": "",
+                "model": "",
+                "temperature": "",
+                "profileSummary": ""
+            },
+            "parsedDetails": {
+                "parsedDate": "",
+                "timeTaken": "",
+                "converterMessage": "",
+                "processTime": {},
+                "status": ""
+            },
+            "attachedCampaigns": {
+                "campaignID": "",
+                "attachedAt": "",
+                "removedAt": "",
+                "attached": true,
+                "status": "Attached",
+                "attachedBy": "",
+                "userID": ""
+            },
+            "resumes": {
+                "resumeFileID": "",
+                "primary": true,
+                "newFileName": "",
+                "newFilePath": "",
+                "newHTMLFileName": "",
+                "newHTMLFilePath": "",
+                "newPDFFileName": "",
+                "newPDFFilePath": "",
+                "originalFileName": "",
+                "uploadedBy": "",
+                "clientID": "",
+                "campaignID": "",
+                "uploadedAt": ""
+            }
+        },
+        "valueLabels": {
+            "referencesReview": [
+                {
+                    "label": "Satisfactory",
+                    "value": "Satisfactory"
+                },
+                {
+                    "label": "Unsatisfactory",
+                    "value": "Unsatisfactory"
+                }
+            ]
+        }
+    }
+}

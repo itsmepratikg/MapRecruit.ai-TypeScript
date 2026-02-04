@@ -1,0 +1,634 @@
+{
+    "status": true,
+    "schema": {
+        "mainSchema": {
+            "requirements": {
+                "education": [],
+                "skills": [],
+                "certifications": [],
+                "licences": [],
+                "noticePeriod": {
+                    "eligibilityCheck": "Not Required",
+                    "text": "",
+                    "days": 0,
+                    "negotiable": false
+                },
+                "workPermit": [],
+                "yearsOfExperience": {
+                    "text": "",
+                    "eligibilityCheck": "Not Required",
+                    "minYears": 0.0,
+                    "maxYears": 50.0,
+                    "negotiable": true,
+                    "confidenceScore": 1
+                },
+                "gender": {
+                    "text": "Any",
+                    "label": "Any",
+                    "eligibilityCheck": "Required"
+                },
+                "languagesKnown": [],
+                "age": {
+                    "text": "",
+                    "eligibilityCheck": "Not Required",
+                    "minInYears": 0.0,
+                    "maxInYears": 0.0,
+                    "confidenceScore": 1
+                },
+                "nationality": [],
+                "maritalStatus": {
+                    "eligibilityCheck": "Not Required",
+                    "status": "Any"
+                },
+                "passport": {
+                    "eligibilityCheck": "Not Required",
+                    "mandatory": false
+                },
+                "physicalRequirement": {
+                    "text": "",
+                    "height": {
+                        "eligibilityCheck": "Not Required",
+                        "minHeight": 0,
+                        "maxHeight": 0,
+                        "unit": "cm"
+                    },
+                    "weight": {
+                        "eligibilityCheck": "Not Required",
+                        "unit": "kgs",
+                        "minWeight": 0,
+                        "maxWeight": 0
+                    },
+                    "moveObjects": {
+                        "eligibilityCheck": "Not Required",
+                        "upTo": 0,
+                        "unit": "kgs"
+                    },
+                    "liftObjects": {
+                        "eligibilityCheck": "Not Required",
+                        "upTo": 0,
+                        "unit": "kgs"
+                    }
+                },
+                "vehicleRequirement": {
+                    "twoWheeler": false,
+                    "fourWheeler": false,
+                    "eligibilityCheck": "Not Required"
+                },
+                "militaryHistory": {
+                    "eligibilityCheck": "Not Required",
+                    "status": false
+                }
+            },
+            "details": {
+                "jobTitle": {
+                    "text": "",
+                    "entityID": "",
+                    "jobType": "Permanent",
+                    "jobTitles": [],
+                    "found": false,
+                    "confidenceScore": 1
+                },
+                "jobTiming": [],
+                "workingHours": {
+                    "eligibilityCheck": "Not Required",
+                    "minHours": 8,
+                    "maxHours": 9,
+                    "period": "Per Day",
+                    "minDays": 5,
+                    "maxDays": 6,
+                    "daysPeriod": "Per Week"
+                },
+                "company": {
+                    "text": "",
+                    "description": "",
+                    "canonical": [],
+                    "canonicalDetails": []
+                },
+                "locations": [],
+                "offeredSalary": {
+                    "text": "",
+                    "period": "Per Hour",
+                    "currency": "",
+                    "minvalue": 0,
+                    "maxvalue": 0,
+                    "negotiable": false,
+                    "eligibilityCheck": "Not Required"
+                },
+                "offshore": {
+                    "eligibilityCheck": "Not Required",
+                    "chance": "No"
+                },
+                "travel": {
+                    "eligibilityCheck": "Not Required",
+                    "chance": "No",
+                    "percentage": 0.0
+                },
+                "onField": {
+                    "eligibilityCheck": "Not Required",
+                    "chance": "No",
+                    "percentage": 0.0
+                },
+                "benefits": {
+                    "text": "",
+                    "benefits": []
+                },
+                "jobDescription": {
+                    "text": ""
+                },
+                "responsibilities": {
+                    "text": "",
+                    "responsibilities": []
+                },
+                "requirements": {
+                    "text": "",
+                    "requirements": []
+                },
+                "fullText": "",
+                "htmlText": ""
+            },
+            "otherInformation": {
+                "documents": [],
+                "industry": {
+                    "classified": [],
+                    "scores": {},
+                    "userModified": false
+                },
+                "newKeys": [],
+                "contextual_derived_skills": [],
+                "possibleSkills": [],
+                "suggestedSkills": [],
+                "similarSkills": [],
+                "similarJobTitles": [],
+                "contextualSkills": [],
+                "removedSkills": [],
+                "importantLines": [],
+                "department": "",
+                "organizationUnit": "",
+                "grade": "",
+                "reasonForOpening": ""
+            },
+            "metaData": {
+                "jobPortalURL": "",
+                "jobPortal": "",
+                "jobID": "",
+                "recruiterName": "",
+                "recruiterEmail": [],
+                "recruiterPhone": [],
+                "postedDate": {
+                    "text": "",
+                    "standard": "",
+                    "date": "",
+                    "month": "",
+                    "year": ""
+                },
+                "expiryDate": {
+                    "text": "",
+                    "standard": "",
+                    "date": "",
+                    "month": "",
+                    "year": ""
+                },
+                "openDurationInDays": 0,
+                "applyURL": []
+            }
+        },
+        "values": {
+            "locationMetricUnit": [
+                "mi",
+                "km"
+            ],
+            "eligibilityCheck": [
+                "Not Required",
+                "Required",
+                "Preferred"
+            ],
+            "offshoreChance": [
+                "Yes",
+                "May be",
+                "No"
+            ],
+            "genderLabels": [
+                "Any",
+                "Male",
+                "Female",
+                "Others"
+            ],
+            "workingHoursPeriod": [
+                "Per Year",
+                "Per Month",
+                "Per Week",
+                "Per Day"
+            ],
+            "workingHoursDaysPeriod": [
+                "Per Day",
+                "Per Week",
+                "Per Month",
+                "Per Year"
+            ],
+            "salaryPeriod": [
+                "Per Hour",
+                "Per Day",
+                "Per Week",
+                "Per Month",
+                "Per Year"
+            ],
+            "salaryCurrency": [
+                "USD",
+                "CAD",
+                "EUR",
+                "GBP",
+                "INR",
+                "AED",
+                "SGD",
+                "MYR",
+                "JPY"
+            ],
+            "languageProficiency": [
+                "No",
+                "Beginner",
+                "Intermediate",
+                "Good",
+                "Fluent"
+            ],
+            "emailsPreferred": [
+                "Primary",
+                "Secondary"
+            ],
+            "emailsType": [
+                "Personal",
+                "Work"
+            ],
+            "phonesType": [
+                "Mobile",
+                "Landline",
+                "Fax"
+            ],
+            "phonesPreferred": [
+                "Primary",
+                "Secondary"
+            ],
+            "websitesType": [
+                "Social",
+                "Personal",
+                "Blog",
+                "Unknown"
+            ],
+            "websitesLabel": [
+                "Profile",
+                "Reference",
+                "Unknown"
+            ],
+            "locationsType": [
+                "Present",
+                "Permanent",
+                "Preferred"
+            ],
+            "maritalStatus": [
+                "Any",
+                "Single",
+                "Married"
+            ],
+            "workPermitStatus": [
+                "Active",
+                "Expired",
+                "Unknown"
+            ],
+            "educationCurrentStatus": [
+                "Studying",
+                "Passed",
+                "Unknown"
+            ],
+            "experienceCurrentStatus": [
+                "Worked",
+                "Working",
+                "Gap"
+            ],
+            "skillsImportance": [
+                "Low",
+                "Medium",
+                "High"
+            ],
+            "campusType": [
+                "School",
+                "College",
+                "University",
+                "Board",
+                "Unknown"
+            ],
+            "jobType": [
+                "Permanent",
+                "Contract",
+                "Internship",
+                "Unknown"
+            ],
+            "jobTimingType": [
+                "Full-time",
+                "Part-time",
+                "Unknown"
+            ],
+            "degreeType": [
+                "Science & Technology",
+                "Arts & Literature",
+                "Medicine",
+                "Pharmacy",
+                "Law",
+                "Commerce",
+                "Management"
+            ],
+            "degreeLevel": [
+                "Secondary School",
+                "Higher Secondary School",
+                "Diploma",
+                "Vocational Education",
+                "Bachelors",
+                "Masters",
+                "PHD",
+                "Law"
+            ]
+        },
+        "listSchema": {
+            "metaDataApplyURL": {
+                "websiteName": "",
+                "url": ""
+            },
+            "responsibilities": {
+                "text": "",
+                "intentions": [],
+                "classification": {
+                    "education": 0.0,
+                    "others": 0.0,
+                    "skill": 0.0
+                },
+                "polarity": "",
+                "entities": []
+            },
+            "intentions": {
+                "confidence": 0.0,
+                "name": ""
+            },
+            "removedSkills": {
+                "removedBy": "",
+                "removedAt": "",
+                "skill": {}
+            },
+            "entities": {
+                "canonical_name": [],
+                "end": 0,
+                "entity": "",
+                "start": 0,
+                "value": ""
+            },
+            "requirements": {
+                "text": "",
+                "intentions": [],
+                "classification": {
+                    "education": 0.0,
+                    "others": 0.0,
+                    "skill": 0.0
+                },
+                "polarity": "",
+                "entities": []
+            },
+            "documents": {
+                "documentName": ""
+            },
+            "jobTiming": {
+                "text": "",
+                "type": "",
+                "shift": "",
+                "startTime": "",
+                "endTime": "",
+                "eligibilityCheck": "Required"
+            },
+            "nationality": {
+                "text": "Any",
+                "label": "Any",
+                "nationalityCanonical": "Any",
+                "country": "Any",
+                "countryCode": "Any",
+                "eligibilityCheck": "Required"
+            },
+            "workPermit": {
+                "text": "",
+                "type": "",
+                "canonical": "",
+                "eligibilityCheck": "Required",
+                "status": "Unknown",
+                "country": "",
+                "countryCode": ""
+            },
+            "languagesKnown": {
+                "text": "",
+                "language": "",
+                "country": "",
+                "countryCode": "",
+                "native": false,
+                "eligibilityCheck": "Required",
+                "readProficiency": "Good",
+                "writeProficiency": "Good",
+                "speakProficiency": "Good",
+                "confidenceScore": 1
+            },
+            "locations": {
+                "text": "",
+                "tier": "",
+                "address": "",
+                "area": "",
+                "city": "",
+                "district": "",
+                "state": "",
+                "stateCode": "",
+                "country": "",
+                "countryCode": "",
+                "postalCode": "",
+                "pin": {
+                    "lat": "",
+                    "lon": ""
+                },
+                "cityCanonical": "",
+                "districtCanonical": "",
+                "stateCanonical": "",
+                "countryCanonical": "",
+                "confidenceScore": 1,
+                "eligibilityCheck": "Required",
+                "circle": {
+                    "metricUnit": "mi",
+                    "radius": 50.0
+                },
+                "vacancies": 0
+            },
+            "education": {
+                "text": "",
+                "eligibilityCheck": "Required",
+                "campus": {
+                    "text": "",
+                    "canonical": "",
+                    "type": "Unknown",
+                    "confidenceScore": 1
+                },
+                "degree": {
+                    "text": "",
+                    "entityID": "",
+                    "canonical": "",
+                    "similar": [],
+                    "type": "",
+                    "level": "",
+                    "confidenceScore": 1
+                },
+                "major": [],
+                "minor": [],
+                "merit": {
+                    "percentage": 0.0,
+                    "GPA": 0.0,
+                    "GPAOutOf": 10.0
+                },
+                "endDate": []
+            },
+            "major": {
+                "text": "",
+                "entityID": "",
+                "canonical": [],
+                "similar": [],
+                "confidenceScore": 1
+            },
+            "endDate": {
+                "text": "",
+                "standard": "",
+                "year": "",
+                "month": "",
+                "date": ""
+            },
+            "certifications": {
+                "label": "",
+                "text": "",
+                "canonical": ""
+            },
+            "licences": {
+                "label": "",
+                "text": "",
+                "canonical": ""
+            },
+            "skills": {
+                "bool": "or",
+                "skills": []
+            },
+            "skills_skills": {
+                "text": "",
+                "entityID": "",
+                "canonical": [],
+                "canonicalDetails": [],
+                "relations": [],
+                "derived": [],
+                "yearsOfExperienceMin": 0.0,
+                "yearsOfExperienceMax": 50.0,
+                "score": 0.0,
+                "confidenceScore": 1,
+                "ontology": true,
+                "importance": "High",
+                "eligibilityCheck": "Required",
+                "originalEC": "Required"
+            },
+            "relations": {
+                "relation": "",
+                "entity": "",
+                "entity_type": "",
+                "score": 0.0
+            },
+            "derivedSkills": {
+                "skill": "",
+                "details": [],
+                "canonical": [],
+                "canonicalDetails": [],
+                "derived": false
+            },
+            "possibleSkills": {
+                "pos": [],
+                "text": "",
+                "fine_text": "",
+                "matchPattern": "",
+                "matchType": "",
+                "score": 0,
+                "line": ""
+            },
+            "suggestedSkills": {
+                "text": "",
+                "entityID": "",
+                "canonical": [],
+                "canonicalDetails": [],
+                "relations": [],
+                "derived": [],
+                "yearsOfExperienceMin": 0.0,
+                "yearsOfExperienceMax": 50.0,
+                "score": 0.0,
+                "confidenceScore": 1,
+                "ontology": true,
+                "importance": "High",
+                "eligibilityCheck": "Required",
+                "originalEC": "Required"
+            },
+            "jobTitles": {
+                "jobTitle": "",
+                "details": {},
+                "canonical": [],
+                "canonicalDetails": [],
+                "relations": [],
+                "profile": [],
+                "profileType": [],
+                "profileDetails": [],
+                "level": "",
+                "levelDetails": [],
+                "jobTitleNoLevel": "",
+                "jobCategory": "",
+                "jobSpecialization": [],
+                "jobSpecializationCanonical": []
+            },
+            "classifiedIndustries": {
+                "industryLabel": "",
+                "industryName": "",
+                "score": 0.0,
+                "percentage": 0.0
+            }
+        },
+        "valueLabels": {
+            "degreeLevel": [
+                {
+                    "value": "school",
+                    "label": "Secondary School"
+                },
+                {
+                    "value": "high school",
+                    "label": "Higher Secondary School"
+                },
+                {
+                    "value": "iti",
+                    "label": "Vocational Education"
+                },
+                {
+                    "value": "diploma",
+                    "label": "Diploma"
+                },
+                {
+                    "value": "ug",
+                    "label": "Bachelors"
+                },
+                {
+                    "value": "pg",
+                    "label": "Masters"
+                },
+                {
+                    "value": "phd",
+                    "label": "PHD"
+                },
+                {
+                    "value": "law",
+                    "label": "Law"
+                },
+                {
+                    "value": "others",
+                    "label": "Others"
+                }
+            ]
+        }
+    },
+    "message": ""
+}

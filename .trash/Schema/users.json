@@ -1,0 +1,461 @@
+{
+    "status": true,
+    "schema": {
+        "mainSchema": {
+            "__v": "4",
+            "betaAccess": true,
+            "email": "",
+            "hashed_password": "",
+            "invitations": "",
+            "mobileno": "",
+            "name": "",
+            "otp": "",
+            "provider": "",
+            "role": "",
+            "jobTitle": "",
+            "SMSID": "",
+            "SMSStatus": "",
+            "roleID": "",
+            "activeVendorClient": "",
+            "salt": "",
+            "userCode": "",
+            "username": "",
+            "teamID": [],
+            "testUser": false,
+            "verified": false,
+            "companyID": "",
+            "postMarkFlag": false,
+            "messengerAutoPilot": false,
+            "talentChatAutoPilot": false,
+            "talentChatAutoReply": "",
+            "Phone": {
+                "DNDStatus": "",
+                "circle": "",
+                "operator": "",
+                "phone": "",
+                "internationalPhoneCode": ""
+            },
+            "mobileenabled": false,
+            "folderSource": "",
+            "updatedAt": "",
+            "passTrack": [],
+            "loginCount": 0,
+            "lastLoginAt": "",
+            "lastActiveAt": "",
+            "emailSignature": "",
+            "EMAILverified": false,
+            "deactivated": false,
+            "deactivatedAt": "",
+            "defaultTableSize": 10,
+            "aliasEmail": "",
+            "createdAt": "",
+            "referral": "",
+            "referralLink": "",
+            "signatureID": "",
+            "signatureVerified": false,
+            "dndModalShow": "",
+            "partnerAdmin": false,
+            "loginAttempts": 0,
+            "profileImage": "",
+            "userColor": "",
+            "vendor": false,
+            "country": {
+                "origin": "",
+                "name": ""
+            },
+            "countryCode": "",
+            "timeZone": "+00:00",
+            "timeZoneName": "",
+            "timeZoneFullName": "",
+            "languageCode": "en-us",
+            "dateFormat": "en-us",
+            "clientID": [],
+            "franchiseID": [],
+            "activeClientID": "",
+            "activeVendorID": "",
+            "lastLoginRegion": "in",
+            "regions": [],
+            "locations": [],
+            "channel": "",
+            "createdBy": "Existing",
+            "createdByID": "",
+            "landingPage": "",
+            "notificationSettings": {
+                "campaignCreation": true,
+                "campaignClosed": true,
+                "profileUploaded": true,
+                "profileLinked": true,
+                "profilesDownloaded": true,
+                "interviewReceived": true,
+                "InPersonReminder": true,
+                "SourceAIQueryComplete": true,
+                "addedToCampaign": true,
+                "attachedProfiles": true,
+                "campaignSlots": true,
+                "campaignSlotsExhausted": true,
+                "folderShared": true,
+                "interviewCompleted": true,
+                "jobseekerBookedSlot": true,
+                "jobseekerCancelledSlot": true,
+                "jobseekerRescheduledSlot": true,
+                "jobseekerRescheduledSlotToNewHost": true,
+                "linkCampaign": true,
+                "linkCampaignFolder": true,
+                "linkFolder": true,
+                "liveVideoReminder": true,
+                "phoneReminder": true,
+                "resumeParser": true,
+                "sharedProfileToUser": true,
+                "unlinkCampaign": true,
+                "unlinkFolder": true,
+                "jobseekerBookedSlotWithoutCampaign": true,
+                "notificationSettings": {
+                    "enabled": true,
+                    "visible": true
+                }
+            },
+            "calendarSettings": {
+                "timeZone": "",
+                "timeZoneName": "",
+                "timeZoneFullName": "",
+                "weeklyHours": [],
+                "businessHours": {
+                    "startTime": "",
+                    "endTime": "",
+                    "format": "24 hours",
+                    "durationInHours": "",
+                    "includeWeekends": false,
+                    "includeHolidays": false,
+                    "includeAllDayEvents": true
+                },
+                "breakHours": [],
+                "holidays": [],
+                "weekends": [
+                    "Saturday",
+                    "Sunday"
+                ]
+            },
+            "defaultFontSettings": {
+                "FontStyle": "",
+                "FontColor": ""
+            }
+        },
+        "listSchema": {
+            "passTrack": {
+                "_id": "",
+                "pass": "",
+                "createdAt": ""
+            },
+            "breakHours": {
+                "startTime": "",
+                "endTime": "",
+                "format": "24 hours",
+                "durationInHours": ""
+            },
+            "weeklyHours": {
+                "day": "",
+                "timings": []
+            },
+            "timings": {
+                "startTime": "",
+                "endTime": ""
+            },
+            "holidays": {
+                "startDate": "",
+                "endDate": "",
+                "holidayTitle": ""
+            },
+            "locations": {
+                "text": "",
+                "tier": "",
+                "address": "",
+                "addressType": "Present",
+                "area": "",
+                "city": "",
+                "district": "",
+                "state": "",
+                "stateCode": "",
+                "country": "",
+                "countryCode": "",
+                "postalCode": "",
+                "pin": {
+                    "lat": "",
+                    "lon": ""
+                },
+                "cityCanonical": "",
+                "districtCanonical": "",
+                "stateCanonical": "",
+                "countryCanonical": "",
+                "foundInResume": true,
+                "confidenceScore": 1
+            }
+        },
+        "values": {
+            "defaultLanguageCode": [
+                {
+                    "label": "English (United States)",
+                    "value": "en-us"
+                },
+                {
+                    "label": "English (United Kingdom)",
+                    "value": "en-uk"
+                },
+                {
+                    "label": "French",
+                    "value": "fr"
+                },
+                {
+                    "label": "German",
+                    "value": "de"
+                },
+                {
+                    "label": "Spanish (Spain)",
+                    "value": "es"
+                },
+                {
+                    "label": "Japanese",
+                    "value": "ja"
+                },
+                {
+                    "label": "Telugu",
+                    "value": "te"
+                }
+            ],
+            "defaultDateFormat": [
+                {
+                    "label": "DD/MM/YYYY",
+                    "value": "en-in"
+                },
+                {
+                    "label": "MM/DD/YYYY",
+                    "value": "en-us"
+                },
+                {
+                    "label": "YYYY-MM-DD",
+                    "value": "en-ca"
+                }
+            ],
+            "createdBy": [
+                "Self",
+                "Existing"
+            ],
+            "channel": [
+                "API",
+                "UI",
+                "SFTP"
+            ],
+            "role": [
+                "Recruiter",
+                "Admin",
+                "Super Admin",
+                "Sourcer",
+                "Recruiting Manager"
+            ],
+            "weekends": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
+            "notifications": [
+                {
+                    "label": "In-person interview Reminder",
+                    "value": "InPersonReminder"
+                },
+                {
+                    "label": "JobBoards Search Executed",
+                    "value": "SourceAIQueryComplete"
+                },
+                {
+                    "label": "User added to Campaign",
+                    "value": "addedToCampaign"
+                },
+                {
+                    "label": "Profiles Uploaded",
+                    "value": "attachedProfiles"
+                },
+                {
+                    "label": "Campaign Slots expiring soon",
+                    "value": "campaignSlots"
+                },
+                {
+                    "label": "Campaign Slots Exhausted",
+                    "value": "campaignSlotsExhausted"
+                },
+                {
+                    "label": "Campaign Closed",
+                    "value": "campaignClosed"
+                },
+                {
+                    "label": "Campaign Created",
+                    "value": "campaignCreation"
+                },
+                {
+                    "label": "Folder Shared",
+                    "value": "folderShared"
+                },
+                {
+                    "label": "Interview Completed",
+                    "value": "interviewCompleted"
+                },
+                {
+                    "label": "Slot Booked",
+                    "value": "jobseekerBookedSlot"
+                },
+                {
+                    "label": "Slot Cancelled",
+                    "value": "jobseekerCancelledSlot"
+                },
+                {
+                    "label": "Slot Rescheduled",
+                    "value": "jobseekerRescheduledSlot"
+                },
+                {
+                    "label": "Rescheduled to New Host",
+                    "value": "jobseekerRescheduledSlotToNewHost"
+                },
+                {
+                    "label": "Link Campaign",
+                    "value": "linkCampaign"
+                },
+                {
+                    "label": "Link Campaign Folder",
+                    "value": "linkCampaignFolder"
+                },
+                {
+                    "label": "Link Folder",
+                    "value": "linkFolder"
+                },
+                {
+                    "label": "Video Interview Reminder",
+                    "value": "liveVideoReminder"
+                },
+                {
+                    "label": "Phone Interview Reminder",
+                    "value": "phoneReminder"
+                },
+                {
+                    "label": "Resumes Parsed",
+                    "value": "resumeParser"
+                },
+                {
+                    "label": "Profile Shared",
+                    "value": "sharedProfileToUser"
+                },
+                {
+                    "label": "Unlinked from Campaign",
+                    "value": "unlinkCampaign"
+                },
+                {
+                    "label": "Unlinked from Campaign Folder",
+                    "value": "unlinkFolder"
+                },
+                {
+                    "label": "Slot Booked without Campaign",
+                    "value": "jobseekerBookedSlotWithoutCampaign"
+                }
+            ],
+            "notificationCategory": [
+                {
+                    "label": "Interviews",
+                    "value": "InPersonReminder"
+                },
+                {
+                    "label": "SourceAI",
+                    "value": "SourceAIQueryComplete"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "addedToCampaign"
+                },
+                {
+                    "label": "Profiles",
+                    "value": "attachedProfiles"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "campaignSlots"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "campaignSlotsExhausted"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "campaignClosed"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "campaignCreation"
+                },
+                {
+                    "label": "Folders",
+                    "value": "folderShared"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "interviewCompleted"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "jobseekerBookedSlot"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "jobseekerCancelledSlot"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "jobseekerRescheduledSlot"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "jobseekerRescheduledSlotToNewHost"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "jobseekerBookedSlotWithoutCampaign"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "linkCampaign"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "linkCampaignFolder"
+                },
+                {
+                    "label": "Folders",
+                    "value": "linkFolder"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "liveVideoReminder"
+                },
+                {
+                    "label": "Interviews",
+                    "value": "phoneReminder"
+                },
+                {
+                    "label": "Profiles",
+                    "value": "resumeParser"
+                },
+                {
+                    "label": "Profiles",
+                    "value": "sharedProfileToUser"
+                },
+                {
+                    "label": "Campaigns",
+                    "value": "unlinkCampaign"
+                },
+                {
+                    "label": "Folders",
+                    "value": "unlinkFolder"
+                }
+            ]
+        }
+    }
+}

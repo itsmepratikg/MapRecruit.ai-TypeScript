@@ -1,0 +1,12 @@
+{
+    "_id": ObjectId("693c5f4897a010153dc4d4af"),
+    "franchiseName": "86559 - Pentenburg OH District",
+    "description": "Pentenburg OH District",
+    "companyID": ObjectId("61814138c98444344034ca8c"),
+    "createdBy": "",
+    "createdAt": ISODate("2025-12-12T18:30:32.548Z"),
+    "updatedAt": ISODate("2025-12-12T18:30:32.548Z"),
+    "active": true,
+    "deleted": false,
+    "franchiseCode": "86559"
+}

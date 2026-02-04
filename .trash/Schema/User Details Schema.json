@@ -1,0 +1,893 @@
+{
+    "role": "",
+    "productAdmin": false,
+    "productSupport": false,
+    "partnerAdmin": false,
+    "partnerSupport": false,
+    "admin": false,
+    "default": false,
+    "deleted": false,
+    "accessLevel": [
+        "Company",
+        "Client",
+        "User"
+    ],
+    "rolesAcess": [],
+    "accessabilitySettings": {
+        "overRide": false,
+        "globalSearch": true,
+        "settings": {
+            "enabled": true,
+            "visible": true,
+            "companyInfo": {
+                "enabled": true,
+                "visible": true
+            },
+            "notifications": {
+                "enabled": true,
+                "visible": true
+            },
+            "attachProfileSkipAutomate": {
+                "enable": true,
+                "visible": true
+            },
+            "engageaiWorkflows": {
+                "deleteWorkFlows": false,
+                "enabled": true,
+                "visible": true
+            },
+            "MriPreferences": {
+                "enabled": false,
+                "visible": false
+            },
+            "sourceAI": {
+                "visible": true,
+                "enabled": true
+            },
+            "ProfileSources": {
+                "visible": true,
+                "enabled": true
+            },
+            "themes": {
+                "enabled": true,
+                "visible": true
+            },
+            "tags": {
+                "enabled": true,
+                "visible": true,
+                "applicationTags": true,
+                "profileTags": true
+            },
+            "authenticationSettings": {
+                "enabled": true,
+                "visible": true
+            },
+            "communicationSettings": {
+                "enabled": true,
+                "visible": true
+            },
+            "reachoutTemplates": {
+                "enabled": true,
+                "visible": true
+            },
+            "teams": {
+                "enabled": true,
+                "visible": true
+            },
+            "users": {
+                "enabled": true,
+                "visible": true,
+                "createUser": true,
+                "updateUser": true,
+                "removeUser": true,
+                "userClients": true,
+                "clientUsers": false
+            },
+            "clients": {
+                "enabled": true,
+                "visible": true,
+                "createClient": true,
+                "updateClient": true,
+                "removeClient": true,
+                "MriPreferences": false
+            },
+            "roles": {
+                "enabled": true,
+                "visible": true,
+                "createRole": true,
+                "updateRole": true,
+                "removeRole": true,
+                "copyRole": false
+            },
+            "offers": {
+                "enabled": true,
+                "visible": false
+            },
+            "jobBoardSettings": {
+                "jobboard": {
+                    "user": {
+                        "create": {
+                            "visible": true,
+                            "enabled": true
+                        },
+                        "update": {
+                            "enabled": true
+                        }
+                    },
+                    "client": {
+                        "create": {
+                            "visible": true,
+                            "enabled": true
+                        },
+                        "update": {
+                            "enabled": true
+                        }
+                    }
+                }
+            },
+            "profiles": {
+                "enabled": true,
+                "visible": true,
+                "advancedSearch": {
+                    "visible": true,
+                    "enabled": true
+                },
+                "suggestedEntities": true,
+                "suggestedSearches": true,
+                "queryAnalysis": true,
+                "matchedEntities": true,
+                "matchSimilarEntities": true,
+                "filters": true,
+                "filtersGraphs": false,
+                "duplicateProfiles": true,
+                "sharedProfiles": true,
+                "favouriteProfiles": true
+            }
+        },
+        "chatbot": {
+            "enabled": false,
+            "visible": false,
+            "createBot": {
+                "enabled": true,
+                "visible": true
+            },
+            "knowledgeBase": {
+                "enabled": false,
+                "visible": false
+            },
+            "campaignAnalytics": {
+                "enabled": true,
+                "visible": true
+            },
+            "chatbots": {
+                "enabled": true,
+                "visible": true
+            },
+            "botAnalytics": {
+                "enabled": true,
+                "visible": true
+            },
+            "botConversations": {
+                "enabled": true,
+                "visible": true
+            },
+            "botPerformance": {
+                "enabled": true,
+                "visible": true
+            },
+            "dashboard": {
+                "enabled": true,
+                "visible": true
+            },
+            "model": {
+                "enabled": true,
+                "visible": true
+            },
+            "flow": {
+                "enabled": true,
+                "visible": true
+            },
+            "analytics": {
+                "enabled": true,
+                "visible": true
+            },
+            "conversations": {
+                "enabled": true,
+                "visible": true
+            },
+            "configuration": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "header": {
+            "history": {
+                "enabled": true,
+                "visible": true
+            },
+            "allEvents": {
+                "enabled": true,
+                "visible": true
+            },
+            "messages": {
+                "enabled": false,
+                "visible": false
+            }
+        },
+        "tableEdit": {
+            "visible": true,
+            "enabled": true,
+            "saveDefault": false
+        },
+        "clients": {
+            "visible": true,
+            "clientInfo": {
+                "enabled": true
+            },
+            "users": {
+                "visible": true,
+                "createUser": true,
+                "updateUser": true,
+                "removeUser": true,
+                "userClients": true,
+                "clientUsers": false
+            },
+            "customField": {
+                "enabled": true,
+                "visible": true
+            },
+            "savedRounds": {
+                "enabled": true,
+                "visible": true
+            },
+            "campaignSettings": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "dashboard": {
+            "tableView": true,
+            "createCampaign": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "intelligence": {
+            "enabled": true,
+            "visible": true,
+            "settings": true,
+            "jobPosting": {
+                "enabled": false,
+                "visible": false
+            }
+        },
+        "jobs": {
+            "enabled": true,
+            "visible": true,
+            "approvalRequired": true,
+            "approver": false,
+            "createJob": true,
+            "updateJob": true,
+            "removeJob": true
+        },
+        "campaigns": {
+            "enabled": true,
+            "visible": true,
+            "generateJobDescription": false,
+            "enhanceJobDescription": false,
+            "derivedSkills": false,
+            "industry": false,
+            "campaignSettings": {
+                "status": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "closingDate": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "owner": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "hiringManager": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "recruiter": {
+                    "enabled": true,
+                    "visible": true
+                }
+            },
+            "createCampaign": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "genAI": {
+            "enabled": false,
+            "visible": false,
+            "genAIEmailContext": {
+                "enabled": false,
+                "visible": false
+            }
+        },
+        "metrics": {
+            "enabled": false,
+            "visible": false,
+            "engageMetrics": {
+                "enabled": true,
+                "visible": true
+            },
+            "jobBoardMetrics": {
+                "enabled": true,
+                "visible": true
+            },
+            "usageMetrics": {
+                "enabled": true,
+                "visible": true
+            },
+            "chatbotMetrics": {
+                "enabled": true,
+                "visible": true
+            },
+            "textUsageMetrics": {
+                "enabled": true,
+                "visible": true
+            },
+            "peoplesAnalytics": {
+                "enabled": false,
+                "visible": false
+            },
+            "referralMetrics": {
+                "enabled": false,
+                "visible": false
+            },
+            "pageVisitMetrics": {
+                "enabled": false,
+                "visible": false
+            },
+            "accessLevel": "Client"
+        },
+        "foldersMetrics": {
+            "enabled": false,
+            "visible": false,
+            "accessLevel": "Client",
+            "campaignLink": {
+                "enabled": true,
+                "visible": true
+            },
+            "campaignUnLink": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "folders": {
+            "enabled": true,
+            "visible": true
+        },
+        "sourceAI": {
+            "enabled": true,
+            "visible": true,
+            "campaigns": {
+                "createCampaign": true,
+                "updateCampaign": true,
+                "removeCampaign": true,
+                "jobFitScore": true,
+                "copyCampaign": true
+            },
+            "portalSourcing": {
+                "enabled": true,
+                "visible": true,
+                "createQuery": true,
+                "runQuery": true,
+                "removeQuery": true
+            },
+            "uploadFiles": {
+                "enabled": true,
+                "visible": true,
+                "uploadResumes": true,
+                "uploadExcel": true
+            },
+            "searchPeople": {
+                "enabled": true,
+                "visible": true,
+                "byKeywords": true,
+                "byTags": true,
+                "byFolder": true
+            },
+            "createProfile": {
+                "enabled": true,
+                "visible": true
+            },
+            "articles": {
+                "createArticle": true,
+                "updateArticle": true,
+                "removeArticle": true
+            },
+            "linkPeople": {
+                "linkPeople": true,
+                "unlinkPeople": true
+            },
+            "integration": {
+                "enabled": true,
+                "visible": true,
+                "createEmailSubject": true,
+                "updateEmailSubject": true,
+                "removeEmailSubject": true
+            },
+            "recommendedPeople": {
+                "enabled": true,
+                "linkPeople": true,
+                "sharePeople": true,
+                "quickAccess": false,
+                "filters": true,
+                "matchMRI": true,
+                "matchVector": true,
+                "advancedSearch": true,
+                "preferences": false
+            },
+            "jobDescription": {
+                "enabled": true,
+                "visible": true,
+                "update": true,
+                "settings": {
+                    "enabled": true,
+                    "visible": true
+                }
+            },
+            "profile": {
+                "enabled": true,
+                "activities": true,
+                "downloadProfile": true,
+                "recommendedJobs": true,
+                "duplicateProfiles": true,
+                "similarProfiles": true,
+                "profileDetails": true,
+                "showResume": true,
+                "linkedCampaigns": true,
+                "linkedFolders": true,
+                "createProfile": true,
+                "updateProfile": true,
+                "removeProfile": true,
+                "mergeDuplicate": true,
+                "createProfileTags": true,
+                "createApplicationTags": true,
+                "saveAsFavorite": true,
+                "interviewTemplate": {
+                    "visible": true,
+                    "create": true,
+                    "delete": false,
+                    "update": false
+                },
+                "OptIn": true,
+                "referral": false,
+                "createNewSourceName": true,
+                "interviewShare": false,
+                "profileShare": false,
+                "selectDefinedSourceName": false,
+                "shareCampaign": true,
+                "viewOriginalProfile": true,
+                "personnelStatus": {
+                    "enabled": true,
+                    "visible": true,
+                    "oneWayDirection": true,
+                    "changeUpto": "Employee"
+                },
+                "addHistory": {
+                    "visible": true,
+                    "campaigns": false,
+                    "clients": true,
+                    "eventType": true,
+                    "comment": true
+                },
+                "employementStatus": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "availabilityStatus": {
+                    "enabled": true,
+                    "visible": true
+                }
+            },
+            "exportProfile": {
+                "enabled": false,
+                "visible": false,
+                "exportProfile": false,
+                "exportApplication": false
+            },
+            "exportCampaign": {
+                "enabled": false,
+                "visible": false,
+                "exportCampaign": false
+            },
+            "profileWidgets": {
+                "duplicateWidget": true,
+                "attentionWidget": true,
+                "resumeWidget": true,
+                "matchInfoWidget": true,
+                "profileViewedWidget": true,
+                "shortListWidget": true,
+                "profileSummaryWidget": true,
+                "skipAutomationWidget": true,
+                "linkCampaignWidget": true,
+                "linkFolderWidget": true,
+                "tagsAttachWidget": true,
+                "unSubscribeWidget": true,
+                "referralWidget": true,
+                "favouriteWidget": true,
+                "downloadProfileWidget": true,
+                "exportProfileWidget": true,
+                "massEmailWidget": true,
+                "massSMSWidget": true,
+                "profileShareWidget": true,
+                "uploadResumesWidget": true,
+                "directVideoWidget": true
+            }
+        },
+        "matchAI": {
+            "enabled": true,
+            "visible": true,
+            "visualizeProfiles": true,
+            "visualizeProfilesVisible": true,
+            "matchSimilarEntitiesSwitch": false,
+            "genAI": {
+                "visible": false,
+                "autoGenerate": false,
+                "generateOnClick": false,
+                "generateButton": false
+            },
+            "calculateMRI": {
+                "recalculate": true,
+                "updateSkills": true,
+                "updatePreferences": true
+            }
+        },
+        "engageAI": {
+            "enabled": true,
+            "visible": true,
+            "screeningRound": {
+                "enabled": true,
+                "createScreeningRound": true,
+                "updateScreeningRound": true,
+                "removeScreeningRound": true,
+                "directVideo": false,
+                "review": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "schedule": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "immediateFollowUp": {
+                    "enabled": true,
+                    "visible": true
+                },
+                "screening": {
+                    "enabled": true,
+                    "visible": true,
+                    "interviewTemplates": true,
+                    "recommendedQuestions": true,
+                    "existingQuestions": true
+                },
+                "announcement": {
+                    "enabled": true,
+                    "visible": true,
+                    "interviewTemplates": true,
+                    "recommendedQuestions": true,
+                    "existingQuestions": true
+                },
+                "liveVideo": {
+                    "enabled": true,
+                    "visible": true,
+                    "interviewTemplates": true,
+                    "recommendedQuestions": true,
+                    "existingQuestions": true
+                },
+                "InPerson": {
+                    "enabled": true,
+                    "visible": true,
+                    "interviewTemplates": true,
+                    "recommendedQuestions": true,
+                    "existingQuestions": true
+                },
+                "survey": {
+                    "enabled": true,
+                    "visible": false,
+                    "interviewTemplates": true,
+                    "recommendedQuestions": true,
+                    "existingQuestions": true
+                },
+                "interview": {
+                    "enabled": false,
+                    "visible": false,
+                    "interviewTemplates": true,
+                    "recommendedQuestions": true,
+                    "existingQuestions": true
+                }
+            },
+            "calendarSync": {
+                "googleCalendar": {
+                    "enabled": true,
+                    "visible": true,
+                    "googleMeet": {
+                        "enabled": false,
+                        "visible": false,
+                        "default": false
+                    }
+                },
+                "outlookCalendar": {
+                    "enabled": true,
+                    "visible": true,
+                    "microsoftTeams": {
+                        "enabled": false,
+                        "visible": false,
+                        "default": false
+                    }
+                }
+            },
+            "automation": {
+                "enabled": true,
+                "visible": true
+            },
+            "autoSchedule": {
+                "enabled": true,
+                "visible": true
+            },
+            "questionnaire": {
+                "enabled": true,
+                "visible": true,
+                "recommendedQuestions": true,
+                "existingQuestions": true,
+                "createQuestions": true,
+                "updateQuestions": true,
+                "removeQuestions": true,
+                "showResponsesCount": true,
+                "showQuestionInfo": false
+            },
+            "reachOut": {
+                "enabled": true,
+                "visible": true,
+                "massEmail": false,
+                "generateMassEmail": false,
+                "massSMS": false,
+                "generateMassSMS": false,
+                "conditionalTemplates": false,
+                "savedPromptMassEmail": false,
+                "savedPromptMassSMS": false,
+                "email": {
+                    "enabled": true,
+                    "visible": true,
+                    "generateReachOutEmail": false,
+                    "savedPromptReachOutEmail": false,
+                    "invitationTemplatesEnabled": false,
+                    "announcementTemplatesEnabled": false,
+                    "autoScheduleTemplatesEnabled": false,
+                    "invitationConfirmationTemplatesEnabled": false,
+                    "cancelTemplatesEnabled": false,
+                    "rescheduleTemplatesEnabled": false,
+                    "acknowledgementTemplatesEnabled": false,
+                    "invitationSurveyTemplateEnabled": false,
+                    "postSurveyTemplateEnabled": false
+                },
+                "sms": {
+                    "enabled": false,
+                    "visible": false,
+                    "generateReachOutSMS": false,
+                    "savedPromptReachOutSMS": false,
+                    "invitationTemplatesEnabled": false,
+                    "announcementTemplatesEnabled": false,
+                    "autoScheduleTemplatesEnabled": false,
+                    "invitationConfirmationTemplatesEnabled": false,
+                    "cancelTemplatesEnabled": false,
+                    "rescheduleTemplatesEnabled": false,
+                    "acknowledgementTemplatesEnabled": false,
+                    "invitationSurveyTemplateEnabled": false,
+                    "postSurveyTemplateEnabled": false
+                },
+                "phone": {
+                    "enabled": false,
+                    "visible": false,
+                    "invitationTemplatesEnabled": false,
+                    "announcementTemplatesEnabled": false,
+                    "autoScheduleTemplatesEnabled": false,
+                    "invitationConfirmationTemplatesEnabled": false,
+                    "cancelTemplatesEnabled": false,
+                    "rescheduleTemplatesEnabled": false,
+                    "acknowledgementTemplatesEnabled": false
+                },
+                "whatsapp": {
+                    "enabled": false,
+                    "visible": false,
+                    "invitationTemplatesEnabled": false,
+                    "acknowledgementTemplatesEnabled": false
+                }
+            },
+            "channels": {
+                "chatBot": true,
+                "phone": true
+            }
+        },
+        "qualifyAI": {
+            "enabled": true,
+            "visible": true
+        },
+        "messenger": {
+            "enabled": false,
+            "visible": false,
+            "messenger": {
+                "enabled": true,
+                "visible": true
+            },
+            "trainedIntent": {
+                "enabled": true,
+                "visible": true
+            },
+            "analytics": {
+                "enabled": true,
+                "visible": true
+            },
+            "keywords": {
+                "enabled": true,
+                "visible": true
+            },
+            "contacts": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "conversation": {
+            "enabled": false,
+            "visible": false,
+            "trainedIntent": {
+                "enabled": true,
+                "visible": true
+            },
+            "analytics": {
+                "enabled": true,
+                "visible": true
+            },
+            "keywords": {
+                "enabled": true,
+                "visible": true
+            },
+            "contacts": {
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "talentChat": {
+            "enabled": false,
+            "visible": false,
+            "trainedIntent": {
+                "enabled": false,
+                "visible": false
+            },
+            "analytics": {
+                "enabled": false,
+                "visible": false
+            },
+            "keywords": {
+                "enabled": false,
+                "visible": false,
+                "edit": {
+                    "enabled": false,
+                    "visible": false
+                },
+                "delete": {
+                    "enabled": false,
+                    "visible": false
+                }
+            },
+            "contacts": {
+                "enabled": false,
+                "visible": false
+            },
+            "schedules": {
+                "enabled": false,
+                "visible": false
+            },
+            "assign": {
+                "enabled": false,
+                "visible": false
+            }
+        },
+        "tables": {
+            "dashboardTables": {
+                "hiringMetrics": {
+                    "enabled": true,
+                    "visible": true,
+                    "selectedColumns": [
+                        "Job",
+                        "Job ID",
+                        "# of Offers",
+                        "Offers Accepted",
+                        "Offers Declined",
+                        "Time to fill",
+                        "NPS(Hiring Manager)",
+                        "NPS(New Hire)"
+                    ],
+                    "allColumns": [
+                        "Job",
+                        "Job ID",
+                        "# of Offers",
+                        "Offers Accepted",
+                        "Offers Declined",
+                        "Time to fill",
+                        "NPS(Hiring Manager)",
+                        "NPS(New Hire)"
+                    ]
+                },
+                "activeCampaigns": {
+                    "enabled": true,
+                    "visible": true,
+                    "selectedColumns": [
+                        "Title",
+                        "Job ID",
+                        "Days Left",
+                        "Members",
+                        "Updated Date",
+                        "Profiles"
+                    ],
+                    "allColumns": [
+                        "Title",
+                        "Job ID",
+                        "Days Left",
+                        "Members",
+                        "Updated Date",
+                        "Profiles"
+                    ]
+                },
+                "receivedInterviews": {
+                    "enabled": true,
+                    "visible": true,
+                    "selectedColumns": [
+                        "Full Name",
+                        "Campaign Name",
+                        "Job ID",
+                        "Turn around time",
+                        "Completed At",
+                        "Status"
+                    ],
+                    "allColumns": [
+                        "Full Name",
+                        "Campaign Name",
+                        "Job ID",
+                        "Turn around time",
+                        "Completed At",
+                        "Status"
+                    ]
+                },
+                "reviewedInterviews": {
+                    "enabled": true,
+                    "visible": true,
+                    "selectedColumns": [
+                        "Full Name",
+                        "Campaign Name",
+                        "Job ID",
+                        "Reviewed By",
+                        "Reviewed At",
+                        "Status"
+                    ],
+                    "allColumns": [
+                        "Full Name",
+                        "Campaign Name",
+                        "Job ID",
+                        "Reviewed By",
+                        "Reviewed At",
+                        "Status"
+                    ]
+                }
+            }
+        },
+        "notificationSettings": {
+            "enabled": true,
+            "visible": true
+        }
+    },
+    "companyID": "",
+    "userID": "",
+    "createdAt": "",
+    "updatedAt": ""
+}

@@ -203,7 +203,7 @@ export const SchemaCampaignList = ({ status, onNavigateToCampaign, onTabChange, 
     // --- Core Filter Logic ---
     const filteredCampaigns = campaigns.filter(c => {
         const userId = userProfile?._id || userProfile?.id;
-        const userClientId = userProfile?.activeClient; // or userProfile.clientID
+        const userClientId = userProfile?.activeClientID; // Use activeClientID (ID) instead of activeClient (Name)
 
         // 1. Multi-tenant Check (Strict)
         // Ensure accurate comparison whether ObjectId or String
