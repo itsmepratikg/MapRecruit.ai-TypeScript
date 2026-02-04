@@ -54,12 +54,23 @@ const updateHierarchy = async (req, res) => {
             return res.status(400).json({ message: 'Invalid hierarchy format' });
         }
 
+        // Sanitize and validate hierarchy entries to prevent NoSQL operator injection
+        const sanitizedHierarchy = hierarchy
+            .filter(item => item && typeof item === 'object')
+            .map(item => {
+                const safeItem = sanitizeNoSQL(item);
+                return {
+                    roleID: safeItem.roleID,
+                    rank: safeItem.rank
+                };
+            });
+
         // Upsert
         const updatedDoc = await RoleHierarchy.findOneAndUpdate(
-            { companyID },
+            { companyID: { $eq: companyID } },
             {
                 companyID,
-                hierarchy,
+                hierarchy: sanitizedHierarchy,
                 updatedBy: req.user.id
             },
             { new: true, upsert: true, setDefaultsOnInsert: true }
