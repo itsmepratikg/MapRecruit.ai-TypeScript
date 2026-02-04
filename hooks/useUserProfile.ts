@@ -209,17 +209,34 @@ export const useUserProfile = () => {
 
     const [availableClients, setAvailableClients] = useState<any[]>([]);
 
-    // Fetch clients on mount
+    // Shared promise for fetching clients to avoid "thundering herd" on mount
+    // This ensures that if 10 components use this hook simultaneously, only 1 request is made.
+    const clientsPromiseRef = useRef<Promise<any[]> | null>(null);
+
     // Fetch clients on mount
     useEffect(() => {
         let isMounted = true;
-        import('../services/api').then(({ clientService }) => {
-            clientService.getAll().then(data => {
+
+        const fetchClients = async () => {
+            // Check if there's already a fetch in progress
+            if (!(window as any)._clientsPromise) {
+                (window as any)._clientsPromise = import('../services/api').then(({ clientService }) =>
+                    clientService.getAll()
+                ).catch(err => {
+                    (window as any)._clientsPromise = null; // Reset on error so we can retry
+                    throw err;
+                });
+            }
+
+            try {
+                const data = await (window as any)._clientsPromise;
                 if (isMounted) setAvailableClients(data);
-            }).catch(err => {
+            } catch (err) {
                 if (isMounted) setAvailableClients([]);
-            });
-        });
+            }
+        };
+
+        fetchClients();
         return () => { isMounted = false; };
     }, []);
 
