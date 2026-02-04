@@ -1,5 +1,6 @@
 const Interview = require('../models/Interview');
 const Client = require('../models/Client');
+const { sanitizeNoSQL, isValidObjectId } = require('../utils/securityUtils');
 
 // Helper to get access filter (standardizing with profileController)
 const getAccessFilter = async (user) => {
@@ -51,8 +52,13 @@ const getInterviews = async (req, res) => {
 const getInterview = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
+
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Interview ID' });
+        }
+
         const interview = await Interview.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             ...accessFilter
         });
 
@@ -72,8 +78,9 @@ const getInterview = async (req, res) => {
 const createInterview = async (req, res) => {
     try {
         // Automatically inject tenant IDs from user context
+        const sanitizedBody = sanitizeNoSQL(req.body);
         const interview = await Interview.create({
-            ...req.body,
+            ...sanitizedBody,
             companyID: req.user.currentCompanyID || req.user.companyID,
             clientID: req.user.activeClientID,
             userID: req.user.id
@@ -86,24 +93,7 @@ const createInterview = async (req, res) => {
     }
 };
 
-// Recursively remove any keys starting with '$' from an object or array
-const removeDollarPrefixedKeysDeep = (value) => {
-    if (Array.isArray(value)) {
-        return value.map((item) => removeDollarPrefixedKeysDeep(item));
-    }
-    if (value && typeof value === 'object') {
-        const sanitized = {};
-        for (const [key, val] of Object.entries(value)) {
-            if (key.startsWith('$')) {
-                // Skip dangerous operator-like keys
-                continue;
-            }
-            sanitized[key] = removeDollarPrefixedKeysDeep(val);
-        }
-        return sanitized;
-    }
-    return value;
-};
+
 
 // @desc    Update interview
 // @route   PUT /api/interviews/:id
@@ -111,8 +101,13 @@ const removeDollarPrefixedKeysDeep = (value) => {
 const updateInterview = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
+
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Interview ID' });
+        }
+
         const interview = await Interview.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             ...accessFilter
         });
 
@@ -121,7 +116,7 @@ const updateInterview = async (req, res) => {
         }
 
         const updates = req.body;
-        const sanitizedUpdates = removeDollarPrefixedKeysDeep(updates);
+        const sanitizedUpdates = sanitizeNoSQL(updates);
 
         const updatedInterview = await Interview.findByIdAndUpdate(
             req.params.id,
@@ -141,8 +136,13 @@ const updateInterview = async (req, res) => {
 const deleteInterview = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
+
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Interview ID' });
+        }
+
         const interview = await Interview.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             ...accessFilter
         });
 

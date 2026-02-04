@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const Role = require('../models/Role'); // Import Role model
+const { sanitizeNoSQL, isValidObjectId } = require('../utils/securityUtils');
 
 // Helper to get role rank (lower is senior)
 // Duplicate of logic in authController. ideally valid to move to a utils file.
@@ -49,7 +50,7 @@ const getUsers = async (req, res) => {
 // @access  Private
 const getUserById = async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        if (!isValidObjectId(req.params.id)) {
             return res.status(400).json({ message: 'Invalid User ID format' });
         }
 
@@ -139,8 +140,9 @@ const createUser = async (req, res) => {
         // Process Client ObjectIds (Valid ones only, which we now know are authorized)
         const clientObjectIds = requestedClientIds.map(id => new mongoose.Types.ObjectId(id));
 
+        const sanitizedBody = sanitizeNoSQL(req.body);
         const userData = {
-            ...req.body,
+            ...sanitizedBody,
             password: password || getDomainPassword(email), // Dynamic domain-based password
             role: req.body.role || 'Recruiter', // Default role if not provided
             clients: clientObjectIds, // Ensure ObjectIds
@@ -165,7 +167,7 @@ const createUser = async (req, res) => {
 // @access  Private
 const updateUser = async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        if (!isValidObjectId(req.params.id)) {
             return res.status(400).json({ message: 'Invalid User ID format' });
         }
 
@@ -202,9 +204,10 @@ const updateUser = async (req, res) => {
         const restrictedFields = ['password', '_id', 'clients']; // Handle clients separately
 
         // Prevent NoSQL operator injection in top-level fields
-        const updates = { ...req.body };
+        const updates = sanitizeNoSQL(req.body);
+        // Previously manual loop removed here as sanitizeNoSQL covers deeper levels too
         for (const key of Object.keys(updates)) {
-            if (key.startsWith('$')) {
+            if (key.startsWith('$')) { // Double check top level just in case, though sanitized
                 delete updates[key];
             }
         }
@@ -330,6 +333,7 @@ const updateActiveAt = async (req, res) => {
 
 const resetPassword = async (req, res) => {
     try {
+        if (!isValidObjectId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
 

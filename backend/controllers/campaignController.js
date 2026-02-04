@@ -1,6 +1,7 @@
 const Campaign = require('../models/Campaign');
 const User = require('../models/User');
 const Client = require('../models/Client');
+const { sanitizeNoSQL, isValidObjectId } = require('../utils/securityUtils');
 
 // Helper to get allowed client IDs for user in current company
 const getAllowedClientIds = async (userId, companyId) => {
@@ -141,8 +142,13 @@ const getRecentCampaigns = async (req, res) => {
 const getCampaign = async (req, res) => {
     try {
         const companyID = req.user.currentCompanyID || req.user.companyID;
+
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Campaign ID' });
+        }
+
         const campaign = await Campaign.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             companyID: companyID
         });
 
@@ -166,8 +172,9 @@ const createCampaign = async (req, res) => {
     try {
         const companyID = req.user.currentCompanyID || req.user.companyID;
         // req.body contains flexible schema structure
+        const sanitizedBody = sanitizeNoSQL(req.body);
         const campaign = await Campaign.create({
-            ...req.body,
+            ...sanitizedBody,
             companyID: companyID, // Force company context
             userID: req.user.id
             // Ensure schema default structure if needed
@@ -190,31 +197,7 @@ const createCampaign = async (req, res) => {
     }
 };
 
-// Helper to deeply sanitize update objects and prevent NoSQL operator injection
-const sanitizeForUpdate = (value) => {
-    if (value === null || value === undefined) return value;
 
-    // Primitives are safe as-is
-    if (typeof value !== 'object') {
-        return value;
-    }
-
-    // Arrays: sanitize each element
-    if (Array.isArray(value)) {
-        return value.map((item) => sanitizeForUpdate(item));
-    }
-
-    // Plain objects: remove any keys starting with '$' and sanitize values
-    const sanitized = {};
-    for (const [key, val] of Object.entries(value)) {
-        if (typeof key === 'string' && key.startsWith('$')) {
-            // Skip any operator-like keys
-            continue;
-        }
-        sanitized[key] = sanitizeForUpdate(val);
-    }
-    return sanitized;
-};
 
 // @desc    Update campaign
 // @route   PUT /api/campaigns/:id
@@ -222,8 +205,13 @@ const sanitizeForUpdate = (value) => {
 const updateCampaign = async (req, res) => {
     try {
         const companyID = req.user.currentCompanyID || req.user.companyID;
+
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Campaign ID' });
+        }
+
         const campaign = await Campaign.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             companyID: companyID
         });
 
@@ -232,7 +220,7 @@ const updateCampaign = async (req, res) => {
         }
 
         // Prevent NoSQL operator injection by deeply sanitizing the update payload
-        const updates = sanitizeForUpdate(req.body);
+        const updates = sanitizeNoSQL(req.body);
 
         const updatedCampaign = await Campaign.findByIdAndUpdate(
             req.params.id,
@@ -253,8 +241,13 @@ const updateCampaign = async (req, res) => {
 const deleteCampaign = async (req, res) => {
     try {
         const companyID = req.user.currentCompanyID || req.user.companyID;
+
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Campaign ID' });
+        }
+
         const campaign = await Campaign.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             companyID: companyID
         });
 
