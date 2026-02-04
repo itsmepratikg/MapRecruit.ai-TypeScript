@@ -7,6 +7,7 @@ const {
     listRoles,
     createRole,
     updateRole,
+    deleteRole,
     switchCompany
 } = require('../controllers/authController');
 const {
@@ -32,7 +33,15 @@ router.post('/passkey/login-verify', verifyLogin);
 router.route('/roles')
     .get(protect, listRoles)
     .post(protect, createRole);
-router.put('/roles/:id', protect, updateRole);
+router.route('/roles/:id')
+    .put(protect, updateRole)
+    .delete(protect, deleteRole);
+
+// Role Hierarchy Routes
+const { getHierarchy, updateHierarchy } = require('../controllers/roleHierarchyController');
+router.route('/roles/hierarchy')
+    .get(protect, getHierarchy)
+    .post(protect, updateHierarchy);
 
 // Impersonation Route
 router.post('/impersonate', protect, require('../controllers/authController').impersonateUser);

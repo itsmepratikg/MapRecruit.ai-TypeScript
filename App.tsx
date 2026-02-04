@@ -374,13 +374,13 @@ export const App = () => {
               {/* Sidebar */}
               <div
                 data-tour="sidebar-container"
-                className={`fixed inset-y-0 left-0 z-50 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transform transition-all duration-300 ease-in-out flex flex-col shadow-xl 
+                className={`z-50 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transform transition-all duration-300 ease-in-out flex flex-col shadow-xl 
                   ${isDesktop
                     ? 'w-64 relative translate-x-0' // Desktop: Always expanded
-                    : (isSidebarOpen
+                    : `fixed inset-y-0 left-0 ${isSidebarOpen
                       ? 'w-64 translate-x-0 shadow-2xl' // Mobile Open: Expanded Overlay
                       : 'w-16 translate-x-0' // Mobile Closed: Mini Sidebar
-                    )
+                    }`
                   }
               `}>
                 {/* ... Sidebar Header ... */}

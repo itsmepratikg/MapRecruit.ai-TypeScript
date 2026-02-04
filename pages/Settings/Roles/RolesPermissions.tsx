@@ -3,205 +3,33 @@ import React, { useState, useMemo, useEffect } from 'react';
 import {
     Shield, Plus, Copy, Search, Edit2, Trash2, ChevronLeft,
     Save, CheckCircle, AlertCircle, ChevronDown, ChevronRight,
-    Layers, Lock, Clock, Check, X
+    Layers, Lock, Clock, Check, X, Eye
 } from '../../../components/Icons';
 import { useToast } from '../../../components/Toast';
 import { useTranslation } from 'react-i18next';
+import PermissionAccordion from './components/PermissionAccordion';
+import RoleOverviewCards from './components/RoleOverviewCards';
+import { useParams, useNavigate } from 'react-router-dom';
 
-// --- MOCK DATA ---
+import { useUserProfile } from '../../../hooks/useUserProfile';
+import { useRoleHierarchy } from '../../../hooks/useRoleHierarchy';
+import { DEFAULT_PERMISSIONS } from './constants';
 
-const MOCK_ROLES = [
-    { id: 'R-SUPER-ADMIN', name: 'Super Administrator', description: 'Full system access with no restrictions.', users: 3, created: 'Jan 10, 2024', updated: 'May 21, 2025' },
-    { id: 'R-PROD-ADMIN', name: 'Product Admin', description: 'Manages campaigns, candidates, and workflows.', users: 5, created: 'Feb 14, 2024', updated: 'May 15, 2025' },
-    { id: 'R-RECRUITER', name: 'Recruiter', description: 'Standard access for sourcing and interviewing.', users: 12, created: 'Mar 01, 2024', updated: 'Apr 20, 2025' },
-    { id: 'R-HM', name: 'Hiring Manager', description: 'View-only access to assigned campaigns and interviews.', users: 8, created: 'Mar 05, 2024', updated: 'Apr 10, 2025' },
-    { id: 'R-SOURCER', name: 'Sourcer', description: 'Dedicated to candidate discovery and pipeline filling.', users: 4, created: 'Apr 12, 2024', updated: 'May 01, 2025' },
-];
-
-const DEFAULT_PERMISSIONS = {
-    "System & Administration": {
-        "overRide": true,
-        "globalSearch": true,
-        "tableEdit": {
-            "visible": true,
-            "enabled": true,
-            "saveDefault": true
-        },
-        "settings": {
-            "enabled": true,
-            "visible": true,
-            "companyInfo": { "enabled": true, "visible": true },
-            "notifications": { "enabled": true, "visible": true },
-            "themes": { "enabled": true, "visible": true },
-            "users": {
-                "enabled": true, "visible": true,
-                "createUser": true, "updateUser": true, "removeUser": true
-            },
-            "roles": {
-                "enabled": true, "visible": true,
-                "createRole": true, "updateRole": true, "removeRole": true
-            }
-        }
-    },
-    "Chatbot & AI": {
-        "chatbot": {
-            "enabled": true,
-            "visible": true,
-            "createBot": { "enabled": true, "visible": true },
-            "knowledgeBase": { "enabled": true, "visible": true },
-            "botAnalytics": { "enabled": true, "visible": true }
-        },
-        "genAI": {
-            "enabled": true,
-            "visible": true
-        }
-    },
-    "Source AI": {
-        "sourceAI": {
-            "enabled": true,
-            "visible": true,
-            "campaigns": {
-                "createCampaign": true, "updateCampaign": true, "removeCampaign": true,
-                "jobFitScore": true
-            },
-            "searchPeople": {
-                "enabled": true, "visible": true,
-                "byKeywords": true, "byTags": true
-            }
-        },
-        "profiles": {
-            "enabled": true, "visible": true,
-            "advancedSearch": { "visible": true, "enabled": true },
-            "exportProfile": true
-        }
-    },
-    "Engage AI": {
-        "engageAI": {
-            "enabled": true, "visible": true,
-            "screeningRound": {
-                "createScreeningRound": true, "updateScreeningRound": true
-            },
-            "automation": { "enabled": true, "visible": true },
-            "reachOut": {
-                "enabled": true, "visible": true,
-                "massEmail": true, "massSMS": true
-            }
-        }
-    }
-};
-
-// --- UTILS ---
-
-const formatKey = (key: string) => {
-    // Manual overrides for cleaner text if needed, or rely on simple transformation
-    if (key === 'overRide') return 'Over Ride';
-    return key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase());
-};
-
-// --- SUB-COMPONENTS ---
-
-interface PermissionToggleProps {
-    label: string;
-    value: boolean;
-    onChange: (val: boolean) => void;
-    disabled?: boolean;
-}
-
-const PermissionToggle: React.FC<PermissionToggleProps> = ({ label, value, onChange, disabled }) => {
-    const { t } = useTranslation();
-    return (
-        <div className={`flex items-center justify-between py-3 border-b border-slate-100 dark:border-slate-800 last:border-0 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}>
-            <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{t(formatKey(label))}</span>
-            <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                    type="checkbox"
-                    className="sr-only peer"
-                    checked={value}
-                    onChange={(e) => onChange(e.target.checked)}
-                    disabled={disabled}
-                />
-                <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
-            </label>
-        </div>
-    );
-};
-
-const RecursivePermissionGroup = ({ data, path = [], onToggle }: { data: any, path: string[], onToggle: (path: string[], val: boolean) => void }) => {
-    const { t } = useTranslation();
-    // If it's a leaf node (boolean), render toggle
-    if (typeof data === 'boolean') {
-        const key = path[path.length - 1];
-        if (key === 'visible' || key === 'enabled') return null; // These are handled by parent
-        return <PermissionToggle label={key} value={data} onChange={(val) => onToggle(path, val)} />;
-    }
-
-    // Identify if this object is a "Feature Node" (has enabled/visible props)
-    const isFeatureNode = 'enabled' in data || 'visible' in data;
-    const isRoot = path.length === 0;
-
-    return (
-        <div className={`space-y-1 ${!isRoot ? 'ml-4 pl-4 border-l-2 border-slate-100 dark:border-slate-800' : ''}`}>
-            {Object.keys(data).map(key => {
-                const value = data[key];
-                const currentPath = [...path, key];
-
-                // Skip meta keys if we are iterating inside a feature node, they are handled by the node header usually
-                if (key === 'enabled' || key === 'visible') return null;
-
-                if (typeof value === 'boolean') {
-                    return (
-                        <PermissionToggle
-                            key={key}
-                            label={key}
-                            value={value}
-                            onChange={(val) => onToggle(currentPath, val)}
-                        />
-                    );
-                }
-
-                if (typeof value === 'object' && value !== null) {
-                    const childEnabled = value.enabled !== undefined ? value.enabled : true;
-
-                    return (
-                        <div key={key} className="mt-4 first:mt-0">
-                            <div className="flex items-center justify-between mb-2">
-                                <h5 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                                    {t(formatKey(key))}
-                                </h5>
-                                {value.enabled !== undefined && (
-                                    <label className="relative inline-flex items-center cursor-pointer scale-75 origin-right">
-                                        <input
-                                            type="checkbox"
-                                            className="sr-only peer"
-                                            checked={value.enabled}
-                                            onChange={(e) => onToggle([...currentPath, 'enabled'], e.target.checked)}
-                                        />
-                                        <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-                                    </label>
-                                )}
-                            </div>
-
-                            <div className={!childEnabled ? 'opacity-50 pointer-events-none grayscale' : ''}>
-                                <RecursivePermissionGroup
-                                    data={value}
-                                    path={currentPath}
-                                    onToggle={onToggle}
-                                />
-                            </div>
-                        </div>
-                    );
-                }
-                return null;
-            })}
-        </div>
-    );
-};
+// ... (keep utils)
 
 // --- MAIN PAGE COMPONENT ---
 
 export const RolesPermissions = () => {
     const { t } = useTranslation();
     const { addToast } = useToast();
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    // User Profile for Context
+    const { userProfile } = useUserProfile();
+    // Hierarchy Hook
+    const { isSeniorTo, loading: hierarchyLoading } = useRoleHierarchy(userProfile?.roleID?._id || userProfile?.roleID, userProfile?.companyID);
+
     const [view, setView] = useState<'LIST' | 'EDITOR'>('LIST');
     const [roles, setRoles] = useState<any[]>([]);
     const [currentRole, setCurrentRole] = useState<any>(null);
@@ -213,22 +41,48 @@ export const RolesPermissions = () => {
     });
     const [searchQuery, setSearchQuery] = useState('');
     const [currentCompanyID, setCurrentCompanyID] = useState<string | null>(null);
+    const [userCounts, setUserCounts] = useState<Record<string, number>>({}); // Map roleID -> count
     const [loading, setLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
 
+    // Initial Data Fetch
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
                 const { default: api, companyService } = await import('../../../services/api');
-                const [rolesRes, companyRes] = await Promise.all([
-                    api.get('/auth/roles'),
-                    companyService.get()
-                ]);
-                setRoles(rolesRes.data);
-                // Assume companyRes is the current company object
-                if (companyRes && companyRes._id) {
-                    // Store current company ID for creating new roles
-                    setCurrentCompanyID(companyRes._id);
+                // Get company first to filter users/roles if needed (though API might handle it via header/middleware)
+                const companyRes = await companyService.get();
+                const companyID = companyRes?._id;
+
+                if (companyID) {
+                    setCurrentCompanyID(companyID);
                 }
+
+                // Fetch Roles and Users
+                // Assuming /auth/roles gives roles for current context (or we need to filter)
+                // Assuming /users gives users for current context
+                const [rolesRes, usersRes] = await Promise.all([
+                    api.get('/auth/roles'),
+                    api.get('/users?limit=1000') // Fetch enough users to count. Optimization: Backend aggregation better.
+                ]);
+
+                // If rolesRes gives all system roles, we might need to filter by company if they are not global.
+                // Assuming backend handles tenant isolation for roles or returns relevant ones.
+                const fetchedRoles = rolesRes.data || [];
+                setRoles(fetchedRoles);
+
+                // Calculate User Counts
+                const users = usersRes.data.docs || usersRes.data || [];
+                const counts: Record<string, number> = {};
+
+                users.forEach((u: any) => {
+                    const rId = u.role?._id || u.role; // Handle populated or ID
+                    if (rId) {
+                        counts[rId] = (counts[rId] || 0) + 1;
+                    }
+                });
+                setUserCounts(counts);
+
             } catch (error) {
                 console.error("Failed to fetch initial data", error);
             } finally {
@@ -236,30 +90,57 @@ export const RolesPermissions = () => {
             }
         };
         fetchInitialData();
-    }, [view]);
+    }, []); // Run once on mount
+
+    // ID Synchronization Logic
+    useEffect(() => {
+        if (loading) return; // Wait for roles to be loaded
+
+        if (id) {
+            setView('EDITOR');
+            if (id === 'new') {
+                setIsEditing(true);
+                setCurrentRole(null);
+                setRoleForm({
+                    roleName: '',
+                    description: '',
+                    accessibilitySettings: JSON.parse(JSON.stringify(DEFAULT_PERMISSIONS)),
+                    companyID: currentCompanyID
+                });
+            } else {
+                setIsEditing(false); // Default to read-only for existing roles
+                const found = roles.find(r => r._id === id || r.id === id);
+                if (found) {
+                    setCurrentRole(found);
+                    setRoleForm({
+                        roleName: found.roleName,
+                        description: found.description,
+                        accessibilitySettings: found.accessibilitySettings || JSON.parse(JSON.stringify(DEFAULT_PERMISSIONS)),
+                        companyID: found.companyID
+                    });
+                } else {
+                    // Invalid ID or not loaded yet
+                    // If roles are definitely loaded and not found:
+                    if (roles.length > 0) {
+                        addToast(t("Role not found"), "error");
+                        navigate('/settings/roles', { replace: true });
+                    }
+                }
+            }
+        } else {
+            navigate('/settings/roles');
+            setCurrentRole(null);
+        }
+    }, [id, roles, loading, currentCompanyID, navigate, addToast, t]);
 
     // --- Handlers ---
 
     const handleEditRole = (role: any) => {
-        setCurrentRole(role);
-        setRoleForm({
-            roleName: role.roleName,
-            description: role.description,
-            accessibilitySettings: role.accessibilitySettings || JSON.parse(JSON.stringify(DEFAULT_PERMISSIONS)),
-            companyID: role.companyID
-        });
-        setView('EDITOR');
+        navigate(`/settings/roles/${role._id}`);
     };
 
     const handleCreateRole = () => {
-        setCurrentRole(null);
-        setRoleForm({
-            roleName: '',
-            description: '',
-            accessibilitySettings: JSON.parse(JSON.stringify(DEFAULT_PERMISSIONS)),
-            companyID: currentCompanyID
-        });
-        setView('EDITOR');
+        navigate('/settings/roles/new');
     };
 
     const handleCopyRole = (e: React.MouseEvent, role: any) => {
@@ -288,7 +169,7 @@ export const RolesPermissions = () => {
                 await api.post('/auth/roles', roleForm);
                 addToast(t("Role created successfully"), 'success');
             }
-            setView('LIST');
+            navigate('/settings/roles');
         } catch (error) {
             console.error("Save failed", error);
             addToast(t("Failed to save role"), "error");
@@ -297,17 +178,66 @@ export const RolesPermissions = () => {
 
     const handlePermissionToggle = (path: string[], value: boolean) => {
         setRoleForm((prev: any) => {
-            const newPermissions = JSON.parse(JSON.stringify(prev.permissions));
-            let current = newPermissions;
+            // ... (keep permission logic same as before)
+            const newAccessibilitySettings = JSON.parse(JSON.stringify(prev.accessibilitySettings || {}));
+            let node = newAccessibilitySettings;
+            const parentPath = path.slice(0, -1);
+            const property = path[path.length - 1];
 
-            for (let i = 0; i < path.length - 1; i++) {
-                current = current[path[i]];
+            // Traverse to the parent of the property
+            for (let i = 0; i < parentPath.length; i++) {
+                if (!node[parentPath[i]]) node[parentPath[i]] = {}; // Should depend on structure
+                node = node[parentPath[i]];
             }
 
-            current[path[path.length - 1]] = value;
-            return { ...prev, permissions: newPermissions };
+            // Set the target property
+            node[property] = value;
+
+            // Enforce Hierarchy: Enabled < Visible < Editable < Deletable
+            const isDelete = property.startsWith('delete') || property.startsWith('remove');
+            const deleteKey = Object.keys(node).find(key => key.startsWith('delete') || key.startsWith('remove'));
+
+            // Case 1: Enabling Deletable -> Enable Editable, Visible, Enabled
+            if (isDelete && value === true) {
+                if (node.editable !== undefined) node.editable = true;
+                if (node.visible !== undefined) node.visible = true;
+                if (node.enabled !== undefined) node.enabled = true;
+            }
+
+            // Case 2: Enabling Editable -> Enable Visible, Enabled
+            if (property === 'editable' && value === true) {
+                if (node.visible !== undefined) node.visible = true;
+                if (node.enabled !== undefined) node.enabled = true;
+            }
+
+            // Case 3: Enabling Visible -> Enable Enabled
+            if (property === 'visible' && value === true) {
+                if (node.enabled !== undefined) node.enabled = true;
+            }
+
+            // Case 4: Disabling Enabled -> Disable Visible, Editable, Deletable
+            if (property === 'enabled' && value === false) {
+                if (node.visible !== undefined) node.visible = false;
+                if (node.editable !== undefined) node.editable = false;
+                if (deleteKey && node[deleteKey] !== undefined) node[deleteKey] = false;
+            }
+
+            // Case 5: Disabling Visible -> Disable Editable, Deletable
+            if (property === 'visible' && value === false) {
+                if (node.editable !== undefined) node.editable = false;
+                if (deleteKey && node[deleteKey] !== undefined) node[deleteKey] = false;
+            }
+
+            // Case 6: Disabling Editable -> Disable Deletable
+            if (property === 'editable' && value === false) {
+                if (deleteKey && node[deleteKey] !== undefined) node[deleteKey] = false;
+            }
+
+            return { ...prev, accessibilitySettings: newAccessibilitySettings };
         });
     };
+
+    // removed handleHierarchySelect
 
     // --- RENDER: LIST VIEW ---
     if (view === 'LIST') {
@@ -326,6 +256,7 @@ export const RolesPermissions = () => {
                                 <p className="text-slate-500 dark:text-slate-400 mt-1">{t("Manage access levels and define capabilities for your organization.")}</p>
                             </div>
                             <div className="flex gap-3 w-full md:w-auto">
+                                {/* Search Logic ... */}
                                 <div className="relative flex-1 md:w-64">
                                     <input
                                         type="text"
@@ -345,8 +276,18 @@ export const RolesPermissions = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden">
+                        {/* ROLE OVERVIEW CARDS (Hierarchy Replacement) */}
+                        <RoleOverviewCards
+                            roles={filteredRoles}
+                            userCounts={userCounts}
+                            onSelectRole={handleEditRole}
+                        />
+
+                        {/* Traditional Table View (Redundant? Maybe keep as detailed view or remove if cards suffice. User asked to "Remove Permission Hierarchy from here" (EDITOR) and "present in initial view". Table gives more details like "Last Updated". Let's keep table for now as it's standard admin UI, cards are top summary.) */}
+
+                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden mt-8">
                             <table className="w-full text-left text-sm">
+                                {/* ... keep table ... */}
                                 <thead className="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 font-medium border-b border-slate-200 dark:border-slate-700">
                                     <tr>
                                         <th className="px-6 py-4">{t("Role Name")}</th>
@@ -361,12 +302,17 @@ export const RolesPermissions = () => {
                                         <tr
                                             key={role._id}
                                             className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group cursor-pointer"
-                                            onClick={() => handleEditRole(role)}
+                                            onClick={() => {
+                                                // Allow viewing, but maybe set read-only mode inside?
+                                                // For now, let's allow navigation, but the Editor will handle the "Read Only" state if not senior.
+                                                handleEditRole(role);
+                                            }}
                                         >
+                                            {/* ... */}
                                             <td className="px-6 py-4">
                                                 <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                                                     {role.roleName}
-                                                    {role.roleName === 'Super Administrator' && <Lock size={12} className="text-amber-500" title={t("System Role")} />}
+                                                    {role.isSystem && <Lock size={12} className="text-amber-500" title={t("System Role")} />}
                                                 </div>
                                                 <div className="text-[10px] font-mono text-slate-400">{role._id}</div>
                                             </td>
@@ -374,30 +320,27 @@ export const RolesPermissions = () => {
                                                 {role.description}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-xs font-medium text-slate-600 dark:text-slate-300">
-                                                    {role.users} Users
+                                                <span className={`px-2 py-1 rounded text-xs font-medium ${userCounts[role._id] ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-600'}`}>
+                                                    {userCounts[role._id] || 0} Users
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-slate-500 dark:text-slate-400 text-xs">
                                                 {role.updatedAt ? new Date(role.updatedAt).toLocaleDateString() : 'N/A'}
                                             </td>
+                                            {/* Actions */}
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button
-                                                        onClick={(e) => handleCopyRole(e, role)}
-                                                        className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-600 rounded text-slate-500 dark:text-slate-400"
-                                                        title={t("Copy Permission Schema")}
-                                                    >
-                                                        <Copy size={16} />
-                                                    </button>
-                                                    {role.id !== 'R-SUPER-ADMIN' && (
-                                                        <button
-                                                            onClick={(e) => handleDeleteRole(e, role)}
-                                                            className="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded text-slate-400 hover:text-red-500"
-                                                            title={t("Delete Role")}
-                                                        >
-                                                            <Trash2 size={16} />
-                                                        </button>
+                                                    {/* Copy is usually safe, but maybe restrict too? Let's keep copy open for now unless strict. */}
+                                                    <button onClick={(e) => handleCopyRole(e, role)} className="p-1.5 hover:bg-slate-200 rounded text-slate-500"><Copy size={16} /></button>
+
+                                                    {!role.isSystem && (
+                                                        <>
+                                                            {isSeniorTo(role._id) ? (
+                                                                <button onClick={(e) => handleDeleteRole(e, role)} className="p-1.5 hover:bg-red-50 text-slate-400 hover:text-red-500"><Trash2 size={16} /></button>
+                                                            ) : (
+                                                                <span className="p-1.5 text-slate-300 cursor-not-allowed" title={t("Insufficient seniority")}><Trash2 size={16} /></span>
+                                                            )}
+                                                        </>
                                                     )}
                                                 </div>
                                             </td>
@@ -415,25 +358,63 @@ export const RolesPermissions = () => {
     // --- RENDER: EDITOR VIEW ---
     return (
         <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-900 animate-in fade-in zoom-in-95 duration-200">
-
-            {/* Sticky Header */}
+            {/* Header */}
             <div className="px-8 py-6 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center sticky top-0 z-20 shadow-sm">
                 <div className="flex items-center gap-4">
-                    <button onClick={() => setView('LIST')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 dark:text-slate-400 transition-colors">
+                    <button onClick={() => navigate('/settings/roles')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 dark:text-slate-400 transition-colors">
                         <ChevronLeft size={24} />
                     </button>
                     <div>
                         <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">
-                            {currentRole ? `${t("Edit")} ${currentRole.name}` : t("Create New Role")}
+                            {id === 'new' ? t("Create New Role") : (isEditing ? `${t("Editing")} ${currentRole?.roleName || ''}` : currentRole?.roleName || t("Role Details"))}
                         </h2>
                         <p className="text-sm text-slate-500 dark:text-slate-400">{t("Configure detailed permissions and scope.")}</p>
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <button onClick={() => setView('LIST')} className="px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 dark:text-slate-300">{t("Cancel")}</button>
-                    <button onClick={handleSaveRole} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm flex items-center gap-2">
-                        <Save size={16} /> {t("Save Role")}
-                    </button>
+                    {!isEditing ? (
+                        <>
+                            {currentRole && isSeniorTo(currentRole._id || currentRole.id) ? (
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-bold shadow-sm flex items-center gap-2"
+                                >
+                                    <Edit2 size={16} /> {t("Edit Role")}
+                                </button>
+                            ) : (
+                                <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-lg text-sm font-medium flex items-center gap-2 cursor-not-allowed">
+                                    <Lock size={16} /> {t("Read Only (Seniority Restricted)")}
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                onClick={() => {
+                                    if (id === 'new') {
+                                        navigate('/settings/roles');
+                                    } else {
+                                        setIsEditing(false);
+                                        // Reset form to currentRole
+                                        if (currentRole) {
+                                            setRoleForm({
+                                                roleName: currentRole.roleName,
+                                                description: currentRole.description,
+                                                accessibilitySettings: currentRole.accessibilitySettings || {},
+                                                companyID: currentRole.companyID
+                                            });
+                                        }
+                                    }
+                                }}
+                                className="px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 dark:text-slate-300"
+                            >
+                                {t("Cancel")}
+                            </button>
+                            <button onClick={handleSaveRole} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm flex items-center gap-2">
+                                <Save size={16} /> {t("Save Role")}
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -448,44 +429,55 @@ export const RolesPermissions = () => {
                                 <label className="text-xs font-bold text-slate-500 dark:text-slate-400">{t("Role Name")} <span className="text-red-500">*</span></label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200"
+                                    className="w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200 disabled:opacity-60 disabled:cursor-not-allowed"
                                     placeholder="e.g. Senior Recruiter"
                                     value={roleForm.roleName}
                                     onChange={(e) => setRoleForm({ ...roleForm, roleName: e.target.value })}
+                                    disabled={!isEditing}
                                 />
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold text-slate-500 dark:text-slate-400">{t("Description")}</label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200"
+                                    className="w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200 disabled:opacity-60 disabled:cursor-not-allowed"
                                     placeholder={t("Briefly describe the purpose of this role")}
                                     value={roleForm.description}
                                     onChange={(e) => setRoleForm({ ...roleForm, description: e.target.value })}
+                                    disabled={!isEditing}
                                 />
                             </div>
                         </div>
-
-                        {/* Multi-Tenant Scope Removed - Roles are now company specific */}
                     </div>
 
+                    {/* REMOVED Permission Hierarchy Selector from Editor */}
+
                     {/* Permissions Editor */}
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                        {Object.keys(roleForm.accessibilitySettings || {}).map((category) => (
-                            <div key={category} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden h-full">
-                                <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex justify-between items-center">
-                                    <h4 className="font-bold text-slate-800 dark:text-slate-200">{t(category)}</h4>
-                                    <Layers size={16} className="text-slate-400" />
-                                </div>
-                                <div className="p-6">
-                                    <RecursivePermissionGroup
-                                        data={roleForm.accessibilitySettings[category]}
-                                        path={[category]}
-                                        onToggle={handlePermissionToggle}
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden">
+                        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
+                            <h4 className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <Layers size={18} className="text-slate-400" />
+                                {t("Detailed Permissions")}
+                            </h4>
+                        </div>
+                        <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                            {/* Keep the loop */}
+                            {Object.keys(roleForm.accessibilitySettings || {}).map((category) => {
+                                const data = roleForm.accessibilitySettings[category];
+                                if (typeof data !== 'object' || data === null) return null;
+
+                                return (
+                                    <PermissionAccordion
+                                        key={category}
+                                        label={t(category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1').trim())}
+                                        data={data}
+                                        categoryKey={category}
+                                        onChange={handlePermissionToggle}
+                                        readOnly={!isEditing}
                                     />
-                                </div>
-                            </div>
-                        ))}
+                                );
+                            })}
+                        </div>
                     </div>
 
                 </div>

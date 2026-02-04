@@ -315,6 +315,17 @@ const createRole = async (req, res) => {
     }
 };
 
+// Helper to get role rank (lower is senior)
+const getRoleRank = async (roleId, companyID) => {
+    const RoleHierarchy = require('../models/RoleHierarchy');
+    const hierarchyDoc = await RoleHierarchy.findOne({ companyID });
+
+    if (!hierarchyDoc || !hierarchyDoc.hierarchy) return Infinity; // No hierarchy = lowest rank
+
+    const entry = hierarchyDoc.hierarchy.find(h => h.roleID.toString() === roleId.toString());
+    return entry ? entry.rank : Infinity;
+};
+
 // @desc    Update a role
 // @route   PUT /api/auth/roles/:id
 const updateRole = async (req, res) => {
@@ -322,9 +333,52 @@ const updateRole = async (req, res) => {
         const role = await Role.findById(req.params.id);
         if (!role) return res.status(404).json({ message: 'Role not found' });
 
+        // Hierarchy Check
+        if (req.user.role !== 'Product Admin') {
+            const userRoleID = req.user.roleID._id || req.user.roleID; // depending on population
+            const userRank = await getRoleRank(userRoleID, req.user.currentCompanyID || req.user.companyID);
+            const targetRank = await getRoleRank(role._id, req.user.currentCompanyID || req.user.companyID);
+
+            // If user is lower rank (higher number) or equal (?), prevent edit
+            // Policy: Seniors can edit Juniors. Peers cannot edit Peers (optional, assume strict seniority).
+            // userRank 1 < targetRank 2 => Allowed
+            // userRank 2 > targetRank 1 => Denied
+            // userRank 2 === targetRank 2 => Denied (assuming one cannot edit value of same rank)
+
+            if (userRank >= targetRank) {
+                return res.status(403).json({ message: 'Insufficient seniority to modify this role.' });
+            }
+        }
+
         Object.assign(role, req.body);
         await role.save();
         res.json(role);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+// @desc    Delete a role
+// @route   DELETE /api/auth/roles/:id
+const deleteRole = async (req, res) => {
+    try {
+        const role = await Role.findById(req.params.id);
+        if (!role) return res.status(404).json({ message: 'Role not found' });
+
+        // Hierarchy Check
+        if (req.user.role !== 'Product Admin') {
+            const userRoleID = req.user.roleID._id || req.user.roleID;
+            const userRank = await getRoleRank(userRoleID, req.user.currentCompanyID || req.user.companyID);
+            const targetRank = await getRoleRank(role._id, req.user.currentCompanyID || req.user.companyID);
+
+            if (userRank >= targetRank) {
+                return res.status(403).json({ message: 'Insufficient seniority to delete this role.' });
+            }
+        }
+
+        await role.deleteOne();
+        res.json({ message: 'Role removed' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
@@ -432,5 +486,6 @@ module.exports = {
     listRoles,
     createRole,
     updateRole,
+    deleteRole,
     switchCompany
 };

@@ -11,7 +11,9 @@ import { UsersSettings } from './Users/Users';
 import { UserProfileContainer } from './Users/UserProfileContainer';
 import { ClientsSettings } from './Clients';
 import { ClientProfileContainer } from './ClientProfile/ClientProfileContainer';
+import { ClientProfileContainer } from './ClientProfile/ClientProfileContainer';
 import { FranchiseSettings } from './Franchise';
+import { RoleHierarchy } from './Roles/RoleHierarchy';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -42,6 +44,7 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             'CLIENTS': 'clients',
             'FRANCHISE': 'franchise',
             'REACHOUT_LAYOUTS': 'reachoutlayouts',
+            'ROLE_HIERARCHY': 'rolehierarchy',
             // Add others as needed, or fallback to TitleCase
         };
         if (map[id]) return map[id];
@@ -79,8 +82,10 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             <Route path="/" element={<Navigate to={`/settings/${getPath('COMPANY_INFO')}`} replace />} />
             <Route path={getPath('COMPANY_INFO')} element={<CompanyInfo />} />
             <Route path={getPath('ROLES')} element={<RolesPermissions />} />
+            <Route path={`${getPath('ROLES')}/:id`} element={<RolesPermissions />} />
             <Route path={getPath('USERS')} element={<UsersSettings onSelectUser={onSelectUser} />} />
             <Route path={getPath('CLIENTS')} element={<ClientsSettings />} /> {/* Add Route */}
+            <Route path={getPath('ROLE_HIERARCHY')} element={<RoleHierarchy />} />
             <Route path={getPath('FRANCHISE')} element={<FranchiseSettings />} />
             <Route path={getPath('REACHOUT_LAYOUTS')} element={<ReachOutLayouts />} />
             <Route path="users/userprofile/:section/:id" element={<UserProfileContainer />} />
@@ -89,7 +94,7 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             {/* Add routes for other settings items */}
             {Object.keys(SETTINGS_CONTENT).map(id => {
                 // Only render placeholder for items not explicitly routed above
-                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE'].includes(id)) {
+                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY'].includes(id)) {
                     return <Route key={id} path={getPath(id)} element={<SettingsContentWrapper id={id} />} />;
                 }
                 return null;

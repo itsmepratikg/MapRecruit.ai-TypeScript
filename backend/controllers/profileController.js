@@ -3,6 +3,7 @@ const Client = require('../models/Client');
 const Article = require('../models/Article');
 const Tag = require('../models/Tag');
 const Campaign = require('../models/Campaign');
+const { sanitizeNoSQL, isValidObjectId } = require('../utils/securityUtils');
 
 // Helper to get access filter based on user's active client settings
 const getAccessFilter = async (user) => {
@@ -94,8 +95,12 @@ const getProfile = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
 
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Profile ID' });
+        }
+
         const profile = await Candidate.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             ...accessFilter
         });
 
@@ -115,8 +120,9 @@ const getProfile = async (req, res) => {
 // @access  Private
 const createProfile = async (req, res) => {
     try {
+        const sanitizedBody = sanitizeNoSQL(req.body);
         const profile = await Candidate.create({
-            ...req.body,
+            ...sanitizedBody,
             companyID: req.user.currentCompanyID || req.user.companyID,
             clientID: req.user.activeClientID
         });
@@ -135,8 +141,12 @@ const updateProfile = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
 
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Profile ID' });
+        }
+
         const profile = await Candidate.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             ...accessFilter
         });
 
@@ -144,9 +154,16 @@ const updateProfile = async (req, res) => {
             return res.status(404).json({ message: 'Profile not found or access denied' });
         }
 
+        const updates = sanitizeNoSQL(req.body);
+
+        // Additional safety check: ensure updates is a plain object
+        if (!updates || typeof updates !== 'object' || Array.isArray(updates)) {
+            return res.status(400).json({ message: 'Invalid update data' });
+        }
+
         const updatedProfile = await Candidate.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            { $set: updates },
             { new: true, runValidators: false }
         );
 
@@ -164,8 +181,12 @@ const deleteProfile = async (req, res) => {
     try {
         const accessFilter = await getAccessFilter(req.user);
 
+        if (!isValidObjectId(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid Profile ID' });
+        }
+
         const profile = await Candidate.findOne({
-            _id: req.params.id,
+            _id: { $eq: req.params.id },
             ...accessFilter
         });
 
