@@ -235,8 +235,10 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
    const selectedCountry = COUNTRIES.find(c => c.code === formData.countryCode) || COUNTRIES[0];
    const selectedColorObj = COLORS.find(c => c.name === formData.color) || COLORS[0];
 
-   const getInitials = (fname: string, lname: string) => {
-      return (fname.charAt(0) + lname.charAt(0)).toUpperCase();
+   const getInitials = (fname?: string, lname?: string) => {
+      const f = fname || '?';
+      const l = lname || '?';
+      return (f.charAt(0) + l.charAt(0)).toUpperCase();
    };
 
    const handleFileDrop = (e: React.DragEvent) => {
@@ -462,7 +464,7 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
                                     />
                                  </div>
                               ) : (
-                                 getInitials(formData.firstName, formData.lastName)
+                                 getInitials(formData.firstName || '?', formData.lastName || '?')
                               )}
                            </div>
                         </div>
