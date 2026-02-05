@@ -7,6 +7,7 @@ import {
 import { useActivities } from '../../hooks/useActivities';
 import { sanitizeActivityHtml, getActivityActorName } from '../../utils/activityUtils';
 import { Activity as ActivityType } from '../../types/Activity';
+import { ActivityItem } from '../../components/ActivityItem';
 
 
 // --- Constants ---
@@ -317,55 +318,34 @@ export const Activities = () => {
               </div>
             ))
           ) : filteredActivities.length > 0 ? (
-            filteredActivities.map((activity, idx) => {
-              const date = new Date(activity.activityAt || activity.createdAt);
-              // Use commonActivity by default for global feed, or fallback to profileActivity/campaignActivity if missing?
-              // Ideally commonActivity is what we want.
-              const htmlContent = sanitizeActivityHtml(activity.activity?.commonActivity || activity.activity?.profileActivity || activity.activity?.campaignActivity);
-              const actorName = getActivityActorName(activity);
+            // Group by Date Logic Inline or Memoized above? 
+            // Better to do it inline here to avoid changing variable scopes too much, 
+            // or we could assume the user is okay with a specific grouping implementation here.
 
-              return (
-                <div key={activity._id || idx} className="relative group animate-in slide-in-from-bottom-2 duration-300">
-                  {/* Timeline Node */}
-                  <div className="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-400 z-10 group-hover:border-emerald-500 group-hover:text-emerald-500 transition-colors">
-                    {activity.activityIcon ? (
-                      <i className={activity.activityIcon} aria-hidden="true"></i>
-                    ) : (
-                      <CheckCircle size={12} />
-                    )}
+            (() => {
+              const grouped: Record<string, ActivityType[]> = {};
+              filteredActivities.forEach(act => {
+                const date = new Date(act.activityAt || act.createdAt);
+                const dateKey = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                if (!grouped[dateKey]) grouped[dateKey] = [];
+                grouped[dateKey].push(act);
+              });
+
+              return Object.entries(grouped).map(([dateLabel, acts], gIdx) => (
+                <div key={dateLabel} className="relative mb-8 animate-in fade-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${gIdx * 50}ms` }}>
+                  <div className="sticky top-0 z-10 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur py-2 mb-4 border-b border-slate-200 dark:border-slate-700 transition-colors">
+                    <h4 className="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider pl-1">
+                      {dateLabel}
+                    </h4>
                   </div>
-
-                  <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        {/* Content Render */}
-                        {htmlContent ? (
-                          <div
-                            className="text-sm text-slate-800 dark:text-slate-200 prose prose-sm max-w-none dark:prose-invert"
-                            dangerouslySetInnerHTML={{ __html: htmlContent }}
-                          />
-                        ) : (
-                          <>
-                            <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">{activity.activityType}</h4>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                              {activity.activityGroup} by {actorName}
-                            </p>
-                          </>
-                        )}
-                      </div>
-                      <div className="text-right ml-4 shrink-0">
-                        <span className="block text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">
-                          {getTimeAgo(date.toISOString())}
-                        </span>
-                        <span className="text-[10px] text-slate-400 mt-1 block">
-                          {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                      </div>
-                    </div>
+                  <div className="space-y-0">
+                    {acts.map((act, idx) => (
+                      <ActivityItem key={act._id || idx} activity={act} index={idx} viewContext="global" />
+                    ))}
                   </div>
                 </div>
-              );
-            })
+              ));
+            })()
           ) : (
             <div className="py-12 text-center">
               <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">

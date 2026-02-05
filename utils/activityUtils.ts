@@ -40,14 +40,22 @@ export const shouldShowActivity = (activity: Activity, context: {
     // For now, let's SHOW them but treat them as system events.
 
     // 4. Context Specific Checks
-    if (context.resumeID) {
+    if (context.resumeID && activity.resumeID) {
         // Must match ResumeID
-        if (!activity.resumeID?.includes(context.resumeID)) return false;
+        const hasMatch = activity.resumeID.some((id: any) => {
+            const val = typeof id === 'object' && id?._id ? id._id : id;
+            return val === context.resumeID;
+        });
+        if (!hasMatch) return false;
     }
 
-    if (context.campaignID) {
+    if (context.campaignID && activity.campaignID) {
         // Must match CampaignID
-        if (!activity.campaignID?.includes(context.campaignID)) return false;
+        const hasMatch = activity.campaignID.some((id: any) => {
+            const val = typeof id === 'object' && id?._id ? id._id : id;
+            return val === context.campaignID;
+        });
+        if (!hasMatch) return false;
     }
 
     return true;

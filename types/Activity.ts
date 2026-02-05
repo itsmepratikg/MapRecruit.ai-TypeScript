@@ -27,8 +27,8 @@ export interface Activity {
     code?: string;
     companyID: string;
     clientID?: string;
-    campaignID?: string[]; // IDs or populated objects could be handled via intersection types or separate interfaces
-    resumeID?: string[];
+    campaignID?: (string | any)[]; // IDs or populated objects
+    resumeID?: (string | any)[];
     articleID?: string[];
     interviewID?: string[];
     roundNumber?: number;

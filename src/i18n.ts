@@ -565,8 +565,6 @@ const resources = {
             "Auth & Sync": "Auth & Sync",
             "User Notifications": "User Notifications",
             "Login Sessions": "Login Sessions",
-            "Settings": "Settings",
-            "Activities": "Activities",
             "User Settings": "User Settings",
             "Manage account status and security credentials.": "Manage account status and security credentials.",
             "Active or Inactive (Verified)": "Active or Inactive (Verified)",

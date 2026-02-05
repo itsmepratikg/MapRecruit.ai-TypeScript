@@ -3,14 +3,15 @@ import React, { useState } from 'react';
 import {
    Briefcase, MapPin, CheckCircle, Clock, FileEdit,
    MessageCircle, Paperclip, Send, AlertCircle, ExternalLink, ThumbsUp,
-   User, Phone, Mail, Globe, Award, Calendar, Shield, Lock, Star, X
+   User, Phone, Mail, Globe, Award, Calendar, Shield, Lock, Star, X, FileText
 } from 'lucide-react';
 import { SectionCard, SecureContactCard } from './Common';
 import { CANDIDATE } from '../data';
 import { useActivities } from '../hooks/useActivities';
 import { useParams } from 'react-router-dom';
-import { sanitizeActivityHtml, getActivityActorName } from '../utils/activityUtils';
+
 import { Activity } from '../types/Activity';
+import { ActivityItem } from './ActivityItem';
 
 
 // Updated Profile Details Component to handle dynamic JSON schema with the OLD UI Layout
@@ -242,91 +243,165 @@ export const ProfileDetails = ({ data, onEditSection }: { data?: any, onEditSect
 
 export const ActivitiesView = ({ companyID, resumeID }: { companyID?: string, resumeID?: string }) => {
    const { id: paramID } = useParams<{ id: string }>();
-   // Use prop resumeID if available, else fallback to param. Should match ResumeID logic.
    const activeResumeID = resumeID || paramID;
 
    const { activities, loading, error } = useActivities({
       candidateID: activeResumeID,
-      limit: 50 // reasonable breakdown
+      limit: 100
    });
+
+   // Filter State
+   const [filterType, setFilterType] = useState<string>('');
+   const [dateRange, setDateRange] = useState<{ start: string, end: string }>({ start: '', end: '' });
+   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
    if (loading) return <div className="p-8 text-center text-slate-500">Loading activities...</div>;
    if (error) return <div className="p-8 text-center text-red-500">Error: {error}</div>;
 
-   // Filter Logic: Client-side strict check just in case backend returns loose data
+   // 1. Get Unique Activity Types for Dropdown
+   const uniqueTypes = Array.from(new Set(activities.map(a => a.activityType))).sort();
+
+   // 2. Filter Logic
    const filteredActivities = activities.filter(act => {
-      // 1. Strict Company Match
+      // Basic Context Checks
       if (companyID && act.companyID !== companyID) return false;
-      // 2. Strict Resume Match (if we know the ResumeID)
-      if (activeResumeID && act.resumeID && !act.resumeID.includes(activeResumeID)) return false;
-      // 3. Visibility
+      if (activeResumeID && act.resumeID) {
+         const hasMatch = act.resumeID.some((id: any) => {
+            const val = typeof id === 'object' && id?._id ? id._id : id;
+            return val === activeResumeID;
+         });
+         if (!hasMatch) return false;
+      }
       if (act.visible === false || act.deleted === true) return false;
+
+      // User Filters
+      if (filterType && act.activityType !== filterType) return false;
+
+      if (dateRange.start) {
+         const actDate = new Date(act.activityAt || act.createdAt);
+         const startDate = new Date(dateRange.start);
+         if (actDate < startDate) return false;
+      }
+      if (dateRange.end) {
+         const actDate = new Date(act.activityAt || act.createdAt);
+         const endDate = new Date(dateRange.end);
+         endDate.setHours(23, 59, 59, 999); // End of day
+         if (actDate > endDate) return false;
+      }
 
       return true;
    });
 
+   // 3. Group by Date
+   const groupedActivities: Record<string, Activity[]> = {};
+   filteredActivities.forEach(act => {
+      const date = new Date(act.activityAt || act.createdAt);
+      // Format: "Monday, 30 June 2025"
+      const dateKey = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      if (!groupedActivities[dateKey]) {
+         groupedActivities[dateKey] = [];
+      }
+      groupedActivities[dateKey].push(act);
+   });
+
    return (
-      <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500 max-w-4xl mx-auto">
-         <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">Activity Log</h3>
-            <button className="text-sm text-green-600 dark:text-green-400 font-medium hover:underline">Download Report</button>
+      <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 max-w-4xl mx-auto">
+         {/* Interaction Header */}
+         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors">
+            <div>
+               <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">Activity Log</h3>
+               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{filteredActivities.length} events recorded</p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+               {/* Type Filter */}
+               <select
+                  className="px-3 py-2 text-sm bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-600 dark:text-slate-200 transition-colors"
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+               >
+                  <option value="">All Types</option>
+                  {uniqueTypes.map(type => (
+                     <option key={type} value={type}>{type}</option>
+                  ))}
+               </select>
+
+               {/* Date Filter Toggle */}
+               <button
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className={`p-2 rounded-lg border transition-colors ${isFilterOpen || dateRange.start ? 'bg-emerald-50 border-emerald-200 text-emerald-600 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-400' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300'}`}
+                  title="Date Filter"
+               >
+                  <Calendar size={18} />
+               </button>
+            </div>
          </div>
 
-         <div className="relative border-l-2 border-slate-200 dark:border-slate-700 ml-4 space-y-8 pb-8">
+         {/* Date Range Picker Panel */}
+         {(isFilterOpen || dateRange.start || dateRange.end) && (
+            <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-end gap-4 animate-in slide-in-from-top-2 transition-colors">
+               <div>
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1 block">Start Date</label>
+                  <input
+                     type="date"
+                     className="px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-700 dark:text-slate-200 dark:[color-scheme:dark]"
+                     value={dateRange.start}
+                     onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                  />
+               </div>
+               <div>
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1 block">End Date</label>
+                  <input
+                     type="date"
+                     className="px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-700 dark:text-slate-200 dark:[color-scheme:dark]"
+                     value={dateRange.end}
+                     onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                  />
+               </div>
+               <button
+                  onClick={() => { setDateRange({ start: '', end: '' }); setIsFilterOpen(false); }}
+                  className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+               >
+                  Clear Dates
+               </button>
+            </div>
+         )}
+
+         {/* Activities List */}
+         <div className="space-y-8 pb-8">
             {filteredActivities.length === 0 && (
-               <div className="pl-8 text-slate-500 dark:text-slate-400 italic">No activities recorded yet.</div>
-            )}
-            {filteredActivities.map((act: Activity, idx: number) => {
-               // Render Logic
-               const date = new Date(act.activityAt || act.createdAt);
-               const htmlContent = sanitizeActivityHtml(act.activity?.profileActivity);
-               const actorName = getActivityActorName(act);
-
-               return (
-                  <div key={act._id || idx} className="relative pl-8">
-                     <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 shadow-sm z-10 ${idx === 0 ? 'bg-green-500' : 'bg-slate-300 dark:bg-slate-600'}`}></div>
-
-                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
-                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 sm:mb-0">
-                           {date.toLocaleDateString()}
-                        </span>
-                        <span className="text-xs text-slate-400 font-mono">
-                           {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                     </div>
-
-                     <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
-                        <div className="flex items-start gap-4">
-                           {/* Icon: Use FontAwesome Class Directly */}
-                           <div className="p-2 rounded-lg bg-slate-100 text-slate-600 shrink-0">
-                              {act.activityIcon ? (
-                                 <i className={act.activityIcon} aria-hidden="true"></i>
-                              ) : (
-                                 <User size={18} /> // Fallback if no icon string
-                              )}
-                           </div>
-
-                           <div className="flex-1">
-                              {/* Content: Render HTML or Fallback */}
-                              {htmlContent ? (
-                                 <div
-                                    className="text-sm text-slate-600 dark:text-slate-300 mb-1 prose prose-sm max-w-none dark:prose-invert"
-                                    dangerouslySetInnerHTML={{ __html: htmlContent }}
-                                 />
-                              ) : (
-                                 <>
-                                    <h4 className="font-bold text-slate-800 dark:text-slate-200 text-sm mb-0.5">{act.activityGroup} - {act.activityType}</h4>
-                                    <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">
-                                       Action by <span className="font-medium text-slate-700 dark:text-slate-300">{actorName}</span>
-                                    </p>
-                                 </>
-                              )}
-                           </div>
-                        </div>
-                     </div>
+               <div className="flex flex-col items-center justify-center py-12 text-slate-400">
+                  <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                     <FileText size={32} opacity={0.5} />
                   </div>
-               );
-            })}
+                  <p>No activities found matching filters.</p>
+                  <button onClick={() => { setFilterType(''); setDateRange({ start: '', end: '' }); }} className="mt-2 text-sm text-emerald-600 font-medium hover:underline">
+                     Clear Filters
+                  </button>
+               </div>
+            )}
+
+            {Object.entries(groupedActivities).map(([dateLabel, acts], gIdx) => (
+               <div key={dateLabel} className="relative animate-in fade-in duration-500" style={{ animationDelay: `${gIdx * 100}ms` }}>
+                  {/* Date Header */}
+                  <div className="sticky top-0 z-20 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur py-2 mb-4 border-b border-slate-200 dark:border-slate-800 transition-colors">
+                     <h4 className="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider pl-1">
+                        {dateLabel}
+                     </h4>
+                  </div>
+
+                  <div className="space-y-0">
+                     {acts.map((act, idx) => (
+                        // Use index within common date group? Or global?
+                        // ActivityItem index prop controls the 'dot' color (first item green).
+                        // Should we make the first item OF THE DAY green? Or just first global? 
+                        // Current logic makes first global green. Let's pass 'idx' here which resets per day.
+                        // So first item of each day is green? Maybe nice.
+                        <ActivityItem key={act._id || idx} activity={act} index={idx} viewContext="profile" />
+                     ))}
+                  </div>
+               </div>
+            ))}
          </div>
       </div>
    );
