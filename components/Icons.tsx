@@ -18,6 +18,7 @@ export const AlignRight = (props: any) => <Icon {...props} iconClass="fa-solid f
 export const Archive = (props: any) => <Icon {...props} iconClass="fa-solid fa-box-archive" />;
 export const ArrowDown = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrow-down" />;
 export const ArrowDownRight = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrow-trend-down" />;
+export const ArrowLeft = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrow-left" />;
 export const ArrowRight = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrow-right" />;
 export const ArrowUpRight = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrow-up-right-from-square" />;
 export const ArrowUpDown = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrows-up-down" />;
