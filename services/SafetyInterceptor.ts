@@ -18,20 +18,37 @@ export const attachSafetyInterceptor = (api: AxiosInstance) => {
 
         const mode = user.mode || 'read-only';
         const method = config.method?.toUpperCase() || 'GET';
+        const url = config.url || '';
 
         // 2. Allow GET/OPTIONS always
         if (method === 'GET' || method === 'OPTIONS') {
             return config;
         }
 
-        // 3. Handle VIEW-ONLY Mode
+        // 3. SPECIAL CASE: Allow Client Switch in Impersonation Mode
+        if (url.includes('/auth/switch-context')) {
+            try {
+                const data = typeof config.data === 'string' ? JSON.parse(config.data || '{}') : (config.data || {});
+                const targetCompanyId = (data.companyId || '').toString();
+                const myCompanyId = (user.currentCompanyID || user.companyID || '').toString();
+
+                if (targetCompanyId === myCompanyId) {
+                    return config;
+                }
+            } catch (e) {
+                // Ignore parse errors
+            }
+        }
+
+        // 4. Handle VIEW-ONLY Mode
         if (mode === 'read-only') {
-            // Reject immediately
-            const error = new Error('Action blocked: You are in View-Only Impersonation mode.');
+            const friendliness = "Action Restricted: You are currently in 'View-Only' mode. To make changes, please restart impersonation with 'Full Access' if permitted.";
+            const error = new Error(friendliness);
             (error as any).isSafetyBlock = true;
 
-            // Dispatch simplified event for Toast
-            window.dispatchEvent(new CustomEvent('IMPERSONATION_BLOCK_TOAST'));
+            window.dispatchEvent(new CustomEvent('IMPERSONATION_BLOCK_TOAST', {
+                detail: { message: friendliness }
+            }));
 
             return Promise.reject(error);
         }

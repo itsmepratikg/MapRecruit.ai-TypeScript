@@ -14,6 +14,8 @@ import { useImpersonation } from '../../../../context/ImpersonationContext';
 export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
     const { t } = useTranslation();
     const { addToast } = useToast();
+    const { startImpersonation } = useImpersonation();
+
     const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [impersonateModal, setImpersonateModal] = useState<{ isOpen: boolean, user: any | null }>({ isOpen: false, user: null });
@@ -101,8 +103,6 @@ export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
     ];
 
     if (loading) return <div className="p-8 text-center text-slate-500">{t("Loading Users...")}</div>;
-
-    const { startImpersonation } = useImpersonation();
 
     // WAIT, I need to add the import first. I'll do that in a separate replacement or use a full replace.
     // Since I can't add imports easily with this tool without targeting top, I'll rely on a second Replace call for imports.

@@ -160,7 +160,10 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
             setView('LIST');
             loadUsers();
         } catch (error: any) {
-            addToast(error.response?.data?.message || t("Failed to save user"), 'error');
+            console.error("Failed to save user:", error);
+            if (!error.isSafetyBlock) {
+                addToast(error.response?.data?.message || t("Failed to save user"), 'error');
+            }
         }
     };
 

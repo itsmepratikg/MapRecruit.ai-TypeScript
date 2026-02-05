@@ -56,6 +56,17 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, []);
 
+  // Global Listener for Safety Interceptor Blocks
+  useEffect(() => {
+    const handleBlock = (e: any) => {
+      const message = e.detail?.message || "Action Restricted: You are in 'View-Only' mode.";
+      addToast(message, 'error');
+    };
+
+    window.addEventListener('IMPERSONATION_BLOCK_TOAST', handleBlock);
+    return () => window.removeEventListener('IMPERSONATION_BLOCK_TOAST', handleBlock);
+  }, [addToast]);
+
   const addPromise = useCallback(<T,>(
     promise: Promise<T>,
     msgs: { loading: string; success: string; error: string }

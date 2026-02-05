@@ -255,9 +255,11 @@ export const App = () => {
       const currentCompanyId = (userProfile.currentCompanyID || userProfile.companyID)?.toString();
       await authService.switchCompany(currentCompanyId, newClientId);
       window.location.reload();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to switch client context', error);
-      addToast('Failed to switch client', 'error');
+      if (!error.isSafetyBlock) {
+        addToast('Failed to switch client', 'error');
+      }
     }
   };
 
