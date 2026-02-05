@@ -8,8 +8,8 @@
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Lines of Code](https://img.shields.io/badge/Lines_of_Code-25k+-blueviolet?style=for-the-badge)](https://github.com/itsmepratikg/MapRecruit.ai-TypeScript-)
-[![Total Files](https://img.shields.io/badge/Total_Files-300+-orange?style=for-the-badge)](https://github.com/itsmepratikg/MapRecruit.ai-TypeScript-)
+[![Lines of Code](https://img.shields.io/badge/Lines_of_Code-437k+-blueviolet?style=for-the-badge)](https://github.com/itsmepratikg/MapRecruit.ai-TypeScript-)
+[![Total Files](https://img.shields.io/badge/Total_Files-500+-orange?style=for-the-badge)](https://github.com/itsmepratikg/MapRecruit.ai-TypeScript-)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 **The Next-Generation Intelligent Hiring & Talent Management Platform**
