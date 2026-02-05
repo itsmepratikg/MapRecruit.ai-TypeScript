@@ -20,7 +20,7 @@ export const useRoleHierarchy = (userRoleID: string | undefined, companyID: stri
 
         const fetchHierarchy = async () => {
             try {
-                const { default: api } = await import('../../services/api');
+                const { default: api } = await import('../services/api');
                 const res = await api.get('/auth/roles/hierarchy');
 
                 if (res.data && res.data.hierarchy) {
