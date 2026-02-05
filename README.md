@@ -8,15 +8,45 @@
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Lines of Code](https://img.shields.io/badge/Lines_of_Code-25k+-blueviolet?style=for-the-badge)](https://github.com/itsmepratikg/MapRecruit.ai-TypeScript-)
+[![Total Files](https://img.shields.io/badge/Total_Files-300+-orange?style=for-the-badge)](https://github.com/itsmepratikg/MapRecruit.ai-TypeScript-)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 **The Next-Generation Intelligent Hiring & Talent Management Platform**
 
-[Explore Features](#-key-features) • [Getting Started](#-getting-started) • [Tech Stack](#-tech-stack) • [License](#-license)
+[Explore Features](#-key-features) • [Getting Started](#-getting-started) • [Tech Stack](#-tech-stack) • [File Structure](#-project-structure) • [License](#-license)
 
 </div>
 
 ---
+
+## 📂 Project Structure
+
+```text
+├── 📁 .github/           # CI/CD Workflows & GitHub Config
+├── 📁 backend/           # Node.js/Express Backend API
+│   ├── 📁 controllers/   # Business Logic
+│   ├── 📁 models/        # MongoDB/Mongoose Schemas
+│   ├── 📁 routes/        # API Endpoints
+│   └── 📁 middleware/    # Auth & Security Middlewares
+├── 📁 components/        # Shared Frontend Components
+│   ├── 📁 Icons/         # Custom Lucide/SVG Icons
+│   ├── 📁 Menu/          # Sidebar & Navigation Logic
+│   ├── 📁 Security/      # Auth Guards & Impersonation UI
+│   └── 📁 Schema/        # Dynamic Data Table Components
+├── 📁 context/           # React Context Providers
+├── 📁 hooks/             # Custom State & Hierarchy Hooks
+├── 📁 pages/             # Page-level Views
+│   ├── 📁 Login/         # Authentication Pages
+│   ├── 📁 Settings/      # Admin & Config Pages
+│   ├── 📁 Campaigns/     # Recruitment Campaigns
+│   └── 📁 Profiles/      # Candidate Management
+├── 📁 services/          # API Clients & Axios Interceptors
+├── 📁 src/               # I18n & App Core Initialization
+├── 📁 types/             # Global TypeScript Interfaces
+├── 📄 App.tsx            # Main Application Entry & Routing
+└── 📄 vite.config.ts     # Frontend Build Configuration
+```
 
 ## 🌟 Overview
 
