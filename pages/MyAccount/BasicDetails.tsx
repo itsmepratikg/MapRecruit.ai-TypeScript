@@ -225,6 +225,13 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
       }
    }, [userProfile, isEditing, userOverride]);
 
+   // Fix: Sync formData with userOverride when it finishes loading (admin editing another user)
+   useEffect(() => {
+      if (userOverride) {
+         setFormData(userOverride);
+      }
+   }, [userOverride]);
+
    const selectedCountry = COUNTRIES.find(c => c.code === formData.countryCode) || COUNTRIES[0];
    const selectedColorObj = COLORS.find(c => c.name === formData.color) || COLORS[0];
 
