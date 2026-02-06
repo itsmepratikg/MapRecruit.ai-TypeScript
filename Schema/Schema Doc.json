@@ -1,0 +1,218 @@
+{
+  "_id": {
+    "$oid": "6982d4fe787c9aa669f52640"
+  },
+  "name": "Candidate",
+  "__v": 0,
+  "config": {
+    "collection": "resumesDB",
+    "description": "Candidate profiles (Resumes)",
+    "fields": {
+      "companyID": {
+        "type": "ObjectId",
+        "ref": "Company",
+        "required": true
+      },
+      "clientID": {
+        "type": "ObjectId",
+        "ref": "Client"
+      },
+      "profile": {
+        "type": "Object",
+        "description": "Personal details",
+        "properties": {
+          "fullName": {
+            "type": "String"
+          },
+          "firstName": {
+            "type": "String"
+          },
+          "lastName": {
+            "type": "String"
+          },
+          "emails": {
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "properties": {
+                "text": {
+                  "type": "String"
+                },
+                "email": {
+                  "type": "String"
+                },
+                "type": {
+                  "type": "String"
+                },
+                "preferred": {
+                  "type": "String"
+                }
+              }
+            }
+          },
+          "phones": {
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "properties": {
+                "text": {
+                  "type": "String"
+                },
+                "phoneNumberOnly": {
+                  "type": "String"
+                },
+                "type": {
+                  "type": "String"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "Object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "professionalSummary": {
+        "type": "Object",
+        "description": "Resume summary",
+        "properties": {
+          "text": {
+            "type": "String"
+          }
+        }
+      },
+      "professionalQualification": {
+        "type": "Object",
+        "properties": {
+          "education": {
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "properties": {
+                "school": {
+                  "type": "String"
+                },
+                "degree": {
+                  "type": "String"
+                },
+                "fieldOfStudy": {
+                  "type": "String"
+                },
+                "startDate": {
+                  "type": "String"
+                },
+                "endDate": {
+                  "type": "String"
+                },
+                "grade": {
+                  "type": "String"
+                }
+              }
+            }
+          },
+          "certifications": {
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "properties": {
+                "name": {
+                  "type": "String"
+                },
+                "issuer": {
+                  "type": "String"
+                },
+                "issueDate": {
+                  "type": "String"
+                },
+                "expirationDate": {
+                  "type": "String"
+                },
+                "url": {
+                  "type": "String"
+                }
+              }
+            }
+          },
+          "skills": {
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "properties": {
+                "name": {
+                  "type": "String"
+                },
+                "lastUsed": {
+                  "type": "String"
+                },
+                "experience": {
+                  "type": "String"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "Object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "professionalExperience": {
+        "type": "Array",
+        "description": "Work history",
+        "items": {
+          "type": "Object",
+          "properties": {
+            "company": {
+              "type": "String"
+            },
+            "jobTitle": {
+              "type": "String"
+            },
+            "startDate": {
+              "type": "String"
+            },
+            "endDate": {
+              "type": "String"
+            },
+            "current": {
+              "type": "Boolean"
+            },
+            "location": {
+              "type": "String"
+            },
+            "description": {
+              "type": "String"
+            }
+          }
+        }
+      },
+      "otherInformation": {
+        "type": "Object",
+        "additionalProperties": true
+      },
+      "metaData": {
+        "type": "Object",
+        "properties": {
+          "originalFileName": {
+            "type": "String"
+          },
+          "mrProfileID": {
+            "type": "String"
+          },
+          "type": {
+            "type": "Object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+  "createdAt": {
+    "$date": "2026-02-04T05:11:23.247Z"
+  },
+  "description": "Candidate profiles (Resumes)",
+  "updatedAt": {
+    "$date": "2026-02-04T05:11:23.247Z"
+  }
+}

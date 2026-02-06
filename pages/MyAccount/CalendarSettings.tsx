@@ -282,14 +282,21 @@ const CopyScheduleModal = ({ sourceDay, days, onCopy, onClose }: any) => {
 };
 
 // Added mode prop to support Modal usage
-export const CalendarSettings = ({ userOverride, mode = 'page', onClose }: { userOverride?: any, mode?: 'page' | 'modal', onClose?: () => void }) => {
+export const CalendarSettings = ({ userOverride, mode = 'page', view = 'settings', onClose }: { userOverride?: any, mode?: 'page' | 'modal', view?: 'settings' | 'events', onClose?: () => void }) => {
     const { addToast } = useToast();
     const { userProfile } = useUserProfile();
 
     // Determine the active user context: either the override (admin edit) or current logged in user
     const activeUser = userOverride || userProfile;
 
-    const [activeTab, setActiveTab] = useState<'settings' | 'events'>('settings');
+    // Initialize state from prop, but allow local switching too (though tabs will now navigate)
+    const [activeTab, setActiveTab] = useState<'settings' | 'events'>(view);
+
+    // Sync prop changes if route changes
+    useEffect(() => {
+        setActiveTab(view);
+    }, [view]);
+
     const [isEditing, setIsEditing] = useState(false);
     const [copyModalData, setCopyModalData] = useState<{ sourceDayIndex: number, sourceDayName: string } | null>(null);
 
@@ -571,20 +578,21 @@ export const CalendarSettings = ({ userOverride, mode = 'page', onClose }: { use
                     </div>
 
                     {/* Tabs - Only show when NOT in modal mode */}
+                    {/* Tabs - Only show when NOT in modal mode */}
                     {mode !== 'modal' && (
                         <div className="flex border-b border-slate-200 dark:border-slate-700">
-                            <button
-                                onClick={() => setActiveTab('settings')}
+                            <RouterLink
+                                to="/myaccount/calendar"
                                 className={`pb-3 px-4 text-sm font-bold border-b-2 transition-colors ${activeTab === 'settings' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
                             >
                                 Configuration
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('events')}
+                            </RouterLink>
+                            <RouterLink
+                                to="/myaccount/calendar/myevents"
                                 className={`pb-3 px-4 text-sm font-bold border-b-2 transition-colors ${activeTab === 'events' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
                             >
                                 View Calendar
-                            </button>
+                            </RouterLink>
                         </div>
                     )}
                 </div>

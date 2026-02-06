@@ -1,0 +1,3170 @@
+{
+  "_id": {
+    "$oid": "690983bcb7f941d7bdaf0a27"
+  },
+  "companyID": {
+    "$oid": "6112806bc9147f673d28c6eb"
+  },
+  "sharedUserID": [],
+  "favouriteUserID": [],
+  "articleID": [
+    "63d760a9aec60c5e1494a9ea"
+  ],
+  "campaignID": [
+    "69292315e875b71058253412",
+    "62c5a8c7250281f99ac58215",
+    "6915cf8c26bd5d74fe99dc7b",
+    "6931992db394b307b3b087df",
+    "6904a1b1fc63a531b40f27ba",
+    "692922fc67d80b239e4e3ab0",
+    "68f7cdae322c76d7b59f221a",
+    "667d30e5004ab28fd4bd3af4",
+    "690b60b2ee0e3af66c119ac3",
+    "693155d5f2242275bd7148e3",
+    "678802b344b68e1a8c7a40eb",
+    "69453921710bafba20237de6",
+    "693696b395bfcea522303666",
+    "6954c05addfa591ef5b40e94"
+  ],
+  "attachedCampaigns": [
+    {
+      "campaignID": "68f7cdae322c76d7b59f221a",
+      "attachedAt": "2025-11-04T04:38:12.808Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "6821a4dc33d8d7ebe8f918e5",
+      "userID": "6821a4dc33d8d7ebe8f918e5"
+    },
+    {
+      "campaignID": "690b60b2ee0e3af66c119ac3",
+      "attachedAt": "2025-11-07T05:25:53.160Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "JobSeeker",
+      "userID": "61b825e415f87d014ee8b4a3"
+    },
+    {
+      "campaignID": "6904a1b1fc63a531b40f27ba",
+      "attachedAt": "2025-11-07T12:08:35.111Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "614d569f77f21325cdbd314a"
+    },
+    {
+      "campaignID": "6915cf8c26bd5d74fe99dc7b",
+      "attachedAt": "2025-12-08T12:56:08.893Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "61b825e415f87d014ee8b4a3"
+    },
+    {
+      "campaignID": "693155d5f2242275bd7148e3",
+      "attachedAt": "2025-12-10T12:38:42.880Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "625f8e49924c541edd6a1e6c"
+    },
+    {
+      "campaignID": "6931992db394b307b3b087df",
+      "attachedAt": "2025-12-16T09:37:44.374Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "614d569f77f21325cdbd314a"
+    },
+    {
+      "campaignID": "62c5a8c7250281f99ac58215",
+      "attachedAt": "2025-11-07T05:45:01.429Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "JobSeeker",
+      "userID": ""
+    },
+    {
+      "campaignID": "667d30e5004ab28fd4bd3af4",
+      "attachedAt": "2025-11-07T05:51:03.562Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "JobSeeker",
+      "userID": ""
+    },
+    {
+      "campaignID": "69292315e875b71058253412",
+      "attachedAt": "2025-12-10T10:40:06.227Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "625f8e49924c541edd6a1e6c"
+    },
+    {
+      "campaignID": "692922fc67d80b239e4e3ab0",
+      "attachedAt": "2025-12-12T07:14:39.349Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "625f8e49924c541edd6a1e6c"
+    },
+    {
+      "campaignID": "678802b344b68e1a8c7a40eb",
+      "attachedAt": "2025-12-18T11:56:05.131Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "JobSeeker",
+      "userID": "61b825e415f87d014ee8b4a3"
+    },
+    {
+      "campaignID": "69453921710bafba20237de6",
+      "attachedAt": "2025-12-19T11:56:19.699Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "6364e1a45c484101eaba341d"
+    },
+    {
+      "campaignID": "693696b395bfcea522303666",
+      "attachedAt": "2025-12-29T04:48:08.307Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "614d569f77f21325cdbd314a"
+    },
+    {
+      "campaignID": "6954c05addfa591ef5b40e94",
+      "attachedAt": "2026-01-05T04:47:44.829Z",
+      "removedAt": "",
+      "attached": true,
+      "status": "Attached",
+      "attachedBy": "Recruiter",
+      "userID": "614d569f77f21325cdbd314a"
+    }
+  ],
+  "sharedArticleID": [],
+  "status": "SUCCESS",
+  "personnelStatus": "Pending Applicant",
+  "employmentStatus": "Active",
+  "availability": "Available",
+  "tagID": [],
+  "active": true,
+  "resume": {
+    "profile": {
+      "fullName": "Pratik Gaurav",
+      "firstName": "Pratik",
+      "middleName": "",
+      "lastName": "Gaurav",
+      "nickName": "",
+      "nameSuffix": "",
+      "emails": [
+        {
+          "text": "pratik.gaurav@maprecruit.ai",
+          "email": "pratik.gaurav@maprecruit.ai",
+          "type": "Personal",
+          "preferred": "Primary",
+          "confidenceScore": 1,
+          "valid": true,
+          "verified": false,
+          "subscribeStatus": "Opt-in"
+        }
+      ],
+      "phones": [
+        {
+          "text": "+917004029399",
+          "phoneNumberOnly": "7004029399",
+          "internationalPhoneCode": "+91",
+          "nationalPhoneCode": "",
+          "country": "INDIA",
+          "countryCode": "IN",
+          "type": "Mobile",
+          "preferred": "Primary",
+          "DNDStatus": "",
+          "confidenceScore": 1,
+          "valid": true,
+          "verified": false,
+          "subscribeStatus": "Opt-in",
+          "ontology": true
+        }
+      ],
+      "websites": [],
+      "skypeID": "",
+      "locations": [
+        {
+          "text": "san diego,california,united states of america,92101",
+          "tier": "",
+          "address": "",
+          "addressType": "present",
+          "area": "",
+          "city": "san diego",
+          "district": "",
+          "state": "california",
+          "stateCode": "CA",
+          "country": "united states of america",
+          "countryCode": "US",
+          "postalCode": "92101",
+          "pin": {
+            "lat": 32.717421,
+            "lon": -117.162771
+          },
+          "cityCanonical": "san diego",
+          "districtCanonical": "",
+          "stateCanonical": "california",
+          "countryCanonical": "united states of america",
+          "foundInResume": true,
+          "confidenceScore": 1,
+          "ontology": true
+        }
+      ],
+      "gender": {
+        "text": "",
+        "label": "",
+        "found": false
+      },
+      "ethnicity": "",
+      "veteranStatus": "",
+      "languagesKnown": [],
+      "age": {
+        "text": "",
+        "inYears": 0,
+        "found": false,
+        "confidenceScore": 1
+      },
+      "dob": {
+        "text": "",
+        "standard": "",
+        "month": "",
+        "date": "",
+        "year": "",
+        "confidenceScore": 1
+      },
+      "nationality": {
+        "text": "",
+        "label": "",
+        "nationalityCanonical": "",
+        "ethnicity": "",
+        "country": "",
+        "countryCode": ""
+      },
+      "maritalStatus": "",
+      "fatherName": "",
+      "motherName": "",
+      "spouseName": "",
+      "passport": {
+        "passportNumber": "",
+        "country": "",
+        "countryCode": "",
+        "expiryDate": {
+          "text": "",
+          "standard": "",
+          "date": "",
+          "month": "",
+          "year": ""
+        }
+      },
+      "profileImage": {
+        "content": "",
+        "fileName": ""
+      }
+    },
+    "professionalSummary": {
+      "objective": "",
+      "summary": "Skilled Software Engineer with 3 years of hands-on experience in automation and manual testing. Proficient in Selenium, TestNG, and Rest Assured with a strong track record of reducing manual testing efforts and enhancing software quality. Experienced in\nAPI, ETL, web application, and Database testing techniques. Worked on waterfall and agile methodologies across various teams and clients to deliver reliable software solutions.",
+      "noticePeriod": {
+        "text": "",
+        "days": 0,
+        "negotiable": false
+      },
+      "workPermit": {
+        "text": "",
+        "type": "",
+        "status": "Unknown",
+        "country": "",
+        "countryCode": ""
+      },
+      "currentSalary": {
+        "text": "",
+        "period": "Per Hour",
+        "currency": "",
+        "value": 0,
+        "country": "",
+        "countryCode": "",
+        "minvalue": ""
+      },
+      "expectedSalary": {
+        "text": "",
+        "period": "Per Hour",
+        "currency": "",
+        "minvalue": 0,
+        "maxvalue": 0,
+        "negotiable": false
+      },
+      "preferredLocations": [],
+      "desiredWorkSchedule": [],
+      "availableDate": {
+        "text": "",
+        "standard": "",
+        "year": "",
+        "month": "",
+        "date": ""
+      },
+      "yearsOfExperience": {
+        "text": "0.0",
+        "derivedYears": 6.75,
+        "mentionedYears": 6.75,
+        "finalYears": 6.75,
+        "confidenceScore": 1
+      },
+      "currentRole": {
+        "jobTitle": "Instructional Student Assistant",
+        "entityID": "",
+        "jobProfile": "",
+        "jobLevel": "",
+        "jobType": "",
+        "jobCategory": "",
+        "jobTitleCanonical": [
+          "instructional student assistant"
+        ],
+        "canonicalID": [
+          "688cd2d2f4b6d9e7b4c3ffdb"
+        ],
+        "confidenceScore": 1
+      },
+      "currentCompany": {
+        "company": "San Diego",
+        "companyCanonical": "san diego",
+        "confidenceScore": 1
+      },
+      "preferredRoles": [],
+      "currentlyWorking": true,
+      "gapYears": {
+        "experienceGapYears": 0,
+        "recentExperienceGap": 0,
+        "longestExperienceGapYears": 0,
+        "educationExperienceGapYears": 0
+      },
+      "avgExperiencePerCompany": 0
+    },
+    "professionalQualification": {
+      "education": [
+        {
+          "campus": {
+            "text": "San Diego State University",
+            "redFlag": false,
+            "canonical": "san diego state university",
+            "type": "Unknown",
+            "confidenceScore": 1
+          },
+          "university": {
+            "text": "san diego state university",
+            "canonical": "san diego state university",
+            "type": "University",
+            "confidenceScore": 1
+          },
+          "degree": {
+            "text": "Master of Science",
+            "canonical": "master of science",
+            "similar": [],
+            "type": "",
+            "level": "pg",
+            "confidenceScore": 1,
+            "entityID": "5bbb58d1ef29be4f56d0b152",
+            "canonicalID": "",
+            "ontology": true
+          },
+          "major": [
+            {
+              "text": "Computer Science | Design, Machine Learning",
+              "entityID": "",
+              "canonical": [
+                "machine learning"
+              ],
+              "canonicalID": [],
+              "similar": [],
+              "confidenceScore": 1,
+              "ontology": true
+            }
+          ],
+          "minor": [],
+          "merit": {
+            "percentage": 38.8,
+            "GPA": "3.88",
+            "GPAOutOf": 10
+          },
+          "currentStatus": "Passed",
+          "startDate": {
+            "text": "2022-08-01",
+            "standard": "2022-08-01",
+            "year": "2022",
+            "month": "08",
+            "date": "01",
+            "ontology": true
+          },
+          "endDate": {
+            "text": "2024-05-01",
+            "standard": "2024-05-01",
+            "year": "2024",
+            "month": "05",
+            "date": "01",
+            "ontology": true
+          },
+          "duration": {
+            "text": "1 years 9 months",
+            "inYears": 1.8,
+            "years": 1,
+            "months": 9,
+            "days": 0
+          },
+          "location": {
+            "text": "SanDiego,CA,USA",
+            "tier": "",
+            "address": "San Diego, CA, USA",
+            "area": "",
+            "city": "",
+            "district": "",
+            "state": "USA",
+            "stateCode": "",
+            "country": "",
+            "countryCode": "",
+            "postalCode": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "cityCanonical": "",
+            "districtCanonical": "",
+            "stateCanonical": "",
+            "countryCanonical": "",
+            "latitude": "",
+            "longitude": "",
+            "ontology": false
+          }
+        },
+        {
+          "campus": {
+            "text": "",
+            "redFlag": false,
+            "canonical": "",
+            "type": "Unknown",
+            "confidenceScore": 1
+          },
+          "university": {
+            "text": "",
+            "canonical": "",
+            "type": "University",
+            "confidenceScore": 1
+          },
+          "degree": {
+            "text": "Bachelor of Technology",
+            "canonical": "bachelor of technology",
+            "similar": [],
+            "type": "",
+            "level": "ug",
+            "confidenceScore": 1,
+            "entityID": "5bbb58e2ef29be4f56d0bfe6",
+            "canonicalID": "",
+            "ontology": true
+          },
+          "major": [
+            {
+              "text": "Computer Science & Engineering | Mining",
+              "entityID": "",
+              "canonical": [
+                "mining"
+              ],
+              "canonicalID": [],
+              "similar": [],
+              "confidenceScore": 1,
+              "ontology": true
+            }
+          ],
+          "minor": [],
+          "merit": {
+            "percentage": 31.1,
+            "GPA": "3.11",
+            "GPAOutOf": 10
+          },
+          "currentStatus": "Passed",
+          "startDate": {
+            "text": "2014-07-01",
+            "standard": "2014-07-01",
+            "year": "2014",
+            "month": "07",
+            "date": "01",
+            "ontology": true
+          },
+          "endDate": {
+            "text": "2018-05-01",
+            "standard": "2018-05-01",
+            "year": "2018",
+            "month": "05",
+            "date": "01",
+            "ontology": true
+          },
+          "duration": {
+            "text": "3 years 10 months",
+            "inYears": 3.8,
+            "years": 3,
+            "months": 10,
+            "days": 0
+          },
+          "location": {
+            "text": "hyderabad,telangana,Hyderabad,India,india",
+            "tier": "",
+            "address": "Hyderabad, India",
+            "area": "",
+            "city": "hyderabad",
+            "district": "",
+            "state": "telangana",
+            "stateCode": "TG",
+            "country": "india",
+            "countryCode": "IN",
+            "postalCode": [
+              "500030",
+              "500018",
+              "500004",
+              "500005",
+              "500032",
+              "500059",
+              "500024",
+              "500048",
+              "500052",
+              "500038",
+              "500068",
+              "500070",
+              "500010",
+              "500072",
+              "500055",
+              "500047",
+              "500049",
+              "500015",
+              "500037",
+              "500009",
+              "500027",
+              "500001",
+              "500082",
+              "500084",
+              "500064",
+              "500076",
+              "500039",
+              "500035",
+              "500079",
+              "500060",
+              "500074",
+              "500020",
+              "500003",
+              "502032",
+              "502300",
+              "502319",
+              "500013",
+              "500057",
+              "500028",
+              "500094",
+              "500085",
+              "500050",
+              "500056",
+              "500042",
+              "500093",
+              "500095",
+              "500012",
+              "500046",
+              "500033",
+              "500081",
+              "500096",
+              "500029",
+              "500063",
+              "500019",
+              "500044",
+              "500065",
+              "500002",
+              "500023",
+              "500034",
+              "500045",
+              "500073",
+              "500016",
+              "500007",
+              "500061",
+              "500040",
+              "500017",
+              "500080",
+              "500026",
+              "500025",
+              "500062"
+            ],
+            "pin": {
+              "lat": 17.361608,
+              "lon": 78.474629
+            },
+            "cityCanonical": "hyderabad",
+            "districtCanonical": "",
+            "stateCanonical": "telangana",
+            "countryCanonical": "india",
+            "latitude": "",
+            "longitude": "",
+            "addressType": "others",
+            "ontology": true,
+            "confidenceScore": 1
+          }
+        },
+        {
+          "campus": {
+            "canonical": "keiser university",
+            "confidenceScore": 1,
+            "redFlag": false,
+            "text": "Keiser University",
+            "type": "Unknown"
+          },
+          "currentStatus": "Studying",
+          "degree": {
+            "canonical": "associate's degree",
+            "canonicalID": "",
+            "confidenceScore": 1,
+            "entityID": "",
+            "level": "ug",
+            "similar": [],
+            "text": "Associate Degree",
+            "type": ""
+          },
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": "",
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "Present",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "latitude": "",
+            "longitude": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "major": [
+            {
+              "canonical": [
+                "engineering"
+              ],
+              "canonicalID": [],
+              "confidenceScore": 1,
+              "entityID": "",
+              "similar": [],
+              "text": "Engineering"
+            }
+          ],
+          "merit": {
+            "GPA": 0,
+            "GPAOutOf": 10,
+            "percentage": 0
+          },
+          "minor": [],
+          "startDate": {
+            "date": "1",
+            "month": "8",
+            "standard": "2021-08-01",
+            "text": "2021-08-01",
+            "year": "2021"
+          },
+          "university": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "keiser university",
+            "type": "University"
+          }
+        }
+      ],
+      "certifications": [
+        {
+          "campus": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "Unknown"
+          },
+          "course": {
+            "canonical": [],
+            "canonicalID": [],
+            "entityID": "",
+            "text": "Driver's License",
+            "type": ""
+          },
+          "currentStatus": "Passed",
+          "description": "",
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": 0,
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "expiryDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "merit": {
+            "GPA": 0,
+            "GPAOutOf": 10,
+            "percentage": 0
+          },
+          "startDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          }
+        },
+        {
+          "campus": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "Unknown"
+          },
+          "course": {
+            "canonical": [],
+            "canonicalID": [],
+            "entityID": "",
+            "text": "Forklift",
+            "type": ""
+          },
+          "currentStatus": "Passed",
+          "description": "",
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": 0,
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "expiryDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "merit": {
+            "GPA": 0,
+            "GPAOutOf": 10,
+            "percentage": 0
+          },
+          "startDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          }
+        },
+        {
+          "campus": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "Unknown"
+          },
+          "course": {
+            "canonical": [],
+            "canonicalID": [],
+            "entityID": "",
+            "text": "Pallet Jack",
+            "type": ""
+          },
+          "currentStatus": "Passed",
+          "description": "",
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": 0,
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "expiryDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "merit": {
+            "GPA": 0,
+            "GPAOutOf": 10,
+            "percentage": 0
+          },
+          "startDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          }
+        }
+      ],
+      "academicProjects": [
+        {
+          "campus": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "Unknown"
+          },
+          "description": "",
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": "",
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "projectTitle": "",
+          "skills": [],
+          "startDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "university": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "University"
+          }
+        },
+        {
+          "campus": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "Unknown"
+          },
+          "description": "",
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": "",
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "projectTitle": "",
+          "skills": [],
+          "startDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "university": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "University"
+          }
+        },
+        {
+          "campus": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "Unknown"
+          },
+          "description": "",
+          "duration": {
+            "days": 0,
+            "inYears": 0,
+            "months": 0,
+            "text": "",
+            "years": 0
+          },
+          "endDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "location": {
+            "address": "",
+            "area": "",
+            "city": "",
+            "cityCanonical": "",
+            "country": "",
+            "countryCanonical": "",
+            "countryCode": "",
+            "district": "",
+            "districtCanonical": "",
+            "pin": {
+              "lat": "",
+              "lon": ""
+            },
+            "postalCode": "",
+            "state": "",
+            "stateCanonical": "",
+            "stateCode": "",
+            "text": "",
+            "tier": ""
+          },
+          "projectTitle": "",
+          "skills": [],
+          "startDate": {
+            "date": "",
+            "month": "",
+            "standard": "",
+            "text": "",
+            "year": ""
+          },
+          "university": {
+            "canonical": "",
+            "confidenceScore": 1,
+            "text": "",
+            "type": "University"
+          }
+        }
+      ],
+      "skills": [
+        {
+          "text": "WAREHOUSE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "EFFECTIVELY COMMUNICATING",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "ASSISTING EMPLOYEES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "PROFESSIONAL MANNER",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "TEACH OTHERS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "PROBLEM SOLVING",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CONFLICT RESOLUTION",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "HIGH ENERGY",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "ENTHUSIASTIC",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "COMMUNICATING",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "GENERAL WAREHOUSE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "ATTENTION TO DETAIL",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "PICK",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CUSTOMER ORDERS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "PACK",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "WAREHOUSE PROCEDURES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CLEAN",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "HANDHELD SCANNERS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "OPERATING SYSTEMS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SAFETY PROCEDURES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "MACHINE EQUIPMENT",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "WORKING WITH A TEAM",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "WAREHOUSE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CUSTOMER SERVICE / SALES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CUSTOMER SERVICE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SERVICE / SALES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SALES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 4.7,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "ONLINE SALES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "KEEP TRACK OF INVENTORY",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SALE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SHOPPING EXPERIENCE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "ANSWERING QUESTIONS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CUSTOMER SERVICE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SHOPPING EXPERIENCE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "ANSWERING INBOUND CALLS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "INBOUND",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "INBOUND CALLS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SALES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 0.5,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "PROVIDING CUSTOMERS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 1.1,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "SHOPPING EXPERIENCE",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 1.1,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "RESOLVING CUSTOMER ISSUES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 1.1,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "DELIVERING RESULTS",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 1.1,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        },
+        {
+          "text": "CUSTOMER ISSUES",
+          "entityID": "",
+          "canonical": [],
+          "canonicalID": [],
+          "canonicalDetails": [],
+          "relations": [],
+          "derived": [],
+          "yearsOfExperience": 1.1,
+          "score": 0,
+          "confidenceScore": 1,
+          "ontology": true,
+          "importance": "High",
+          "lastUsedAgo": ""
+        }
+      ],
+      "licences": []
+    },
+    "professionalExperience": [
+      {
+        "company": {
+          "text": "Animal Supply Company",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "Warehouse Lead",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "2022-01-01",
+          "standard": "2022-01-01",
+          "year": 2022,
+          "month": 1,
+          "date": 1
+        },
+        "endDate": {
+          "text": "Present",
+          "standard": "",
+          "year": "",
+          "month": "",
+          "date": ""
+        },
+        "duration": {
+          "text": "",
+          "inYears": 0,
+          "years": 0,
+          "months": 0,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Working",
+        "location": {
+          "text": "Duluth, GA",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "The responsibilities that the position of warehouse lead required, consisted of the supervision of other employees which entailed keeping track of schedules, effectively communicating and assisting employees and management to meet the demands of the company and being able to address concerns and conflict in an appropriate, professional manner. This role requires one to not only be good at the job but to know how to add value and teach others to be just as good . Problem solving and conflict resolution with high energy combined with the ability to be interactive and enthusiastic are key qualities to have in assuming the position.\nGeneral Warehouse",
+        "skills": [
+          {
+            "text": "WAREHOUSE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "EFFECTIVELY COMMUNICATING",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "ASSISTING EMPLOYEES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "PROFESSIONAL MANNER",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "TEACH OTHERS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "PROBLEM SOLVING",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "CONFLICT RESOLUTION",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "HIGH ENERGY",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "ENTHUSIASTIC",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "COMMUNICATING",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "GENERAL WAREHOUSE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          }
+        ],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      },
+      {
+        "company": {
+          "text": "Animal Supply Co. - Suwannee, GA",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "Seasonal Customer Service / Sales",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "2021-05-01",
+          "standard": "2021-05-01",
+          "year": 2021,
+          "month": 5,
+          "date": 1
+        },
+        "endDate": {
+          "text": "Present",
+          "standard": "",
+          "year": "",
+          "month": "",
+          "date": ""
+        },
+        "duration": {
+          "text": "",
+          "inYears": 0,
+          "years": 0,
+          "months": 0,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Working",
+        "location": {
+          "text": "prosperity",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "This role requires attention to detail and the ability to learn instantaneously how to pick items for customer orders and pack them while following proper warehouse procedures. Tasks often come with different variations such as preserving a clean and orderly workspace, using handheld scanners and computerized operating systems that coincide with inventory, practicing safety procedures, operating machine equipment and working with a team to meet performance standards and productivity goals.",
+        "skills": [
+          {
+            "text": "ATTENTION TO DETAIL",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "PICK",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "CUSTOMER ORDERS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "PACK",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "WAREHOUSE PROCEDURES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "CLEAN",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "HANDHELD SCANNERS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "OPERATING SYSTEMS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SAFETY PROCEDURES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "MACHINE EQUIPMENT",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "WORKING WITH A TEAM",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "WAREHOUSE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "CUSTOMER SERVICE / SALES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "CUSTOMER SERVICE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SERVICE / SALES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SALES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 4.7,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          }
+        ],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      },
+      {
+        "company": {
+          "text": "PureBlanding",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "2020-06-01",
+          "standard": "2020-06-01",
+          "year": 2020,
+          "month": 6,
+          "date": 1
+        },
+        "endDate": {
+          "text": "2020-12-01",
+          "standard": "2020-12-01",
+          "year": 2020,
+          "month": 12,
+          "date": 1
+        },
+        "duration": {
+          "text": "6 Months ",
+          "inYears": 0,
+          "years": 0,
+          "months": 6,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Worked",
+        "location": {
+          "text": "Irvington, NJ",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "The primary obligations of the job were to assist with online sales. It was important to keep track of inventory and sale performances. To sustain a positive online shopping experience for customer, providing help with any complications and answering questions in a timely, adequate manner were vital.",
+        "skills": [
+          {
+            "text": "ONLINE SALES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "KEEP TRACK OF INVENTORY",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SALE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SHOPPING EXPERIENCE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "ANSWERING QUESTIONS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          }
+        ],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      },
+      {
+        "company": {
+          "text": "Amazon.com requires discipline and enthusiasm",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "Customer Service Associate",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "2019-12-01",
+          "standard": "2019-12-01",
+          "year": 2019,
+          "month": 12,
+          "date": 1
+        },
+        "endDate": {
+          "text": "2020-06-01",
+          "standard": "2020-06-01",
+          "year": 2020,
+          "month": 6,
+          "date": 1
+        },
+        "duration": {
+          "text": "6 Months ",
+          "inYears": 0,
+          "years": 0,
+          "months": 6,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Worked",
+        "location": {
+          "text": "",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "Amazon.com - Remote\nThe work from home customer service associate position with Amazon.com requires discipline and enthusiasm to give customers the best online shopping experience. There was an ongoing commitment to answering inbound calls dealing with sales, customer account fixes, and processing returns and refunds all while practicing 100% customer. Successfully doing so, the ability to maintain performance rates of\n96% and above came effortlessly.\nCashier/ Customer Service",
+        "skills": [
+          {
+            "text": "CUSTOMER SERVICE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SHOPPING EXPERIENCE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "ANSWERING INBOUND CALLS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "INBOUND",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "INBOUND CALLS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SALES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 0.5,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          }
+        ],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      },
+      {
+        "company": {
+          "text": "Walmart",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "2018-10-01",
+          "standard": "2018-10-01",
+          "year": 2018,
+          "month": 10,
+          "date": 1
+        },
+        "endDate": {
+          "text": "2019-11-01",
+          "standard": "2019-11-01",
+          "year": 2019,
+          "month": 11,
+          "date": 1
+        },
+        "duration": {
+          "text": "1 Years 1 Months ",
+          "inYears": 0,
+          "years": 1,
+          "months": 1,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Worked",
+        "location": {
+          "text": "Loganville, GA",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "As a cashier the main duties performed on a day-to-day basis were providing customers with expeditious, friendly, and efficient shopping experience. Regulating transactions, resolving customer issues and delivering results, as well as maintaining a safe and well put together workstation contributed to the responsibilities of the job title.",
+        "skills": [
+          {
+            "text": "PROVIDING CUSTOMERS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 1.1,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "SHOPPING EXPERIENCE",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 1.1,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "RESOLVING CUSTOMER ISSUES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 1.1,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "DELIVERING RESULTS",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 1.1,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          },
+          {
+            "text": "CUSTOMER ISSUES",
+            "entityID": "",
+            "canonical": [],
+            "canonicalID": [],
+            "canonicalDetails": [],
+            "relations": [],
+            "derived": [],
+            "yearsOfExperience": 1.1,
+            "score": 0,
+            "confidenceScore": 1,
+            "ontology": true,
+            "importance": "High",
+            "lastUsedAgo": ""
+          }
+        ],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      },
+      {
+        "company": {
+          "text": "TRC Staffing",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "warehouse operator",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "",
+          "standard": "",
+          "year": "",
+          "month": "",
+          "date": ""
+        },
+        "endDate": {
+          "text": "",
+          "standard": "",
+          "year": "",
+          "month": "",
+          "date": ""
+        },
+        "duration": {
+          "text": "",
+          "inYears": 0,
+          "years": 0,
+          "months": 0,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Worked",
+        "location": {
+          "text": "",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "• Operated warehouse equipment including forklifts, pallet jacks, and hand trucks to efficiently move and organize inventory.\n• Performed regular inventory checks to ensure accurate stock levels and timely identification of discrepancies.\n• Trained new staff on best practices for warehouse operations, enhancing team efficiency and safety compliance.\n• Utilized warehouse management software to track inventory movement and generate reports for management.\n",
+        "skills": [],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      },
+      {
+        "company": {
+          "text": "TRC Staffing",
+          "redFlag": false,
+          "canonical": [],
+          "canonicalDetails": [],
+          "confidenceScore": 1
+        },
+        "jobTitle": {
+          "text": "INGOT QUALITY TECHNICIAN ",
+          "jobType": "Premanent",
+          "jobCategory": "",
+          "jobTitles": [],
+          "confidenceScore": 1
+        },
+        "workSchedule": "",
+        "startDate": {
+          "text": "2026-01-04",
+          "standard": "2026-01-04",
+          "year": 2026,
+          "month": 1,
+          "date": 4
+        },
+        "endDate": {
+          "text": "Present",
+          "standard": "",
+          "year": "",
+          "month": "",
+          "date": ""
+        },
+        "duration": {
+          "text": "",
+          "inYears": 0,
+          "years": 0,
+          "months": 0,
+          "days": 0
+        },
+        "projects": [],
+        "currentStatus": "Working",
+        "location": {
+          "text": "",
+          "tier": "",
+          "address": "",
+          "area": "",
+          "city": "",
+          "district": "",
+          "state": "",
+          "stateCode": "",
+          "country": "",
+          "countryCode": "",
+          "postalCode": "",
+          "pin": {
+            "lat": "",
+            "lon": ""
+          },
+          "cityCanonical": "",
+          "districtCanonical": "",
+          "stateCanonical": "",
+          "countryCanonical": ""
+        },
+        "description": "• Conducted thorough quality inspections on ingot production processes to ensure compliance with industry standards.\n• Performed dimensional and visual inspections of ingots to identify defects and ensure product integrity.\n• Collaborated with production teams to implement corrective actions for non-conformance issues identified during inspections.\n• Utilized various testing equipment and techniques to assess the physical and chemical properties of ingots.\n• Maintained accurate records of quality control data, including inspection results and non-conformance reports.\n• Developed and updated quality assurance protocols to enhance the efficiency of the quality control process.\n• Trained new team members on quality standards and inspection procedures to ensure consistency across the team.\n• Assisted in the preparation of quality reports for management review, highlighting key findings and areas for improvement.\n",
+        "skills": [],
+        "supervisor": {
+          "text": "",
+          "jobTitles": [],
+          "name": "",
+          "confidenceScore": 1
+        },
+        "previousGapYears": {
+          "years": 0,
+          "months": 0,
+          "days": 0,
+          "inYears": 0
+        },
+        "reasonForLeave": ""
+      }
+    ],
+    "otherInformation": {
+      "references": [],
+      "sectionsText": {
+        "personal_details": "Pratik Gaurav\n+91 - 7004029399 pratik.gaurav@maprecruit.ai",
+        "summary": "",
+        "education": "",
+        "experience": "",
+        "certification": "",
+        "others": "",
+        "unknown": ""
+      },
+      "contextual_derived_skills": [],
+      "militaryHistory": [],
+      "accomplishments": [],
+      "bufferEntities": [],
+      "contextualSkills": [],
+      "extracurricularActivities": [],
+      "declaration": "",
+      "curriculumVitae": "",
+      "publications": [],
+      "additionalInformation": "",
+      "fullText": "\nPratik Gaurav\n+91-7004029399 pratik.gaurav@maprecruit.ai",
+      "profileSummary": "",
+      "industryScores": {
+        "accounting_finance": 15.0851,
+        "administrative_management": 65.3146,
+        "agriculture_horticulture": 0.0398,
+        "airport_aviation": 0.0077,
+        "arts_media": 0.1049,
+        "banking_insurance": 1.4369,
+        "education_training": 0.0101,
+        "energy_mining": 0.0305,
+        "engineering_manufacturing": 1.845,
+        "general_services": 1.4755,
+        "healthcare_medical": 0.1127,
+        "hospitality_tourism": 0.1829,
+        "information_technology": 0.3956,
+        "legal_law": 0.1277,
+        "logistics_warehouse": 8.9419,
+        "pharma_drugs": 0.7331,
+        "sales_marketing": 0.4072,
+        "sports_club": 0.0063,
+        "staffing_hr": 0.4117,
+        "support_service": 3.3307
+      },
+      "textBySections": [],
+      "unusedLines": [],
+      "industry": [
+        {
+          "industry_label": "Accounting and Finance",
+          "industry_name": "accounting_finance",
+          "score": 15.0851,
+          "percentage": 18.76
+        },
+        {
+          "industry_label": "Administration",
+          "industry_name": "administrative_management",
+          "score": 65.3146,
+          "percentage": 81.24
+        }
+      ]
+    },
+    "metaData": {
+      "originalFileName": "",
+      "fileExtension": "",
+      "timeTaken": 0.05993,
+      "version": "6.0.0",
+      "wordsCount": 6,
+      "linesCount": 3,
+      "languageCode": "sl",
+      "tablesCount": 0
+    }
+  },
+  "createdAt": "2025-11-04T04:40:28.024Z",
+  "updatedAt": {
+    "$date": "2026-02-05T11:33:57.490Z"
+  },
+  "customData": {
+    "6112806bc9147f673d28c6eb": {
+      "61c955e903926f6b5e9a2822": {
+        "label": "Primary BU",
+        "format": "Text",
+        "value": "TRC Talent Solutions - TRC Talent Solutions"
+      }
+    }
+  },
+  "metaData": {
+    "originalFileName": "ProfileSummary.txt",
+    "profileImageURL": "",
+    "fileType": "txt",
+    "inputSource": "TRC Website",
+    "inputSourceCategory": "",
+    "originalSource": "TRC Website",
+    "originalSourceCategory": "",
+    "referenceID": "",
+    "originalReferenceID": "",
+    "inputChannel": "Careers",
+    "origin": "",
+    "originType": "",
+    "newFileName": "6952076330155a5d1bac4323.txt",
+    "newFilePath": "/opt/mr/files/input/trcstaffingUS/",
+    "newHTMLFileName": "6952076330155a5d1bac4323.htm",
+    "newHTMLFilePath": "/opt/mr/files/output/htm/trcstaffingUS/",
+    "newPDFFileName": "6952076330155a5d1bac4323.pdf",
+    "newPDFFilePath": "/opt/mr/files/output/pdf/trcstaffingUS/",
+    "attention": [],
+    "missingMandatoryFields": [],
+    "uploadedAt": "2025-12-29T04:45:23.675Z",
+    "resumes": [
+      {
+        "resumeFileID": "690983bcb7f941d7bdaf0a27",
+        "primary": true,
+        "originalFileName": "download.pdf",
+        "newFileName": "download.pdf",
+        "newFilePath": "/SchemaData",
+        "newHTMLFileName": "download.pdf",
+        "newPDFFileName": "download.pdf",
+        "newHTMLFilePath": "/SchemaData",
+        "newPDFFilePath": "/SchemaData",
+        "fileType": "pdf",
+        "uploadedBy": "6821a4dc33d8d7ebe8f918e5",
+        "clientID": "6902185cfd2ad83fcd90a645",
+        "campaignID": "",
+        "uploadedAt": "2025-11-04T04:40:28.024Z"
+      }
+    ],
+    "version": "v6",
+    "maprecruitVersion": "v2",
+    "createdBy": "Recruiter",
+    "originalID": "690983bcb7f941d7bdaf0a27",
+    "duplicateVerified": false,
+    "duplicateVerifiedAt": "",
+    "originCountry": "",
+    "originCountryCode": "",
+    "originInternationalPhoneCode": "US",
+    "queryJobID": [],
+    "referral": false,
+    "referralCode": "",
+    "deletedBy": "",
+    "deletedByID": "",
+    "mergedBy": "",
+    "mergedByID": "",
+    "resumeParsed": true,
+    "resumeReviewed": true,
+    "resumeSynced": true,
+    "syncedAt": "2025-12-24T10:01:52.835Z",
+    "reviewPipeline": [
+      "Canonicalize",
+      "Duplicate Check",
+      "Unsubscribe Check",
+      "Resume Review",
+      "ES Sync",
+      "MRI",
+      "Automate Screening Round"
+    ],
+    "parsedDetails": [
+      {
+        "parsedDate": "2025-11-04T04:40:24.287Z",
+        "timeTaken": "0:00:00.512752",
+        "processTime": {
+          "linesCount": 3,
+          "wordsCount": 6,
+          "tablesCount": 0,
+          "converterMessage": "text to htm",
+          "format": "Plain Resume",
+          "section_classifier_hits": 0,
+          "ner_jobtitle_hits": 0,
+          "file_handling_time": 0.019072,
+          "conversion_time": 0.002766,
+          "linebyline_time": 0.001655,
+          "entity_recognition_time": 0.029813,
+          "industry_classification_time": 0.024944,
+          "section_creation_time": 0.000027,
+          "section_identification_time": 0.000118,
+          "section_classification_time": 0,
+          "ner_jobtitle_response_time": 0,
+          "subparser_time": 0.003343,
+          "professional_skills_time": 0,
+          "final_json_creation_time": 0.000528,
+          "db_insertion_time": 0,
+          "hd_shd_vectordb_hits": 0,
+          "hd_shd_vectordb_time": 0.000001,
+          "process_time": {
+            "experience_parser": 0,
+            "education_parser": 0.000001,
+            "contact_parser": 0.003288,
+            "summary_parser": 0.000005
+          }
+        },
+        "converterMessage": "text to htm",
+        "status": "SUCCESS"
+      }
+    ],
+    "converterMessage": "text to htm",
+    "processTime": {
+      "linesCount": 87,
+      "wordsCount": 570,
+      "tablesCount": 0,
+      "converterMessage": "text to htm",
+      "format": "Plain Resume",
+      "section_classifier_hits": 1,
+      "ner_jobtitle_hits": 3,
+      "file_handling_time": 0.038816,
+      "conversion_time": 0.006904,
+      "linebyline_time": 0.610926,
+      "entity_recognition_time": 0.315314,
+      "industry_classification_time": 0.279326,
+      "section_creation_time": 0.000112,
+      "section_identification_time": 0.017067,
+      "section_classification_time": 0.0123,
+      "ner_jobtitle_response_time": 0.1801,
+      "subparser_time": 0.378471,
+      "professional_skills_time": 0,
+      "final_json_creation_time": 0.002306,
+      "db_insertion_time": 0,
+      "hd_shd_vectordb_hits": 0,
+      "hd_shd_vectordb_time": 0.000001,
+      "process_time": {
+        "experience_parser": 0.320178,
+        "education_parser": 0.00032,
+        "contact_parser": 0.056662,
+        "summary_parser": 0.000903
+      }
+    },
+    "duplicates": [],
+    "fileMoved": 1,
+    "esInsert": true
+  },
+  "tags": [],
+  "profileTags": [],
+  "referral": [],
+  "clientID": null,
+  "professionalExperience": []
+}

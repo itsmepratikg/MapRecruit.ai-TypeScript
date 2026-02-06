@@ -10,6 +10,14 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       host: true,
     },
+    preview: {
+      port: 3000,
+      strictPort: true,
+      host: true,
+    },
+    optimizeDeps: {
+      include: ['@schedule-x/react', '@schedule-x/calendar', '@schedule-x/drag-and-drop', '@schedule-x/events-service', '@schedule-x/resize', '@schedule-x/theme-default'],
+    },
     plugins: [react()],
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
