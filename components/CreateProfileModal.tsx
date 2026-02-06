@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Upload, User, Mail, Phone, MapPin, Briefcase, CheckCircle, Loader2 } from 'lucide-react';
 import { useToast } from './Toast';
+import { integrationService } from '../services/integrationService';
+import { googlePickerService } from '../services/googlePickerService';
 
 interface CreateProfileModalProps {
     isOpen: boolean;
@@ -67,6 +68,43 @@ export const CreateProfileModal: React.FC<CreateProfileModalProps> = ({ isOpen, 
         }, 2000);
     };
 
+    const handleGoogleDriveClick = async () => {
+        try {
+            const status = await integrationService.getStatus();
+            if (!status.google.connected) {
+                addToast("Please connect your Google Workspace in Settings first.", "info");
+                return;
+            }
+
+            setUploading(true);
+            const token = await integrationService.getPickerToken();
+
+            await googlePickerService.openPicker(token, async (fileId, fileName) => {
+                try {
+                    const result = await integrationService.fetchDriveFile(fileId, fileName);
+                    if (result.success) {
+                        setFormData({
+                            ...formData,
+                            ...result.parsedData
+                        });
+                        setActiveTab('manual');
+                        addToast(`Successfully imported ${fileName} from Google Drive!`, "success");
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch from Drive:", error);
+                    addToast("Failed to fetch file from Google Drive", "error");
+                } finally {
+                    setUploading(false);
+                }
+            });
+
+        } catch (error) {
+            console.error("Google Drive Error:", error);
+            addToast("Failed to open Google Drive picker", "error");
+            setUploading(false);
+        }
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         addToast(`Profile created for ${formData.firstName} ${formData.lastName}`, 'success');
@@ -118,9 +156,30 @@ export const CreateProfileModal: React.FC<CreateProfileModalProps> = ({ isOpen, 
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-700 dark:text-slate-200 mb-2">{t("Drop resume here")}</h3>
                                     <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">{t("Supported formats: PDF, DOCX, TXT")}</p>
-                                    <button className="px-4 py-2 bg-white dark:bg-slate-600 border border-slate-200 dark:border-slate-500 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-500 shadow-sm">
-                                        {t("Browse Files")}
-                                    </button>
+                                    <div className="flex gap-3">
+                                        <button
+                                            onClick={() => (document.getElementById('resume-upload-input') as HTMLInputElement)?.click()}
+                                            className="px-4 py-2 bg-white dark:bg-slate-600 border border-slate-200 dark:border-slate-500 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-500 shadow-sm"
+                                        >
+                                            {t("Browse Files")}
+                                        </button>
+                                        <button
+                                            onClick={handleGoogleDriveClick}
+                                            className="px-4 py-2 bg-white dark:bg-slate-600 border border-blue-200 dark:border-blue-900 rounded-lg text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 shadow-sm flex items-center gap-2"
+                                        >
+                                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M12.5,2L6,2C4.9,2,4,2.9,4,4V20C4,21.1,4.9,22,6,22H18C19.1,22,20,21.1,20,20V8L12.5,2M15,20H5V4H12V9H17V20H15M10,14H15V16H10V14M10,11H15V13H10V11M10,17H13V19H10V17Z" />
+                                            </svg>
+                                            {t("Google Drive")}
+                                        </button>
+                                        <input
+                                            id="resume-upload-input"
+                                            type="file"
+                                            className="hidden"
+                                            onChange={(e) => e.target.files?.[0] && simulateUpload(e.target.files[0].name)}
+                                            accept=".pdf,.docx,.txt"
+                                        />
+                                    </div>
                                 </>
                             )}
                         </div>

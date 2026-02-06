@@ -95,6 +95,18 @@ const userSchema = mongoose.Schema({
     calendarSettings: {
         type: mongoose.Schema.Types.Mixed,
         default: {}
+    },
+    integrations: {
+        google: {
+            connected: { type: Boolean, default: false },
+            tokens: { type: mongoose.Schema.Types.Mixed },
+            email: { type: String }
+        },
+        microsoft: {
+            connected: { type: Boolean, default: false },
+            tokens: { type: mongoose.Schema.Types.Mixed },
+            email: { type: String }
+        }
     }
 }, {
     timestamps: true,

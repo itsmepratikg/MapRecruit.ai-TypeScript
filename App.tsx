@@ -19,6 +19,7 @@ const PreviousHistory = React.lazy(() => import('./pages/PreviousHistory/index')
 const Notifications = React.lazy(() => import('./pages/Notifications/index').then(module => ({ default: module.Notifications })));
 const TalentChat = React.lazy(() => import('./pages/TalentChat/index').then(module => ({ default: module.TalentChat })));
 const SupportPage = React.lazy(() => import('./pages/Support/index').then(module => ({ default: module.SupportPage })));
+const GoogleCallback = React.lazy(() => import('./pages/MyAccount/GoogleCallback').then(m => ({ default: m.GoogleCallback })));
 import { Campaign } from './types';
 import { CreateProfileModal } from './components/CreateProfileModal';
 import { CreateFolderModal } from './pages/Profiles/FoldersMetrics/CreateFolderModal';
@@ -30,10 +31,10 @@ import { useUserProfile } from './hooks/useUserProfile';
 import { useCompanyTheme } from './hooks/useCompanyTheme';
 import { GLOBAL_CAMPAIGNS } from './data';
 import { GlobalSearch } from './components/GlobalSearch'; // Import Global Search
-import clarity from '@microsoft/clarity';
 import { useSessionTimeout } from './hooks/useSessionTimeout';
 import html2canvas from 'html2canvas';
 import { campaignService } from './services/api';
+import { useClarity } from './hooks/useClarity';
 
 // Import New Menu Components
 import { DashboardMenu } from './components/Menu/DashboardMenu';
@@ -164,23 +165,8 @@ export const App = () => {
     }
   });
 
-  // Update Clarity User Info on Authentication
-  useEffect(() => {
-    if (isAuthenticated && userProfile?.email && clarity && clarity.identify) {
-      // Identify user in Clarity
-      clarity.identify(
-        userProfile.email, // Identifier
-        undefined, // Custom ID (Session-based)
-        `${userProfile.firstName} ${userProfile.lastName}` // Friendly Name
-      );
-
-      // Set additional tags for filtering
-      if (clarity.setTag) {
-        clarity.setTag('user_role', userProfile.role || 'Unknown');
-        clarity.setTag('active_client', userProfile.activeClient || 'Unknown');
-      }
-    }
-  }, [isAuthenticated, userProfile]);
+  // Initialize Analytics (Microsoft Clarity)
+  useClarity(isAuthenticated, userProfile);
 
   // Global Keyboard Listener for Search (Cmd+K / Ctrl+K)
   useEffect(() => {
@@ -663,6 +649,7 @@ export const App = () => {
                     <Route path="/notifications" element={<Notifications onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />} />
                     <Route path="/talent-chat/*" element={<TalentChat />} />
                     <Route path="/support" element={<SupportPage />} />
+                    <Route path="/auth/google/callback" element={<GoogleCallback />} />
                   </Routes>
                 </React.Suspense>
               </div>

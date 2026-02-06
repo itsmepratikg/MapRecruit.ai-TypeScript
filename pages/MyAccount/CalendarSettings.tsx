@@ -4,9 +4,13 @@ import {
     Calendar, Clock, Globe, Save, Edit2, Plus, Trash2,
     Copy, CheckCircle, AlertCircle, X, ChevronDown, Link, RefreshCw, LogOut, Check
 } from '../../components/Icons';
+import { CalendarView } from './CalendarView';
 import { useToast } from '../../components/Toast';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { userService } from '../../services/api';
+import { integrationService } from '../../services/integrationService';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 // --- Types ---
 
@@ -277,13 +281,15 @@ const CopyScheduleModal = ({ sourceDay, days, onCopy, onClose }: any) => {
     );
 };
 
-export const CalendarSettings = ({ userOverride }: { userOverride?: any }) => {
+// Added mode prop to support Modal usage
+export const CalendarSettings = ({ userOverride, mode = 'page', onClose }: { userOverride?: any, mode?: 'page' | 'modal', onClose?: () => void }) => {
     const { addToast } = useToast();
     const { userProfile } = useUserProfile();
 
     // Determine the active user context: either the override (admin edit) or current logged in user
     const activeUser = userOverride || userProfile;
 
+    const [activeTab, setActiveTab] = useState<'settings' | 'events'>('settings');
     const [isEditing, setIsEditing] = useState(false);
     const [copyModalData, setCopyModalData] = useState<{ sourceDayIndex: number, sourceDayName: string } | null>(null);
 
@@ -362,6 +368,7 @@ export const CalendarSettings = ({ userOverride }: { userOverride?: any }) => {
     const handleCancel = () => {
         setIsEditing(false);
         addToast("Changes discarded", "info");
+        if (onClose) onClose();
     };
 
     const toggleWeekendDay = (day: string) => {
@@ -464,34 +471,64 @@ export const CalendarSettings = ({ userOverride }: { userOverride?: any }) => {
     // Calendar Sync Handlers
     const handleConnectCalendar = (provider: 'Google' | 'Outlook') => {
         if (!isEditing) return;
-        addToast(`Connecting to ${provider}...`, 'info');
-        // Simulate API connection
-        setTimeout(() => {
-            const newCalendar: ConnectedCalendar = {
-                id: Date.now().toString(),
-                provider,
-                email: provider === 'Google' ? 'pratik.gaurav@gmail.com' : 'pratik.gaurav@outlook.com',
-                status: 'Connected',
-                lastSynced: 'Just now'
-            };
-            setConnectedCalendars(prev => [...prev, newCalendar]);
-            addToast(`${provider} Calendar connected successfully`, 'success');
-        }, 1500);
+
+        if (provider === 'Google') {
+            integrationService.connectGoogle();
+        } else {
+            addToast("Outlook integration coming soon", "info");
+        }
     };
 
-    const handleDisconnectCalendar = (id: string) => {
+    const handleDisconnectCalendar = async (id: string, provider: 'Google' | 'Outlook') => {
         if (!isEditing) return;
-        setConnectedCalendars(prev => prev.filter(c => c.id !== id));
-        addToast("Calendar disconnected", "info");
+        try {
+            await integrationService.disconnect(provider.toLowerCase() as any);
+            setConnectedCalendars(prev => prev.filter(c => c.id !== id));
+            addToast("Calendar disconnected", "success");
+        } catch (error) {
+            addToast("Failed to disconnect", "error");
+        }
     };
 
-    const handleSyncCalendar = (id: string) => {
+    const handleSyncCalendar = async (id: string) => {
         setConnectedCalendars(prev => prev.map(c => c.id === id ? { ...c, status: 'Syncing' } : c));
-        setTimeout(() => {
+        try {
+            const result = await integrationService.syncCalendar();
             setConnectedCalendars(prev => prev.map(c => c.id === id ? { ...c, status: 'Connected', lastSynced: 'Just now' } : c));
-            addToast("Calendar synced successfully", "success");
-        }, 2000);
+            addToast(`Synced ${result.count} events successfully`, "success");
+        } catch (error) {
+            setConnectedCalendars(prev => prev.map(c => c.id === id ? { ...c, status: 'Error' } : c));
+            addToast("Failed to sync calendar", "error");
+        }
     };
+
+    // Load status on mount
+    useEffect(() => {
+        const loadStatus = async () => {
+            const status = await integrationService.getStatus();
+            const cals: ConnectedCalendar[] = [];
+            if (status.google.connected) {
+                cals.push({
+                    id: 'google-1',
+                    provider: 'Google',
+                    email: status.google.email || 'Connected Account',
+                    status: 'Connected',
+                    lastSynced: status.google.lastSynced || 'Unknown'
+                });
+            }
+            if (status.microsoft.connected) {
+                cals.push({
+                    id: 'ms-1',
+                    provider: 'Outlook',
+                    email: status.microsoft.email || 'Connected Account',
+                    status: 'Connected',
+                    lastSynced: 'Unknown'
+                });
+            }
+            setConnectedCalendars(cals);
+        };
+        loadStatus();
+    }, []);
 
     return (
         <div className="animate-in fade-in duration-300 pb-12">
@@ -507,401 +544,432 @@ export const CalendarSettings = ({ userOverride }: { userOverride?: any }) => {
 
             {/* Full Width Sticky Header */}
             <div className="sticky top-0 z-20 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 px-8 lg:px-12 py-6 transition-all shadow-sm">
-                <div className="max-w-5xl mx-auto flex justify-between items-center">
-                    <div>
-                        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                            <Calendar size={20} className="text-emerald-500" /> Calendar Settings
-                        </h2>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Configure availability, time zones, and calendar integrations.</p>
-                    </div>
-                    <div className="flex gap-3">
-                        {isEditing ? (
-                            <>
-                                <button onClick={handleCancel} className="px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
-                                <button onClick={handleSave} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors shadow-sm flex items-center gap-2">
-                                    <Save size={16} /> Save Changes
-                                </button>
-                            </>
-                        ) : (
-                            <button onClick={() => setIsEditing(true)} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors shadow-sm flex items-center gap-2">
-                                <Edit2 size={16} /> Edit
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Padded Content Body */}
-            <div className="px-8 lg:px-12 pt-8">
-                <div className="max-w-5xl mx-auto space-y-8">
-
-                    {/* 0. Calendar Synchronization */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                        <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
-                            <Link size={16} className="text-slate-400" /> Calendar Integration
-                        </h3>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <button
-                                onClick={() => handleConnectCalendar('Google')}
-                                disabled={!isEditing || connectedCalendars.some(c => c.provider === 'Google')}
-                                className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${connectedCalendars.some(c => c.provider === 'Google') ? 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-60 cursor-default' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-sm'}`}
-                            >
-                                <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-xl font-bold text-blue-600 shadow-sm">G</div>
-                                <div className="text-left">
-                                    <span className="block font-bold text-slate-700 dark:text-slate-200 text-sm">Google Calendar</span>
-                                    <span className="text-xs text-slate-500 dark:text-slate-400">{connectedCalendars.some(c => c.provider === 'Google') ? 'Connected' : 'Connect Account'}</span>
-                                </div>
-                            </button>
-
-                            <button
-                                onClick={() => handleConnectCalendar('Outlook')}
-                                disabled={!isEditing || connectedCalendars.some(c => c.provider === 'Outlook')}
-                                className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${connectedCalendars.some(c => c.provider === 'Outlook') ? 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-60 cursor-default' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-sm'}`}
-                            >
-                                <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
-                                    <div className="grid grid-cols-2 gap-0.5 w-4 h-4">
-                                        <div className="bg-orange-500 w-1.5 h-1.5"></div>
-                                        <div className="bg-green-500 w-1.5 h-1.5"></div>
-                                        <div className="bg-blue-500 w-1.5 h-1.5"></div>
-                                        <div className="bg-yellow-500 w-1.5 h-1.5"></div>
-                                    </div>
-                                </div>
-                                <div className="text-left">
-                                    <span className="block font-bold text-slate-700 dark:text-slate-200 text-sm">Outlook Calendar</span>
-                                    <span className="text-xs text-slate-500 dark:text-slate-400">{connectedCalendars.some(c => c.provider === 'Outlook') ? 'Connected' : 'Connect Account'}</span>
-                                </div>
-                            </button>
+                <div className="max-w-5xl mx-auto flex flex-col gap-6">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                                <Calendar size={20} className="text-emerald-500" /> Calendar Settings
+                            </h2>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Configure availability, time zones, and calendar integrations.</p>
                         </div>
-
-                        {connectedCalendars.length > 0 && (
-                            <div className="border-t border-slate-100 dark:border-slate-700 pt-4">
-                                <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-3">Connected Accounts</h4>
-                                <div className="space-y-2">
-                                    {connectedCalendars.map(cal => (
-                                        <div key={cal.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-700">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-2 h-2 rounded-full ${cal.status === 'Connected' ? 'bg-emerald-500' : cal.status === 'Syncing' ? 'bg-blue-500 animate-pulse' : 'bg-red-500'}`}></div>
-                                                <div>
-                                                    <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{cal.provider} ({cal.email})</p>
-                                                    <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                                                        {cal.status === 'Syncing' ? 'Syncing...' : `Last synced: ${cal.lastSynced}`}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => handleSyncCalendar(cal.id)}
-                                                    className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors"
-                                                    title="Sync Now"
-                                                >
-                                                    <RefreshCw size={14} className={cal.status === 'Syncing' ? 'animate-spin' : ''} />
-                                                </button>
-                                                {isEditing && (
-                                                    <button
-                                                        onClick={() => handleDisconnectCalendar(cal.id)}
-                                                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
-                                                        title="Disconnect"
-                                                    >
-                                                        <LogOut size={14} />
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* 1. General Preferences */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                        <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
-                            <Globe size={16} className="text-slate-400" /> General Preferences
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Date Format</label>
-                                <select
-                                    className="w-full p-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200"
-                                    value={config.dateFormat}
-                                    onChange={(e) => setConfig({ ...config, dateFormat: e.target.value })}
-                                    disabled={!isEditing}
-                                >
-                                    {DATE_FORMATS.map(f => <option key={f} value={f}>{f}</option>)}
-                                </select>
-                            </div>
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Time Format</label>
-                                <div className="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-lg">
-                                    {['12h', '24h'].map(fmt => (
-                                        <button
-                                            key={fmt}
-                                            onClick={() => isEditing && setConfig({ ...config, timeFormat: fmt as any })}
-                                            className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all ${config.timeFormat === fmt ? 'bg-white dark:bg-slate-600 shadow-sm text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}
-                                            disabled={!isEditing}
-                                        >
-                                            {fmt.toUpperCase()}
+                        <div className="flex gap-3">
+                            {activeTab === 'settings' && (
+                                isEditing ? (
+                                    <>
+                                        <button onClick={handleCancel} className="px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                                        <button onClick={handleSave} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors shadow-sm flex items-center gap-2">
+                                            <Save size={16} /> Save Changes
                                         </button>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Time Zone</label>
-                                <select
-                                    className="w-full p-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200"
-                                    value={config.timeZone}
-                                    onChange={(e) => setConfig({ ...config, timeZone: e.target.value })}
-                                    disabled={!isEditing}
-                                >
-                                    {TIME_ZONES.map(z => <option key={z} value={z}>{z}</option>)}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* 2. Scheduling Rules & Weekends */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                        <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
-                            <CheckCircle size={16} className="text-slate-400" /> Scheduling Rules
-                        </h3>
-
-                        <div className="space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Define Weekends</label>
-                                <div className="flex flex-wrap gap-2">
-                                    {DAYS_OF_WEEK.map(day => {
-                                        const isWeekend = config.weekends.includes(day);
-                                        return (
-                                            <button
-                                                key={day}
-                                                onClick={() => isEditing && toggleWeekendDay(day)}
-                                                disabled={!isEditing}
-                                                className={`px-4 py-2 rounded-lg text-xs font-bold border transition-all ${isWeekend ? 'bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-800 dark:border-slate-100' : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
-                                            >
-                                                {day}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col sm:flex-row gap-6 pt-4 border-t border-slate-100 dark:border-slate-700">
-                                <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all flex-1 ${config.excludeWeekends ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600'}`}>
-                                    <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${config.excludeWeekends ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300'}`}>
-                                        {config.excludeWeekends && <CheckCircle size={14} fill="currentColor" />}
-                                    </div>
-                                    <input type="checkbox" className="hidden" checked={config.excludeWeekends} onChange={(e) => isEditing && setConfig({ ...config, excludeWeekends: e.target.checked })} disabled={!isEditing} />
-                                    <div>
-                                        <span className="block text-sm font-bold text-slate-800 dark:text-slate-200">Exclude Weekends</span>
-                                        <span className="text-xs text-slate-500 dark:text-slate-400">Do not schedule meetings on defined weekends.</span>
-                                    </div>
-                                </label>
-
-                                <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all flex-1 ${config.excludeHolidays ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600'}`}>
-                                    <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${config.excludeHolidays ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300'}`}>
-                                        {config.excludeHolidays && <CheckCircle size={14} fill="currentColor" />}
-                                    </div>
-                                    <input type="checkbox" className="hidden" checked={config.excludeHolidays} onChange={(e) => isEditing && setConfig({ ...config, excludeHolidays: e.target.checked })} disabled={!isEditing} />
-                                    <div>
-                                        <span className="block text-sm font-bold text-slate-800 dark:text-slate-200">Exclude Holidays</span>
-                                        <span className="text-xs text-slate-500 dark:text-slate-400">Block calendar on holidays and personal leaves.</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* 3. Weekly Hours */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                        <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
-                            <Clock size={16} className="text-slate-400" /> Weekly Hours
-                        </h3>
-
-                        <div className="space-y-4">
-                            {config.weeklySchedule.map((day, dayIndex) => (
-                                <div key={day.day} className={`flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg border transition-colors ${day.isWorking ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700' : 'bg-slate-50 dark:bg-slate-900/50 border-transparent'}`}>
-
-                                    {/* Day Toggle */}
-                                    <div className="w-32 pt-2 flex items-center gap-3">
-                                        <label className="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" className="sr-only peer" checked={day.isWorking} onChange={() => isEditing && toggleDayWorking(dayIndex)} disabled={!isEditing} />
-                                            <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
-                                        </label>
-                                        <span className={`text-sm font-bold ${day.isWorking ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}`}>{day.day}</span>
-                                    </div>
-
-                                    {/* Slots */}
-                                    <div className="flex-1 space-y-2">
-                                        {day.isWorking ? (
-                                            <>
-                                                {day.slots.map((slot) => (
-                                                    <div key={slot.id} className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-200">
-                                                        <TimePicker
-                                                            value={slot.start}
-                                                            onChange={(val) => updateTimeSlot(dayIndex, slot.id, 'start', val)}
-                                                            format={config.timeFormat}
-                                                            disabled={!isEditing}
-                                                        />
-                                                        <span className="text-slate-400">-</span>
-                                                        <TimePicker
-                                                            value={slot.end}
-                                                            onChange={(val) => updateTimeSlot(dayIndex, slot.id, 'end', val)}
-                                                            format={config.timeFormat}
-                                                            disabled={!isEditing}
-                                                        />
-                                                        {isEditing && (
-                                                            <button onClick={() => removeTimeSlot(dayIndex, slot.id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors ml-2">
-                                                                <Trash2 size={16} />
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                ))}
-                                                {isEditing && (
-                                                    <div className="flex gap-4 mt-2">
-                                                        <button onClick={() => addTimeSlot(dayIndex)} className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
-                                                            <Plus size={12} /> Add Hours
-                                                        </button>
-                                                        {day.slots.length > 0 && (
-                                                            <button
-                                                                onClick={() => setCopyModalData({ sourceDayIndex: dayIndex, sourceDayName: day.day })}
-                                                                className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                                                            >
-                                                                <Copy size={12} /> Copy to...
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </>
-                                        ) : (
-                                            <span className="text-sm text-slate-400 italic pt-2 block">Unavailable</span>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* 4. Holidays & Breaks */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Global Breaks */}
-                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                            <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-                                <Clock size={16} className="text-slate-400" /> Daily Breaks
-                            </h3>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Recurring breaks applied to all working days (e.g. Lunch).</p>
-
-                            <div className="space-y-3">
-                                {config.breaks.map((brk, idx) => (
-                                    <div key={brk.id} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg border border-slate-100 dark:border-slate-700">
-                                        <span className="text-sm font-bold text-slate-600 dark:text-slate-300 w-16">Break {idx + 1}</span>
-                                        <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">
-                                            <span className="text-xs text-slate-700 dark:text-slate-200">{formatTimeDisplay(brk.start, config.timeFormat)}</span>
-                                            <span className="text-slate-300">-</span>
-                                            <span className="text-xs text-slate-700 dark:text-slate-200">{formatTimeDisplay(brk.end, config.timeFormat)}</span>
-                                        </div>
-                                        {isEditing && (
-                                            <button
-                                                onClick={() => removeBreak(brk.id)}
-                                                className="ml-auto text-slate-400 hover:text-red-500"
-                                            >
-                                                <X size={16} />
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
-                                {isEditing && (
-                                    <div className="flex gap-2 items-center p-3 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg">
-                                        <TimePicker
-                                            value={newBreak.start}
-                                            onChange={(v) => setNewBreak({ ...newBreak, start: v })}
-                                            format={config.timeFormat}
-                                            disabled={false}
-                                        />
-                                        <span className="text-slate-400">-</span>
-                                        <TimePicker
-                                            value={newBreak.end}
-                                            onChange={(v) => setNewBreak({ ...newBreak, end: v })}
-                                            format={config.timeFormat}
-                                            disabled={false}
-                                        />
-                                        <button onClick={addBreak} className="ml-auto text-xs font-bold text-emerald-600 dark:text-emerald-400">Add</button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Holidays */}
-                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                            <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-                                <AlertCircle size={16} className="text-slate-400" /> Holidays & Leaves
-                            </h3>
-
-                            <div className="space-y-2 mb-4 max-h-48 overflow-y-auto custom-scrollbar">
-                                {config.holidays.map(h => (
-                                    <div key={h.id} className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg hover:shadow-sm transition-shadow">
-                                        <div>
-                                            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{h.name}</p>
-                                            <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                                                {formatDateDisplay(h.date, config.dateFormat)}
-                                                <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-bold ${h.type === 'Holiday' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'}`}>{h.type}</span>
-                                            </p>
-                                        </div>
-                                        {isEditing && (
-                                            <button onClick={() => removeHoliday(h.id)} className="text-slate-300 hover:text-red-500 transition-colors">
-                                                <Trash2 size={16} />
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-
-                            {isEditing && (
-                                <div className="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg border border-slate-200 dark:border-slate-700">
-                                    <input
-                                        type="text"
-                                        placeholder="Holiday Name (e.g. Out of Office)"
-                                        className="w-full text-sm p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-800 dark:text-slate-200 outline-none focus:border-emerald-500"
-                                        value={newHoliday.name}
-                                        onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
-                                    />
-                                    <div className="flex gap-2">
-                                        <div className="flex-1 relative">
-                                            <input
-                                                type="date"
-                                                className="w-full text-sm p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-800 dark:text-slate-200 outline-none focus:border-emerald-500"
-                                                value={newHoliday.date}
-                                                onChange={(e) => setNewHoliday({ ...newHoliday, date: e.target.value })}
-                                            />
-                                            {/* Helper hint for format, although HTML date input uses system locale for display */}
-                                            <div className="text-[10px] text-slate-400 mt-1 absolute right-0 -bottom-4">
-                                                Format: {config.dateFormat}
-                                            </div>
-                                        </div>
-                                        <select
-                                            className="flex-1 text-sm p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-800 dark:text-slate-200 outline-none focus:border-emerald-500"
-                                            value={newHoliday.type}
-                                            onChange={(e) => setNewHoliday({ ...newHoliday, type: e.target.value as any })}
-                                        >
-                                            <option value="Holiday">Holiday</option>
-                                            <option value="Medical">Medical</option>
-                                            <option value="Personal">Personal</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <button
-                                        onClick={addHoliday}
-                                        disabled={!newHoliday.name || !newHoliday.date}
-                                        className="w-full py-2 bg-slate-800 dark:bg-slate-700 text-white rounded text-xs font-bold hover:bg-slate-900 dark:hover:bg-slate-600 disabled:opacity-50 mt-2"
-                                    >
-                                        Add Date
+                                    </>
+                                ) : (
+                                    <button onClick={() => setIsEditing(true)} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors shadow-sm flex items-center gap-2">
+                                        <Edit2 size={16} /> Edit
                                     </button>
-                                </div>
+                                )
                             )}
                         </div>
                     </div>
 
+                    {/* Tabs - Only show when NOT in modal mode */}
+                    {mode !== 'modal' && (
+                        <div className="flex border-b border-slate-200 dark:border-slate-700">
+                            <button
+                                onClick={() => setActiveTab('settings')}
+                                className={`pb-3 px-4 text-sm font-bold border-b-2 transition-colors ${activeTab === 'settings' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                            >
+                                Configuration
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('events')}
+                                className={`pb-3 px-4 text-sm font-bold border-b-2 transition-colors ${activeTab === 'events' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                            >
+                                View Calendar
+                            </button>
+                        </div>
+                    )}
                 </div>
+            </div>
+
+            {/* Padded Content Body */}
+            <div className={`px-4 lg:px-8 pt-6 ${activeTab === 'events' ? 'w-full' : 'max-w-5xl mx-auto'}`}>
+                {activeTab === 'events' ? (
+                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 h-[calc(100vh-140px)]">
+                        <CalendarView />
+                    </div>
+                ) : (
+                    <div className="max-w-5xl mx-auto">
+                        {/* Always showing settings content now */}
+                        <div className="space-y-8">
+
+                            {/* 0. Calendar Synchronization */}
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                                <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                    <Link size={16} className="text-slate-400" /> Calendar Integration
+                                </h3>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <button
+                                        onClick={() => handleConnectCalendar('Google')}
+                                        disabled={!isEditing || connectedCalendars.some(c => c.provider === 'Google')}
+                                        className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${connectedCalendars.some(c => c.provider === 'Google') ? 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-60 cursor-default' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-sm'}`}
+                                    >
+                                        <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-xl font-bold text-blue-600 shadow-sm">G</div>
+                                        <div className="text-left">
+                                            <span className="block font-bold text-slate-700 dark:text-slate-200 text-sm">Google Calendar</span>
+                                            <span className="text-xs text-slate-500 dark:text-slate-400">{connectedCalendars.some(c => c.provider === 'Google') ? 'Connected' : 'Connect Account'}</span>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        onClick={() => handleConnectCalendar('Outlook')}
+                                        disabled={!isEditing || connectedCalendars.some(c => c.provider === 'Outlook')}
+                                        className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${connectedCalendars.some(c => c.provider === 'Outlook') ? 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-60 cursor-default' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-sm'}`}
+                                    >
+                                        <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+                                            <div className="grid grid-cols-2 gap-0.5 w-4 h-4">
+                                                <div className="bg-orange-500 w-1.5 h-1.5"></div>
+                                                <div className="bg-green-500 w-1.5 h-1.5"></div>
+                                                <div className="bg-blue-500 w-1.5 h-1.5"></div>
+                                                <div className="bg-yellow-500 w-1.5 h-1.5"></div>
+                                            </div>
+                                        </div>
+                                        <div className="text-left">
+                                            <span className="block font-bold text-slate-700 dark:text-slate-200 text-sm">Outlook Calendar</span>
+                                            <span className="text-xs text-slate-500 dark:text-slate-400">{connectedCalendars.some(c => c.provider === 'Outlook') ? 'Connected' : 'Connect Account'}</span>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                {connectedCalendars.length > 0 && (
+                                    <div className="border-t border-slate-100 dark:border-slate-700 pt-4">
+                                        <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-3">Connected Accounts</h4>
+                                        <div className="space-y-2">
+                                            {connectedCalendars.map(cal => (
+                                                <div key={cal.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`w-2 h-2 rounded-full ${cal.status === 'Connected' ? 'bg-emerald-500' : cal.status === 'Syncing' ? 'bg-blue-500 animate-pulse' : 'bg-red-500'}`}></div>
+                                                        <div>
+                                                            <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{cal.provider} ({cal.email})</p>
+                                                            <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                                                {cal.status === 'Syncing' ? 'Syncing...' : `Last synced: ${cal.lastSynced}`}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex gap-2">
+                                                        <button
+                                                            onClick={() => handleSyncCalendar(cal.id)}
+                                                            className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors"
+                                                            title="Sync Now"
+                                                        >
+                                                            <RefreshCw size={14} className={cal.status === 'Syncing' ? 'animate-spin' : ''} />
+                                                        </button>
+                                                        {isEditing && (
+                                                            <button
+                                                                onClick={() => handleDisconnectCalendar(cal.id, cal.provider)}
+                                                                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+                                                                title="Disconnect"
+                                                            >
+                                                                <LogOut size={14} />
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* 1. General Preferences */}
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                                <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                    <Globe size={16} className="text-slate-400" /> General Preferences
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Date Format</label>
+                                        <select
+                                            className="w-full p-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200"
+                                            value={config.dateFormat}
+                                            onChange={(e) => setConfig({ ...config, dateFormat: e.target.value })}
+                                            disabled={!isEditing}
+                                        >
+                                            {DATE_FORMATS.map(f => <option key={f} value={f}>{f}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Time Format</label>
+                                        <div className="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-lg">
+                                            {['12h', '24h'].map(fmt => (
+                                                <button
+                                                    key={fmt}
+                                                    onClick={() => isEditing && setConfig({ ...config, timeFormat: fmt as any })}
+                                                    className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all ${config.timeFormat === fmt ? 'bg-white dark:bg-slate-600 shadow-sm text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}
+                                                    disabled={!isEditing}
+                                                >
+                                                    {fmt.toUpperCase()}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Time Zone</label>
+                                        <select
+                                            className="w-full p-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 outline-none dark:text-slate-200"
+                                            value={config.timeZone}
+                                            onChange={(e) => setConfig({ ...config, timeZone: e.target.value })}
+                                            disabled={!isEditing}
+                                        >
+                                            {TIME_ZONES.map(z => <option key={z} value={z}>{z}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 2. Scheduling Rules & Weekends */}
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                                <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                    <CheckCircle size={16} className="text-slate-400" /> Scheduling Rules
+                                </h3>
+
+                                <div className="space-y-6">
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Define Weekends</label>
+                                        <div className="flex flex-wrap gap-2">
+                                            {DAYS_OF_WEEK.map(day => {
+                                                const isWeekend = config.weekends.includes(day);
+                                                return (
+                                                    <button
+                                                        key={day}
+                                                        onClick={() => isEditing && toggleWeekendDay(day)}
+                                                        disabled={!isEditing}
+                                                        className={`px-4 py-2 rounded-lg text-xs font-bold border transition-all ${isWeekend ? 'bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-800 dark:border-slate-100' : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                                                    >
+                                                        {day}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col sm:flex-row gap-6 pt-4 border-t border-slate-100 dark:border-slate-700">
+                                        <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all flex-1 ${config.excludeWeekends ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600'}`}>
+                                            <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${config.excludeWeekends ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300'}`}>
+                                                {config.excludeWeekends && <CheckCircle size={14} fill="currentColor" />}
+                                            </div>
+                                            <input type="checkbox" className="hidden" checked={config.excludeWeekends} onChange={(e) => isEditing && setConfig({ ...config, excludeWeekends: e.target.checked })} disabled={!isEditing} />
+                                            <div>
+                                                <span className="block text-sm font-bold text-slate-800 dark:text-slate-200">Exclude Weekends</span>
+                                                <span className="text-xs text-slate-500 dark:text-slate-400">Do not schedule meetings on defined weekends.</span>
+                                            </div>
+                                        </label>
+
+                                        <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all flex-1 ${config.excludeHolidays ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600'}`}>
+                                            <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${config.excludeHolidays ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300'}`}>
+                                                {config.excludeHolidays && <CheckCircle size={14} fill="currentColor" />}
+                                            </div>
+                                            <input type="checkbox" className="hidden" checked={config.excludeHolidays} onChange={(e) => isEditing && setConfig({ ...config, excludeHolidays: e.target.checked })} disabled={!isEditing} />
+                                            <div>
+                                                <span className="block text-sm font-bold text-slate-800 dark:text-slate-200">Exclude Holidays</span>
+                                                <span className="text-xs text-slate-500 dark:text-slate-400">Block calendar on holidays and personal leaves.</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 3. Weekly Hours */}
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                                <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                    <Clock size={16} className="text-slate-400" /> Weekly Hours
+                                </h3>
+
+                                <div className="space-y-4">
+                                    {config.weeklySchedule.map((day, dayIndex) => (
+                                        <div key={day.day} className={`flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg border transition-colors ${day.isWorking ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700' : 'bg-slate-50 dark:bg-slate-900/50 border-transparent'}`}>
+
+                                            {/* Day Toggle */}
+                                            <div className="w-32 pt-2 flex items-center gap-3">
+                                                <label className="relative inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" className="sr-only peer" checked={day.isWorking} onChange={() => isEditing && toggleDayWorking(dayIndex)} disabled={!isEditing} />
+                                                    <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                                                </label>
+                                                <span className={`text-sm font-bold ${day.isWorking ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}`}>{day.day}</span>
+                                            </div>
+
+                                            {/* Slots */}
+                                            <div className="flex-1 space-y-2">
+                                                {day.isWorking ? (
+                                                    <>
+                                                        {day.slots.map((slot) => (
+                                                            <div key={slot.id} className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-200">
+                                                                <TimePicker
+                                                                    value={slot.start}
+                                                                    onChange={(val) => updateTimeSlot(dayIndex, slot.id, 'start', val)}
+                                                                    format={config.timeFormat}
+                                                                    disabled={!isEditing}
+                                                                />
+                                                                <span className="text-slate-400">-</span>
+                                                                <TimePicker
+                                                                    value={slot.end}
+                                                                    onChange={(val) => updateTimeSlot(dayIndex, slot.id, 'end', val)}
+                                                                    format={config.timeFormat}
+                                                                    disabled={!isEditing}
+                                                                />
+                                                                {isEditing && (
+                                                                    <button onClick={() => removeTimeSlot(dayIndex, slot.id)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors ml-2">
+                                                                        <Trash2 size={16} />
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                        {isEditing && (
+                                                            <div className="flex gap-4 mt-2">
+                                                                <button onClick={() => addTimeSlot(dayIndex)} className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+                                                                    <Plus size={12} /> Add Hours
+                                                                </button>
+                                                                {day.slots.length > 0 && (
+                                                                    <button
+                                                                        onClick={() => setCopyModalData({ sourceDayIndex: dayIndex, sourceDayName: day.day })}
+                                                                        className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                                                                    >
+                                                                        <Copy size={12} /> Copy to...
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <span className="text-sm text-slate-400 italic pt-2 block">Unavailable</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* 4. Holidays & Breaks */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {/* Global Breaks */}
+                                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                                    <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                        <Clock size={16} className="text-slate-400" /> Daily Breaks
+                                    </h3>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Recurring breaks applied to all working days (e.g. Lunch).</p>
+
+                                    <div className="space-y-3">
+                                        {config.breaks.map((brk, idx) => (
+                                            <div key={brk.id} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                <span className="text-sm font-bold text-slate-600 dark:text-slate-300 w-16">Break {idx + 1}</span>
+                                                <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-600">
+                                                    <span className="text-xs text-slate-700 dark:text-slate-200">{formatTimeDisplay(brk.start, config.timeFormat)}</span>
+                                                    <span className="text-slate-300">-</span>
+                                                    <span className="text-xs text-slate-700 dark:text-slate-200">{formatTimeDisplay(brk.end, config.timeFormat)}</span>
+                                                </div>
+                                                {isEditing && (
+                                                    <button
+                                                        onClick={() => removeBreak(brk.id)}
+                                                        className="ml-auto text-slate-400 hover:text-red-500"
+                                                    >
+                                                        <X size={16} />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                        {isEditing && (
+                                            <div className="flex gap-2 items-center p-3 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg">
+                                                <TimePicker
+                                                    value={newBreak.start}
+                                                    onChange={(v) => setNewBreak({ ...newBreak, start: v })}
+                                                    format={config.timeFormat}
+                                                    disabled={false}
+                                                />
+                                                <span className="text-slate-400">-</span>
+                                                <TimePicker
+                                                    value={newBreak.end}
+                                                    onChange={(v) => setNewBreak({ ...newBreak, end: v })}
+                                                    format={config.timeFormat}
+                                                    disabled={false}
+                                                />
+                                                <button onClick={addBreak} className="ml-auto text-xs font-bold text-emerald-600 dark:text-emerald-400">Add</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Holidays */}
+                                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                                    <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                        <AlertCircle size={16} className="text-slate-400" /> Holidays & Leaves
+                                    </h3>
+
+                                    <div className="space-y-2 mb-4 max-h-48 overflow-y-auto custom-scrollbar">
+                                        {config.holidays.map(h => (
+                                            <div key={h.id} className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg hover:shadow-sm transition-shadow">
+                                                <div>
+                                                    <p className="text-sm font-bold text-slate-700 dark:text-slate-200">{h.name}</p>
+                                                    <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                                                        {formatDateDisplay(h.date, config.dateFormat)}
+                                                        <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-bold ${h.type === 'Holiday' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'}`}>{h.type}</span>
+                                                    </p>
+                                                </div>
+                                                {isEditing && (
+                                                    <button onClick={() => removeHoliday(h.id)} className="text-slate-300 hover:text-red-500 transition-colors">
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {isEditing && (
+                                        <div className="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg border border-slate-200 dark:border-slate-700">
+                                            <input
+                                                type="text"
+                                                placeholder="Holiday Name (e.g. Out of Office)"
+                                                className="w-full text-sm p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-800 dark:text-slate-200 outline-none focus:border-emerald-500"
+                                                value={newHoliday.name}
+                                                onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
+                                            />
+                                            <div className="flex gap-2">
+                                                <div className="flex-1 relative">
+                                                    <input
+                                                        type="date"
+                                                        className="w-full text-sm p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-800 dark:text-slate-200 outline-none focus:border-emerald-500"
+                                                        value={newHoliday.date}
+                                                        onChange={(e) => setNewHoliday({ ...newHoliday, date: e.target.value })}
+                                                    />
+                                                    {/* Helper hint for format, although HTML date input uses system locale for display */}
+                                                    <div className="text-[10px] text-slate-400 mt-1 absolute right-0 -bottom-4">
+                                                        Format: {config.dateFormat}
+                                                    </div>
+                                                </div>
+                                                <select
+                                                    className="flex-1 text-sm p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-800 dark:text-slate-200 outline-none focus:border-emerald-500"
+                                                    value={newHoliday.type}
+                                                    onChange={(e) => setNewHoliday({ ...newHoliday, type: e.target.value as any })}
+                                                >
+                                                    <option value="Holiday">Holiday</option>
+                                                    <option value="Medical">Medical</option>
+                                                    <option value="Personal">Personal</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <button
+                                                onClick={addHoliday}
+                                                disabled={!newHoliday.name || !newHoliday.date}
+                                                className="w-full py-2 bg-slate-800 dark:bg-slate-700 text-white rounded text-xs font-bold hover:bg-slate-900 dark:hover:bg-slate-600 disabled:opacity-50 mt-2"
+                                            >
+                                                Add Date
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

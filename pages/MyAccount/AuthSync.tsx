@@ -7,6 +7,7 @@ import {
 import { useToast } from '../../components/Toast';
 import { PasskeySettings } from './PasskeySettings';
 import { useUserProfile } from '../../hooks/useUserProfile';
+import { integrationService } from '../../services/integrationService';
 
 // --- Mock Data for Global Defaults ---
 const SECURITY_POLICIES = {
@@ -110,6 +111,22 @@ export const AuthSync = () => {
   // Check for existing passkey in storage on load
   // Sync with Real User Profile for Passkey Status
   const { userProfile } = useUserProfile();
+
+  useEffect(() => {
+    const fetchIntegrations = async () => {
+      try {
+        const status = await integrationService.getStatus();
+        setSsoStatus(prev => ({
+          ...prev,
+          google: status.google.connected,
+          microsoft: status.microsoft.connected
+        }));
+      } catch (error) {
+        console.error("Failed to sync integration status", error);
+      }
+    };
+    fetchIntegrations();
+  }, []);
 
   useEffect(() => {
     // Check if user has ANY passkeys registered in the profile object
@@ -276,14 +293,13 @@ export const AuthSync = () => {
     addToast("Changes discarded", "info");
   };
 
-  const toggleSSO = (provider: 'google' | 'microsoft' | 'passkey') => {
+  const toggleSSO = async (provider: 'google' | 'microsoft' | 'passkey') => {
     if (!isEditing) return;
 
     if (provider === 'passkey') {
       if (!ssoStatus.passkey) {
         // Enabling Passkey triggers the manager modal
         setShowPasskeyManager(true);
-        // Do NOT preemptively set true. Wait for user to actually register one.
       } else {
         // Disabling Passkey (Immediate)
         setSsoStatus(prev => ({ ...prev, passkey: false }));
@@ -293,9 +309,24 @@ export const AuthSync = () => {
       return;
     }
 
-    const newState = !ssoStatus[provider];
-    setSsoStatus(prev => ({ ...prev, [provider]: newState }));
-    addToast(`${provider === 'google' ? 'Google' : 'Microsoft'} Workspace ${newState ? 'connected' : 'disconnected'}.`, newState ? "success" : "info");
+    // Handle OAuth Providers
+    if (!ssoStatus[provider]) {
+      // Connect Logic
+      if (provider === 'google') {
+        integrationService.connectGoogle();
+      } else if (provider === 'microsoft') {
+        integrationService.connectMicrosoft();
+      }
+    } else {
+      // Disconnect Logic
+      try {
+        await integrationService.disconnect(provider);
+        setSsoStatus(prev => ({ ...prev, [provider]: false }));
+        addToast(`${provider === 'google' ? 'Google' : 'Microsoft'} disconnected`, "success");
+      } catch (error) {
+        addToast("Failed to disconnect", "error");
+      }
+    }
   };
 
   const renderRequirement = (isValid: boolean, label: string) => (

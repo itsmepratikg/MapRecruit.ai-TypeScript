@@ -47,6 +47,18 @@ export const authService = {
             throw error;
         }
     },
+    googleLogin: async (credential) => {
+        try {
+            const response = await api.post('/auth/google', { credential });
+            if (response.data.token) {
+                localStorage.setItem('user', JSON.stringify(response.data));
+            }
+            return response.data;
+        } catch (error) {
+            console.error("Google Login Failed:", error);
+            throw error;
+        }
+    },
     register: async (userData) => {
         const response = await api.post('/auth/register', userData);
         if (response.data.token) {

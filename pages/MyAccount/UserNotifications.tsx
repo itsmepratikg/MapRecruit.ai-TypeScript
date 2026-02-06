@@ -1,11 +1,59 @@
-
-import React, { useState } from 'react';
-import { 
-  Bell, MessageCircle, Monitor, XCircle, CheckCircle, 
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Bell, MessageCircle, Monitor, XCircle, CheckCircle,
   Moon, Zap, AlertCircle, ChevronDown, ChevronUp, Info,
-  Edit2, Save
+  Edit2, Save, Globe, LogOut
 } from '../../components/Icons';
+import { integrationService, WorkspaceIntegrations } from '../../services/integrationService';
 import { useToast } from '../../components/Toast';
+
+interface IntegrationCardProps {
+  name: string;
+  icon: React.ReactNode;
+  status: { connected: boolean; email?: string };
+  onConnect: () => void;
+  onDisconnect: () => void;
+  disabled?: boolean;
+}
+
+const IntegrationCard: React.FC<IntegrationCardProps> = ({ name, icon, status, onConnect, onDisconnect, disabled }) => {
+  return (
+    <div className={`p-4 rounded-xl border transition-all ${status.connected ? 'bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm'}`}>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className={`p-2 rounded-lg ${status.connected ? 'bg-emerald-100 dark:bg-emerald-800 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'}`}>
+            {icon}
+          </div>
+          <div>
+            <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm">{name}</h4>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+              {status.connected ? `Connected as ${status.email}` : 'Not connected'}
+            </p>
+          </div>
+        </div>
+
+        {status.connected ? (
+          <button
+            onClick={onDisconnect}
+            disabled={disabled}
+            className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+            title="Disconnect"
+          >
+            <XCircle size={18} />
+          </button>
+        ) : (
+          <button
+            onClick={onConnect}
+            disabled={disabled}
+            className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline disabled:opacity-50"
+          >
+            Connect
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 // --- Constants & Schema ---
 
@@ -91,12 +139,12 @@ const NotificationRow: React.FC<NotificationRowProps> = ({ label, value, onChang
   return (
     <div className={`flex items-center justify-between py-3 border-b border-slate-100 dark:border-slate-800 last:border-0 px-3 rounded-lg transition-colors ${disabled ? 'opacity-70' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}>
       <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{label}</span>
-      
+
       <div className={`flex bg-slate-100 dark:bg-slate-900 rounded-lg p-1 gap-1 ${disabled ? 'pointer-events-none' : ''}`}>
         {NOTIFICATION_MODES.map((mode) => {
           const Icon = mode.icon;
           const isActive = value === mode.id;
-          
+
           return (
             <button
               key={mode.id}
@@ -130,7 +178,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({ category, settings, o
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm transition-all h-full flex flex-col">
-      <button 
+      <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full flex items-center justify-between px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors shrink-0"
       >
@@ -142,13 +190,13 @@ const CategorySection: React.FC<CategorySectionProps> = ({ category, settings, o
           {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </div>
       </button>
-      
+
       {isExpanded && (
         <div className="p-4 space-y-1 flex-1">
           {category.items.map(item => (
-            <NotificationRow 
-              key={item.id} 
-              label={item.label} 
+            <NotificationRow
+              key={item.id}
+              label={item.label}
               value={settings[item.id] || 'APP'} // Default to In-App if not set
               onChange={(val) => onUpdate(item.id, val)}
               disabled={disabled}
@@ -163,8 +211,43 @@ const CategorySection: React.FC<CategorySectionProps> = ({ category, settings, o
 export const UserNotifications = () => {
   const { addToast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const [dnd, setDnd] = useState(false);
+  const [integrations, setIntegrations] = useState<WorkspaceIntegrations>({
+    google: { connected: false },
+    microsoft: { connected: false }
+  });
+
+  // Load integration status on mount
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const status = await integrationService.getStatus();
+      setIntegrations(status);
+    };
+    fetchStatus();
+  }, []);
+
+  const handleConnectGoogle = () => {
+    integrationService.connectGoogle();
+  };
+
+  const handleConnectMicrosoft = () => {
+    addToast("MS Teams integration coming soon!", "info");
+  };
+
+  const handleDisconnect = async (provider: 'google' | 'microsoft') => {
+    try {
+      await integrationService.disconnect(provider);
+      setIntegrations(prev => ({
+        ...prev,
+        [provider]: { connected: false }
+      }));
+      addToast(`${provider === 'google' ? 'Google' : 'Microsoft'} disconnected`, "success");
+    } catch (err) {
+      addToast("Failed to disconnect", "error");
+    }
+  };
+
   // State for all individual settings
   const [settings, setSettings] = useState<Record<string, string>>({});
 
@@ -198,107 +281,137 @@ export const UserNotifications = () => {
   return (
     <div className="p-8 lg:p-12">
       <div className="max-w-7xl mx-auto animate-in fade-in duration-300 pb-12">
-        
+
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-slate-200 dark:border-slate-700 pb-6 gap-4">
-           <div>
-               <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                 <Bell size={22} className="text-emerald-500"/> User Notifications
-               </h2>
-               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                 Control how and where you receive alerts, updates, and system messages.
-               </p>
-           </div>
-           
-           <div className="flex gap-3">
-             {!isEditing ? (
-               <button 
-                 onClick={handleEdit}
-                 className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2"
-               >
-                 <Edit2 size={16} /> Edit Settings
-               </button>
-             ) : (
-               <>
-                   <button 
-                     onClick={handleCancel}
-                     className="px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                   >
-                     Cancel
-                   </button>
-                   <button 
-                     onClick={handleSave}
-                     className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2"
-                   >
-                     <Save size={16} /> Save Changes
-                   </button>
-               </>
-             )}
-           </div>
+          <div>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+              <Bell size={22} className="text-emerald-500" /> User Notifications
+            </h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Control how and where you receive alerts, updates, and system messages.
+            </p>
+          </div>
+
+          <div className="flex gap-3">
+            {!isEditing ? (
+              <button
+                onClick={handleEdit}
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2"
+              >
+                <Edit2 size={16} /> Edit Settings
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={handleCancel}
+                  className="px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSave}
+                  className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2"
+                >
+                  <Save size={16} /> Save Changes
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
         <div className="space-y-8">
-            
-            {/* Legend / Info Note - Moved to Top */}
-            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl flex items-start gap-3">
-                <Info size={20} className="text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-                <p className="text-sm text-blue-800 dark:text-blue-300 leading-relaxed">
-                    <strong>Note:</strong> "All Channels" includes Email, SMS (if enabled), Workspace Chat (Teams/Slack), and In-App notifications. "In Chat Only" suppresses email and in-app toasts.
-                </p>
+
+          {/* Legend / Info Note - Moved to Top */}
+          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl flex items-start gap-3">
+            <Info size={20} className="text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+            <p className="text-sm text-blue-800 dark:text-blue-300 leading-relaxed">
+              <strong>Note:</strong> "All Channels" includes Email, SMS (if enabled), Workspace Chat (Teams/Slack), and In-App notifications. "In Chat Only" suppresses email and in-app toasts.
+            </p>
+          </div>
+
+          {/* Do Not Disturb */}
+          <div className={`p-6 rounded-xl border transition-all ${dnd ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm'}`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={`p-3 rounded-full ${dnd ? 'bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-300' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}`}>
+                  <Moon size={24} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg">Do Not Disturb</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    Pause all toast notifications and popups. Urgent alerts will still appear in the Notification Center.
+                  </p>
+                </div>
+              </div>
+              <label className={`relative inline-flex items-center ${isEditing ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
+                <input
+                  type="checkbox"
+                  className="sr-only peer"
+                  checked={dnd}
+                  onChange={(e) => isEditing && setDnd(e.target.checked)}
+                  disabled={!isEditing}
+                />
+                <div className="w-14 h-7 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-indigo-600"></div>
+              </label>
+            </div>
+          </div>
+
+          {/* Workspace Integrations */}
+          <div className="space-y-4">
+            <h3 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 px-1">
+              <Globe size={18} className="text-indigo-500" /> Workspace Integrations
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <IntegrationCard
+                name="Google Chat & Drive"
+                icon={<span className="font-bold text-lg">G</span>}
+                status={integrations.google}
+                onConnect={handleConnectGoogle}
+                onDisconnect={() => handleDisconnect('google')}
+                disabled={!isEditing}
+              />
+              <IntegrationCard
+                name="Microsoft Teams"
+                icon={<div className="grid grid-cols-2 gap-0.5 w-4 h-4">
+                  <div className="bg-orange-500 w-1.5 h-1.5"></div>
+                  <div className="bg-green-500 w-1.5 h-1.5"></div>
+                  <div className="bg-blue-500 w-1.5 h-1.5"></div>
+                  <div className="bg-yellow-500 w-1.5 h-1.5"></div>
+                </div>}
+                status={integrations.microsoft}
+                onConnect={handleConnectMicrosoft}
+                onDisconnect={() => handleDisconnect('microsoft')}
+                disabled={!isEditing}
+              />
+            </div>
+          </div>
+
+          {/* Granular Settings */}
+          <div className={dnd ? 'opacity-50 pointer-events-none filter grayscale transition-all duration-300' : 'transition-all duration-300'}>
+
+            {/* Legend */}
+            <div className="flex flex-wrap gap-4 mb-6 px-2">
+              {NOTIFICATION_MODES.map(mode => (
+                <div key={mode.id} className="flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
+                  <mode.icon size={14} className={mode.color} />
+                  <span>{mode.label}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Do Not Disturb */}
-            <div className={`p-6 rounded-xl border transition-all ${dnd ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm'}`}>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className={`p-3 rounded-full ${dnd ? 'bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-300' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}`}>
-                            <Moon size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg">Do Not Disturb</h3>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                                Pause all toast notifications and popups. Urgent alerts will still appear in the Notification Center.
-                            </p>
-                        </div>
-                    </div>
-                    <label className={`relative inline-flex items-center ${isEditing ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
-                        <input 
-                            type="checkbox" 
-                            className="sr-only peer" 
-                            checked={dnd} 
-                            onChange={(e) => isEditing && setDnd(e.target.checked)} 
-                            disabled={!isEditing}
-                        />
-                        <div className="w-14 h-7 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-indigo-600"></div>
-                    </label>
-                </div>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              {NOTIFICATION_SCHEMA.map(cat => (
+                <CategorySection
+                  key={cat.id}
+                  category={cat}
+                  settings={settings}
+                  onUpdate={handleUpdateSetting}
+                  disabled={!isEditing}
+                />
+              ))}
             </div>
-
-            {/* Granular Settings */}
-            <div className={dnd ? 'opacity-50 pointer-events-none filter grayscale transition-all duration-300' : 'transition-all duration-300'}>
-                
-                {/* Legend */}
-                <div className="flex flex-wrap gap-4 mb-6 px-2">
-                    {NOTIFICATION_MODES.map(mode => (
-                        <div key={mode.id} className="flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
-                            <mode.icon size={14} className={mode.color} />
-                            <span>{mode.label}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                    {NOTIFICATION_SCHEMA.map(cat => (
-                        <CategorySection 
-                            key={cat.id} 
-                            category={cat} 
-                            settings={settings} 
-                            onUpdate={handleUpdateSetting} 
-                            disabled={!isEditing}
-                        />
-                    ))}
-                </div>
-            </div>
+          </div>
 
         </div>
       </div>

@@ -8,7 +8,8 @@ const {
     createRole,
     updateRole,
     deleteRole,
-    switchCompany
+    switchCompany,
+    googleLogin
 } = require('../controllers/authController');
 const {
     getRegistrationOptions,
@@ -20,6 +21,7 @@ const { protect } = require('../middleware/authMiddleware');
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
+router.post('/google', googleLogin);
 router.get('/me', protect, getMe);
 router.post('/switch-context', protect, switchCompany);
 

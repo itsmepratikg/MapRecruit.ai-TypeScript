@@ -8,13 +8,6 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
 import { ToastProvider } from './components/Toast';
 import './src/i18n';
-import clarity from '@microsoft/clarity';
-
-// Initialize Microsoft Clarity
-const CLARITY_PROJECT_ID = "v0ogrd44yt";
-if (clarity && clarity.init) {
-  clarity.init(CLARITY_PROJECT_ID);
-}
 
 // Suppress Recharts deprecation warnings
 const error = console.error;

@@ -11,6 +11,11 @@
   "dependencies": {
     "@azure/msal-browser": "3.10.0",
     "@azure/msal-react": "2.0.12",
+    "@fullcalendar/core": "^6.1.20",
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/react": "^6.1.20",
+    "@fullcalendar/timegrid": "^6.1.20",
     "@microsoft/clarity": "1.0.0",
     "@react-oauth/google": "0.12.1",
     "@reactour/tour": "^3.8.0",

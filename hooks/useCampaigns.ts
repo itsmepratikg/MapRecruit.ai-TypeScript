@@ -8,6 +8,7 @@ export const useCampaigns = () => {
     const [error, setError] = useState<string | null>(null);
 
     const fetchCampaigns = async () => {
+        if (!localStorage.getItem('user')) return;
         setLoading(true);
         try {
             const data = await campaignService.getAll();
@@ -24,7 +25,9 @@ export const useCampaigns = () => {
     };
 
     useEffect(() => {
-        fetchCampaigns();
+        if (localStorage.getItem('user')) {
+            fetchCampaigns();
+        }
     }, []);
 
     return {

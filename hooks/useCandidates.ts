@@ -7,6 +7,7 @@ export const useCandidates = () => {
     const [error, setError] = useState<string | null>(null);
 
     const fetchCandidates = async () => {
+        if (!localStorage.getItem('user')) return;
         setLoading(true);
         try {
             const data = await profileService.getAll();
@@ -21,7 +22,9 @@ export const useCandidates = () => {
     };
 
     useEffect(() => {
-        fetchCandidates();
+        if (localStorage.getItem('user')) {
+            fetchCandidates();
+        }
     }, []);
 
     return {

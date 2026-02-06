@@ -107,33 +107,29 @@ export const Login = ({ onLogin }: LoginProps) => {
 
 
     const loginWithGoogle = useGoogleLogin({
-        onSuccess: (tokenResponse) => {
+        onSuccess: async (tokenResponse) => {
             setIsLoading(true);
             console.log("Google Login Success:", tokenResponse);
 
-            const googleAuthAction = new Promise<void>((resolve) => {
-                setTimeout(() => {
-                    localStorage.setItem('authToken', `google-token-${tokenResponse.access_token.substring(0, 10)}`);
-                    resolve();
-                }, 1000);
-            });
+            try {
+                // Use the new backend endpoint for real verification and login
+                await authService.googleLogin(tokenResponse.access_token);
 
-            addPromise(googleAuthAction, {
-                loading: t('Connecting to Google...'),
-                success: t('Successfully logged in via Google!'),
-                error: t('Google login failed.')
-            }).then(() => {
+                addToast(t('Successfully logged in via Google!'), "success");
                 onLogin();
-            }).catch(() => {
+            } catch (error) {
+                console.error("Google Backend Login Failed:", error);
+                // Fallback or Error handling
+                addToast(t('Google login failed. Please try again.'), "error");
                 setIsSupportOpen(true);
-            }).finally(() => {
+            } finally {
                 setIsLoading(false);
-            });
+            }
         },
         onError: (errorResponse) => {
             console.error("Google Login Error:", errorResponse);
             // Don't open support if user just closed the popup
-            if (errorResponse.error !== 'popup_closed_by_user') {
+            if ((errorResponse as any).error !== 'popup_closed_by_user') {
                 addToast(t("Google Sign-In failed. Please try again."), "error");
                 setIsSupportOpen(true);
             }
@@ -186,10 +182,7 @@ export const Login = ({ onLogin }: LoginProps) => {
                     {/* Abstract Background */}
                     <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] rounded-full bg-emerald-900/30 blur-3xl"></div>
                     <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-indigo-900/30 blur-3xl"></div>
-                    <div
-                        className="absolute inset-0 opacity-20"
-                        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
-                    ></div>
+
                 </div>
 
                 <div className="relative z-10">

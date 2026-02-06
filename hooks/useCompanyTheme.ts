@@ -10,9 +10,9 @@ export const useCompanyTheme = (userProfile: any) => {
 
     useEffect(() => {
         const fetchAndApplyTheme = async () => {
-            // If no user, reset to default
-            if (!userProfile) {
-                // console.log('useCompanyTheme: No userProfile, using default.');
+            // Wait until user is logged in before fetching company data
+            if (!userProfile || !localStorage.getItem('user')) {
+                // console.log('useCompanyTheme: No user logged in, using default.');
                 applyTheme(DEFAULT_THEME_COLOR);
                 return;
             }

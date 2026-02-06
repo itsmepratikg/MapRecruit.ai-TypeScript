@@ -173,6 +173,9 @@ export const useUserProfile = () => {
         let isMounted = true;
 
         const fetchClients = async () => {
+            // Wait until user is logged in before fetching clients
+            if (!localStorage.getItem('user')) return;
+
             // Check if there's already a fetch in progress
             if (!(window as any)._clientsPromise) {
                 (window as any)._clientsPromise = import('../services/api').then(({ clientService }) =>
@@ -193,7 +196,7 @@ export const useUserProfile = () => {
 
         fetchClients();
         return () => { isMounted = false; };
-    }, []);
+    }, [userProfile?.email]);
 
     return {
         userProfile,

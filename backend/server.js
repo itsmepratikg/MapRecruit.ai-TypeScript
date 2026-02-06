@@ -82,6 +82,13 @@ app.use('/api/library', require('./routes/libraryRoutes'));
 app.use('/api/company', require('./routes/companyRoutes'));
 app.use('/api/owning-entities', require('./routes/owningEntityRoutes'));
 app.use('/api/schemas', require('./routes/schemaRoutes'));
+app.use('/api/user/integrations', require('./routes/integrationRoutes'));
+app.use('/api/webhooks', require('./routes/webhookRoutes'));
+
+// Initialize Background Sync Scheduler
+const syncService = require('./services/syncService');
+syncService.init();
+
 app.get('/api/debug', (req, res) => res.json({
     message: 'Backend is alive',
     time: new Date().toISOString(),

@@ -478,6 +478,79 @@ const switchCompany = async (req, res) => {
     }
 };
 
+// @desc    Login with Google
+// @route   POST /api/auth/google
+// @access  Public
+const googleLogin = async (req, res) => {
+    try {
+        const { credential } = req.body;
+
+        // 1. Verify Token with Google
+        const googleRes = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+            headers: { Authorization: `Bearer ${credential}` }
+        });
+
+        if (!googleRes.ok) {
+            throw new Error('Failed to verify Google token');
+        }
+
+        const googleUser = await googleRes.json();
+        const email = googleUser.email;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Invalid Google Token: Email missing' });
+        }
+
+        // 2. Find or Create User
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            // Check if we allow auto-registration
+            // For now, let's create a basic user to unblock login
+            const randomPwd = Math.random().toString(36).slice(-8) + "1Aa!";
+            const Company = require('../models/Company');
+            const defaultCompany = await Company.findOne({}); // Fallback
+
+            if (!defaultCompany) {
+                return res.status(400).json({ message: 'No company context found. Cannot auto-register.' });
+            }
+
+            user = await User.create({
+                email,
+                password: randomPwd,
+                role: 'User',
+                companyID: defaultCompany._id, // Assign to first company
+                isGoogleLinked: true
+            });
+        }
+
+        // 3. Generate JWT (Same as loginUser)
+        const populatedUser = await User.findById(user._id).populate('roleID');
+
+        // Update Login Stats
+        user.loginCount = (user.loginCount || 0) + 1;
+        user.lastLoginAt = new Date();
+        user.lastActiveAt = new Date();
+        await user.save();
+
+        const userObj = populatedUser.toObject();
+        delete userObj.password;
+
+        userObj.id = userObj._id;
+        userObj.clientID = await filterClientsByContext(userObj);
+        userObj.clients = userObj.clientID;
+
+        res.json({
+            ...userObj,
+            token: generateToken(user._id, user.id, user.companyID, user.activeClientID, user.role, user.roleID, user.currentCompanyID, user.accessibilitySettings?.productAdmin),
+        });
+
+    } catch (error) {
+        console.error("Google Login Error:", error);
+        res.status(500).json({ message: 'Google Login Failed' });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
@@ -487,5 +560,6 @@ module.exports = {
     createRole,
     updateRole,
     deleteRole,
-    switchCompany
+    switchCompany,
+    googleLogin
 };
