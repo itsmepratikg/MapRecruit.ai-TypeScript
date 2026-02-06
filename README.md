@@ -72,6 +72,14 @@
 - **Multi-Language**: Robust internationalization supporting English, Spanish, French, German, Japanese, and more.
 - **Context Aware**: Automatic language detection and localized date/currency formatting.
 
+### 📅 Intelligent Calendar & Scheduling
+- **Multi-Source Sync**: Real-time synchronization with **Google Calendar** and **Microsoft Outlook**.
+- **Smart Meeting Detection**: Automated extraction of meeting links (Google Meet, Zoom, Teams) from event metadata.
+- **Enterprise Rules**: Granular control over business hours, break hours, and localized holiday exclusion.
+- **Precise Timekeeping**: Robust IANA timezone persistence ensures scheduling accuracy for global teams.
+- **High-Density UI**: Ultra-compact calendar grid optimized for professional, back-to-back scheduling.
+- **Soft-Delete Sync**: Secure disconnection workflow that preserves historical data while clearing the active view.
+
 ### 📊 Dynamic Intelligent Dashboard
 - **Customizable Layout**: Drag-and-drop widget system powered by **Gridstack.js**.
 - **Visual Analytics**: Real-time hiring metrics via **Recharts** and **D3.js**.
@@ -85,7 +93,7 @@
 | :--- | :--- |
 | **Frontend** | React 18, Vite, TypeScript, Tailwind CSS |
 | **State/Routing** | React Router 7, Context API |
-| **Icons & UI** | Lucide React, Gridstack, React Hot Toast |
+| **Icons & UI** | Lucide React, FullCalendar, Gridstack, React Hot Toast |
 | **I18n** | i18next, react-i18next |
 | **Analytics** | Recharts, D3.js, Microsoft Clarity |
 | **Build/Ops** | Vite, Vercel Ready |
