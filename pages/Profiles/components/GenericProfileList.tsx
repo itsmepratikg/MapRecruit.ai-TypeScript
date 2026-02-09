@@ -1,12 +1,7 @@
 
 import React, { useState } from 'react';
 import { Search, Calendar, ChevronDown, Filter, MoreHorizontal, User, Clock, MapPin, MessageSquare, Sparkles } from '../../../components/Icons';
-
-const MOCK_PROFILES = [
-    { id: "1", name: "Alice Johnson", title: "Senior Developer", location: "New York, NY", status: "Active", avatar: null },
-    { id: "2", name: "Bob Smith", title: "Product Manager", location: "San Francisco, CA", status: "Active", avatar: null },
-    { id: "3", name: "Charlie Brown", title: "Designer", location: "Remote", status: "Inactive", avatar: null }
-];
+import { MOCK_PROFILES } from '../../../data';
 import { TalentAssistantSidePanel } from './TalentAssistantSidePanel';
 
 interface GenericProfileListProps {

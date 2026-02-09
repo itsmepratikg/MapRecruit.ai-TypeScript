@@ -2,12 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Target, Filter, Search, ChevronDown, CheckCircle, Clock, XCircle, Eye, User, Sparkles } from '../../components/Icons';
-
-const MOCK_PROFILES = [
-    { id: "1", name: "Alice Johnson", title: "Senior Developer", location: "New York, NY", status: "Active", avatar: "AJ" },
-    { id: "2", name: "Bob Smith", title: "Product Manager", location: "San Francisco, CA", status: "Active", avatar: "BS" },
-    { id: "3", name: "Charlie Brown", title: "Designer", location: "Remote", status: "Inactive", avatar: "CB" }
-];
+import { MOCK_PROFILES } from '../../data';
 import { TalentAssistantSidePanel } from './components/TalentAssistantSidePanel';
 
 type RoundType = 'Assessment' | 'Interview';

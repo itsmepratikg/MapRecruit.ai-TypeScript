@@ -6,24 +6,12 @@ import {
    User, Phone, Mail, Globe, Award, Calendar, Shield, Lock, Star, X, FileText
 } from 'lucide-react';
 import { SectionCard, SecureContactCard } from './Common';
-// import { CANDIDATE } from '../data'; // Removed
+import { CANDIDATE } from '../data';
 import { useActivities } from '../hooks/useActivities';
 import { useParams } from 'react-router-dom';
 
 import { Activity } from '../types/Activity';
 import { ActivityItem } from './ActivityItem';
-
-const PLACEHOLDER_CANDIDATE = {
-   name: "Candidate Name",
-   recommended: [
-      { id: 1, name: "Forklift Operator", jobID: "REQ-12345", location: "Atlanta, GA", company: "TRC Staffing" },
-      { id: 2, name: "Warehouse Associate", jobID: "REQ-67890", location: "Savannah, GA", company: "TRC Staffing" }
-   ],
-   similar: [
-      { id: 1, name: "John Doe", location: "Atlanta, GA", role: "Forklift Operator", score: 95 },
-      { id: 2, name: "Jane Smith", location: "Marietta, GA", role: "Warehouse Worker", score: 88 }
-   ]
-};
 
 
 // Updated Profile Details Component to handle dynamic JSON schema with the OLD UI Layout
@@ -425,7 +413,7 @@ export const TalentChatView = () => (
       <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
          <div>
             <h3 className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2"><MessageCircle size={18} className="text-emerald-600 dark:text-emerald-400" /> Talent Chat</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Secure conversation with {PLACEHOLDER_CANDIDATE.name}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Secure conversation with {CANDIDATE.name}</p>
          </div>
          <span className="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400 px-2 py-0.5 rounded-full font-medium">Online</span>
       </div>
@@ -473,7 +461,7 @@ export const RecommendedView = () => (
                </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800">
-               {PLACEHOLDER_CANDIDATE.recommended?.map((rec: any) => (
+               {CANDIDATE.recommended?.map((rec: any) => (
                   <tr key={rec.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-700/50 transition-colors group">
                      <td className="px-6 py-4 font-bold text-emerald-700 dark:text-emerald-400 group-hover:underline cursor-pointer">{rec.name}</td>
                      <td className="px-6 py-4 text-slate-600 dark:text-slate-300 font-mono text-xs bg-slate-50/0 dark:bg-slate-700/0 group-hover:bg-white dark:group-hover:bg-slate-700 w-fit rounded px-2">{rec.jobID}</td>
@@ -502,7 +490,7 @@ export const SimilarProfilesView = () => (
          </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
-         {PLACEHOLDER_CANDIDATE.similar?.map((profile: any) => (
+         {CANDIDATE.similar?.map((profile: any) => (
             <div key={profile.id} className="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-emerald-200 dark:hover:border-emerald-800 transition-all flex flex-col sm:flex-row items-center justify-between group">
                <div className="flex items-center gap-5 w-full sm:w-auto">
                   <div className="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-300 font-bold text-xl group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/30 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">

@@ -2,20 +2,7 @@
 import React from 'react';
 import { Video, Phone, MapPin, Calendar, Clock, Plus } from 'lucide-react';
 import { StatusBadge } from './Common';
-// import { CANDIDATE } from '../data';
-
-const PLACEHOLDER_CANDIDATE = {
-   standaloneInterviews: [
-      {
-         _id: "int-1",
-         campaign: { title: "Frontend Developer Interview" },
-         linkedBy: "System",
-         updatedAt: new Date().toISOString(),
-         screeningRounds: [{ mode: "Video" }],
-         applicationType: "Screening"
-      }
-   ]
-};
+import { CANDIDATE } from '../data';
 
 export const InterviewCard = ({ interview, onClick }: any) => {
    const getIcon = () => {
@@ -72,7 +59,7 @@ export const InterviewsView = ({
    interviews?: any[],
    onSelectInterview: (i: any) => void
 }) => {
-   const interviews = (propInterviews || PLACEHOLDER_CANDIDATE.standaloneInterviews).map((iv: any) => {
+   const interviews = (propInterviews || CANDIDATE.standaloneInterviews).map((iv: any) => {
       if (iv._id) {
          return {
             ...iv,
