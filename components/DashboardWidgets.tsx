@@ -75,10 +75,17 @@ export const WelcomeHeader = ({ onNavigate, counts }: { onNavigate?: (tab: strin
       greeting: 'Good Evening',
       bgGradient: 'from-indigo-900 to-indigo-800'
    });
+   const [showTzAlert, setShowTzAlert] = useState(() => {
+      return localStorage.getItem('dismiss-tz-alert') !== 'true';
+   });
 
    const userColorObj = COLORS.find(c => c.name === userProfile?.color) || COLORS[0];
    const initials = ((userProfile?.firstName?.charAt(0) || '') + (userProfile?.lastName?.charAt(0) || '')).toUpperCase() || '??';
    const { t } = useTranslation();
+
+   const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+   const profileTz = userProfile?.calendarSettings?.timeZoneFullName || userProfile?.timeZone || 'Asia/Kolkata';
+   const isTzMismatch = browserTz !== profileTz;
 
    useEffect(() => {
       const updateGreeting = () => {
@@ -110,10 +117,18 @@ export const WelcomeHeader = ({ onNavigate, counts }: { onNavigate?: (tab: strin
          day: 'numeric',
          hour: '2-digit',
          minute: '2-digit',
-         hour12: true,
-         timeZone: 'UTC'
-      }) + ' UTC';
+         hour12: true
+      });
    };
+
+   const dismissTzAlert = () => {
+      setShowTzAlert(false);
+      localStorage.setItem('dismiss-tz-alert', 'true');
+   };
+
+   const activeClientName = typeof userProfile?.activeClient === 'object'
+      ? (userProfile.activeClient.clientName || userProfile.activeClient.name || 'Unknown')
+      : (userProfile?.activeClient || 'Unknown');
 
    return (
       <div className={`bg-gradient-to-br ${timeData.bgGradient} rounded-2xl p-6 text-white flex flex-col h-full relative overflow-hidden shadow-lg border border-white/10 dark:border-slate-600 transition-colors duration-1000`}>
@@ -124,7 +139,22 @@ export const WelcomeHeader = ({ onNavigate, counts }: { onNavigate?: (tab: strin
             <div className="flex justify-between items-start mb-4">
                <div>
                   <h2 className="text-xl font-bold tracking-tight">{t(timeData.greeting)}, {userProfile?.firstName || 'User'}</h2>
-                  <p className="text-[10px] text-white/60 mt-0.5">{t("Timezone")}: {userProfile?.timeZone || 'Asia/Kolkata (IST)'}</p>
+                  {showTzAlert && isTzMismatch && (
+                     <div className="mt-2 bg-amber-400/20 backdrop-blur-md border border-amber-400/30 p-2 rounded-lg flex items-start gap-2 max-w-[200px] animate-in slide-in-from-left-2 duration-300">
+                        <AlertCircle size={14} className="text-amber-300 shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                           <p className="text-[9px] text-amber-50 font-medium leading-tight">
+                              {t("It seems you are in a different timezone ({{browserTz}}) than what is configured ({{profileTz}}).", { browserTz, profileTz })}
+                           </p>
+                           <button
+                              onClick={dismissTzAlert}
+                              className="text-[8px] text-white/60 hover:text-white mt-1 underline underline-offset-2"
+                           >
+                              {t("Dismiss")}
+                           </button>
+                        </div>
+                     </div>
+                  )}
                </div>
                <div className="flex flex-col items-end gap-1">
                   <span className="text-[10px] text-white/80 bg-black/20 px-2 py-1 rounded border border-white/10 whitespace-nowrap">
@@ -154,13 +184,9 @@ export const WelcomeHeader = ({ onNavigate, counts }: { onNavigate?: (tab: strin
                </div>
                <div className="min-w-0">
                   <p className="font-bold text-base truncate">{userProfile?.firstName || 'Current'} {userProfile?.lastName || 'User'}</p>
-                  <div className="flex items-center gap-1.5 mt-1 text-[10px] text-white/90 bg-white/10 px-2 py-0.5 rounded-full w-fit border border-white/10 backdrop-blur-sm">
-                     <Briefcase size={10} />
-                     <span className="truncate">
-                        {typeof userProfile?.activeClient === 'object'
-                           ? (userProfile.activeClient.clientName || userProfile.activeClient.name || 'Unknown')
-                           : (userProfile?.activeClient || 'Unknown')}
-                     </span>
+                  <div className="flex items-center gap-1.5 mt-1 text-[11px] text-white/95 bg-white/10 px-2.5 py-1 rounded-full w-fit border border-white/20 backdrop-blur-md font-semibold">
+                     <Briefcase size={12} className="text-white/80" />
+                     <span className="truncate">{activeClientName}</span>
                   </div>
                </div>
             </div>
