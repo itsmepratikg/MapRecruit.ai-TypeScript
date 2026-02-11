@@ -244,7 +244,7 @@ export interface EngageEdge {
 export interface ClientData {
   _id: string;
   clientName: string;
-  clientNameAlias?: string; // Optional based on mock
+  clientNameAlias?: string;
   clientCode: string;
   clientType: string;
   country: string;
@@ -256,9 +256,9 @@ export interface ClientData {
   countryCode?: string;
   enable?: boolean;
   description?: string;
-  settings?: any; // or specific interface if known
+  settings?: any;
   locations?: any[];
   ClientUsersList?: any[];
-  createdAt?: string; // or Date
-  updatedAt?: string; // or Date
+  createdAt?: string;
+  updatedAt?: string;
 }

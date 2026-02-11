@@ -6,9 +6,18 @@ import {
     X, Save, Building2
 } from '../../components/Icons';
 import { useToast } from '../../components/Toast';
-import { clientService, schemaService } from '../../services/api';
+import { clientService } from '../../services/api';
 import { ClientData } from '../../types';
 import SchemaTable from '../../components/Schema/SchemaTable';
+
+// Temporary fallback schema while DB migration stabilizes
+const CLIENT_SCHEMA = [
+    { header: 'Client Name', accessor: 'clientName', sortable: true },
+    { header: 'Code', accessor: 'clientCode', sortable: true },
+    { header: 'Type', accessor: 'clientType', sortable: true },
+    { header: 'Location', accessor: 'country', sortable: true },
+    { header: 'Status', accessor: 'status', sortable: true, render: (val: string) => val }
+];
 
 interface ClientsSettingsProps {
     onSelectClient?: (client: ClientData) => void;
@@ -19,7 +28,6 @@ export const ClientsSettings = ({ onSelectClient }: ClientsSettingsProps) => {
     const { addToast } = useToast();
     const [activeTab, setActiveTab] = useState<'Active' | 'Inactive'>('Active');
     const [clients, setClients] = useState<ClientData[]>([]);
-    const [columns, setColumns] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,18 +38,11 @@ export const ClientsSettings = ({ onSelectClient }: ClientsSettingsProps) => {
     const loadClients = async () => {
         try {
             setLoading(true);
-            const [data, schemaData] = await Promise.all([
-                clientService.getAll(),
-                schemaService.getByName('Client')
-            ]);
+            const data = await clientService.getAll();
             setClients(data);
-            if (schemaData && schemaData.config) {
-                setColumns(schemaData.config);
-            }
         } catch (error) {
-            console.error("Failed to fetch clients or schema:", error);
-            // Don't show toast for schema failure if clients loaded, just log it
-            if (!clients.length) addToast(t("Failed to load data"), 'error');
+            console.error("Failed to fetch clients:", error);
+            addToast(t("Failed to load clients"), 'error');
         } finally {
             setLoading(false);
         }
@@ -50,8 +51,6 @@ export const ClientsSettings = ({ onSelectClient }: ClientsSettingsProps) => {
     const navigate = useNavigate();
 
     const handleCreateClient = () => {
-        // Future: Navigate to create page or show modal
-        // For now, keep as is or just show toast
         addToast(t("Create Client feature coming soon"), 'info');
     };
 
@@ -68,7 +67,7 @@ export const ClientsSettings = ({ onSelectClient }: ClientsSettingsProps) => {
         .filter(c => {
             const matchesTab = activeTab === 'Active'
                 ? (c.status === 'Active')
-                : (c.status !== 'Active'); // Assuming anything not 'Active' is Inactive/Deactivated
+                : (c.status !== 'Active');
 
             const term = searchQuery.toLowerCase();
             const matchesSearch = (
@@ -80,8 +79,6 @@ export const ClientsSettings = ({ onSelectClient }: ClientsSettingsProps) => {
             return matchesTab && matchesSearch;
         })
         .sort((a, b) => a.clientName.localeCompare(b.clientName));
-
-
 
     return (
         <div className="h-full overflow-hidden flex flex-col">
@@ -147,8 +144,7 @@ export const ClientsSettings = ({ onSelectClient }: ClientsSettingsProps) => {
                         ) : (
                             <SchemaTable
                                 data={filteredClients}
-                                columns={columns} // Use fetched schema
-
+                                columns={CLIENT_SCHEMA}
                                 title={t("Clients")}
                                 onEdit={handleEditClient}
                             />
