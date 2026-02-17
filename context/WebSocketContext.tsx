@@ -18,6 +18,8 @@ export interface UserPresence {
     page?: string;      // Specific page/tab within campaign
     lastActive?: number;
     status?: 'active' | 'idle';
+    role?: string;
+    location?: string;
 }
 
 interface WebSocketContextType {

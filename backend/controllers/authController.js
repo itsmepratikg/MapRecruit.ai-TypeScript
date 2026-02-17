@@ -56,7 +56,7 @@ const filterClientsByContext = async (userObject) => {
 const generateToken = (id, email, companyID, activeClientID, role, roleID, currentCompanyID, productAdmin) => {
     const payload = { id, email, companyID, activeClientID, role, roleID };
     if (currentCompanyID) payload.currentCompanyID = currentCompanyID;
-    if (productAdmin !== undefined) payload.productAdmin = productAdmin;
+    if (productAdmin !== undefined) payload.productAdmin = !!productAdmin;
     return jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: '30d',
     });
@@ -243,7 +243,7 @@ const impersonateUser = async (req, res) => {
     try {
         const { targetUserId, mode = 'read-only' } = req.body;
 
-        if (typeof targetUserId !== 'string') return res.status(400).json({ message: 'Invalid Target User ID' });
+        if (!targetUserId) return res.status(400).json({ message: 'Target User ID is required' });
 
         // 1. Verify Requestor is Admin
         if (req.user.role !== 'Product Admin') {
@@ -264,6 +264,8 @@ const impersonateUser = async (req, res) => {
             currentCompanyID: targetUser.currentCompanyID,
             activeClientID: targetUser.activeClientID,
             role: targetUser.role,
+            roleID: targetUser.roleID,
+            productAdmin: !!targetUser.accessibilitySettings?.productAdmin,
             // Impersonation Claims
             impersonatorId: req.user.id,
             mode: mode // 'read-only' | 'full'
@@ -271,8 +273,15 @@ const impersonateUser = async (req, res) => {
             expiresIn: '1h',
         });
 
+        // Normalize response
+        const userObj = targetUser.toObject();
+        delete userObj.password;
+        userObj.id = userObj._id;
+        userObj.clientID = await filterClientsByContext(userObj);
+        userObj.clients = userObj.clientID;
+
         res.json({
-            ...targetUser.toObject(),
+            ...userObj,
             token,
             isImpersonated: true,
             mode
@@ -317,12 +326,13 @@ const createRole = async (req, res) => {
 
 // Helper to get role rank (lower is senior)
 const getRoleRank = async (roleId, companyID) => {
+    if (!roleId) return Infinity;
     const RoleHierarchy = require('../models/RoleHierarchy');
     const hierarchyDoc = await RoleHierarchy.findOne({ companyID });
 
     if (!hierarchyDoc || !hierarchyDoc.hierarchy) return Infinity; // No hierarchy = lowest rank
 
-    const entry = hierarchyDoc.hierarchy.find(h => h.roleID.toString() === roleId.toString());
+    const entry = hierarchyDoc.hierarchy.find(h => h.roleID && h.roleID.toString() === roleId.toString());
     return entry ? entry.rank : Infinity;
 };
 
@@ -391,6 +401,16 @@ const deleteRole = async (req, res) => {
 const switchCompany = async (req, res) => {
     try {
         const { companyId, clientId } = req.body;
+
+        // --- Impersonation Safety: Prevent Company Switching ---
+        if (req.user.impersonatorId && companyId.toString() !== req.user.companyID.toString()) {
+            return res.status(403).json({
+                message: 'Action blocked: You cannot switch company environments while impersonating. Exit impersonation first.',
+                code: 'IMPERSONATION_RESTRICTED'
+            });
+        }
+        // -----------------------------------------------------
+
         if (!companyId || !mongoose.Types.ObjectId.isValid(companyId)) {
             return res.status(400).json({ message: 'Invalid Company ID' });
         }
@@ -526,7 +546,7 @@ const googleLogin = async (req, res) => {
 
         res.json({
             ...userObj,
-            token: generateToken(user._id, user.id, user.companyID, user.activeClientID, user.role, user.roleID, user.currentCompanyID, user.accessibilitySettings?.productAdmin),
+            token: generateToken(user._id, user.email, user.companyID, user.activeClientID, user.role, user.roleID, user.currentCompanyID, user.accessibilitySettings?.productAdmin),
         });
 
     } catch (error) {

@@ -327,14 +327,19 @@ export const Login = ({ onLogin }: LoginProps) => {
                             {t("Microsoft 365")}
                         </button>
 
-                        <button
-                            onClick={handlePasskeyLogin}
-                            disabled={isLoading}
-                            className="w-full flex items-center justify-center gap-2 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium disabled:opacity-60"
-                        >
-                            <Fingerprint size={18} className="text-emerald-500" />
-                            {t("Sign in via Passkey")}
-                        </button>
+                        <div className="flex flex-col items-center gap-1 w-full">
+                            <button
+                                onClick={handlePasskeyLogin}
+                                disabled={isLoading}
+                                className="w-full flex items-center justify-center gap-2 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium disabled:opacity-60"
+                            >
+                                <Fingerprint size={18} className="text-emerald-500" />
+                                {t("Sign in via Passkey")}
+                            </button>
+                            <span className="text-[10px] text-slate-400 font-medium uppercase tracking-tighter">
+                                {t("Email optional for passkeys")}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

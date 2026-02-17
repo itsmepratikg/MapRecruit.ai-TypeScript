@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, X } from './Icons';
 
@@ -27,6 +26,16 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   const { t } = useTranslation();
   const effectiveConfirmText = confirmText || t("Confirm");
   const effectiveCancelText = cancelText || t("Cancel");
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (

@@ -90,21 +90,24 @@ export const SupportRequestModal: React.FC<SupportRequestModalProps> = ({
         setIsSubmitting(true);
         try {
             const content = editorRef.current ? editorRef.current.getContent() : 'No content provided';
-            // Mock API call
-            console.log('Submitting Ticket:', {
+            const { default: api } = await import('../../services/api');
+
+            const response = await api.post('/support', {
                 userId,
                 currentUrl,
                 activeClientID,
                 activeCompanyID,
                 content,
-                attachment: screenshot
+                screenshot
             });
 
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            alert('Support request submitted successfully with attachments.');
-            onClose();
-        } catch (error) {
+            if (response.data.success) {
+                alert(response.data.message || 'Support request submitted successfully');
+                onClose();
+            }
+        } catch (error: any) {
             console.error('Submission failed:', error);
+            alert(error.response?.data?.message || 'Failed to submit support request. Please try again.');
         } finally {
             setIsSubmitting(false);
         }

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate, useParams } from 'react-router-dom';
-import { Menu, X, ChevronRight } from './components/Icons';
+import { Menu, X, ChevronRight, Loader2 } from './components/Icons';
 import { useToast } from './components/Toast';
 // Lazy Load Pages for Performance Optimization
 const Home = React.lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
@@ -20,6 +20,7 @@ const Notifications = React.lazy(() => import('./pages/Notifications/index').the
 const TalentChat = React.lazy(() => import('./pages/TalentChat/index').then(module => ({ default: module.TalentChat })));
 const SupportPage = React.lazy(() => import('./pages/Support/index').then(module => ({ default: module.SupportPage })));
 const GoogleCallback = React.lazy(() => import('./pages/MyAccount/GoogleCallback').then(m => ({ default: m.GoogleCallback })));
+const MicrosoftCallback = React.lazy(() => import('./pages/MyAccount/MicrosoftCallback').then(m => ({ default: m.MicrosoftCallback })));
 import { Campaign } from './types';
 import { PlaceholderModal } from './components/PlaceholderModal';
 import { useScreenSize } from './hooks/useScreenSize';
@@ -39,7 +40,7 @@ import { ConfirmClientSwitchModal } from './components/ConfirmClientSwitchModal'
 
 // Import Providers and Security Components
 import { QuickTourManager } from './components/QuickTour/QuickTourManager';
-import { ImpersonationProvider } from './context/ImpersonationContext';
+import { ImpersonationProvider, useImpersonation } from './context/ImpersonationContext';
 import { ImpersonationBanner, SafetyRequestModal } from './components/Security/ImpersonationBanner';
 import { AccessGuard } from './components/Security/AccessGuard';
 import { SupportRequestModal } from './components/Security/SupportRequestModal';
@@ -71,6 +72,37 @@ export const LegacyProfileRedirect = () => {
   const { id, tab } = useParams();
   // Swap from /profile/:id/:tab to /profile/:tab/:id
   return <Navigate to={`/profile/${tab || 'profile'}/${id}`} replace />;
+};
+
+// Helper for Impersonation Logic
+const ImpersonateWrapper = () => {
+  const { payload } = useParams();
+  const { startImpersonation } = useImpersonation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (payload) {
+      try {
+        // payload is a base64 encoded JSON: { token, user, mode }
+        const decoded = JSON.parse(atob(payload));
+        const { token, user, mode } = decoded;
+        startImpersonation(token, user, mode || 'read-only');
+      } catch (err) {
+        console.error("Invalid impersonation payload", err);
+        navigate('/dashboard', { replace: true });
+      }
+    }
+  }, [payload, startImpersonation, navigate]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+      <div className="text-center">
+        <Loader2 size={48} className="text-blue-500 animate-spin mx-auto mb-4" />
+        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Authenticating Session</h2>
+        <p className="text-slate-500 dark:text-slate-400">Please wait while we set up your secure view...</p>
+      </div>
+    </div>
+  );
 };
 
 export const App = () => {
@@ -244,6 +276,23 @@ const AppContent = () => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Workspace Connection Reminder (Persistent Toast on Login)
+  useEffect(() => {
+    if (isAuthenticated && userProfile) {
+      const googleConnected = userProfile.integrations?.google?.connected;
+      const microsoftConnected = userProfile.integrations?.microsoft?.connected;
+
+      if (!googleConnected && !microsoftConnected) {
+        // Only show if both are disconnected to avoid nagging if they use only one
+        addToast(
+          "Cloud Workspace not connected. Link your Google Drive or OneDrive in Settings to enable direct resume imports.",
+          "info",
+          { duration: Infinity, id: 'workspace-status-reminder' }
+        );
+      }
+    }
+  }, [isAuthenticated, !!userProfile, addToast]);
 
   const handleLogin = () => {
     // Check if there is a redirect path state (Clean URL Logic)
@@ -746,6 +795,8 @@ const AppContent = () => {
                     <Route path="/talent-chat/*" element={<TalentChat />} />
                     <Route path="/support" element={<SupportPage />} />
                     <Route path="/auth/google/callback" element={<GoogleCallback />} />
+                    <Route path="/auth/microsoft/callback" element={<MicrosoftCallback />} />
+                    <Route path="/impersonate/:payload/*" element={<ImpersonateWrapper />} />
                   </Routes>
                 </React.Suspense>
               </div>

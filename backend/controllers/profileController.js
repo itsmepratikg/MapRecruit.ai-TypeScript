@@ -120,16 +120,61 @@ const getProfile = async (req, res) => {
 // @access  Private
 const createProfile = async (req, res) => {
     try {
-        const sanitizedBody = sanitizeNoSQL(req.body);
-        const profile = await Candidate.create({
-            ...sanitizedBody,
+        const { firstName, lastName, email, phone, title, company, location, skills, source } = sanitizeNoSQL(req.body);
+
+        // Map flat form data to nested Candidate schema
+        const candidateData = {
             companyID: req.user.currentCompanyID || req.user.companyID,
-            clientID: req.user.activeClientID
-        });
+            clientID: req.user.activeClientID,
+            profile: {
+                firstName,
+                lastName,
+                fullName: `${firstName} ${lastName}`.trim(),
+                emails: email ? [{
+                    value: email, // Standardized key if possible, but schema shows mixed. Using 'text' based on schema observation or standard
+                    text: email,
+                    email: email,
+                    type: 'Personal',
+                    preferred: 'Yes'
+                }] : [],
+                phones: phone ? [{
+                    value: phone,
+                    text: phone,
+                    type: 'Mobile'
+                }] : [],
+                locations: location ? [{
+                    city: location.split(',')[0]?.trim(),
+                    state: location.split(',')[1]?.trim(),
+                    country: 'USA', // Defaulting for now
+                    text: location
+                }] : []
+            },
+            professionalSummary: {
+                currentRole: {
+                    jobTitle: title,
+                    companyName: company
+                }
+            },
+            professionalQualification: {
+                skills: skills ? skills.split(',').map(s => ({
+                    name: s.trim(),
+                    lastUsed: new Date()
+                })) : []
+            },
+            metaData: {
+                source: source || 'Manual',
+                originalFileName: 'Manual Entry',
+                importDate: new Date()
+            },
+            personnelStatus: 'Lead', // Default status for new manual entries
+            employmentStatus: 'Active'
+        };
+
+        const profile = await Candidate.create(candidateData);
 
         res.status(201).json(profile);
     } catch (error) {
-        console.error(error);
+        console.error('createProfile Error:', error);
         res.status(500).json({ message: 'Server Error' });
     }
 };

@@ -200,6 +200,7 @@ app.use('/api/owning-entities', require('./routes/owningEntityRoutes'));
 app.use('/api/schemas', require('./routes/schemaRoutes'));
 app.use('/api/user/integrations', require('./routes/integrationRoutes'));
 app.use('/api/webhooks', require('./routes/webhookRoutes'));
+app.use('/api/support', require('./routes/supportRoutes'));
 
 // Initialize Background Sync Scheduler
 const syncService = require('./services/syncService');

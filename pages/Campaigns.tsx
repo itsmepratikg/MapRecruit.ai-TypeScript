@@ -70,22 +70,37 @@ import { useCampaigns } from '../hooks/useCampaigns';
 import { campaignService } from '../services/api';
 import { useLocation } from 'react-router-dom';
 
-// Map Backend Campaign to UI Structure
 export const mapCampaignToUI = (camp: any): Campaign => {
   const mainSchema = camp.schemaConfig?.mainSchema || {};
   const meta = camp.migrationMeta || {};
 
+  const formatDate = (dateValue: any) => {
+    if (!dateValue) return '---';
+    const date = new Date(dateValue);
+    const now = new Date();
+    const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
   return {
     id: camp._id?.$oid || camp._id || 0,
-    name: mainSchema.title || camp.title || 'Untitled Campaign',
-    jobID: meta.jobID || '---',
+    name: camp.title || camp.name || camp.displayName || mainSchema.title || 'Untitled Campaign',
+    role: camp.job?.details?.jobTitle?.text || mainSchema.jobType || 'General Role',
+    jobID: camp.passcode || meta.jobID || '---',
     status: mainSchema.status || (camp.status === true || camp.status === 'Active' ? 'Active' : 'Closed'),
     isNew: camp.isNew || false,
     isFavorite: camp.isFavorite || false,
     owner: camp.owner || { initials: "U", color: "bg-slate-500", name: "User" },
     members: camp.members || [],
-    updatedDate: new Date(camp.updatedAt || camp.createdAt || Date.now()).toLocaleDateString(),
-    profilesCount: meta.profilesCount || 0,
+    updatedDate: formatDate(camp.updatedAt || camp.createdAt),
+    date: new Date(camp.createdAt || Date.now()).toLocaleDateString(),
+    profilesCount: camp.profilesCount ?? meta.profilesCount ?? 0,
+    candidates: camp.profilesCount ?? meta.profilesCount ?? 0,
     daysLeft: (() => {
       if (camp.customData?.closedAt) {
         const closedAt = new Date(camp.customData.closedAt);
@@ -95,7 +110,8 @@ export const mapCampaignToUI = (camp: any): Campaign => {
       }
       return camp.daysLeft || 0;
     })(),
-    engageStatus: (camp.engageStatus as 'Green' | 'Yellow' | 'Grey') || 'Grey'
+    engageStatus: (camp.engageStatus as 'Green' | 'Yellow' | 'Grey') || 'Grey',
+    rounds: [] // Add empty rounds to satisfy Type
   };
 };
 

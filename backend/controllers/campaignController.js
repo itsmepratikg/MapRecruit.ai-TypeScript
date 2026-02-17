@@ -1,9 +1,11 @@
+const mongoose = require('mongoose');
 const Campaign = require('../models/Campaign');
 const User = require('../models/User');
 const Client = require('../models/Client');
 const { sanitizeNoSQL, isValidObjectId } = require('../utils/securityUtils');
 const ScrapeService = require('../services/scrapeService');
 const Workflow = require('../models/Workflow');
+const Interview = require('../models/Interview');
 
 // Helper to get allowed client IDs for user in current company
 const getAllowedClientIds = async (userId, companyId) => {
@@ -38,9 +40,20 @@ const getCampaigns = async (req, res) => {
             .populate('ownerID', 'firstName lastName avatar color email')
             .lean(); // Use lean for performance and modification
 
+        const interviewCounts = await Interview.aggregate([
+            {
+                $match: {
+                    companyID: mongoose.Types.ObjectId.isValid(companyID) ? new mongoose.Types.ObjectId(companyID) : companyID,
+                    linked: true
+                }
+            },
+            { $group: { _id: "$campaignID", count: { $sum: 1 } } }
+        ]);
+
+        const interviewMap = new Map(interviewCounts.map(i => [i._id.toString(), i.count]));
+
         // Fetch Workflows for these campaigns to determine automation status
         const campaignIds = campaigns.map(c => c._id);
-
         let workflows = [];
         try {
             workflows = await Workflow.find({
@@ -49,10 +62,9 @@ const getCampaigns = async (req, res) => {
             }).select('campaignID').lean();
         } catch (wfError) {
             console.error('Workflow fetch error (non-fatal):', wfError);
-            // Continue without workflows if this fails
         }
 
-        const workflowMap = new Set(workflows.map(w => w.campaignID.toString()));
+        const workflowStatusMap = new Set(workflows.map(w => w.campaignID.toString()));
 
         // augment campaigns with computed fields
         const augmentedCampaigns = campaigns.map(campaign => {
@@ -80,26 +92,27 @@ const getCampaigns = async (req, res) => {
             }
 
             // 4. Engage AI Status (Green/Yellow/Grey)
-            // Grey: No screening rounds
-            // Yellow: Rounds exist, no workflow
-            // Green: Rounds exist + workflow exists
             let engageStatus = 'Grey';
             const hasRounds = (campaign.screeningRounds && campaign.screeningRounds.length > 0);
 
             if (hasRounds) {
-                if (workflowMap.has(campaign._id.toString())) {
+                if (workflowStatusMap.has(campaign._id.toString())) {
                     engageStatus = 'Green';
                 } else {
                     engageStatus = 'Yellow';
                 }
             }
 
+            // 5. Dynamic Profiles Count from interviews
+            const profilesCount = interviewMap.get(campaign._id.toString()) || 0;
+
             return {
                 ...campaign,
-                owner, // override ownerID with formatted object for frontend convenience if needed, or just add 'owner'
+                owner,
                 isFavorite,
                 daysLeft,
-                engageStatus
+                engageStatus,
+                profilesCount // Add dynamic count
             };
         });
 
@@ -227,7 +240,15 @@ const getCampaign = async (req, res) => {
             return res.status(404).json({ message: 'Campaign not found' });
         }
 
-        res.status(200).json(campaign);
+        const interviewCount = await Interview.countDocuments({
+            campaignID: mongoose.Types.ObjectId.isValid(req.params.id) ? new mongoose.Types.ObjectId(req.params.id) : req.params.id,
+            linked: true
+        });
+
+        res.status(200).json({
+            ...campaign.toObject(),
+            profilesCount: interviewCount
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });

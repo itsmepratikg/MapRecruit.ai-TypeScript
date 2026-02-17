@@ -10,13 +10,23 @@ interface AdvancedSearchModalProps {
 }
 
 export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen, onClose, initialKeywords, onSearch }) => {
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const [formData, setFormData] = useState<any>({
     keywords: initialKeywords || '',
-    location: '', radius: '30', radiusUnit: 'Miles', 
+    location: '', radius: '30', radiusUnit: 'Miles',
     excludeViewed: false, excludeSimilar: false, booleanSearch: false,
-    candidateName: '', dateCreated: '', dateUpdated: '', 
+    candidateName: '', dateCreated: '', dateUpdated: '',
     candidateType: '', employmentStatus: '', availability: '',
     profileTags: '', folders: '', campaigns: '', source: '', lastActivity: '', excludeKeywords: '', excludeSource: '',
     jobTitle: '', excludeJobTitle: '', company: '', excludeCompany: '',
@@ -44,9 +54,9 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
 
   const handleKeywordKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && formData.keywords.trim()) {
-        e.preventDefault();
-        setKeywordChips([...keywordChips, formData.keywords.trim()]);
-        setFormData((prev: any) => ({ ...prev, keywords: '' }));
+      e.preventDefault();
+      setKeywordChips([...keywordChips, formData.keywords.trim()]);
+      setFormData((prev: any) => ({ ...prev, keywords: '' }));
     }
   };
 
@@ -76,12 +86,12 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
   const renderInput = (label: string, name: string, placeholder = "") => (
     <div className="space-y-1.5">
       <label className="text-xs font-medium text-gray-500 dark:text-slate-400">{label}</label>
-      <input 
+      <input
         name={name}
         value={formData[name]}
         onChange={handleChange}
-        placeholder={placeholder} 
-        className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 focus:border-green-500 focus:ring-2 focus:ring-green-100 dark:focus:ring-green-900/30 outline-none transition-all bg-white dark:bg-slate-900 dark:text-slate-200" 
+        placeholder={placeholder}
+        className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 focus:border-green-500 focus:ring-2 focus:ring-green-100 dark:focus:ring-green-900/30 outline-none transition-all bg-white dark:bg-slate-900 dark:text-slate-200"
       />
     </div>
   );
@@ -89,7 +99,7 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
   const renderSelect = (label: string, name: string, options: string[] = []) => (
     <div className="space-y-1.5">
       <label className="text-xs font-medium text-gray-500 dark:text-slate-400">{label}</label>
-      <select 
+      <select
         name={name}
         value={formData[name]}
         onChange={handleChange}
@@ -125,9 +135,9 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
         <div className="p-5 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center bg-gray-50/80 dark:bg-slate-900/50">
           <h2 className="text-xl font-bold text-gray-800 dark:text-slate-100">Advanced Search</h2>
           <div className="flex gap-2">
-             <button onClick={handleClear} className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 font-medium px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">Clear</button>
-             <button onClick={handleApply} className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors shadow-sm">Search</button>
-             <button onClick={onClose} className="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-slate-300 p-1 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full"><X size={20}/></button>
+            <button onClick={handleClear} className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 font-medium px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">Clear</button>
+            <button onClick={handleApply} className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors shadow-sm">Search</button>
+            <button onClick={onClose} className="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-slate-300 p-1 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full"><X size={20} /></button>
           </div>
         </div>
 
@@ -136,24 +146,24 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
             <h3 className="text-sm font-bold text-gray-900 dark:text-slate-100 bg-gray-100 dark:bg-slate-700 px-3 py-2 rounded-lg mb-4 inline-block">General</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-gray-500 dark:text-slate-400">Keywords</label>
-                  <input 
-                    name="keywords"
-                    value={formData.keywords}
-                    onChange={handleChange}
-                    onKeyDown={handleKeywordKeyDown}
-                    placeholder="Type & Enter..." 
-                    className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 focus:border-green-500 outline-none bg-white dark:bg-slate-900 dark:text-slate-200" 
-                  />
-                  <div className="flex flex-wrap gap-2 mt-1 min-h-[24px]">
-                      {keywordChips.map(chip => (
-                          <span key={chip} className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800 px-2 py-0.5 rounded-full text-xs flex items-center gap-1">
-                              {chip} <button onClick={() => removeChip(chip)}><X size={10} /></button>
-                          </span>
-                      ))}
-                  </div>
+                <label className="text-xs font-medium text-gray-500 dark:text-slate-400">Keywords</label>
+                <input
+                  name="keywords"
+                  value={formData.keywords}
+                  onChange={handleChange}
+                  onKeyDown={handleKeywordKeyDown}
+                  placeholder="Type & Enter..."
+                  className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 focus:border-green-500 outline-none bg-white dark:bg-slate-900 dark:text-slate-200"
+                />
+                <div className="flex flex-wrap gap-2 mt-1 min-h-[24px]">
+                  {keywordChips.map(chip => (
+                    <span key={chip} className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800 px-2 py-0.5 rounded-full text-xs flex items-center gap-1">
+                      {chip} <button onClick={() => removeChip(chip)}><X size={10} /></button>
+                    </span>
+                  ))}
+                </div>
               </div>
-              
+
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-gray-500 dark:text-slate-400">Location</label>
                 <div className="flex gap-2">
@@ -171,8 +181,8 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
               </div>
 
               {renderInput("Candidate Name", "candidateName")}
-              <div className="space-y-1.5"><label className="text-xs font-medium text-gray-500 dark:text-slate-400">Profile Created Date</label><input type="date" name="dateCreated" onChange={handleChange} className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 outline-none bg-white dark:bg-slate-900 dark:text-slate-200"/></div>
-              <div className="space-y-1.5"><label className="text-xs font-medium text-gray-500 dark:text-slate-400">Profile Updated Date</label><input type="date" name="dateUpdated" onChange={handleChange} className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 outline-none bg-white dark:bg-slate-900 dark:text-slate-200"/></div>
+              <div className="space-y-1.5"><label className="text-xs font-medium text-gray-500 dark:text-slate-400">Profile Created Date</label><input type="date" name="dateCreated" onChange={handleChange} className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 outline-none bg-white dark:bg-slate-900 dark:text-slate-200" /></div>
+              <div className="space-y-1.5"><label className="text-xs font-medium text-gray-500 dark:text-slate-400">Profile Updated Date</label><input type="date" name="dateUpdated" onChange={handleChange} className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 outline-none bg-white dark:bg-slate-900 dark:text-slate-200" /></div>
 
               {renderSelect("Candidate Type", "candidateType", ["W2", "C2C", "Full Time"])}
               {renderSelect("Employment Status", "employmentStatus", ["Employed", "Unemployed"])}
@@ -187,7 +197,7 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
               {renderSelect("Exclude Campaigns", "campaigns", [])}
 
               {renderInput("Source", "source")}
-              <div className="space-y-1.5"><label className="text-xs font-medium text-gray-500 dark:text-slate-400">Last Activity</label><input type="date" name="lastActivity" onChange={handleChange} className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 outline-none bg-white dark:bg-slate-900 dark:text-slate-200"/></div>
+              <div className="space-y-1.5"><label className="text-xs font-medium text-gray-500 dark:text-slate-400">Last Activity</label><input type="date" name="lastActivity" onChange={handleChange} className="w-full text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 outline-none bg-white dark:bg-slate-900 dark:text-slate-200" /></div>
               {renderInput("Exclude Keywords", "excludeKeywords")}
               {renderInput("Exclude Source", "excludeSource")}
             </div>
@@ -204,10 +214,10 @@ export const AdvancedSearchModal: React.FC<AdvancedSearchModalProps> = ({ isOpen
               {renderInput("Exclude Skills", "excludeSkills")}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-               {renderRangeGroup("Desired Pay Rate", "desiredPay")}
-               {renderRangeGroup("Minimum Pay Rate", "minPay")}
-               {renderRangeGroup("Current Pay Rate", "currPay")}
-               {renderRangeGroup("Experience", "experience", ['Years', 'Months'])}
+              {renderRangeGroup("Desired Pay Rate", "desiredPay")}
+              {renderRangeGroup("Minimum Pay Rate", "minPay")}
+              {renderRangeGroup("Current Pay Rate", "currPay")}
+              {renderRangeGroup("Experience", "experience", ['Years', 'Months'])}
             </div>
           </section>
 

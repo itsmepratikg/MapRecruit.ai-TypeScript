@@ -45,27 +45,35 @@ export const googlePickerService = {
     /**
      * Opens the Google Picker.
      * @param accessToken Required OAuth token from the user.
-     * @param onSelect Callback when a file is selected.
+     * @param onSelect Callback when files are selected.
+     * @param multiSelect Whether to allow multiple file selection.
      */
-    async openPicker(accessToken: string, onSelect: (fileId: string, fileName: string) => void): Promise<void> {
+    async openPicker(accessToken: string, onSelect: (files: { id: string, name: string, sizeBytes: number }[]) => void, multiSelect = false): Promise<void> {
         await this.initPicker();
 
         const view = new window.google.picker.DocsView(window.google.picker.ViewId.DOCS);
         view.setMimeTypes('application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain');
-        view.setSelectableMimeTypes('application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain');
 
-        const picker = new window.google.picker.PickerBuilder()
+        const builder = new window.google.picker.PickerBuilder()
             .addView(view)
             .setOAuthToken(accessToken)
             .setDeveloperKey(GOOGLE_API_KEY)
             .setCallback((data: any) => {
                 if (data.action === window.google.picker.Action.PICKED) {
-                    const file = data.docs[0];
-                    onSelect(file.id, file.name);
+                    const selectedFiles = data.docs.map((doc: any) => ({
+                        id: doc.id,
+                        name: doc.name,
+                        sizeBytes: doc.sizeBytes
+                    }));
+                    onSelect(selectedFiles);
                 }
-            })
-            .build();
+            });
 
+        if (multiSelect) {
+            builder.enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED);
+        }
+
+        const picker = builder.build();
         picker.setVisible(true);
     }
 };

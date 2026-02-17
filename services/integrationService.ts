@@ -14,7 +14,32 @@ export interface WorkspaceIntegrations {
 }
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "1001864596436-5uldln2ve14spbphgo2rpjf02jrntm2d.apps.googleusercontent.com";
-const REDIRECT_URI = `${window.location.origin}/auth/google/callback`;
+const MICROSOFT_CLIENT_ID = import.meta.env.VITE_MICROSOFT_CLIENT_ID || "e4338f76-0b52-49e1-893e-4652f1fd9d0e";
+
+const GOOGLE_REDIRECT_URI = `${window.location.origin}/auth/google/callback`;
+const MICROSOFT_REDIRECT_URI = `${window.location.origin}/auth/microsoft/callback`;
+const RETURN_PATH_KEY = 'maprecruit_auth_return_path';
+const MS_VERIFIER_KEY = 'ms_code_verifier';
+
+// PKCE Helpers
+const generateCodeVerifier = () => {
+    const array = new Uint8Array(32);
+    window.crypto.getRandomValues(array);
+    return btoa(String.fromCharCode(...array))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+};
+
+const generateCodeChallenge = async (verifier: string) => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(verifier);
+    const digest = await window.crypto.subtle.digest('SHA-256', data);
+    return btoa(String.fromCharCode(...new Uint8Array(digest)))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+};
 
 export const integrationService = {
     /**
@@ -35,10 +60,28 @@ export const integrationService = {
     },
 
     /**
+     * Saves the current path to localStorage to redirect back after OAuth.
+     */
+    saveReturnPath(): void {
+        const currentPath = window.location.pathname + window.location.search;
+        localStorage.setItem(RETURN_PATH_KEY, currentPath);
+    },
+
+    /**
+     * Gets and clears the return path from localStorage.
+     */
+    getReturnPath(): string {
+        const path = localStorage.getItem(RETURN_PATH_KEY) || '/myaccount/authsync';
+        localStorage.removeItem(RETURN_PATH_KEY);
+        return path;
+    },
+
+    /**
      * Initiates the Google OAuth flow.
      * Redirects the user to Google's consent screen.
      */
     connectGoogle(): void {
+        this.saveReturnPath();
         const scopes = [
             'openid',
             'email',
@@ -51,7 +94,7 @@ export const integrationService = {
 
         const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
             `client_id=${GOOGLE_CLIENT_ID}&` +
-            `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+            `redirect_uri=${encodeURIComponent(GOOGLE_REDIRECT_URI)}&` +
             `response_type=code&` +
             `scope=${encodeURIComponent(scopes)}&` +
             `access_type=offline&` +
@@ -62,12 +105,34 @@ export const integrationService = {
     },
 
     /**
-     * Initiates the Microsoft MS Teams/Office 365 OAuth flow.
+     * Initiates the Microsoft Office 365 OAuth flow with PKCE.
      */
-    connectMicrosoft(): void {
-        // Placeholder for MS Teams OAuth
-        // In a real implementation, this would use MSAL or a similar redirect flow
-        addToast('Microsoft Teams integration flow coming soon.', 'info');
+    async connectMicrosoft(): Promise<void> {
+        this.saveReturnPath();
+        const verifier = generateCodeVerifier();
+        sessionStorage.setItem(MS_VERIFIER_KEY, verifier);
+        const challenge = await generateCodeChallenge(verifier);
+
+        const scopes = [
+            'openid',
+            'email',
+            'profile',
+            'offline_access',
+            'Files.Read.All', // For OneDrive/SharePoint
+            'Calendars.ReadWrite'
+        ].join(' ');
+
+        const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?` +
+            `client_id=${MICROSOFT_CLIENT_ID}&` +
+            `response_type=code&` +
+            `redirect_uri=${encodeURIComponent(MICROSOFT_REDIRECT_URI)}&` +
+            `response_mode=query&` +
+            `scope=${encodeURIComponent(scopes)}&` +
+            `code_challenge=${challenge}&` +
+            `code_challenge_method=S256&` +
+            `prompt=consent`;
+
+        window.location.href = authUrl;
     },
 
     /**
@@ -82,7 +147,18 @@ export const integrationService = {
      * Sends the authorization code to the backend.
      */
     async handleCallback(provider: 'google' | 'microsoft', code: string): Promise<void> {
-        await api.post(`/user/integrations/${provider}/callback`, { code, redirectUri: REDIRECT_URI });
+        const redirectUri = provider === 'google' ? GOOGLE_REDIRECT_URI : MICROSOFT_REDIRECT_URI;
+        const payload: any = { code, redirectUri };
+
+        if (provider === 'microsoft') {
+            const verifier = sessionStorage.getItem(MS_VERIFIER_KEY);
+            if (verifier) {
+                payload.codeVerifier = verifier;
+                sessionStorage.removeItem(MS_VERIFIER_KEY);
+            }
+        }
+
+        await api.post(`/user/integrations/${provider}/callback`, payload);
     },
 
     /**
@@ -94,11 +170,21 @@ export const integrationService = {
     },
 
     /**
-     * Fetches a file from Google Drive and returns parsed metadata.
+     * Fetches files from Google Drive and returns parsed metadata.
      */
-    async fetchDriveFile(fileId: string, fileName: string): Promise<any> {
-        const response = await api.post('/user/integrations/google/drive/fetch', { fileId, fileName });
-        return response.data;
+    async fetchDriveFiles(files: { fileId: string; fileName: string; size?: number }[]): Promise<any[]> {
+        return Promise.all(
+            files.map(file => api.post('/user/integrations/google/drive/fetch', file).then(res => res.data))
+        );
+    },
+
+    /**
+     * Fetches files from Microsoft OneDrive/SharePoint and returns parsed metadata.
+     */
+    async fetchMicrosoftFiles(files: { resourceId: string; siteId?: string; fileName: string; size?: number }[]): Promise<any[]> {
+        return Promise.all(
+            files.map(file => api.post('/user/integrations/microsoft/drive/fetch', file).then(res => res.data))
+        );
     },
 
     /**

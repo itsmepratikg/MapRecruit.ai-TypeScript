@@ -124,9 +124,7 @@ export const PasskeySettings = ({ isModal = false }: { isModal?: boolean }) => {
                             key={device.id}
                             className={`flex items-center justify-between p-5 rounded-xl border transition-all ${registered
                                 ? 'bg-white dark:bg-slate-800 border-emerald-200 dark:border-emerald-900/50 shadow-sm'
-                                : isCurrent
-                                    ? 'bg-slate-50 dark:bg-slate-800 border-emerald-500/30 border-dashed'
-                                    : 'bg-slate-50/30 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700 border-dashed opacity-60'
+                                : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 border-dashed hover:border-emerald-500/30'
                                 }`}
                         >
                             <div className="flex items-center gap-4">
@@ -146,14 +144,17 @@ export const PasskeySettings = ({ isModal = false }: { isModal?: boolean }) => {
                                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                                         {registered
                                             ? t('Registered and active for secure sign-in.')
-                                            : isCurrent
-                                                ? t('Register this device for biometric sign-in.')
-                                                : t('Please log in from your {{device}} browser to register this slot.', { device: device.id })}
+                                            : t('Register a passkey for this slot.')}
                                     </p>
                                 </div>
                             </div>
 
-                            {isCurrent ? (
+                            <div className="flex items-center gap-3">
+                                {isCurrent && !registered && (
+                                    <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                        {t('Current Device')}
+                                    </span>
+                                )}
                                 <button
                                     onClick={() => handleRegister(device.id)}
                                     disabled={isLoading}
@@ -163,16 +164,12 @@ export const PasskeySettings = ({ isModal = false }: { isModal?: boolean }) => {
                                         }`}
                                 >
                                     {registered ? (
-                                        <>{t('Update Passkey')}</>
+                                        <>{t('Update')}</>
                                     ) : (
-                                        <><Plus size={16} /> {t('Add Passkey')}</>
+                                        <><Plus size={16} /> {t('Add')}</>
                                     )}
                                 </button>
-                            ) : (
-                                <div className="text-[10px] font-bold text-slate-400 uppercase border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg">
-                                    {registered ? t('Registered') : t('Switch Device')}
-                                </div>
-                            )}
+                            </div>
                         </div>
                     );
                 })}

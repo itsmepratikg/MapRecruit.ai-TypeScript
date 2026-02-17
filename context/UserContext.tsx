@@ -15,7 +15,9 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 const STORAGE_KEY_PROFILE = 'user_profile_cache';
+const STORAGE_KEY_PROFILE = 'user_profile_cache';
 const STORAGE_KEY_EXPIRY = 'session_expiry';
+const STORAGE_KEY_ETAG = 'user_profile_etag';
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
@@ -29,9 +31,14 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const logout = useCallback(() => {
         setUserProfile(null);
+        localStorage.removeItem('authToken');
         sessionStorage.removeItem('authToken');
         localStorage.removeItem(STORAGE_KEY_PROFILE);
         localStorage.removeItem(STORAGE_KEY_EXPIRY);
+        localStorage.removeItem(STORAGE_KEY_ETAG);
+        localStorage.removeItem('admin_restore_token');
+        localStorage.removeItem('impersonation_mode');
+        localStorage.removeItem('impersonation_target');
         navigate('/');
     }, [navigate]);
 
@@ -61,7 +68,26 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const refetchProfile = useCallback(async () => {
         try {
             const { default: api } = await import('../services/api');
-            const response = await api.get('/auth/me');
+
+            // Get current ETag
+            const etag = localStorage.getItem(STORAGE_KEY_ETAG);
+            const headers: Record<string, string> = {};
+            if (etag) headers['If-None-Match'] = etag;
+
+            // Validate against DB
+            const response = await api.get('/auth/me', { headers, validateStatus: (status) => status === 200 || status === 304 });
+
+            if (response.status === 304) {
+                console.log("[UserContext] 304 Not Modified. Using valid cache.");
+                const cachedProfile = localStorage.getItem(STORAGE_KEY_PROFILE);
+                if (cachedProfile) {
+                    setUserProfile(JSON.parse(cachedProfile));
+                    updateSessionExpiry();
+                    setLoading(false);
+                    return;
+                }
+            }
+
             if (response.data) {
                 const userData = response.data;
                 const mappedProfile = {
@@ -72,17 +98,28 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
                         ? userData.clientID.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c)
                         : (userData.teams || []),
                 };
+
+                // Save New Data & ETag
                 setUserProfile(mappedProfile);
                 localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(mappedProfile));
+
+                const newEtag = response.headers['etag'];
+                if (newEtag) localStorage.setItem(STORAGE_KEY_ETAG, newEtag);
+
                 updateSessionExpiry();
             }
         } catch (err) {
             console.error("Profile refresh failed", err);
-            // If 401, we might want to logout, but let the interceptor handle that usually
+            // If 401, logout
+            if ((err as any).response?.status === 401) {
+                logout();
+            }
+        } finally {
+            setLoading(false);
         }
-    }, [updateSessionExpiry]);
+    }, [updateSessionExpiry, logout]);
 
-    // Initial Load & Verification
+    // Initial Load - DB First Principle
     useEffect(() => {
         const initUser = async () => {
             const token = localStorage.getItem('authToken');
@@ -91,60 +128,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 return;
             }
 
-            // 1. Try loading from cache for instant render
-            const cachedProfile = localStorage.getItem(STORAGE_KEY_PROFILE);
-            const expiryStr = localStorage.getItem(STORAGE_KEY_EXPIRY);
-
-            if (cachedProfile && expiryStr) {
-                const expiry = parseInt(expiryStr, 10);
-                if (Date.now() < expiry) {
-                    try {
-                        setUserProfile(JSON.parse(cachedProfile));
-                    } catch (e) {
-                        console.error("Failed to parse cached profile", e);
-                    }
-                } else {
-                    // Cache expired
-                    logout();
-                    setLoading(false);
-                    return;
-                }
-            }
-
-            // 2. Fetch fresh data (Stale-while-revalidate)
-            try {
-                const { default: api } = await import('../services/api');
-                const response = await api.get('/auth/me');
-
-                if (response.data) {
-                    const userData = response.data;
-                    const mappedProfile = {
-                        ...userData,
-                        _id: userData._id || userData.id,
-                        phone: userData.phone || userData.mobile || userData.phoneNumber,
-                        teams: Array.isArray(userData.clientID)
-                            ? userData.clientID.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c)
-                            : (userData.teams || []),
-                    };
-                    setUserProfile(mappedProfile);
-                    localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(mappedProfile));
-
-                    // Initialize or refresh expiry
-                    const newExpiry = Date.now() + SESSION_TIMEOUT_MS;
-                    localStorage.setItem(STORAGE_KEY_EXPIRY, newExpiry.toString());
-                }
-            } catch (err: any) {
-                setError("Failed to load profile");
-                if (err.response?.status === 401 || err.response?.status === 404) {
-                    logout();
-                }
-            } finally {
-                setLoading(false);
-            }
+            // We do NOT load from cache optimistically.
+            // We rely on refetchProfile handling the 304/200 logic.
+            await refetchProfile();
         };
 
-        initUser();
-    }, [logout]);
+        if (loading) {
+            initUser();
+        }
+    }, [loading, refetchProfile]);
 
     // Activity Listeners
     useEffect(() => {

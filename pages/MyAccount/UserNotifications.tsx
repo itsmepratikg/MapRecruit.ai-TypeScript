@@ -27,7 +27,7 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({ name, icon, status, o
           <div>
             <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm">{name}</h4>
             <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
-              {status.connected ? `Connected as ${status.email}` : 'Not connected'}
+              {status.connected ? 'Connected' : 'Not connected'}
             </p>
           </div>
         </div>
@@ -365,7 +365,7 @@ export const UserNotifications = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <IntegrationCard
                 name="Google Chat & Drive"
-                icon={<span className="font-bold text-lg">G</span>}
+                icon={<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="G" className="w-4 h-4" />}
                 status={integrations.google}
                 onConnect={handleConnectGoogle}
                 onDisconnect={() => handleDisconnect('google')}
@@ -373,12 +373,7 @@ export const UserNotifications = () => {
               />
               <IntegrationCard
                 name="Microsoft Teams"
-                icon={<div className="grid grid-cols-2 gap-0.5 w-4 h-4">
-                  <div className="bg-orange-500 w-1.5 h-1.5"></div>
-                  <div className="bg-green-500 w-1.5 h-1.5"></div>
-                  <div className="bg-blue-500 w-1.5 h-1.5"></div>
-                  <div className="bg-yellow-500 w-1.5 h-1.5"></div>
-                </div>}
+                icon={<img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="MS" className="w-4 h-4" />}
                 status={integrations.microsoft}
                 onConnect={handleConnectMicrosoft}
                 onDisconnect={() => handleDisconnect('microsoft')}

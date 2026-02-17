@@ -336,6 +336,29 @@ export const libraryService = {
     }
 };
 
+export const interviewService = {
+    getAll: async (params) => {
+        const response = await api.get('/interviews', { params });
+        return response.data;
+    },
+    getById: async (id) => {
+        const response = await api.get(`/interviews/${id}`);
+        return response.data;
+    },
+    create: async (interviewData) => {
+        const response = await api.post('/interviews', interviewData);
+        return response.data;
+    },
+    update: async (id, interviewData) => {
+        const response = await api.put(`/interviews/${id}`, interviewData);
+        return response.data;
+    },
+    delete: async (id) => {
+        const response = await api.delete(`/interviews/${id}`);
+        return response.data;
+    }
+};
+
 export const schemaService = {
     getByName: async (name) => {
         const response = await api.get(`/schemas/${name}`);

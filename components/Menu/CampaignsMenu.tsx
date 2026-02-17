@@ -20,6 +20,8 @@ export const CampaignsMenu = ({
     const { isDesktop } = useScreenSize();
     const location = useLocation();
     const navigate = useNavigate();
+    const [campaign, setCampaign] = React.useState<any>(selectedCampaign);
+    const [loading, setLoading] = React.useState(false);
 
     // Parse current active section from URL
     const pathParts = location.pathname.split('/');
@@ -31,19 +33,40 @@ export const CampaignsMenu = ({
     // Fallback ID from URL
     if (!campaignId) {
         if (isNewRoute) {
-            // Pattern: /showcampaign/module/sub/id OR /showcampaign/module/id
-            // Intelligence: /showcampaign/intelligence/:id (id is index 3)
-            // SourceAI: /showcampaign/sourceai/attachpeople/:id (id is index 4)
-            // EngageAI: /showcampaign/engageai/:id (id is index 3)
-            // Helper to find ID: it's usually the last or second to last part that looks like an ID
-            // For simplicity, we assume it's one of the parts.
-            // Let's rely on the fact that IDs are usually long alphanumeric strings.
             const idPart = pathParts.find(p => /^[a-f0-9]{24}$/.test(p));
             if (idPart) campaignId = idPart;
         } else {
             campaignId = pathParts[2]; // /campaigns/id
         }
     }
+
+    React.useEffect(() => {
+        if (selectedCampaign) {
+            setCampaign(selectedCampaign);
+            return;
+        }
+
+        const fetchCampaign = async () => {
+            if (!campaignId || campaignId === '1') return;
+            setLoading(true);
+            try {
+                // We use the same service as App.tsx
+                const { campaignService } = await import('../../services/api');
+                const { mapCampaignToUI } = await import('../../pages/Campaigns');
+                const campaigns = await campaignService.getAll();
+                const found = campaigns.find((c: any) => (c._id?.$oid || c._id)?.toString() === campaignId);
+                if (found) {
+                    setCampaign(mapCampaignToUI(found));
+                }
+            } catch (err) {
+                console.error("Sidebar: Failed to fetch campaign", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCampaign();
+    }, [campaignId, selectedCampaign]);
 
     const currentModule = isNewRoute ? pathParts[2]?.toLowerCase() : (pathParts[3] || 'Intelligence');
     const currentSub = isNewRoute ? pathParts[3]?.toLowerCase() : pathParts[4];
@@ -112,8 +135,8 @@ export const CampaignsMenu = ({
             </button>
 
             <div className={`px-3 mb-6 ${isCollapsed ? 'hidden' : 'block'}`}>
-                <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">{selectedCampaign?.name || 'Campaign'}</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">ID: {selectedCampaign?.jobID || campaignId?.substring(0, 8)}</p>
+                <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight">{loading ? 'Loading...' : (campaign?.name || 'Campaign')}</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1">Job ID: {campaign?.jobID || campaignId?.substring(0, 8)}</p>
             </div>
 
             <div className="space-y-1">

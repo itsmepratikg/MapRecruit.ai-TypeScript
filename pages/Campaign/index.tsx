@@ -13,7 +13,7 @@ import { MatchAI } from './MatchAI';
 import { EngageAIWrapper } from './EngageAI';
 import { Recommendations } from './Recommendations';
 import { CampaignSettings } from './Settings';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useWebSocket } from '../../context/WebSocketContext';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { CoPresenceAvatars } from '../../components/engage/CoPresenceAvatars';
@@ -38,7 +38,7 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
                      {/* Always visible info */}
                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
                         <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600 hidden md:block"></span>
-                        <span className="font-mono text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">ID: {campaign.jobID}</span>
+                        <span className="font-mono text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">Job ID: {campaign.jobID}</span>
                         <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
                         <span className={campaign.daysLeft < 5 ? "text-red-500 font-medium" : "text-green-600 dark:text-green-400 font-medium"}>
                            {campaign.daysLeft} Days Left
@@ -97,16 +97,18 @@ export const CampaignDashboard = ({ campaign, onBack }: { campaign: Campaign, on
       if (campaign?.id && userProfile) {
          const roomId = String(campaign.id);
          joinRoom(roomId, {
-            id: userProfile.id || 'visitor',
+            id: userProfile?._id || userProfile?.id || 'visitor',
             firstName: userProfile.firstName || 'Visitor',
             lastName: userProfile.lastName || '',
             email: userProfile.email || '',
             color: userProfile.color || 'blue',
-            avatar: userProfile.avatar
+            avatar: userProfile.avatar,
+            role: userProfile.role,
+            location: userProfile.location || userProfile.timeZone
          }, activeTab);
 
          return () => {
-            leaveRoom(roomId, userProfile.id || 'visitor');
+            leaveRoom(roomId, userProfile?._id || userProfile?.id || 'visitor');
          };
       }
    }, [campaign?.id, userProfile, joinRoom, leaveRoom, activeTab]);
@@ -126,7 +128,7 @@ export const CampaignDashboard = ({ campaign, onBack }: { campaign: Campaign, on
 
    return (
       <div className="flex flex-col h-full bg-slate-50/50 dark:bg-slate-900 transition-colors overflow-hidden">
-         <CampaignHeader campaign={campaign} isScrolled={isScrolled} onBack={onBack} currentUserId={userProfile?.id} />
+         <CampaignHeader campaign={campaign} isScrolled={isScrolled} onBack={onBack} currentUserId={userProfile?._id || userProfile?.id} />
          {/* Pass userProfile to header if needed, but CoPresenceAvatars uses context */}
          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto custom-scrollbar">
             <Routes>
@@ -135,10 +137,10 @@ export const CampaignDashboard = ({ campaign, onBack }: { campaign: Campaign, on
                <Route path="SourceAI/*" element={
                   <Routes>
                      <Route path="/" element={<Navigate to="Attach" replace />} />
-                     <Route path="Attach" element={<SourceAIWrapper activeView="ATTACH" />} />
-                     <Route path="Profiles" element={<SourceAIWrapper activeView="PROFILES" />} />
-                     <Route path="Integrations" element={<SourceAIWrapper activeView="INTEGRATIONS" />} />
-                     <Route path="JD" element={<SourceAIWrapper activeView="JD" />} />
+                     <Route path="Attach" element={<SourceAIWrapper activeView="ATTACH" campaign={campaign} />} />
+                     <Route path="Profiles" element={<SourceAIWrapper activeView="PROFILES" campaign={campaign} />} />
+                     <Route path="Integrations" element={<SourceAIWrapper activeView="INTEGRATIONS" campaign={campaign} />} />
+                     <Route path="JD" element={<SourceAIWrapper activeView="JD" campaign={campaign} />} />
                   </Routes>
                } />
                <Route path="MatchAI" element={<MatchAI />} />

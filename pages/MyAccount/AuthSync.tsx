@@ -293,7 +293,11 @@ export const AuthSync = () => {
   };
 
   const toggleSSO = async (provider: 'google' | 'microsoft' | 'passkey') => {
-    if (!isEditing) return;
+    // Passkey setup still needs explicit editing state to avoid accidental triggers
+    if (provider === 'passkey' && !isEditing) return;
+
+    // For Microsoft/Google, we allow triggering the flow even in view-only mode
+    // as it involves an external redirect anyway.
 
     if (provider === 'passkey') {
       if (!ssoStatus.passkey) {
@@ -577,8 +581,7 @@ export const AuthSync = () => {
                 <div className={`p-4 rounded-lg border flex items-center justify-between transition-colors ${ssoStatus.google ? 'bg-slate-50 dark:bg-slate-900/50 border-emerald-200 dark:border-emerald-900/30' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
-                      {/* Google G Icon Mock */}
-                      <span className="font-bold text-blue-600 text-lg">G</span>
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="G" className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Google Workspace</p>
@@ -587,8 +590,8 @@ export const AuthSync = () => {
                       </p>
                     </div>
                   </div>
-                  <label className={`relative inline-flex items-center ${isEditing ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
-                    <input type="checkbox" className="sr-only peer" checked={ssoStatus.google} onChange={() => toggleSSO('google')} disabled={!isEditing} />
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" checked={ssoStatus.google} onChange={() => toggleSSO('google')} />
                     <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
                   </label>
                 </div>
@@ -597,13 +600,7 @@ export const AuthSync = () => {
                 <div className={`p-4 rounded-lg border flex items-center justify-between transition-colors ${ssoStatus.microsoft ? 'bg-slate-50 dark:bg-slate-900/50 border-emerald-200 dark:border-emerald-900/30' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
-                      {/* Microsoft Icon Mock */}
-                      <div className="grid grid-cols-2 gap-0.5 w-3.5 h-3.5">
-                        <div className="bg-orange-500 w-1.5 h-1.5"></div>
-                        <div className="bg-green-500 w-1.5 h-1.5"></div>
-                        <div className="bg-blue-500 w-1.5 h-1.5"></div>
-                        <div className="bg-yellow-500 w-1.5 h-1.5"></div>
-                      </div>
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="MS" className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Microsoft 365</p>
@@ -612,8 +609,8 @@ export const AuthSync = () => {
                       </p>
                     </div>
                   </div>
-                  <label className={`relative inline-flex items-center ${isEditing ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
-                    <input type="checkbox" className="sr-only peer" checked={ssoStatus.microsoft} onChange={() => toggleSSO('microsoft')} disabled={!isEditing} />
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" checked={ssoStatus.microsoft} onChange={() => toggleSSO('microsoft')} />
                     <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
                   </label>
                 </div>

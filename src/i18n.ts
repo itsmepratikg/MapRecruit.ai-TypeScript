@@ -284,6 +284,10 @@ const resources = {
             "Google Workspace": "Google Workspace",
             "Microsoft 365": "Microsoft 365",
             "Sign in via Passkey": "Sign in via Passkey",
+            "Email optional for passkeys": "Email optional for passkeys",
+            "Add": "Add",
+            "Update": "Update",
+            "Register a passkey for this slot.": "Register a passkey for this slot.",
 
             // --- Profiles Page ---
             "Recently Visited Profiles": "Recently Visited Profiles",

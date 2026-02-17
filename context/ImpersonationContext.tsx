@@ -25,11 +25,13 @@ export const ImpersonationProvider: React.FC<{ children: React.ReactNode }> = ({
         // Sync with storage on mount
         const adminToken = localStorage.getItem('admin_restore_token');
         const mode = localStorage.getItem('impersonation_mode') as 'read-only' | 'full';
+        const cachedTarget = localStorage.getItem('impersonation_target');
 
         if (adminToken) {
             setState({
                 isImpersonating: true,
-                mode: mode || 'read-only'
+                mode: mode || 'read-only',
+                targetUser: cachedTarget ? JSON.parse(cachedTarget) : null
             });
         }
     }, []);
@@ -43,9 +45,13 @@ export const ImpersonationProvider: React.FC<{ children: React.ReactNode }> = ({
 
         // Set Impersonation Context
         localStorage.setItem('impersonation_mode', mode);
+        localStorage.setItem('impersonation_target', JSON.stringify(targetUser));
 
         // Swap to Target Token
         localStorage.setItem('authToken', token);
+
+        // Clear user profile cache to force fresh load of target user
+        localStorage.removeItem('user_profile_cache');
 
         setState({
             isImpersonating: true,
@@ -67,8 +73,10 @@ export const ImpersonationProvider: React.FC<{ children: React.ReactNode }> = ({
             // Clear Backup & Context
             localStorage.removeItem('admin_restore_token');
             localStorage.removeItem('impersonation_mode');
+            localStorage.removeItem('impersonation_target');
+            localStorage.removeItem('user_profile_cache'); // Clear target's cache
 
-            setState({ isImpersonating: false, mode: 'read-only' });
+            setState({ isImpersonating: false, mode: 'read-only', targetUser: null });
 
             window.location.reload();
         }

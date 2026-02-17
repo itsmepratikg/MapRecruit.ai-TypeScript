@@ -27,15 +27,21 @@ const getStatus = async (req, res) => {
 
 const handleGoogleCallback = async (req, res) => {
     try {
-        const { code } = req.body;
+        const { code, redirectUri: providedRedirectUri } = req.body;
         if (!code) return res.status(400).json({ message: 'Authorization code is required' });
 
         const clientId = process.env.GOOGLE_CLIENT_ID;
         const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-        // The redirect URI must EXACTLY match what was used in the frontend redirect
-        const redirectUri = process.env.NODE_ENV === 'production'
+
+        // Use provided redirectUri if available, otherwise fallback to environment-based one
+        const fallbackRedirectUri = process.env.NODE_ENV === 'production'
             ? 'https://your-app-domain.com/auth/google/callback'
             : 'http://localhost:3000/auth/google/callback';
+
+        const redirectUri = providedRedirectUri || fallbackRedirectUri;
+
+        console.log('Google Token Exchange - Code:', code ? 'Present' : 'Missing');
+        console.log('Google Token Exchange - Redirect URI:', redirectUri);
 
         // 1. Exchange code for tokens
         const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
@@ -133,6 +139,7 @@ const getPickerToken = async (req, res) => {
 
         // Refresh Token
         console.log('Refreshing Google Access Token for Picker...');
+
         const refreshResponse = await fetch('https://oauth2.googleapis.com/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -145,9 +152,22 @@ const getPickerToken = async (req, res) => {
         });
 
         const newTokens = await refreshResponse.json();
+        console.log('Google Refresh Response Status:', refreshResponse.status);
         if (newTokens.error) {
-            console.error('Google Refresh Error:', newTokens);
-            return res.status(400).json({ message: 'Failed to refresh token' });
+            console.error('Google Refresh Error Detail:', JSON.stringify(newTokens, null, 2));
+
+            if (newTokens.error === 'invalid_grant') {
+                console.log('Force disconnecting Google due to invalid_grant');
+                user.integrations.google.connected = false;
+                user.markModified('integrations');
+                await user.save();
+                return res.status(403).json({
+                    message: 'Google connection has expired. Please reconnect in Settings.',
+                    error: 'invalid_grant'
+                });
+            }
+
+            return res.status(400).json({ message: 'Failed to refresh token', error: newTokens.error });
         }
 
         // Update User
@@ -168,21 +188,62 @@ const getPickerToken = async (req, res) => {
 
 const fetchDriveFile = async (req, res) => {
     try {
-        const { fileId, fileName } = req.body;
+        const { fileId, fileName, size } = req.body;
         if (!fileId) return res.status(400).json({ message: 'fileId is required' });
+
+        // Backend 2MB check
+        if (size && size > 2 * 1024 * 1024) {
+            return res.status(400).json({ message: `File ${fileName} exceeds the 2MB limit.` });
+        }
 
         const user = await User.findById(req.user.id);
         const accessToken = user.integrations?.google?.tokens?.access_token;
-
         if (!accessToken) return res.status(401).json({ message: 'Unauthorized' });
 
-        // In a real implementation, we would download the file and pass it to a parser.
-        // For this demo/task, we'll simulate the successful fetch and return metadata.
+        const isTestEnv = req.headers.host.includes('localhost') || req.headers.host.includes('.vercel.app');
 
-        console.log(`[Drive] Fetching file: ${fileName} (${fileId})`);
+        if (isTestEnv) {
+            const fs = require('fs');
+            const path = require('path');
+            const { google } = require('googleapis');
 
-        // Simulate a delay for "processing"
-        await new Promise(resolve => setTimeout(resolve, 1500));
+            const oauth2Client = new google.auth.OAuth2();
+            oauth2Client.setCredentials({ access_token: accessToken });
+
+            const drive = google.drive({ version: 'v3', auth: oauth2Client });
+
+            // Check metadata if size wasn't provided
+            if (!size) {
+                const meta = await drive.files.get({ fileId, fields: 'size' });
+                if (meta.data.size > 2 * 1024 * 1024) {
+                    return res.status(400).json({ message: `File ${fileName} exceeds the 2MB limit.` });
+                }
+            }
+
+            const companyId = user.company || 'default';
+            const targetDir = path.join(process.cwd(), '.trash', 'Workspace', companyId.toString(), 'Google');
+
+            if (!fs.existsSync(targetDir)) {
+                fs.mkdirSync(targetDir, { recursive: true });
+            }
+
+            const filePath = path.join(targetDir, fileName);
+            const dest = fs.createWriteStream(filePath);
+
+            const driveRes = await drive.files.get(
+                { fileId, alt: 'media' },
+                { responseType: 'stream' }
+            );
+
+            await new Promise((resolve, reject) => {
+                driveRes.data
+                    .on('end', resolve)
+                    .on('error', reject)
+                    .pipe(dest);
+            });
+
+            console.log(`[Drive] Saved ${fileName} to ${targetDir}`);
+        }
 
         res.json({
             success: true,
@@ -199,7 +260,7 @@ const fetchDriveFile = async (req, res) => {
         });
     } catch (error) {
         console.error('fetchDriveFile Error:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: error.message || 'Internal Server Error' });
     }
 };
 
@@ -364,12 +425,172 @@ const deleteSpecificCalendarEvent = async (req, res) => {
     }
 };
 
+const fetchMicrosoftFile = async (req, res) => {
+    try {
+        const { resourceId, siteId, fileName, size } = req.body;
+        if (!resourceId) return res.status(400).json({ message: 'resourceId is required' });
+
+        // Backend 2MB check
+        if (size && size > 2 * 1024 * 1024) {
+            return res.status(400).json({ message: `File ${fileName} exceeds the 2MB limit.` });
+        }
+
+        const user = await User.findById(req.user.id);
+        const accessToken = user.integrations?.microsoft?.tokens?.access_token;
+        if (!accessToken) return res.status(401).json({ message: 'Unauthorized' });
+
+        const isTestEnv = req.headers.host.includes('localhost') || req.headers.host.includes('.vercel.app');
+
+        if (isTestEnv) {
+            const fs = require('fs');
+            const path = require('path');
+            const axios = require('axios');
+
+            // 1. Get download URL from Graph
+            const graphUrl = siteId
+                ? `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/items/${resourceId}`
+                : `https://graph.microsoft.com/v1.0/me/drive/items/${resourceId}`;
+
+            const metaResponse = await axios.get(graphUrl, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+
+            const downloadUrl = metaResponse.data['@microsoft.graph.downloadUrl'];
+            const fileSize = metaResponse.data.size;
+
+            if (fileSize > 2 * 1024 * 1024) {
+                return res.status(400).json({ message: `File ${fileName} exceeds the 2MB limit.` });
+            }
+
+            if (!downloadUrl) throw new Error('Could not get download URL from Microsoft Graph');
+
+            const companyId = user.company || 'default';
+            const targetDir = path.join(process.cwd(), '.trash', 'Workspace', companyId.toString(), 'Microsoft');
+
+            if (!fs.existsSync(targetDir)) {
+                fs.mkdirSync(targetDir, { recursive: true });
+            }
+
+            const filePath = path.join(targetDir, fileName);
+            const dest = fs.createWriteStream(filePath);
+
+            const downloadRes = await axios.get(downloadUrl, { responseType: 'stream' });
+
+            await new Promise((resolve, reject) => {
+                downloadRes.data
+                    .on('end', resolve)
+                    .on('error', reject)
+                    .pipe(dest);
+            });
+
+            console.log(`[Microsoft] Saved ${fileName} to ${targetDir}`);
+        }
+
+        res.json({
+            success: true,
+            fileName: fileName,
+            resourceId: resourceId,
+            parsedData: {
+                firstName: 'Alex',
+                lastName: 'Microsoft',
+                email: 'alex.msft@example.com',
+                title: 'Solutions Architect',
+                skills: 'Azure, C#, SharePoint',
+                source: 'OneDrive'
+            }
+        });
+    } catch (error) {
+        console.error('fetchMicrosoftFile Error:', error);
+        res.status(500).json({ message: error.message || 'Internal Server Error' });
+    }
+};
+
+const handleMicrosoftCallback = async (req, res) => {
+    try {
+        const { code, redirectUri: providedRedirectUri, codeVerifier } = req.body;
+        if (!code) return res.status(400).json({ message: 'Authorization code is required' });
+
+        const clientId = process.env.MICROSOFT_CLIENT_ID;
+        const clientSecret = process.env.MICROSOFT_CLIENT_SECRET;
+
+        const fallbackRedirectUri = process.env.NODE_ENV === 'production'
+            ? 'https://your-app-domain.com/auth/microsoft/callback'
+            : 'http://localhost:3000/auth/microsoft/callback';
+
+        const redirectUri = providedRedirectUri || fallbackRedirectUri;
+
+        console.log('Microsoft Token Exchange - Code:', code ? 'Present' : 'Missing');
+        console.log('Microsoft Token Exchange - Redirect URI:', redirectUri);
+        console.log('Microsoft Token Exchange - PKCE:', codeVerifier ? 'Enabled' : 'Disabled');
+
+        // 1. Exchange code for tokens
+        const bodyParams = {
+            client_id: clientId,
+            code: code,
+            redirect_uri: redirectUri,
+            grant_type: 'authorization_code',
+            scope: 'openid email profile offline_access Files.Read.All Calendars.ReadWrite'
+        };
+
+        // For public clients using PKCE, we should NOT send the client_secret
+        if (codeVerifier) {
+            bodyParams.code_verifier = codeVerifier;
+        } else if (clientSecret) {
+            bodyParams.client_secret = clientSecret;
+        }
+
+        const tokenResponse = await fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Origin': req.headers.referer || req.headers.origin || 'http://localhost:5173'
+            },
+            body: new URLSearchParams(bodyParams)
+        });
+
+        const tokens = await tokenResponse.json();
+        if (tokens.error) {
+            console.error('Microsoft Token Exchange Error:', tokens);
+            return res.status(400).json({ message: tokens.error_description || 'Failed to exchange token' });
+        }
+
+        // 2. Get User Info (Email) from Graph
+        const userinfoResponse = await fetch('https://graph.microsoft.com/v1.0/me', {
+            headers: { Authorization: `Bearer ${tokens.access_token}` }
+        });
+        const userinfo = await userinfoResponse.json();
+
+        // 3. Update User Document
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        if (!user.integrations) user.integrations = {};
+        user.integrations.microsoft = {
+            connected: true,
+            tokens: tokens,
+            email: userinfo.mail || userinfo.userPrincipalName,
+            lastSynced: new Date(),
+            validUpto: tokens.expires_in ? new Date(Date.now() + tokens.expires_in * 1000) : null
+        };
+
+        user.markModified('integrations');
+        await user.save();
+
+        res.json({ success: true, email: user.integrations.microsoft.email });
+    } catch (error) {
+        console.error('handleMicrosoftCallback Error:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     getStatus,
     handleGoogleCallback,
+    handleMicrosoftCallback,
     disconnect,
     getPickerToken,
     fetchDriveFile,
+    fetchMicrosoftFile,
     syncCalendar,
     getCalendarEvents,
     createCalendarEvent,

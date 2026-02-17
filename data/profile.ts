@@ -1,6 +1,8 @@
 
 
 export interface UserProfileData {
+  _id?: string;
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;

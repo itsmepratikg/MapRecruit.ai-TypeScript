@@ -11,13 +11,18 @@ export const GoogleCallback: React.FC = () => {
     const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
     const [error, setError] = useState<string | null>(null);
 
+    const hasRun = React.useRef(false);
+
     useEffect(() => {
+        if (hasRun.current) return;
+
         const handleAuth = async () => {
             const params = new URLSearchParams(location.search);
             const code = params.get('code');
             const errorParam = params.get('error');
 
             if (errorParam) {
+                hasRun.current = true;
                 setStatus('error');
                 setError(errorParam);
                 addToast(`Auth Error: ${errorParam}`, 'error');
@@ -26,28 +31,34 @@ export const GoogleCallback: React.FC = () => {
             }
 
             if (!code) {
-                setStatus('error');
-                setError('No authorization code received.');
-                setTimeout(() => navigate('/myaccount/usernotifications'), 3000);
-                return;
+                return; // Wait for code
             }
 
+            hasRun.current = true;
+
             try {
-                await integrationService.handleCallback('google', code);
+                const [result] = await Promise.all([
+                    integrationService.handleCallback('google', code),
+                    new Promise(resolve => setTimeout(resolve, 800))
+                ]);
+
                 setStatus('success');
                 addToast('Google Workspace connected successfully!', 'success');
-                setTimeout(() => navigate('/myaccount/usernotifications'), 2000);
+                const returnPath = integrationService.getReturnPath();
+                setTimeout(() => navigate(returnPath), 2000);
             } catch (err: any) {
                 console.error('OAuth Callback Failed:', err);
+
                 setStatus('error');
                 setError(err.response?.data?.message || 'Failed to exchange authorization code.');
                 addToast('Failed to connect Google Workspace', 'error');
-                setTimeout(() => navigate('/myaccount/usernotifications'), 4000);
+                const returnPath = integrationService.getReturnPath();
+                setTimeout(() => navigate(returnPath), 4000);
             }
         };
 
         handleAuth();
-    }, [location, navigate, addToast]);
+    }, [location.search, navigate, addToast]);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
