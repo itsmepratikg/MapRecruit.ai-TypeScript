@@ -119,7 +119,10 @@ export const integrationService = {
             'profile',
             'offline_access',
             'Files.Read.All', // For OneDrive/SharePoint
-            'Calendars.ReadWrite'
+            'Calendars.ReadWrite',
+            'Channel.Create',
+            'ChannelMessage.Send',
+            'Team.ReadBasic.All'
         ].join(' ');
 
         const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?` +

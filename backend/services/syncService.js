@@ -26,35 +26,37 @@ const syncService = {
         }
 
         const tokens = user.integrations.google.tokens;
-        oAuth2Client.setCredentials(tokens);
+        if (!tokens || !tokens.access_token) {
+            throw new Error('No access token found');
+        }
 
-        // Check token expiry/refresh if needed handled by googleapis automatically 
-        // if refresh_token is present, but usually explicit refresh is safer.
-        // For now, assuming access_token is valid or auto-refreshed.
+        oAuth2Client.setCredentials(tokens);
 
         const calendar = google.calendar({ version: 'v3', auth: oAuth2Client });
 
-        // particular time range (e.g., next 7 days)
-        const timeMin = new Date().toISOString();
+        // Sync range: Current time to +30 days
+        const timeMin = new Date();
         const timeMax = new Date();
-        timeMax.setDate(timeMax.getDate() + 30); // Sync next 30 days
+        timeMax.setDate(timeMax.getDate() + 30);
 
         const response = await calendar.events.list({
             calendarId: 'primary',
-            timeMin: timeMin,
+            timeMin: timeMin.toISOString(),
             timeMax: timeMax.toISOString(),
-            maxResults: 50,
+            maxResults: 250, // Increased limit
             singleEvents: true,
             orderBy: 'startTime',
         });
 
-        const events = response.data.items || [];
-        console.log(`[Sync] Found ${events.length} calendar events for user ${userId}`);
+        const fetchedEvents = response.data.items || [];
+        console.log(`[Sync] Found ${fetchedEvents.length} calendar events for user ${userId}`);
 
+        const fetchedEventIds = new Set();
         const savedEvents = [];
 
-        for (const event of events) {
-            // Upsert into SyncedData
+        // 1. Upsert fetched events
+        for (const event of fetchedEvents) {
+            fetchedEventIds.add(event.id);
             const eventData = {
                 userId: user._id,
                 provider: 'google',
@@ -75,18 +77,39 @@ const syncService = {
                     organizer: event.organizer,
                     reminders: event.reminders
                 },
+                status: 'active', // Ensure status is active
                 lastSynced: new Date()
             };
 
             await SyncedData.findOneAndUpdate(
                 { userId: user._id, provider: 'google', itemType: 'calendar', externalId: event.id },
-                eventData,
+                { $set: eventData },
                 { upsert: true, new: true }
             );
             savedEvents.push(eventData);
         }
 
-        return { count: events.length, events: savedEvents };
+        // 2. Handle Deletions: Find events in DB that are NOT in fetchedEvents but fall within the time range
+        // We only check for events that are 'active' locally but missing remotely
+        const eventsToDelete = await SyncedData.find({
+            userId: user._id,
+            provider: 'google',
+            itemType: 'calendar',
+            status: { $ne: 'deleted' },
+            'data.start.dateTime': { $gte: timeMin.toISOString(), $lte: timeMax.toISOString() },
+            externalId: { $nin: Array.from(fetchedEventIds) }
+        });
+
+        if (eventsToDelete.length > 0) {
+            console.log(`[Sync] Marking ${eventsToDelete.length} events as deleted locally.`);
+            const idsToDelete = eventsToDelete.map(e => e._id);
+            await SyncedData.updateMany(
+                { _id: { $in: idsToDelete } },
+                { $set: { status: 'deleted', lastSynced: new Date() } }
+            );
+        }
+
+        return { count: fetchedEvents.length, deleted: eventsToDelete.length, events: savedEvents };
     },
 
     // Placeholder for other sync methods (Microsoft, Email, etc.)

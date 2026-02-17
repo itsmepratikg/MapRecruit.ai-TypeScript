@@ -15,7 +15,6 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 const STORAGE_KEY_PROFILE = 'user_profile_cache';
-const STORAGE_KEY_PROFILE = 'user_profile_cache';
 const STORAGE_KEY_EXPIRY = 'session_expiry';
 const STORAGE_KEY_ETAG = 'user_profile_etag';
 

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const microsoftAuthService = require('../services/microsoftAuthService');
 
 const getStatus = async (req, res) => {
     try {
@@ -436,7 +437,8 @@ const fetchMicrosoftFile = async (req, res) => {
         }
 
         const user = await User.findById(req.user.id);
-        const accessToken = user.integrations?.microsoft?.tokens?.access_token;
+        // Use service to get token (handles refresh)
+        const accessToken = await microsoftAuthService.getAccessToken(req.user.id);
         if (!accessToken) return res.status(401).json({ message: 'Unauthorized' });
 
         const isTestEnv = req.headers.host.includes('localhost') || req.headers.host.includes('.vercel.app');
@@ -529,7 +531,7 @@ const handleMicrosoftCallback = async (req, res) => {
             code: code,
             redirect_uri: redirectUri,
             grant_type: 'authorization_code',
-            scope: 'openid email profile offline_access Files.Read.All Calendars.ReadWrite'
+            scope: 'openid email profile offline_access Files.Read.All Calendars.ReadWrite Channel.Create ChannelMessage.Send Team.ReadBasic.All'
         };
 
         // For public clients using PKCE, we should NOT send the client_secret

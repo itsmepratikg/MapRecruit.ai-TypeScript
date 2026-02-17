@@ -6,6 +6,7 @@ const { sanitizeNoSQL, isValidObjectId } = require('../utils/securityUtils');
 const ScrapeService = require('../services/scrapeService');
 const Workflow = require('../models/Workflow');
 const Interview = require('../models/Interview');
+const notificationDispatcher = require('../services/notificationDispatcher');
 
 // Helper to get allowed client IDs for user in current company
 const getAllowedClientIds = async (userId, companyId) => {
@@ -280,6 +281,12 @@ const createCampaign = async (req, res) => {
             type: 'CAMPAIGN_CREATED',
             title: 'Campaign Created',
             description: `Created campaign: ${campaign.title || 'Untitled'}`
+        });
+
+        // Dispatch Notification (Async, don't await/block response)
+        notificationDispatcher.dispatch(req.user.id, 'CAMPAIGN_CREATED', {
+            message: `New Campaign Created: <b>${campaign.title}</b>`,
+            link: `/campaigns/${campaign._id}`
         });
 
         res.status(201).json(campaign);
