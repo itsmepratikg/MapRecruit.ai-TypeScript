@@ -13,6 +13,24 @@ import { useToast } from '../../components/Toast';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { ConfirmationModal } from '../../components/ConfirmationModal';
 
+const GoogleMeetLogo = ({ className }: { className?: string }) => (
+    <svg className={className} width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 13.5V8.5C22 7.12 20.88 6 19.5 6H16L12 2L8 6H4.5C3.12 6 2 7.12 2 8.5V18.5C2 19.88 3.12 21 4.5 21H19.5C20.88 21 22 19.88 22 18.5V13.5Z" fill="#00832d" fillOpacity="0" />
+        <rect x="2" y="6" width="20" height="15" rx="2" fill="#00ac47" />
+        <path d="M17 11.5L22 8V19L17 15.5V11.5Z" fill="#00832d" />
+        <path d="M12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11Z" fill="white" />
+    </svg>
+);
+
+const MicrosoftTeamsLogo = ({ className }: { className?: string }) => (
+    <svg className={className} width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="4" width="20" height="16" rx="2" fill="#5059c9" />
+        <path d="M8.5 10H15.5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        <path d="M12 10V17" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="17.5" cy="7.5" r="2.5" fill="#5059c9" stroke="white" strokeWidth="2" />
+    </svg>
+);
+
 interface CalendarViewProps {
     timeZone?: string;
     onOpenSettings?: () => void;
@@ -220,6 +238,23 @@ export const CalendarView = ({ timeZone = 'local', onOpenSettings }: CalendarVie
     const handleDateToday = () => { calendarRef.current?.getApi().today(); };
     const changeView = (view: string) => { calendarRef.current?.getApi().changeView(view); };
 
+    const renderEventContent = (eventInfo: any) => {
+        const { event, timeText } = eventInfo;
+        const isGoogleMeet = event.extendedProps?.hangoutLink || event.extendedProps?.data?.hangoutLink || (event.extendedProps?.location && event.extendedProps.location.includes('google.com'));
+        const isTeams = (event.extendedProps?.location && event.extendedProps.location.includes('teams.microsoft.com')) || event.extendedProps?.data?.conferences?.some((c: any) => c.solutionType === 'microsoftTeams');
+
+        return (
+            <div className="flex flex-col h-full overflow-hidden leading-tight p-0.5">
+                <div className="flex items-center gap-1">
+                    {timeText && <span className="text-[10px] font-bold opacity-90 whitespace-nowrap">{timeText}</span>}
+                    {isGoogleMeet && <GoogleMeetLogo className="flex-shrink-0" />}
+                    {isTeams && <MicrosoftTeamsLogo className="flex-shrink-0" />}
+                </div>
+                <div className="truncate font-semibold text-xs mt-0.5">{event.title}</div>
+            </div>
+        );
+    };
+
     return (
         <div className="flex h-full bg-[#f8fafc] dark:bg-slate-950 overflow-hidden font-sans">
             <div className="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full flex-shrink-0 animate-in slide-in-from-left duration-300">
@@ -365,6 +400,7 @@ export const CalendarView = ({ timeZone = 'local', onOpenSettings }: CalendarVie
                         initialView="timeGridWeek"
                         headerToolbar={false}
                         events={[...filteredEvents, ...holidayEvents]}
+                        eventContent={renderEventContent}
                         eventClick={handleEventClick}
                         datesSet={handleDatesSet}
                         height="auto"

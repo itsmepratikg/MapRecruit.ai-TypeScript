@@ -47,6 +47,11 @@ export const SidebarFooter = ({
 
     // Helper to safely check permissions even if roleID is not fully populated yet
     const hasPermission = (setting: string) => {
+        // Fallback: Check root-level accessibilitySettings if available (hybrid data model)
+        if (userProfile?.accessibilitySettings?.[setting] === true || userProfile?.accessibilitySettings?.settings?.[setting] === true) {
+            return true;
+        }
+
         if (!userProfile?.roleID || typeof userProfile.roleID !== 'object') return false;
         // Check root-level flags (new format) or nested settings (old format)
         return (
@@ -144,7 +149,7 @@ export const SidebarFooter = ({
 
     return (
         <div className="p-2 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 mt-auto space-y-1 shrink-0 transition-colors pb-4 lg:pb-2" onClick={(e) => e.stopPropagation()}>
-            {/* DEBUG: Temporary Diagnostic UI */}
+            {/* DEBUG: Temporary Diagnostic UI - Commented out to avoid confusing user
             {(!userProfile?.roleID || typeof userProfile.roleID === 'string') && (
                 <div className="text-[10px] text-red-500 p-1 bg-red-50 mb-1 border border-red-200 rounded max-w-xs overflow-hidden">
                     ❌ Role Data Missing.<br />
@@ -152,6 +157,7 @@ export const SidebarFooter = ({
                     RoleVal: {JSON.stringify(userProfile.role)}
                 </div>
             )}
+            */}
             {userProfile?.roleID && typeof userProfile.roleID === 'object' && !hasPermission('clientSwitcher') && (
                 <div className="text-[10px] text-orange-500 p-1 bg-orange-50 mb-1 border border-orange-200 rounded">
                     ⚠ Perms Loaded but 'clientSwitcher' is false.
