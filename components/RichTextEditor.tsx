@@ -39,6 +39,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     init={{
                         height: height,
                         menubar: true,
+                        license_key: 'gpl',
                         plugins: [
                             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',

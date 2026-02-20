@@ -69,6 +69,7 @@ const SkillChipInput = ({
    type,
    onMoveReq,
    onMovePref,
+   onDropSkill,
    readOnly = false
 }: {
    groups: EditSkillGroup[];
@@ -341,20 +342,6 @@ export const JobDescription = ({ campaign }: { campaign?: Campaign }) => {
       }
    }, [campaign, isEditing]);
 
-   if (!campaign || !formData) return <div className="p-8 text-center text-slate-500">Loading campaign data...</div>;
-
-   const handleSaveClick = () => {
-      setShowSaveConfirm(true);
-   };
-
-   const handleConfirmSave = () => {
-      console.log('Saving campaign...', { ...formData, jobDescription: jdContent });
-      // TODO: Implement API call to save
-      setIsEditing(false);
-      setIsDirty(false);
-      setShowSaveConfirm(false);
-   };
-
    const handleCancelClick = () => {
       if (isDirty) {
          setShowCancelConfirm(true);
@@ -372,6 +359,20 @@ export const JobDescription = ({ campaign }: { campaign?: Campaign }) => {
       window.addEventListener('keydown', handleEscape);
       return () => window.removeEventListener('keydown', handleEscape);
    }, [isEditing, isDirty, showSaveConfirm, showCancelConfirm]);
+
+   if (!campaign || !formData) return <div className="p-8 text-center text-slate-500">Loading campaign data...</div>;
+
+   const handleSaveClick = () => {
+      setShowSaveConfirm(true);
+   };
+
+   const handleConfirmSave = () => {
+      console.log('Saving campaign...', { ...formData, jobDescription: jdContent });
+      // TODO: Implement API call to save
+      setIsEditing(false);
+      setIsDirty(false);
+      setShowSaveConfirm(false);
+   };
 
    const handleConfirmCancel = () => {
       setIsEditing(false);
