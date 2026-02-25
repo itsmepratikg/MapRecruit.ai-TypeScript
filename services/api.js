@@ -374,4 +374,20 @@ export const schemaService = {
     }
 };
 
+export const integrationService = {
+    getStatus: async () => {
+        const response = await api.get('/user/integrations');
+        return response.data;
+    },
+    syncAll: async () => {
+        const response = await api.post('/user/integrations/sync');
+        return response.data;
+    },
+    syncProfilePhoto: async (provider) => {
+        const response = await api.get(`/user/integrations/profile-photo/${provider}`);
+        return response.data;
+    }
+};
+
 export default api;
+

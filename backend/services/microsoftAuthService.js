@@ -5,9 +5,10 @@ const microsoftAuthService = {
     /**
      * Retrieves a valid access token for the user, refreshing it if necessary.
      */
-    async getAccessToken(userId) {
-        const user = await User.findById(userId);
+    async getAccessToken(userId, preFetchedUser = null) {
+        const user = preFetchedUser || await User.findById(userId);
         if (!user || !user.integrations?.microsoft?.connected) {
+            if (preFetchedUser) return null; // Don't throw if we're just checking status
             throw new Error('Microsoft integration not connected');
         }
 

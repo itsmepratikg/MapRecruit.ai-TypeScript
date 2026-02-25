@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Lock, Shield, CheckCircle, XCircle, Eye, EyeOff,
-  Save, RefreshCw, AlertCircle, Check, Key, Globe, LogOut, Edit2, AlertTriangle, Fingerprint, X
+  Save, RefreshCw, AlertCircle, Check, Key, Globe, LogOut, Edit2, AlertTriangle, Fingerprint, X, Info
 } from '../../components/Icons';
 import { useToast } from '../../components/Toast';
 import { PasskeySettings } from './PasskeySettings';
@@ -93,10 +93,19 @@ export const AuthSync = () => {
     confirm: ''
   });
 
-  const [ssoStatus, setSsoStatus] = useState({
+  const [ssoStatus, setSsoStatus] = useState<{
+    google: boolean;
+    microsoft: boolean;
+    passkey: boolean;
+    googleValidUpto: string | Date | null | undefined;
+    microsoftValidUpto: string | Date | null | undefined;
+  }>({
     google: true,
     microsoft: false,
-    passkey: false
+    passkey: false,
+    googleValidUpto: null,
+    microsoftValidUpto: null,
+    isSyncing: false
   });
 
   const [authSettings, setAuthSettings] = useState({
@@ -110,6 +119,27 @@ export const AuthSync = () => {
       microsoft: { enable: false }
     }
   });
+
+  const manualSync = async () => {
+    setSsoStatus(prev => ({ ...prev, isSyncing: true }));
+    try {
+      const response = await integrationService.syncAll();
+      if (response.success) {
+        addToast("Workspace integrations refreshed successfully.", "success");
+        setSsoStatus(prev => ({
+          ...prev,
+          google: response.status.google.connected,
+          microsoft: response.status.microsoft.connected,
+          googleValidUpto: response.status.google.validUpto,
+          microsoftValidUpto: response.status.microsoft.validUpto
+        }));
+      }
+    } catch (error) {
+      addToast("Failed to refresh integrations.", "error");
+    } finally {
+      setSsoStatus(prev => ({ ...prev, isSyncing: false }));
+    }
+  };
 
 
   // Sync with Real User Profile for Passkey Status
@@ -125,7 +155,9 @@ export const AuthSync = () => {
         setSsoStatus(prev => ({
           ...prev,
           google: status.google.connected,
-          microsoft: status.microsoft.connected
+          microsoft: status.microsoft.connected,
+          googleValidUpto: status.google?.validUpto,
+          microsoftValidUpto: status.microsoft?.validUpto
         }));
 
         if (settings) {
@@ -566,7 +598,17 @@ export const AuthSync = () => {
                 <h3 className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                   <Globe size={18} className="text-blue-500" /> Workspace Sign-in
                 </h3>
-                <span className="text-[10px] uppercase font-bold text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">SSO</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={manualSync}
+                    disabled={ssoStatus.isSyncing}
+                    className={`p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors ${ssoStatus.isSyncing ? 'animate-spin text-emerald-500' : 'text-slate-400'}`}
+                    title="Force refresh connections"
+                  >
+                    <RefreshCw size={16} />
+                  </button>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">SSO</span>
+                </div>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
                 Connect your corporate account or use passkeys for easier access.
@@ -583,7 +625,16 @@ export const AuthSync = () => {
                       <div>
                         <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Google Workspace</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400">
-                          {ssoStatus.google ? <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><CheckCircle size={10} /> Connected</span> : 'Not Connected'}
+                          {ssoStatus.google ? (
+                            <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                              <CheckCircle size={10} /> Connected
+                              {ssoStatus.googleValidUpto && (
+                                <span title={`Token expires at: ${new Date(ssoStatus.googleValidUpto).toLocaleString()}`} className="cursor-help text-emerald-500 hover:text-emerald-700 ml-1">
+                                  <Info size={12} />
+                                </span>
+                              )}
+                            </span>
+                          ) : 'Not Connected'}
                         </p>
                       </div>
                     </div>
@@ -605,7 +656,16 @@ export const AuthSync = () => {
                       <div>
                         <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Microsoft 365</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400">
-                          {ssoStatus.microsoft ? <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><CheckCircle size={10} /> Connected</span> : 'Not Connected'}
+                          {ssoStatus.microsoft ? (
+                            <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                              <CheckCircle size={10} /> Connected
+                              {ssoStatus.microsoftValidUpto && (
+                                <span title={`Token expires at: ${new Date(ssoStatus.microsoftValidUpto).toLocaleString()}`} className="cursor-help text-emerald-500 hover:text-emerald-700 ml-1">
+                                  <Info size={12} />
+                                </span>
+                              )}
+                            </span>
+                          ) : 'Not Connected'}
                         </p>
                       </div>
                     </div>

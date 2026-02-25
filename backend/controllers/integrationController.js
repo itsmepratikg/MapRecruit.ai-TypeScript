@@ -1,23 +1,46 @@
 const User = require('../models/User');
+const googleAuthService = require('../services/googleAuthService');
 const microsoftAuthService = require('../services/microsoftAuthService');
+const syncService = require('../services/syncService');
 
 const getStatus = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id);
+        let user = await User.findById(req.user.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
+
+        let modified = false;
+
+        // Proactively refresh tokens if they are close to expiring
+        if (user.integrations?.google?.connected) {
+            try {
+                const oldToken = user.integrations.google.tokens?.access_token;
+                const newToken = await googleAuthService.getAccessToken(user._id, user);
+                if (oldToken !== newToken) modified = true;
+            } catch (e) { console.warn('Silently failed google refresh in status'); }
+        }
+        if (user.integrations?.microsoft?.connected) {
+            try {
+                const oldToken = user.integrations.microsoft.tokens?.access_token;
+                const newToken = await microsoftAuthService.getAccessToken(user._id, user);
+                if (oldToken !== newToken) modified = true;
+            } catch (e) { console.warn('Silently failed microsoft refresh in status'); }
+        }
+
+        // If tokens were refreshed, re-fetch just once to be safe, or just use the mutated object
+        const finalUser = modified ? await User.findById(req.user.id) : user;
 
         res.json({
             google: {
-                connected: user.integrations?.google?.connected || false,
-                email: user.integrations?.google?.email,
-                lastSynced: user.integrations?.google?.lastSynced,
-                validUpto: user.integrations?.google?.validUpto
+                connected: finalUser.integrations?.google?.connected || false,
+                email: finalUser.integrations?.google?.email,
+                lastSynced: finalUser.integrations?.google?.lastSynced,
+                validUpto: finalUser.integrations?.google?.validUpto
             },
             microsoft: {
-                connected: user.integrations?.microsoft?.connected || false,
-                email: user.integrations?.microsoft?.email,
-                lastSynced: user.integrations?.microsoft?.lastSynced,
-                validUpto: user.integrations?.microsoft?.validUpto
+                connected: finalUser.integrations?.microsoft?.connected || false,
+                email: finalUser.integrations?.microsoft?.email,
+                lastSynced: finalUser.integrations?.microsoft?.lastSynced,
+                validUpto: finalUser.integrations?.microsoft?.validUpto
             }
         });
     } catch (error) {
@@ -124,63 +147,9 @@ const disconnect = async (req, res) => {
 
 const getPickerToken = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id);
-        if (!user || !user.integrations?.google?.connected) {
-            return res.status(401).json({ message: 'Google Workspace not connected' });
-        }
-
-        const tokens = user.integrations.google.tokens;
-
-        // Check if token is expired (or close to it)
-        const isExpired = tokens.expiry_date ? (Date.now() > (tokens.expiry_date - 60000)) : true;
-
-        if (!isExpired) {
-            return res.json({ access_token: tokens.access_token });
-        }
-
-        // Refresh Token
-        console.log('Refreshing Google Access Token for Picker...');
-
-        const refreshResponse = await fetch('https://oauth2.googleapis.com/token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                client_id: process.env.GOOGLE_CLIENT_ID,
-                client_secret: process.env.GOOGLE_CLIENT_SECRET,
-                refresh_token: tokens.refresh_token,
-                grant_type: 'refresh_token'
-            })
-        });
-
-        const newTokens = await refreshResponse.json();
-        console.log('Google Refresh Response Status:', refreshResponse.status);
-        if (newTokens.error) {
-            console.error('Google Refresh Error Detail:', JSON.stringify(newTokens, null, 2));
-
-            if (newTokens.error === 'invalid_grant') {
-                console.log('Force disconnecting Google due to invalid_grant');
-                user.integrations.google.connected = false;
-                user.markModified('integrations');
-                await user.save();
-                return res.status(403).json({
-                    message: 'Google connection has expired. Please reconnect in Settings.',
-                    error: 'invalid_grant'
-                });
-            }
-
-            return res.status(400).json({ message: 'Failed to refresh token', error: newTokens.error });
-        }
-
-        // Update User
-        user.integrations.google.tokens = {
-            ...tokens,
-            ...newTokens,
-            expiry_date: Date.now() + (newTokens.expires_in * 1000)
-        };
-        user.markModified('integrations');
-        await user.save();
-
-        res.json({ access_token: newTokens.access_token });
+        // Use service to get token (handles refresh)
+        const accessToken = await googleAuthService.getAccessToken(req.user.id);
+        res.json({ access_token: accessToken });
     } catch (error) {
         console.error('getPickerToken Error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -198,8 +167,9 @@ const fetchDriveFile = async (req, res) => {
         }
 
         const user = await User.findById(req.user.id);
-        const accessToken = user.integrations?.google?.tokens?.access_token;
-        if (!accessToken) return res.status(401).json({ message: 'Unauthorized' });
+        // Use service to get token (handles refresh)
+        const accessToken = await googleAuthService.getAccessToken(req.user.id);
+        if (!accessToken) return res.status(403).json({ message: 'Unauthorized Google Access' });
 
         const isTestEnv = req.headers.host.includes('localhost') || req.headers.host.includes('.vercel.app');
 
@@ -265,8 +235,6 @@ const fetchDriveFile = async (req, res) => {
     }
 };
 
-const syncService = require('../services/syncService');
-
 // ... (Existing controller methods)
 
 const syncCalendar = async (req, res) => {
@@ -308,8 +276,9 @@ const getCalendarEvents = async (req, res) => {
 const createCalendarEvent = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        const accessToken = user.integrations?.google?.tokens?.access_token;
-        if (!accessToken) return res.status(401).json({ message: 'Google not connected' });
+        // Use service to get token (handles refresh)
+        const accessToken = await googleAuthService.getAccessToken(req.user.id);
+        if (!accessToken) return res.status(403).json({ message: 'Google not connected' });
 
         const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1', {
             method: 'POST',
@@ -359,8 +328,9 @@ const updateCalendarEvent = async (req, res) => {
     try {
         const { eventId } = req.params;
         const user = await User.findById(req.user.id);
-        const accessToken = user.integrations?.google?.tokens?.access_token;
-        if (!accessToken) return res.status(401).json({ message: 'Google not connected' });
+        // Use service to get token (handles refresh)
+        const accessToken = await googleAuthService.getAccessToken(req.user.id);
+        if (!accessToken) return res.status(403).json({ message: 'Google not connected' });
 
         const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${eventId}?conferenceDataVersion=1`, {
             method: 'PATCH',
@@ -402,8 +372,9 @@ const deleteSpecificCalendarEvent = async (req, res) => {
     try {
         const { eventId } = req.params;
         const user = await User.findById(req.user.id);
-        const accessToken = user.integrations?.google?.tokens?.access_token;
-        if (!accessToken) return res.status(401).json({ message: 'Google not connected' });
+        // Use service to get token (handles refresh)
+        const accessToken = await googleAuthService.getAccessToken(req.user.id);
+        if (!accessToken) return res.status(403).json({ message: 'Google not connected' });
 
         const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${eventId}`, {
             method: 'DELETE',
@@ -439,7 +410,7 @@ const fetchMicrosoftFile = async (req, res) => {
         const user = await User.findById(req.user.id);
         // Use service to get token (handles refresh)
         const accessToken = await microsoftAuthService.getAccessToken(req.user.id);
-        if (!accessToken) return res.status(401).json({ message: 'Unauthorized' });
+        if (!accessToken) return res.status(403).json({ message: 'Unauthorized Microsoft Access' });
 
         const isTestEnv = req.headers.host.includes('localhost') || req.headers.host.includes('.vercel.app');
 
@@ -585,7 +556,106 @@ const handleMicrosoftCallback = async (req, res) => {
     }
 };
 
+const syncAll = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        let results = { google: null, microsoft: null };
+
+        if (user.integrations?.google?.connected) {
+            try {
+                await googleAuthService.getAccessToken(user._id, user);
+                // Also trigger a calendar sync since the user is explicitly asking for a sync
+                try {
+                    await syncService.fetchUserCalendarEvents(user._id);
+                    results.google = { success: true, synced: true };
+                } catch (syncErr) {
+                    console.warn('Silent calendar sync failure in syncAll:', syncErr.message);
+                    results.google = { success: true, synced: false };
+                }
+            } catch (err) {
+                results.google = { success: false, error: err.message };
+            }
+        }
+
+        if (user.integrations?.microsoft?.connected) {
+            try {
+                await microsoftAuthService.getAccessToken(user._id, user);
+                // Also trigger an outlook sync
+                try {
+                    await syncService.fetchUserOutlookEvents(user._id);
+                    results.microsoft = { success: true, synced: true };
+                } catch (syncErr) {
+                    console.warn('Silent outlook sync failure in syncAll:', syncErr.message);
+                    results.microsoft = { success: true, synced: false };
+                }
+            } catch (err) {
+                results.microsoft = { success: false, error: err.message };
+            }
+        }
+
+        // Re-fetch final status
+        const updatedUser = await User.findById(req.user.id);
+
+        res.json({
+            success: true,
+            results,
+            status: {
+                google: {
+                    connected: updatedUser.integrations?.google?.connected || false,
+                    validUpto: updatedUser.integrations?.google?.validUpto
+                },
+                microsoft: {
+                    connected: updatedUser.integrations?.microsoft?.connected || false,
+                    validUpto: updatedUser.integrations?.microsoft?.validUpto
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Manual Sync Error:', error);
+        res.status(500).json({ message: 'Manual sync failed' });
+    }
+};
+
+const syncProfilePhoto = async (req, res) => {
+    try {
+        const { provider } = req.params;
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        if (provider === 'google') {
+            const accessToken = await googleAuthService.getAccessToken(user._id, user);
+            const userinfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            const userinfo = await userinfoResponse.json();
+            if (userinfo.picture) {
+                return res.json({ photoUrl: userinfo.picture });
+            }
+        } else if (provider === 'microsoft') {
+            const accessToken = await microsoftAuthService.getAccessToken(user._id, user);
+            const photoResponse = await fetch('https://graph.microsoft.com/v1.0/me/photo/$value', {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+
+            if (photoResponse.ok) {
+                const buffer = await photoResponse.arrayBuffer();
+                const base64 = Buffer.from(buffer).toString('base64');
+                const contentType = photoResponse.headers.get('content-type') || 'image/jpeg';
+                return res.json({ photoUrl: `data:${contentType};base64,${base64}` });
+            }
+        }
+
+        res.status(400).json({ message: 'Could not fetch profile photo from provider. Ensure it is set there.' });
+    } catch (error) {
+        console.error('Sync Profile Photo Error:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
+
     getStatus,
     handleGoogleCallback,
     handleMicrosoftCallback,
@@ -597,5 +667,8 @@ module.exports = {
     getCalendarEvents,
     createCalendarEvent,
     updateCalendarEvent,
-    deleteSpecificCalendarEvent
+    deleteSpecificCalendarEvent,
+    syncAll,
+    syncProfilePhoto
 };
+

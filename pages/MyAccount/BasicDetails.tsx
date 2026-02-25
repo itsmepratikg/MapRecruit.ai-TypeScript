@@ -3,13 +3,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
    User, Upload, Search, ChevronDown, Check, ChevronLeft,
-   MapPin, Mail, Phone, Briefcase, Building2, Users, X
+   MapPin, Mail, Phone, Briefcase, Building2, Users, X,
+   RefreshCw, Trash2
 } from '../../components/Icons';
+
 import { useToast } from '../../components/Toast';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { COLORS } from '../../data/profile';
 import { userService, schemaService } from '../../services/api';
 import { Save } from '../../components/Icons'; // Ensure Save icon is imported
+import { ConfirmationModal } from '../../components/ConfirmationModal';
 
 // --- Constants ---
 
@@ -235,7 +238,10 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
    const [zoomLevel, setZoomLevel] = useState(1);
    const [schema, setSchema] = useState<any>(null);
    const [schemaLoading, setSchemaLoading] = useState(true);
+   const [showRemoveConfirm, setShowRemoveConfirm] = useState(false); // Added state for remove confirmation
+   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
    const fileInputRef = useRef<HTMLInputElement>(null);
+
 
    // Load Schema from MongoDB
    useEffect(() => {
@@ -269,7 +275,7 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
    }, [userOverride]);
 
    const selectedCountry = COUNTRIES.find(c => c.code === formData?.countryCode) || COUNTRIES[0];
-   const selectedColorObj = COLORS.find(c => c.name === formData?.color) || COLORS[0];
+   const selectedColorObj = COLORS.find(c => c.name === formData?.color || c.hex === formData?.color) || COLORS[0];
 
    const getInitials = (fname?: string, lname?: string) => {
       const f = fname || '?';
@@ -304,8 +310,36 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
       reader.readAsDataURL(file);
    };
 
-   const handleSave = async () => {
+   const handleSyncPhoto = async (provider: 'google' | 'microsoft') => {
+      try {
+         const { integrationService } = await import('../../services/api');
+         const response = await integrationService.syncProfilePhoto(provider);
+         if (response.photoUrl) {
+            setFormData((prev: any) => ({ ...prev, avatar: response.photoUrl }));
+            setZoomLevel(1);
+            addToast(`Profile photo synced from ${provider.charAt(0).toUpperCase() + provider.slice(1)}`, 'success');
+         }
+      } catch (error: any) {
+         addToast(error.message || `Failed to sync photo from ${provider}. Ensure the account is connected.`, 'error');
+      }
+   };
+
+   const handleRemovePhoto = () => {
+      setFormData((prev: any) => ({ ...prev, avatar: null }));
+      setShowRemoveConfirm(false);
+      addToast('Profile photo removed locally. Save changes to apply.', 'info');
+   };
+
+
+   const handleSave = async (isProceeding = false) => {
+      // If we need confirmation and haven't gotten it yet
+      if (!isProceeding) {
+         setShowSaveConfirm(true);
+         return;
+      }
+
       // If override is provided, we delegate saving to parent
+
       if (onSaveOverride) {
          onSaveOverride(formData);
          return;
@@ -395,8 +429,7 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
                   {/* Avatar Column - Find avatar field in schema */}
                   <div className="lg:col-span-4 flex flex-col items-center">
                      <div
-                        className={`w-48 h-48 rounded-full flex items-center justify-center text-5xl font-bold shadow-lg mb-4 overflow-hidden border-4 border-white dark:border-slate-800 ${!formData.avatar ? selectedColorObj.class : 'bg-slate-100'}`}
-                        style={formData.avatar ? {} : { color: 'white' }}
+                        className={`w-48 h-48 rounded-full flex items-center justify-center text-4xl font-bold border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden mb-6 ${!formData.avatar ? selectedColorObj.class : 'bg-slate-100'}`}
                      >
                         {formData.avatar ? (
                            <img src={formData.avatar} alt="Profile" className="w-full h-full object-cover" />
@@ -502,7 +535,7 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
                                        src={formData.avatar}
                                        alt="Preview"
                                        style={{ transform: `scale(${zoomLevel})` }}
-                                       className="max-w-none transition-transform duration-75 cursor-move"
+                                       className="w-full h-full object-cover transition-transform duration-75 cursor-move"
                                     />
                                  </div>
                               ) : (
@@ -530,6 +563,74 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
                            </p>
                            <p className="text-[10px] text-slate-400 mt-1">Supports JPG, PNG, GIF</p>
                         </div>
+
+                        {/* Provider Sync Buttons */}
+                        <div className="w-full flex items-center justify-center gap-4">
+                           {userProfile?.integrations?.google?.connected && (
+                              <button
+                                 onClick={(e) => { e.stopPropagation(); handleSyncPhoto('google'); }}
+                                 className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors shadow-sm"
+                                 title="Sync from Google"
+                              >
+                                 <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.28 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.67-.35-1.39-.35-2.09s.13-1.42.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                                 </svg>
+                                 Sync
+                              </button>
+                           )}
+                           {userProfile?.integrations?.microsoft?.connected && (
+                              <button
+                                 onClick={(e) => { e.stopPropagation(); handleSyncPhoto('microsoft'); }}
+                                 className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors shadow-sm"
+                                 title="Sync from Microsoft"
+                              >
+                                 <svg className="w-4 h-4" viewBox="0 0 23 23">
+                                    <path fill="#f3f3f3" d="M0 0h23v23H0z" />
+                                    <path fill="#f35325" d="M1 1h10v10H1z" />
+                                    <path fill="#81bc06" d="M12 1h10v10H12z" />
+                                    <path fill="#05a6f0" d="M1 12h10v10H1z" />
+                                    <path fill="#ffba08" d="M12 12h10v10H12z" />
+                                 </svg>
+                                 Sync
+                              </button>
+                           )}
+                           {formData.avatar && (
+                              <button
+                                 onClick={(e) => { e.stopPropagation(); setShowRemoveConfirm(true); }}
+                                 className="flex items-center gap-2 px-3 py-1.5 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-lg text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors shadow-sm"
+                              >
+                                 <Trash2 size={14} />
+                                 Remove
+                              </button>
+                           )}
+                        </div>
+
+                        {/* Remove Confirmation */}
+                        {showRemoveConfirm && (
+                           <div className="w-full p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-100 dark:border-red-900/30 animate-in slide-in-from-top-2 duration-200">
+                              <p className="text-xs text-red-700 dark:text-red-300 font-medium mb-3 text-center">
+                                 Are you sure you want to remove your profile picture?
+                              </p>
+                              <div className="flex gap-3">
+                                 <button
+                                    onClick={() => setShowRemoveConfirm(false)}
+                                    className="flex-1 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                                 >
+                                    Cancel
+                                 </button>
+                                 <button
+                                    onClick={handleRemovePhoto}
+                                    className="flex-1 px-3 py-1.5 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition-colors shadow-sm"
+                                 >
+                                    Yes, Remove
+                                 </button>
+                              </div>
+                           </div>
+                        )}
+
 
                         {formData.avatar && (
                            <div className="w-full space-y-2">
@@ -714,7 +815,18 @@ export const BasicDetails = ({ userOverride, onSaveOverride, onBack }: BasicDeta
                   </div>
                </div>
             )}
+            <ConfirmationModal
+               isOpen={showSaveConfirm}
+               onClose={() => setShowSaveConfirm(false)}
+               onConfirm={() => handleSave(true)}
+               title={t("Save Changes?")}
+               message={t("Are you sure you want to save these profile changes?")}
+               confirmText={t("Yes, Save")}
+               cancelText={t("Cancel")}
+            />
          </div>
       </div>
    );
 };
+
+

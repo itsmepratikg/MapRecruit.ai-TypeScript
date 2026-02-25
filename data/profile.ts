@@ -36,6 +36,7 @@ export const PROFILE_CLIENTS = [
 
 export const COLORS = [
   { name: 'Red', hex: '#ef4444', class: 'bg-red-500 text-white' },
+  { name: 'Mahogany', hex: '#922B21', class: 'bg-[#922B21] text-white' },
   { name: 'Dark Orchid', hex: '#9932cc', class: 'bg-purple-600 text-white' },
   { name: 'Blue', hex: '#3b82f6', class: 'bg-blue-500 text-white' },
   { name: 'Pale Green', hex: '#98fb98', class: 'bg-green-300 text-green-900' },

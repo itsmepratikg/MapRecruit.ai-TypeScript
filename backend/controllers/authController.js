@@ -10,7 +10,8 @@ const Client = require('../models/Client');
  */
 const filterClientsByContext = async (userObject) => {
     // console.log(`[DEBUG] filterClientsByContext - User: ${userObject.email}, Context Company: ${userObject.currentCompanyID || userObject.companyID}`);
-    const rawClients = userObject.clients || [];
+    const rawClients = userObject.clientID || userObject.clients || [];
+
     const contextCompanyID = userObject.currentCompanyID || userObject.companyID;
 
     if (!contextCompanyID || rawClients.length === 0) {

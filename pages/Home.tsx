@@ -8,6 +8,7 @@ import { useScreenSize } from '../hooks/useScreenSize';
 import { useTranslation } from 'react-i18next';
 import { campaignService } from '../services/api';
 import api from '../services/api';
+import { integrationService } from '../services/integrationService';
 
 interface HomeProps {
     onNavigate: (tab: string) => void;
@@ -44,7 +45,18 @@ export const Home = ({ onNavigate }: HomeProps) => {
                 console.error("Failed to fetch dashboard stats:", err);
             }
         };
+
+        const triggerBackgroundSync = async () => {
+            try {
+                // Silent background sync to keep tokens alive and data fresh
+                await integrationService.syncAll();
+            } catch (err) {
+                console.warn("Background integration sync failed:", err);
+            }
+        };
+
         fetchStats();
+        triggerBackgroundSync();
     }, []);
 
     // Determine current layout mode

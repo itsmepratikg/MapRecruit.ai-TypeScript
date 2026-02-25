@@ -12,11 +12,15 @@ const {
     getCalendarEvents,
     createCalendarEvent,
     updateCalendarEvent,
-    deleteSpecificCalendarEvent
+    deleteSpecificCalendarEvent,
+    syncAll,
+    syncProfilePhoto
 } = require('../controllers/integrationController');
+
 const { protect } = require('../middleware/authMiddleware');
 
 router.get('/', protect, getStatus);
+router.post('/sync', protect, syncAll);
 router.get('/tokens/google', protect, getPickerToken);
 router.post('/google/callback', protect, handleGoogleCallback);
 router.post('/google/drive/fetch', protect, fetchDriveFile);
@@ -27,6 +31,8 @@ router.get('/google/calendar/events', protect, getCalendarEvents);
 router.post('/google/calendar/events', protect, createCalendarEvent);
 router.put('/google/calendar/events/:eventId', protect, updateCalendarEvent);
 router.delete('/google/calendar/events/:eventId', protect, deleteSpecificCalendarEvent);
+router.get('/profile-photo/:provider', protect, syncProfilePhoto);
 router.delete('/:provider', protect, disconnect);
+
 
 module.exports = router;

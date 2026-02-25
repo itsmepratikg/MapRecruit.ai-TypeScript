@@ -95,15 +95,34 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     safeActiveClientID = userData.activeClient._id;
                 }
 
+                const teams = Array.isArray(userData.clientID)
+                    ? userData.clientID.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c)
+                    : (userData.teams || []);
+
+                // Find active client name from client list if possible
+                let activeClientName = userData.activeClient || 'NA';
+                if (Array.isArray(userData.clientID) && safeActiveClientID) {
+                    const activeObj = userData.clientID.find((c: any) => {
+                        const cid = (c._id || c.id || c).toString();
+                        return cid === safeActiveClientID.toString();
+                    });
+                    if (activeObj && typeof activeObj === 'object') {
+                        activeClientName = activeObj.clientName || activeObj.name;
+                    }
+                }
+
+
                 const mappedProfile = {
                     ...userData,
                     activeClientID: safeActiveClientID,
+                    activeClient: activeClientName,
                     _id: userData._id || userData.id,
+                    color: userData.color || userData.userColor || '#3b82f6',
                     phone: userData.phone || userData.mobile || userData.phoneNumber,
-                    teams: Array.isArray(userData.clientID)
-                        ? userData.clientID.map((c: any) => typeof c === 'object' ? (c.clientName || c.name) : c)
-                        : (userData.teams || []),
+                    location: userData.location || (Array.isArray(userData.locations) && userData.locations[0]?.text) || 'NA',
+                    teams: teams,
                 };
+
 
                 // Save New Data & ETag
                 setUserProfile(mappedProfile);

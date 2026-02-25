@@ -265,8 +265,11 @@ export const integrationService = {
     /**
      * getPublicSettings: Fetches public integration settings (No Auth Required)
      */
-    async getPublicSettings(): Promise<any> {
-        const response = await api.get('/v1/integration-settings/public/config');
+    /**
+     * Triggers a manual sync/refresh for all connected workspace integrations.
+     */
+    async syncAll(): Promise<{ success: boolean; results: any; status: WorkspaceIntegrations }> {
+        const response = await api.post('/user/integrations/sync');
         return response.data;
     }
 };

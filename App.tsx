@@ -291,6 +291,31 @@ const AppContent = () => {
           { duration: Infinity, id: 'workspace-status-reminder' }
         );
       }
+
+      const checkTokenStatus = (validUpto: string | Date | undefined | null, name: string, connected: boolean, email?: string) => {
+        const now = Date.now();
+        const expiryTime = validUpto ? new Date(validUpto).getTime() : 0;
+
+        // Only show if the backend has explicitly marked it as disconnected 
+        if (email && !connected) {
+          addToast(`${name} connection has expired or been revoked. Please reconnect.`, "error", { duration: Infinity, id: `token-status-${name}` });
+        }
+
+      };
+
+      checkTokenStatus(
+        userProfile.integrations?.google?.validUpto,
+        'Google Workspace',
+        !!googleConnected,
+        userProfile.integrations?.google?.email
+      );
+
+      checkTokenStatus(
+        userProfile.integrations?.microsoft?.validUpto,
+        'Microsoft 365',
+        !!microsoftConnected,
+        userProfile.integrations?.microsoft?.email
+      );
     }
   }, [isAuthenticated, !!userProfile, addToast]);
 
