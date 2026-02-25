@@ -14,6 +14,7 @@ import { AuthSync } from './AuthSync';
 import { UserNotifications } from './UserNotifications';
 import { LoginSessions } from './LoginSessions';
 import { PasskeySettings } from './PasskeySettings';
+import { GoogleChatLinking } from './GoogleChatLinking';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 interface MyAccountProps {
@@ -51,6 +52,7 @@ export const MyAccount = ({ userOverride }: MyAccountProps) => {
           <Route path="rolepermissions" element={<RolesPermissions />} />
           <Route path="authsync" element={<AuthSync />} />
           <Route path="usernotifications" element={<UserNotifications />} />
+          <Route path="usernotifications/googlechat" element={<GoogleChatLinking />} />
           <Route path="security" element={<PasskeySettings />} />
           <Route path="loginsessions" element={<LoginSessions />} />
           {/* Prevent recursive loops by redirecting to the base absolute path if no match */}

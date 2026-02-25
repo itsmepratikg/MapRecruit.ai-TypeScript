@@ -100,7 +100,8 @@ const userSchema = mongoose.Schema({
         google: {
             connected: { type: Boolean, default: false },
             tokens: { type: mongoose.Schema.Types.Mixed },
-            email: { type: String }
+            email: { type: String },
+            chatSpaceId: { type: String }
         },
         microsoft: {
             connected: { type: Boolean, default: false },

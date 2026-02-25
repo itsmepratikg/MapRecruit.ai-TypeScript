@@ -8,7 +8,7 @@ import { ChevronLeft } from '../../../components/Icons';
 import { PlaceholderView } from '../components/PlaceholderView';
 import { Users, FileText, CheckCircle } from '../../../components/Icons';
 import { ClientInformation } from './components/ClientInformation';
-import { ClientSettings } from './components/ClientSettings';
+import { CustomFieldsPanel } from './components/CustomFieldsPanel';
 
 export const ClientProfileContainer = () => {
     const { t } = useTranslation();
@@ -68,15 +68,7 @@ export const ClientProfileContainer = () => {
                     </div>
                 );
             case 'customfields':
-                return (
-                    <div className="p-8 lg:p-12">
-                        <PlaceholderView
-                            title={t("Custom Fields")}
-                            description={t("Configure Custom Fields for Campaigns, Resume, and Interviews.")}
-                            icon={FileText}
-                        />
-                    </div>
-                );
+                return <CustomFieldsPanel clientId={clientId || ''} />;
             case 'screeningrounds':
                 return (
                     <div className="p-8 lg:p-12">

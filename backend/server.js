@@ -201,6 +201,7 @@ app.use('/api/schemas', require('./routes/schemaRoutes'));
 app.use('/api/user/integrations', require('./routes/integrationRoutes'));
 app.use('/api/webhooks', require('./routes/webhookRoutes'));
 app.use('/api/support', require('./routes/supportRoutes'));
+app.use('/api/chat', require('./routes/chatRoutes'));
 
 // Integration Routes (SharePoint, Drive, Uploads)
 app.use('/api/v1/sharepoint', require('./routes/sharepointRoutes'));
