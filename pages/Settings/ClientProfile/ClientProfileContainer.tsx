@@ -9,6 +9,7 @@ import { PlaceholderView } from '../components/PlaceholderView';
 import { Users, FileText, CheckCircle } from '../../../components/Icons';
 import { ClientInformation } from './components/ClientInformation';
 import { CustomFieldsPanel } from './components/CustomFieldsPanel';
+import { ClientSettings } from './components/ClientSettings';
 
 export const ClientProfileContainer = () => {
     const { t } = useTranslation();

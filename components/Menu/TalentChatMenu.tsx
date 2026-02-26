@@ -24,15 +24,15 @@ export const TalentChatMenu = ({
 
     const getPath = (id: string) => {
         const map: Record<string, string> = {
-            'CONVERSATIONS': 'Conversations',
-            'KEYWORDS': 'Keywords',
-            'SCHEDULES': 'Schedules',
-            'ANALYTICS': 'Analytics',
+            'CONVERSATIONS': 'conversations',
+            'KEYWORDS': 'keywords',
+            'SCHEDULES': 'schedules',
+            'ANALYTICS': 'analytics',
         };
-        return map[id] || id;
+        return map[id] || id.toLowerCase();
     };
 
-    const currentPath = location.pathname.split('/talent-chat/')[1] || 'Conversations';
+    const currentPath = location.pathname.split('/talentchat/')[1] || 'conversations';
 
     return (
         <div className="animate-in slide-in-from-left duration-300 ease-out">
@@ -58,7 +58,7 @@ export const TalentChatMenu = ({
                                 icon={item.icon}
                                 label={item.label}
                                 activeTab={currentPath === path}
-                                to={`/talent-chat/${path}`}
+                                to={`/talentchat/${path}`}
                                 onClick={() => {
                                     setActiveTab(item.id);
                                     if (!isDesktop) setIsSidebarOpen(false);

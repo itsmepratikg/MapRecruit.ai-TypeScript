@@ -69,6 +69,7 @@ export const GitGraph = (props: any) => <Icon {...props} iconClass="fa-solid fa-
 export const Github = (props: any) => <Icon {...props} iconClass="fa-brands fa-github" />;
 export const Globe = (props: any) => <Icon {...props} iconClass="fa-solid fa-globe" />;
 export const GripHorizontal = (props: any) => <Icon {...props} iconClass="fa-solid fa-grip-lines" />;
+export const Hash = (props: any) => <Icon {...props} iconClass="fa-solid fa-hashtag" />;
 export const Heart = (props: any) => <Icon {...props} iconClass="fa-solid fa-heart" />;
 export const HelpCircle = (props: any) => <Icon {...props} iconClass="fa-solid fa-circle-question" />;
 export const History = (props: any) => <Icon {...props} iconClass="fa-solid fa-clock-rotate-left" />;
@@ -145,6 +146,8 @@ export const ShieldAlert = (props: any) => <Icon {...props} iconClass="fa-solid 
 export const Target = (props: any) => <Icon {...props} iconClass="fa-solid fa-bullseye" />;
 export const ThumbsDown = (props: any) => <Icon {...props} iconClass="fa-solid fa-thumbs-down" />;
 export const ThumbsUp = (props: any) => <Icon {...props} iconClass="fa-solid fa-thumbs-up" />;
+export const ToggleLeft = (props: any) => <Icon {...props} iconClass="fa-solid fa-toggle-off" />;
+export const ToggleRight = (props: any) => <Icon {...props} iconClass="fa-solid fa-toggle-on" />;
 export const Trash2 = (props: any) => <Icon {...props} iconClass="fa-solid fa-trash" />;
 export const TrendingUp = (props: any) => <Icon {...props} iconClass="fa-solid fa-arrow-trend-up" />;
 export const Type = (props: any) => <Icon {...props} iconClass="fa-solid fa-font" />;

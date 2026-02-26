@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('../config/passport');
 const router = express.Router();
 const {
     registerUser,
@@ -9,7 +10,9 @@ const {
     updateRole,
     deleteRole,
     switchCompany,
-    googleLogin
+    googleLogin,
+    googleOAuthCallback,
+    microsoftOAuthCallback
 } = require('../controllers/authController');
 const {
     getRegistrationOptions,
@@ -24,6 +27,13 @@ router.post('/login', loginUser);
 router.post('/google', googleLogin);
 router.get('/me', protect, getMe);
 router.post('/switch-context', protect, switchCompany);
+
+// Passport OAuth Routes
+router.get('/google/oauth', passport.authenticate('google', { accessType: 'offline', prompt: 'consent' }));
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), googleOAuthCallback);
+
+router.get('/microsoft/oauth', passport.authenticate('microsoft', { prompt: 'select_account' }));
+router.get('/microsoft/callback', passport.authenticate('microsoft', { failureRedirect: '/login' }), microsoftOAuthCallback);
 
 // Passkey Routes
 router.post('/passkey/register-options', protect, getRegistrationOptions);

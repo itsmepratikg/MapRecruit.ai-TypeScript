@@ -150,6 +150,7 @@ export const PROFILES_CATEGORIES = [
 
 export const TALENT_CHAT_MENU = [
   { id: 'CONVERSATIONS', label: 'Conversations', icon: MessageSquare },
+  { id: 'EMAILS', label: 'Emails', icon: Mail },
   { id: 'KEYWORDS', label: 'Keywords', icon: Key },
   { id: 'SCHEDULES', label: 'Schedules', icon: Calendar },
   { id: 'ANALYTICS', label: 'Analytics', icon: BarChart2 },

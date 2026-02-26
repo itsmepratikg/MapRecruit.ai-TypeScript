@@ -556,6 +556,74 @@ const googleLogin = async (req, res) => {
     }
 };
 
+// @desc    OAuth Callback for Google (Enterprise Email)
+// @route   GET /api/auth/google/callback
+const googleOAuthCallback = async (req, res) => {
+    try {
+        if (!req.user || !req.user.profile) {
+            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=GoogleAuthFailed`);
+        }
+
+        const email = req.user.profile.emails[0].value;
+        const accessToken = req.user.accessToken;
+        const refreshToken = req.user.refreshToken;
+
+        // Optionally, check if the email belongs to an existing MapRecruit user
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            // Save tokens to session for email fetching
+            req.session.emailTokens = {
+                provider: 'google',
+                accessToken,
+                refreshToken
+            };
+            req.session.save(() => {
+                res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/talentchat/emails`);
+            });
+        } else {
+            res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=UserNotFound`);
+        }
+    } catch (error) {
+        console.error("Google OAuth Callback Error:", error);
+        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=GoogleCallbackError`);
+    }
+};
+
+// @desc    OAuth Callback for Microsoft (Enterprise Email)
+// @route   GET /api/auth/microsoft/callback
+const microsoftOAuthCallback = async (req, res) => {
+    try {
+        if (!req.user || !req.user.profile) {
+            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=MicrosoftAuthFailed`);
+        }
+
+        const email = req.user.profile.emails ? req.user.profile.emails[0].value : req.user.profile.userPrincipalName;
+        const accessToken = req.user.accessToken;
+        const refreshToken = req.user.refreshToken;
+
+        // Optionally, check if the email belongs to an existing MapRecruit user
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            // Save tokens to session for email fetching
+            req.session.emailTokens = {
+                provider: 'microsoft',
+                accessToken,
+                refreshToken
+            };
+            req.session.save(() => {
+                res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/talentchat/emails`);
+            });
+        } else {
+            res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=UserNotFound`);
+        }
+    } catch (error) {
+        console.error("Microsoft OAuth Callback Error:", error);
+        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=MicrosoftCallbackError`);
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
@@ -566,5 +634,7 @@ module.exports = {
     updateRole,
     deleteRole,
     switchCompany,
-    googleLogin
+    googleLogin,
+    googleOAuthCallback,
+    microsoftOAuthCallback
 };

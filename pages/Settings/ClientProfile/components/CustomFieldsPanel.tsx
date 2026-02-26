@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus, Trash2, Edit2, Check, X, FileText, Settings, Type, AlignLeft, Hash, Calendar, ToggleLeft, List } from '../../../components/Icons';
+import { Plus, Trash2, Edit2, Check, X, FileText, Settings, Type, AlignLeft, Hash, Calendar, ToggleLeft, List } from '../../../../components/Icons';
 
 export const CustomFieldsPanel = ({ clientId }: { clientId: string }) => {
     const { t } = useTranslation();

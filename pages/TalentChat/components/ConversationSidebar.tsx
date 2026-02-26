@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
     Search, Filter, Mail, MessageSquare, Phone, Globe,
     ChevronDown, CheckCircle, Clock, UserPlus, XCircle,
-    AlertTriangle, Check, AlertCircle, ChevronUp, ChevronRight
+    AlertTriangle, Check, AlertCircle, ChevronUp, ChevronRight, Building2,
+    MoreHorizontal
 } from '../../../components/Icons';
 import { Conversation } from '../types';
 import { useUserProfile } from '../../../hooks/useUserProfile';
@@ -43,20 +44,41 @@ export const ConversationSidebar = ({
     // Sender Filter State
     const [isSenderDropdownOpen, setIsSenderDropdownOpen] = useState(false);
     const [selectedSender, setSelectedSender] = useState<{ type: 'Email' | 'SMS', label: string }>({ type: 'Email', label: 'All Emails' });
+    const [filterCategory, setFilterCategory] = useState<'all' | 'workspace' | 'email' | 'sms'>('all');
+    const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+
     const senderDropdownRef = useRef<HTMLDivElement>(null);
+    const statusDropdownRef = useRef<HTMLDivElement>(null);
 
     // Accordion State for Dropdown
     const [expandedAccordion, setExpandedAccordion] = useState<'Email' | 'SMS' | null>('Email');
 
-    const filteredConversations = conversations.filter(c =>
-        (filterStatus === 'all' || c.status === filterStatus) &&
-        (c.contact.name.toLowerCase().includes(search.toLowerCase()) || c.lastMessage.toLowerCase().includes(search.toLowerCase()))
-    );
+    const filteredConversations = conversations.filter(c => {
+        const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
+        const matchesSearch = c.contact.name.toLowerCase().includes(search.toLowerCase()) ||
+            c.lastMessage.toLowerCase().includes(search.toLowerCase());
+
+        let matchesCategory = true;
+        if (filterCategory === 'workspace') {
+            // Workspace refers to external Gmail/Outlook integrated emails
+            matchesCategory = c.channel === 'Email' && (c.labels.includes('Workspace') || c.id === '1');
+        } else if (filterCategory === 'email') {
+            // Email Only refers to internal MapRecruit communication emails
+            matchesCategory = c.channel === 'Email' && !c.labels.includes('Workspace');
+        } else if (filterCategory === 'sms') {
+            matchesCategory = c.channel === 'SMS';
+        }
+
+        return matchesStatus && matchesSearch && matchesCategory;
+    });
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (senderDropdownRef.current && !senderDropdownRef.current.contains(event.target as Node)) {
                 setIsSenderDropdownOpen(false);
+            }
+            if (statusDropdownRef.current && !statusDropdownRef.current.contains(event.target as Node)) {
+                setIsStatusDropdownOpen(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
@@ -112,24 +134,69 @@ export const ConversationSidebar = ({
         <div className="w-full md:w-80 flex flex-col border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 h-full">
             {/* Header / Filter */}
             <div className="p-4 border-b border-slate-200 dark:border-slate-700 shrink-0 space-y-3">
-                <div className="flex items-center justify-between">
-                    <h2 className="font-bold text-lg text-slate-800 dark:text-slate-100">Conversations</h2>
-                    {/* View Filters (Open/Resolved) */}
-                    <div className="flex gap-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg">
+                <div className="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar pb-1">
+                    <h2 className="font-bold text-base text-slate-800 dark:text-slate-100 shrink-0">Conversations</h2>
+
+                    {/* Category Tabs */}
+                    <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg shrink-0">
                         <button
-                            onClick={() => setFilterStatus('open')}
-                            className={`p-1.5 rounded text-xs font-bold transition-colors ${filterStatus === 'open' ? 'bg-white dark:bg-slate-600 shadow text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}
-                            title="Open"
+                            onClick={() => setFilterCategory('all')}
+                            className={`px-2 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition-all ${filterCategory === 'all' ? 'bg-white dark:bg-slate-600 shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
                         >
-                            <Clock size={14} />
+                            All
                         </button>
                         <button
-                            onClick={() => setFilterStatus('resolved')}
-                            className={`p-1.5 rounded text-xs font-bold transition-colors ${filterStatus === 'resolved' ? 'bg-white dark:bg-slate-600 shadow text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}
-                            title="Resolved"
+                            onClick={() => setFilterCategory('workspace')}
+                            className={`p-1 rounded text-[10px] transition-all flex items-center justify-center min-w-[24px] ${filterCategory === 'workspace' ? 'bg-white dark:bg-slate-600 shadow-sm text-emerald-600 font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                            title="Workspace (Gmail/Outlook)"
                         >
-                            <CheckCircle size={14} />
+                            <Building2 size={13} />
                         </button>
+                        <button
+                            onClick={() => setFilterCategory('email')}
+                            className={`p-1 rounded text-[10px] transition-all flex items-center justify-center min-w-[24px] ${filterCategory === 'email' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                            title="Email Only (Comm)"
+                        >
+                            <Mail size={13} />
+                        </button>
+                        <button
+                            onClick={() => setFilterCategory('sms')}
+                            className={`p-1 rounded text-[10px] transition-all flex items-center justify-center min-w-[24px] ${filterCategory === 'sms' ? 'bg-white dark:bg-slate-600 shadow-sm text-green-600 font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                            title="SMS Only"
+                        >
+                            <MessageSquare size={13} />
+                        </button>
+                    </div>
+
+                    {/* View Filters (Open/Resolved) in a More Menu */}
+                    <div className="relative" ref={statusDropdownRef}>
+                        <button
+                            onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+                            className={`p-1.5 rounded-lg transition-colors ${isStatusDropdownOpen ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                            title="More Filters"
+                        >
+                            <MoreHorizontal size={18} />
+                        </button>
+
+                        {isStatusDropdownOpen && (
+                            <div className="absolute top-full right-0 mt-2 w-36 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-1.5 z-30 animate-in fade-in zoom-in-95 duration-100">
+                                <div className="px-3 py-1 mb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status</div>
+                                <button
+                                    onClick={() => { setFilterStatus('open'); setIsStatusDropdownOpen(false); }}
+                                    className={`w-full flex items-center gap-3 px-3 py-2 text-xs transition-colors ${filterStatus === 'open' ? 'text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                                >
+                                    <Clock size={14} className={filterStatus === 'open' ? "text-emerald-600" : "text-slate-400"} />
+                                    Open
+                                </button>
+                                <button
+                                    onClick={() => { setFilterStatus('resolved'); setIsStatusDropdownOpen(false); }}
+                                    className={`w-full flex items-center gap-3 px-3 py-2 text-xs transition-colors ${filterStatus === 'resolved' ? 'text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                                >
+                                    <CheckCircle size={14} className={filterStatus === 'resolved' ? "text-emerald-600" : "text-slate-400"} />
+                                    Resolved
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
 

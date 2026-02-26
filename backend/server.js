@@ -1,12 +1,13 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const http = require('http'); // Import HTTP
 const { Server } = require("socket.io"); // Import Socket.io
-
-// Load environment variables
-dotenv.config();
+const session = require('express-session');
+const passport = require('./config/passport');
+const helmet = require('helmet');
 
 // Set mongoose options
 mongoose.set('strictQuery', false);
@@ -20,13 +21,14 @@ const io = new Server(server, {
         origin: [
             "http://localhost:5173",
             "http://localhost:3000",
+            "http://localhost:5000",
             "https://map-recruit-ai-type-script.vercel.app",
             "https://maprecruit.ai",
             "https://*.maprecruit.com",
             "https://www.maprecruit.com",
             "https://www.maprecruit.ai"
         ],
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }
 });
@@ -42,10 +44,15 @@ const limiter = rateLimit({
 });
 
 // Middleware
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+    contentSecurityPolicy: false // Needed if using mixed CDNs for tinymce etc., otherwise configure strictly later
+}));
 app.use(cors({
     origin: [
         "http://localhost:5173",
         "http://localhost:3000",
+        "http://localhost:5000",
         "https://map-recruit-ai-type-script.vercel.app",
         "https://maprecruit.ai",
         "https://*.maprecruit.com",
@@ -56,6 +63,24 @@ app.use(cors({
 }));
 app.use(limiter); // Apply global rate limiter
 app.use(express.json({ limit: '10mb' })); // Support large JSON payloads for schemaless data
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Session Configuration
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your_super_secret_enterprise_key_maprecruit',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 30 * 60 * 1000, // 30 minutes session timeout
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    }
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Logging Middleware
 app.use((req, res, next) => {
@@ -202,6 +227,7 @@ app.use('/api/user/integrations', require('./routes/integrationRoutes'));
 app.use('/api/webhooks', require('./routes/webhookRoutes'));
 app.use('/api/support', require('./routes/supportRoutes'));
 app.use('/api/chat', require('./routes/chatRoutes'));
+app.use('/api/emails', require('./routes/emailRoutes'));
 
 // Integration Routes (SharePoint, Drive, Uploads)
 app.use('/api/v1/sharepoint', require('./routes/sharepointRoutes'));

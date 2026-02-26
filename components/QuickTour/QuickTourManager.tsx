@@ -29,7 +29,7 @@ const TourLogic = () => {
             if (path.includes('/dashboard')) targetPhase = 'DASHBOARD';
             else if (path.includes('/profiles')) targetPhase = 'PROFILES';
             else if (path.includes('/campaigns')) targetPhase = 'CAMPAIGNS';
-            else if (path.includes('/talent-chat')) targetPhase = 'TALENT_CHAT';
+            else if (path.includes('/talentchat')) targetPhase = 'TALENT_CHAT';
             else if (path.includes('/settings')) targetPhase = 'SETTINGS';
 
             if (targetPhase !== phase) {
@@ -147,7 +147,7 @@ const TourPhaser = () => {
         if (path.includes('/dashboard')) phase = 'DASHBOARD';
         if (path.includes('/profiles')) phase = 'PROFILES';
         if (path.includes('/campaigns')) phase = 'CAMPAIGNS';
-        if (path.includes('/talent-chat')) phase = 'TALENT_CHAT';
+        if (path.includes('/talentchat')) phase = 'TALENT_CHAT';
         if (path.includes('/settings')) phase = 'SETTINGS';
 
         console.log('QuickTour: Phase detected', phase);

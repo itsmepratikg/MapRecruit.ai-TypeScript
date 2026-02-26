@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, Users, BarChart2, Settings, ChevronRight, MessageSquare, User } from '../Icons';
+import { LayoutDashboard, Briefcase, Users, BarChart2, Settings, ChevronRight, MessageSquare, User, Mail } from '../Icons';
 import { NavItem } from './NavItem';
 import { CampaignMenuContent, ProfilesMenuContent, SettingsMenuContent, TalentChatMenuContent } from './Flyouts';
 import { getProfileViewPath } from './constants';
@@ -101,7 +101,7 @@ export const DashboardMenu = ({
     const isActiveCampaign = location.pathname.startsWith('/campaigns');
     const isActiveProfile = location.pathname.startsWith('/profiles');
     const isActiveSettings = location.pathname.startsWith('/settings');
-    const isActiveTalentChat = location.pathname.startsWith('/talent-chat');
+    const isActiveTalentChat = location.pathname.startsWith('/talentchat');
 
     return (
         <>
@@ -222,9 +222,9 @@ export const DashboardMenu = ({
             {/* Talent Chat Item with Hover Menu */}
             <div className="relative" onMouseEnter={(e) => handlePopoverEnter('talentchat', e)} onMouseLeave={handlePopoverLeave}>
                 <NavLink
-                    to="/talent-chat"
-                    data-tour="nav-talent-chat"
-                    className={({ isActive }) => `w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${isActive || activePopover === 'talentchat' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
+                    to="/talentchat"
+                    data-tour="nav-talentchat"
+                    className={() => `w-full flex items-center justify-between px-3 py-2.5 rounded-md transition-colors ${isActiveTalentChat || activePopover === 'talentchat' ? 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-200' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'}`}
                 >
                     <div className="flex items-center gap-3">
                         <MessageSquare size={20} className={isActiveTalentChat || activePopover === 'talentchat' ? 'text-emerald-600 dark:text-emerald-300' : 'text-slate-400 dark:text-slate-500'} />
@@ -245,14 +245,18 @@ export const DashboardMenu = ({
                             <TalentChatMenuContent
                                 onNavigate={(id) => {
                                     // id is like "CONVERSATIONS"
-                                    const map: Record<string, string> = {
-                                        'CONVERSATIONS': 'Conversations',
-                                        'KEYWORDS': 'Keywords',
-                                        'SCHEDULES': 'Schedules',
-                                        'ANALYTICS': 'Analytics',
+                                    const getPath = (id: string) => {
+                                        const map: Record<string, string> = {
+                                            'CONVERSATIONS': 'conversations',
+                                            'EMAILS': 'emails',
+                                            'KEYWORDS': 'keywords',
+                                            'SCHEDULES': 'schedules',
+                                            'ANALYTICS': 'analytics',
+                                        };
+                                        return map[id] || id.toLowerCase();
                                     };
-                                    const path = map[id] || id;
-                                    navigate(`/talent-chat/${path}`);
+                                    const path = getPath(id);
+                                    navigate(`/talentchat/${path}`);
                                     setActiveTalentChatTab(id);
                                 }}
                                 onClose={closePopover}

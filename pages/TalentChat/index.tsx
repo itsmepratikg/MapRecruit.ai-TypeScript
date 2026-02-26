@@ -137,21 +137,25 @@ const ConversationsView = () => {
     );
 };
 
+import { EmailDashboard } from '../Emails/index';
+
 export const TalentChat = () => {
     const getPath = (id: string) => {
         const map: Record<string, string> = {
-            'CONVERSATIONS': 'Conversations',
-            'KEYWORDS': 'Keywords',
-            'SCHEDULES': 'Schedules',
-            'ANALYTICS': 'Analytics',
+            'CONVERSATIONS': 'conversations',
+            'EMAILS': 'emails',
+            'KEYWORDS': 'keywords',
+            'SCHEDULES': 'schedules',
+            'ANALYTICS': 'analytics',
         };
-        return map[id] || id;
+        return map[id] || id.toLowerCase();
     };
 
     return (
         <Routes>
             <Route path="/" element={<Navigate to={getPath('CONVERSATIONS')} replace />} />
             <Route path={getPath('CONVERSATIONS')} element={<ConversationsView />} />
+            <Route path={getPath('EMAILS')} element={<EmailDashboard />} />
             <Route path={getPath('KEYWORDS')} element={<KeywordsWrapper />} />
             <Route path={getPath('SCHEDULES')} element={<PlaceholderPage title="Chat Schedules" description="Manage availability schedules for automated chat responses." icon={Calendar} />} />
             <Route path={getPath('ANALYTICS')} element={<ChatAnalytics />} />

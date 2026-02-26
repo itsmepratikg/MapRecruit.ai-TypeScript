@@ -19,6 +19,7 @@ const PreviousHistory = React.lazy(() => import('./pages/PreviousHistory/index')
 const Notifications = React.lazy(() => import('./pages/Notifications/index').then(module => ({ default: module.Notifications })));
 const TalentChat = React.lazy(() => import('./pages/TalentChat/index').then(module => ({ default: module.TalentChat })));
 const SupportPage = React.lazy(() => import('./pages/Support/index').then(module => ({ default: module.SupportPage })));
+// EmailDashboard removed as it's now internal to TalentChat
 const GoogleCallback = React.lazy(() => import('./pages/MyAccount/GoogleCallback').then(m => ({ default: m.GoogleCallback })));
 const MicrosoftCallback = React.lazy(() => import('./pages/MyAccount/MicrosoftCallback').then(m => ({ default: m.MicrosoftCallback })));
 import { Campaign } from './types';
@@ -174,6 +175,30 @@ const AppContent = () => {
 
 
 
+  // Sync Active States with URL
+  useEffect(() => {
+    const path = location.pathname;
+
+    // Talent Chat Sync
+    if (path.startsWith('/talentchat/')) {
+      const sub = path.split('/talentchat/')[1].split('/')[0].toUpperCase();
+      if (['CONVERSATIONS', 'EMAILS', 'KEYWORDS', 'SCHEDULES', 'ANALYTICS'].includes(sub)) {
+        setActiveTalentChatTab(sub);
+      } else if (sub.toLowerCase() === 'emails') {
+        setActiveTalentChatTab('EMAILS');
+      }
+    }
+
+    // Account Sync
+    if (path.startsWith('/myaccount/')) {
+      const sub = path.split('/myaccount/')[1].split('/')[0].toUpperCase();
+      // Add more as needed
+      if (['BASIC_DETAILS', 'AUTH_SYNC', 'USER_PREFS'].includes(sub)) {
+        setActiveAccountTab(sub);
+      }
+    }
+  }, [location.pathname]);
+
   // History Tracking
   const { addRecentItem } = useRecentItems();
 
@@ -182,10 +207,11 @@ const AppContent = () => {
 
     // Delay to allow page title to update
     const timer = setTimeout(() => {
-      let type: 'CAMPAIGN' | 'PROFILE' | 'ACCOUNT' | 'PAGE' = 'PAGE';
+      let type: 'CAMPAIGN' | 'PROFILE' | 'ACCOUNT' | 'PAGE' | 'TALENT_CHAT' = 'PAGE';
       if (location.pathname.includes('/showcampaign/')) type = 'CAMPAIGN';
       else if (location.pathname.includes('/profile/')) type = 'PROFILE';
       else if (location.pathname.includes('/myaccount')) type = 'ACCOUNT';
+      else if (location.pathname.includes('/talentchat')) type = 'TALENT_CHAT';
 
       // Clean title
       let title = document.title.replace(' - MapRecruit', '').replace('MapRecruit', '').trim();
@@ -436,7 +462,8 @@ const AppContent = () => {
         'ACTIVITIES': '/activities',
         'HISTORY': '/history',
         'NOTIFICATIONS': '/notifications',
-        'TALENT_CHAT': '/talent-chat'
+        'TALENT_CHAT': '/talentchat',
+        'EMAILS': '/talentchat/emails'
       };
 
       let target = routeMap[data.view] || '/dashboard';
@@ -664,7 +691,7 @@ const AppContent = () => {
                           setIsSidebarOpen={setIsSidebarOpen}
                         />
                       } />
-                      <Route path="/talent-chat/*" element={
+                      <Route path="/talentchat/*" element={
                         <TalentChatMenu
                           onBack={() => navigate('/dashboard')}
                           isCollapsed={isCollapsed}
@@ -691,7 +718,7 @@ const AppContent = () => {
                               'ACTIVITIES': '/activities',
                               'HISTORY': '/history',
                               'NOTIFICATIONS': '/notifications',
-                              'TALENT_CHAT': '/talent-chat'
+                              'TALENT_CHAT': '/talentchat'
                             };
                             navigate(routeMap[view] || '/dashboard');
                             if (!isDesktop) setIsSidebarOpen(false);
@@ -801,6 +828,8 @@ const AppContent = () => {
                       }} initialTab={'Archived'} />
                     } />
 
+                    {/* EmailDashboard now sub-route of TalentChat */}
+
                     <Route path="/campaigns/:id/*" element={
                       // We need to pass the campaign object. ideally fetch by ID. For now using selectedCampaign state which needs to be set.
                       // In a real app, CampaignDashboard would fetch by ID.
@@ -821,7 +850,8 @@ const AppContent = () => {
                     <Route path="/activities" element={<Activities />} />
                     <Route path="/history" element={<PreviousHistory onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />} />
                     <Route path="/notifications" element={<Notifications onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />} />
-                    <Route path="/talent-chat/*" element={<TalentChat />} />
+                    <Route path="/talentchat/*" element={<TalentChat />} />
+                    <Route path="/talent-chat/*" element={<Navigate to="/talentchat" replace />} />
                     <Route path="/support" element={<SupportPage />} />
                     <Route path="/auth/google/callback" element={<GoogleCallback />} />
                     <Route path="/auth/microsoft/callback" element={<MicrosoftCallback />} />

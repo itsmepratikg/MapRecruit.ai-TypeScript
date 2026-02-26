@@ -906,12 +906,13 @@ export const TalentChatMenuContent = ({
     const { t } = useTranslation();
     const getPath = (id: string) => {
         const map: Record<string, string> = {
-            'CONVERSATIONS': 'Conversations',
-            'KEYWORDS': 'Keywords',
-            'SCHEDULES': 'Schedules',
-            'ANALYTICS': 'Analytics',
+            'CONVERSATIONS': 'conversations',
+            'EMAILS': 'emails',
+            'KEYWORDS': 'keywords',
+            'SCHEDULES': 'schedules',
+            'ANALYTICS': 'analytics',
         };
-        return map[id] || id;
+        return map[id] || id.toLowerCase();
     };
 
     return (
