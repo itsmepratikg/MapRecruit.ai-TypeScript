@@ -87,7 +87,7 @@ export const CampaignsMenu = ({
             if (sub === 'Tracking') return `/showcampaign/engageai/${cid}/1/dashboard`; // Default Round 1
         }
         if (module === 'Recommendations') return `/showcampaign/recommendedprofiles/${cid}`;
-        if (module === 'Settings') return `/campaigns/${cid}/Settings`; // Keep legacy for now or update? User said "work on building later".
+        if (module === 'Settings') return `/showcampaign/settings/${cid}`;
 
         return `/showcampaign/intelligence/${cid}`;
     };
@@ -115,6 +115,7 @@ export const CampaignsMenu = ({
         if (mod === 'matchai') return location.pathname.includes('/matchai');
         if (mod === 'engageai') return location.pathname.includes('/engageai');
         if (mod === 'recommendations') return location.pathname.includes('/recommendedprofiles');
+        if (mod === 'settings') return location.pathname.includes('/settings/');
 
         return false;
     };

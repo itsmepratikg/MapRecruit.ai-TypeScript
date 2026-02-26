@@ -2,6 +2,7 @@ const User = require('../models/User');
 const googleAuthService = require('../services/googleAuthService');
 const microsoftAuthService = require('../services/microsoftAuthService');
 const syncService = require('../services/syncService');
+require('isomorphic-fetch');
 
 const getStatus = async (req, res) => {
     try {

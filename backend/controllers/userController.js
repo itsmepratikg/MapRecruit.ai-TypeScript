@@ -249,7 +249,7 @@ const updateUser = async (req, res) => {
                 };
                 user.markModified('accessibilitySettings');
             } else if (!restrictedFields.includes(key)) {
-                user[key] = updates[key];
+                user.set(key, updates[key]);
             }
         });
 

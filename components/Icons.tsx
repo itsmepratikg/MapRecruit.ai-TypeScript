@@ -1,4 +1,5 @@
 
+/* Icons Component - v2.1.2 - Forcing Vite Refresh */
 import React from 'react';
 
 // Wrapper for FontAwesome Icons to mimic Lucide API
@@ -86,6 +87,7 @@ export const Linkedin = (props: any) => <Icon {...props} iconClass="fa-brands fa
 export const List = (props: any) => <Icon {...props} iconClass="fa-solid fa-list" />;
 export const ListChecks = (props: any) => <Icon {...props} iconClass="fa-solid fa-list-check" />;
 export const Loader2 = (props: any) => <Icon {...props} iconClass="fa-solid fa-spinner fa-spin" />;
+export const Loader = Loader2;
 export const Lock = (props: any) => <Icon {...props} iconClass="fa-solid fa-lock" />;
 export const LogOut = (props: any) => <Icon {...props} iconClass="fa-solid fa-right-from-bracket" />;
 export const Mail = (props: any) => <Icon {...props} iconClass="fa-solid fa-envelope" />;

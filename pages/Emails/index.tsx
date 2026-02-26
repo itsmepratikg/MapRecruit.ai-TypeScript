@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { Mail, RefreshCw, AlertCircle } from 'lucide-react';
 import { EmailList } from './components/EmailList';
 import { EmailReader } from './components/EmailReader';
@@ -12,16 +12,14 @@ export const EmailDashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const apiURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
     const fetchEmails = async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${apiURL}/api/emails`, { withCredentials: true });
+            const response = await api.get('/emails');
             setEmails(response.data.emails || []);
         } catch (err: any) {
-            if (err.response?.status === 401) {
+            if (err.response?.status === 401 || err.response?.status === 403) {
                 setError('unauthorized');
             } else {
                 setError('Failed to fetch emails');

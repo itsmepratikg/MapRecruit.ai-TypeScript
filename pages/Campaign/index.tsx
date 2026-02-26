@@ -18,10 +18,12 @@ import { useWebSocket } from '../../context/WebSocketContext';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { CoPresenceAvatars } from '../../components/engage/CoPresenceAvatars';
 import { clientService } from '../../services/api';
+import { ShareModal } from '../../components/Campaign/ShareModal';
 
 export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: { campaign: Campaign, isScrolled: boolean, onBack?: () => void, currentUserId?: string }) => {
    const [clientName, setClientName] = useState<string>('N/A');
    const [clientData, setClientData] = useState<any>(null);
+   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
    useEffect(() => {
       if (campaign.clientID) {
@@ -150,8 +152,14 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
                            strokeLinecap="round"
                         />
                      </svg>
-                     <div className="absolute inset-0 m-auto flex items-center justify-center text-slate-400">
-                        <Briefcase size={isScrolled ? 14 : 20} />
+                     <div className="absolute inset-0 m-auto flex items-center justify-center p-[6px] lg:p-[10px] rounded-full z-10">
+                        <div className="w-full h-full rounded-full overflow-hidden bg-white/50 dark:bg-slate-800/50 flex items-center justify-center backdrop-blur-sm shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)] p-1">
+                           {(clientData?.clientLogo || clientData?.logo) ? (
+                              <img src={clientData.clientLogo || clientData.logo} alt="Company" className="w-full h-full object-contain rounded-full mix-blend-multiply dark:mix-blend-screen" />
+                           ) : (
+                              <Building2 size={isScrolled ? 14 : 18} className="text-slate-400" />
+                           )}
+                        </div>
                      </div>
                      {!isScrolled && matchScoreDetails.enabled && (
                         <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 ${getMatchColor(matchScore)}`}>
@@ -218,39 +226,39 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
                   <div className={`flex flex-col gap-2 mt-2 w-full max-w-4xl ${isScrolled ? 'hidden' : 'flex'}`}>
                      {/* Row 2: 4 items */}
                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-xs text-gray-600 dark:text-slate-400">
+                        <span className="flex items-center gap-1.5 truncate" title={(campaign as any).jobPosting?.location || (campaign as any).location || 'Unspecified'}>
+                           <MapPin size={12} className="shrink-0 text-slate-400" />
+                           <span className="truncate font-medium text-slate-700 dark:text-slate-300">{(campaign as any).jobPosting?.location || (campaign as any).location || 'Unspecified'}</span>
+                        </span>
                         <span className="flex items-center gap-1.5 truncate" title={campaign.role || (campaign as any).jobPosting?.primaryIndustry || 'Logistics'}>
-                           <Briefcase size={12} className="shrink-0" />
+                           <Briefcase size={12} className="shrink-0 text-slate-400" />
                            <span className="truncate">{campaign.role || (campaign as any).jobPosting?.primaryIndustry || 'Logistics'}</span>
                         </span>
-                        <span className="flex items-center gap-1.5 truncate" title={(campaign as any).jobPosting?.location || (campaign as any).location || 'Unspecified'}>
-                           <MapPin size={12} className="shrink-0" />
-                           <span className="truncate">{(campaign as any).jobPosting?.location || (campaign as any).location || 'Unspecified'}</span>
+                        <span className="flex items-center gap-1.5 truncate">
+                           <span className="font-bold text-[10px] shrink-0 text-slate-400">$</span>
+                           <span className="truncate">{(campaign as any).compensation?.min ? `${(campaign as any).compensation.min}k` : '15'} - {(campaign as any).compensation?.max ? `${(campaign as any).compensation.max}k` : '45'}/{(campaign as any).compensation?.period === 'Hour' ? 'hr' : 'yr'}</span>
                         </span>
                         <span className="flex items-center gap-1.5 truncate">
-                           <span className="font-bold text-[10px] shrink-0">$</span>
-                           <span className="truncate">{(campaign as any).compensation?.min || '15'} - {(campaign as any).compensation?.max || '45'}/{(campaign as any).compensation?.period === 'Year' ? 'yr' : 'hr'}</span>
-                        </span>
-                        <span className="flex items-center gap-1.5 truncate">
-                           <Clock size={12} className="shrink-0" />
-                           <span className="truncate">{(campaign as any).experience?.min || '1'} - {(campaign as any).experience?.max || '5'} Yrs Exp</span>
+                           <Users size={12} className="shrink-0 text-slate-400" />
+                           <span className="truncate">{campaign.candidates || 0} Candidates</span>
                         </span>
                      </div>
                      {/* Row 3: 4 items */}
                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-xs text-gray-600 dark:text-slate-400">
                         <span className="flex items-center gap-1.5 truncate">
-                           <Users size={12} className="shrink-0" />
-                           <span className="truncate">{campaign.candidates} Candidates</span>
+                           <Clock size={12} className="shrink-0 text-slate-400" />
+                           <span className="truncate">{(campaign as any).experience?.min || '1'} - {(campaign as any).experience?.max || '5'} Yrs Exp</span>
                         </span>
                         <span className="flex items-center gap-1.5 truncate">
-                           <Clock size={12} className="shrink-0" />
-                           <span className="truncate">Updated {campaign.updatedDate}</span>
+                           <Clock size={12} className="shrink-0 text-slate-400" />
+                           <span className="truncate">Updated {campaign.updatedDate || new Date().toLocaleDateString()}</span>
                         </span>
                         <span className="flex items-center gap-1.5 truncate" title={clientName}>
-                           <Building2 size={12} className="shrink-0" />
+                           <Building2 size={12} className="shrink-0 text-slate-400" />
                            <span className="truncate">{clientName}</span>
                         </span>
                         <span className="flex items-center gap-1.5 truncate" title={getIndustries()}>
-                           <Layers size={12} className="shrink-0" />
+                           <Layers size={12} className="shrink-0 text-slate-400" />
                            <span className="truncate">{getIndustries()}</span>
                         </span>
                      </div>
@@ -272,7 +280,7 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
 
                <div className="h-8 w-px bg-gray-200 dark:bg-slate-700 mx-1 hidden md:block"></div>
 
-               <button className="p-2 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors">
+               <button onClick={() => setIsShareModalOpen(true)} className="p-2 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors">
                   <Share2 size={20} />
                </button>
                <div className="relative group">
@@ -299,6 +307,13 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
                </div>
             </div>
          </div>
+         
+         {/* Share Modal */}
+         <ShareModal
+            isOpen={isShareModalOpen}
+            onClose={() => setIsShareModalOpen(false)}
+            campaign={campaign}
+         />
       </div>
    );
 };

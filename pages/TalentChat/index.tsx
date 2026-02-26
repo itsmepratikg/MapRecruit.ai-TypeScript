@@ -11,7 +11,12 @@ import { ChatAnalytics } from './components/ChatAnalytics';
 import { KeywordsWrapper } from './Keywords/index'; // Explicit index import
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { useToast } from '../../components/Toast';
-import { ChannelType } from './types';
+import { ChannelType, Conversation, Message } from './types';
+import api from '../../services/api';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Mock Business Settings (Usually fetched from MyAccount)
@@ -33,6 +38,60 @@ const ConversationsView = () => {
     const [filterStatus, setFilterStatus] = useState('open');
 
     const [isContactPanelOpen, setIsContactPanelOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchWorkspaceEmails = async () => {
+            setIsLoading(true);
+            try {
+                const response = await api.get('/emails');
+                const workspaceEmails = response.data.emails || [];
+
+                const workspaceConversations = workspaceEmails.map((email: any) => ({
+                    id: `ws_${email.id}`,
+                    contact: {
+                        id: `c_${email.from.replace(/[^a-zA-Z0-9]/g, '')}`,
+                        name: email.from.split('<')[0].trim() || email.from,
+                        email: email.from.match(/<(.+)>/)?.[1] || email.from,
+                        phone: '', avatar: '', location: '', company: '', tags: [], notes: '', lastSeen: 'Just now'
+                    },
+                    messages: [{
+                        id: `m_${email.id}`,
+                        content: email.snippet,
+                        contentType: 'text' as const,
+                        senderId: 'contact',
+                        senderName: email.from,
+                        timestamp: email.date,
+                        status: 'read' as const,
+                        channel: 'Email' as const,
+                        subject: email.subject
+                    }],
+                    unreadCount: 0,
+                    lastMessage: email.snippet,
+                    lastMessageAt: email.date ? dayjs(email.date).fromNow() : 'Just now',
+                    status: 'open' as const,
+                    channel: 'Email' as const,
+                    labels: ['Workspace'],
+                    communicationStatus: 'AVAILABLE' as const
+                }));
+
+                // Merge with mock data, but avoid duplicates if re-fetched
+                setConversations(prev => {
+                    const mockWithoutWorkspace = prev.filter(c => !c.id.startsWith('ws_'));
+                    return [...workspaceConversations, ...mockWithoutWorkspace];
+                });
+            } catch (err: any) {
+                if (err.response?.status === 403) {
+                     console.error('[TalentChat] Insufficient Google API Scopes. Emails will not sync until permissions are granted in the Emails page.');
+                }
+                console.warn('Failed to fetch workspace emails for Talent Chat sidebar:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchWorkspaceEmails();
+    }, []);
 
     const activeConversation = conversations.find(c => c.id === activeConversationId);
 

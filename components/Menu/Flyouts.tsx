@@ -393,7 +393,7 @@ export const AccountMenuContent = ({
 }) => {
     const { t } = useTranslation();
     const userColorObj = COLORS.find(c => c.name === userProfile.color) || COLORS[0];
-    const [historyOpen, setHistoryOpen] = React.useState(true); // Default open
+    const [historyOpen, setHistoryOpen] = React.useState(false); // Default open
 
     return (
         <>

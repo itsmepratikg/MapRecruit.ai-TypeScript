@@ -48,9 +48,7 @@ const microsoftAuthService = {
             params.append('refresh_token', refreshToken);
             params.append('scope', 'openid email profile offline_access Files.Read.All Calendars.ReadWrite Channel.Create ChannelMessage.Send Team.ReadBasic.All');
 
-            if (clientSecret) {
-                params.append('client_secret', clientSecret);
-            }
+            // Do not send client_secret for Public Clients (SPA), which causes AADSTS90023
 
             const response = await axios.post(
                 'https://login.microsoftonline.com/common/oauth2/v2.0/token',

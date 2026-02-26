@@ -33,7 +33,10 @@ const getEmails = async (req, res) => {
         }
 
         if (provider === 'google') {
-            const oauth2Client = new google.auth.OAuth2();
+            const oauth2Client = new google.auth.OAuth2(
+                process.env.GOOGLE_CLIENT_ID,
+                process.env.GOOGLE_CLIENT_SECRET
+            );
             oauth2Client.setCredentials({ access_token: accessToken });
             const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 
@@ -81,11 +84,21 @@ const getEmails = async (req, res) => {
             return res.status(400).json({ message: 'Unknown provider' });
         }
     } catch (error) {
-        console.error("Email Fetch Error:", error);
+        console.error('Email Fetch Error:', error);
+        
+        // Handle Google Scope errors specifically
+        if (error.code === 403 || error.status === 403 || error.message?.includes('scopes')) {
+            return res.status(403).json({ 
+                message: 'Insufficient permissions. Please re-connect your Google account to enable email access.',
+                reconnectRequired: true
+            });
+        }
+        
         if (error.code === 401 || (error.response && error.response.status === 401)) {
             return res.status(401).json({ message: 'Token expired or invalid. Please re-authenticate.' });
         }
-        res.status(500).json({ message: 'Server Error Fetching Emails' });
+        
+        res.status(500).json({ message: 'Failed to fetch emails', error: error.message });
     }
 };
 

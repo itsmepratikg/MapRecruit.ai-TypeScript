@@ -133,12 +133,13 @@ export const ConversationSidebar = ({
     return (
         <div className="w-full md:w-80 flex flex-col border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 h-full">
             {/* Header / Filter */}
-            <div className="p-4 border-b border-slate-200 dark:border-slate-700 shrink-0 space-y-3">
-                <div className="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar pb-1">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-700 shrink-0 space-y-3 relative z-[50]">
+                <div className="flex items-center justify-between gap-2">
                     <h2 className="font-bold text-base text-slate-800 dark:text-slate-100 shrink-0">Conversations</h2>
 
-                    {/* Category Tabs */}
-                    <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg shrink-0">
+                    <div className="flex items-center gap-2">
+                        {/* Category Tabs */}
+                        <div className="flex items-center gap-0.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg shrink-0">
                         <button
                             onClick={() => setFilterCategory('all')}
                             className={`px-2 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition-all ${filterCategory === 'all' ? 'bg-white dark:bg-slate-600 shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
@@ -179,18 +180,18 @@ export const ConversationSidebar = ({
                         </button>
 
                         {isStatusDropdownOpen && (
-                            <div className="absolute top-full right-0 mt-2 w-36 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-1.5 z-30 animate-in fade-in zoom-in-95 duration-100">
-                                <div className="px-3 py-1 mb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status</div>
+                            <div className="absolute top-full right-0 mt-2 w-36 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl py-1.5 z-[100] origin-top-right">
+                                <div className="px-3 py-1 mb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-700/50 pb-1.5 mx-1">Status</div>
                                 <button
-                                    onClick={() => { setFilterStatus('open'); setIsStatusDropdownOpen(false); }}
-                                    className={`w-full flex items-center gap-3 px-3 py-2 text-xs transition-colors ${filterStatus === 'open' ? 'text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                                    onClick={(e) => { e.stopPropagation(); setFilterStatus('open'); setIsStatusDropdownOpen(false); }}
+                                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-xs transition-colors ${filterStatus === 'open' ? 'text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
                                 >
                                     <Clock size={14} className={filterStatus === 'open' ? "text-emerald-600" : "text-slate-400"} />
                                     Open
                                 </button>
                                 <button
-                                    onClick={() => { setFilterStatus('resolved'); setIsStatusDropdownOpen(false); }}
-                                    className={`w-full flex items-center gap-3 px-3 py-2 text-xs transition-colors ${filterStatus === 'resolved' ? 'text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                                    onClick={(e) => { e.stopPropagation(); setFilterStatus('resolved'); setIsStatusDropdownOpen(false); }}
+                                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-xs transition-colors ${filterStatus === 'resolved' ? 'text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
                                 >
                                     <CheckCircle size={14} className={filterStatus === 'resolved' ? "text-emerald-600" : "text-slate-400"} />
                                     Resolved
@@ -199,8 +200,9 @@ export const ConversationSidebar = ({
                         )}
                     </div>
                 </div>
+            </div>
 
-                {/* Sender Dropdown & Search Bar Row */}
+            {/* Sender Dropdown & Search Bar Row */}
                 <div className="flex gap-2 relative z-20">
 
                     {/* Sender Dropdown Trigger */}

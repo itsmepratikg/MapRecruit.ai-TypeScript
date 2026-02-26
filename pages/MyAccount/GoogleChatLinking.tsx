@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { api } from '../../../services/api';
-import { useUserProfile } from '../../../hooks/useUserProfile';
-import { CheckCircle, XCircle, Loader, MessageSquare } from '../../../components/Icons';
+import api from '../../services/api';
+import { useUserProfile } from '../../hooks/useUserProfile';
+import { CheckCircle, XCircle, Loader, MessageSquare } from '../../components/Icons';
 
 export const GoogleChatLinking = () => {
     const location = useLocation();

@@ -860,51 +860,7 @@ export const JobDescription = ({ campaign }: { campaign?: Campaign }) => {
                )}
             </div>
 
-            {/* Right Column: Widgets (Span 4) */}
-            <div className="col-span-12 lg:col-span-4 space-y-6">
-               {/* Custom Fields Widget (Pipeline, etc) */}
-               {
-                  layoutData.result.customTabs.map((section: any) => {
-                     // Filter out unwanted sections
-                     const unwantedParams = ['Additional Information', 'Pipeline', 'AppCast', 'LinkedIn', 'TRC Front Office', 'Street Address', 'Estimated End Date', 'Parent Account'];
-                     if (unwantedParams.some(param => section.name?.includes(param))) return null;
-
-                     if (section.sectionType === 'Custom' && section.fields) {
-                        return (
-                           <div key={section.name} className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-                              <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">{section.name || "Additional Info"}</h4>
-                              <div className="grid grid-cols-1 gap-4">
-                                 {section.fields.map((field: any) => {
-                                    const companyId = section.companyID;
-                                    const fieldId = field.fieldID || field._id; // Ensure ID fallback
-                                    const customVal = formData?.customData?.[companyId]?.[fieldId]?.value;
-
-                                    return (
-                                       <div key={fieldId} className="flex justify-between items-center group">
-                                          <span className="text-sm font-medium text-slate-500 dark:text-slate-400">{field.name}</span>
-                                          <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                                             {customVal ? (
-                                                ['Yes', 'No'].includes(customVal) ? (
-                                                   <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-bold ${customVal === 'Yes'
-                                                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                                                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
-                                                      }`}>
-                                                      {customVal}
-                                                   </span>
-                                                ) : customVal
-                                             ) : <span className="text-slate-300 dark:text-slate-600">-</span>}
-                                          </span>
-                                       </div>
-                                    );
-                                 })}
-                              </div>
-                           </div>
-                        );
-                     }
-                     return null;
-                  })
-               }
-            </div>
+            {/* Right Column: Custom Fields removed from read-only view per requirements */}
          </div>
 
          {/* Edit Modal */}

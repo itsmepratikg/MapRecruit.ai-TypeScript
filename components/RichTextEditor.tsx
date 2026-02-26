@@ -31,7 +31,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             {label && <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{label}</label>}
             <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
                 <Editor
-                    // apiKey="your-api-key" // Relying on default/GPL for now
+                    apiKey={import.meta.env.VITE_TINYMCE_API_KEY || 'o9pcamp5uwp8ltrbro1lxw3aev7rw18u5hey91n1x88f684e'}
                     onInit={(evt, editor) => (editorRef.current = editor)}
                     initialValue={initialValue}
                     value={value}
