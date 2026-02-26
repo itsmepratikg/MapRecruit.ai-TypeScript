@@ -27,6 +27,7 @@ export const CampaignSettings = ({ campaign }: { campaign: Campaign }) => {
                 id,
                 name: user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.name || id : id,
                 initials: user ? (user.firstName?.charAt(0) || user.name?.charAt(0) || id.charAt(0)).toUpperCase() : 'U',
+                avatar: user?.avatar || user?.profilePic || user?.profilePicture || user?.image || null,
                 color: user?.color || 'bg-slate-200 text-slate-600',
                 status: user?.status,
                 enabled: user?.enabled
@@ -449,15 +450,19 @@ export const CampaignSettings = ({ campaign }: { campaign: Campaign }) => {
                         {/* Owner Column */}
                         <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col h-full h-min-[300px] overflow-visible pb-2 pt-2 shadow-sm shrink-0">
                             <div className="relative px-4 py-3 bg-indigo-50 dark:bg-indigo-900/20 border-b border-indigo-100 dark:border-indigo-900/50 mx-2 rounded-lg flex justify-between items-center mb-2">
-                                <h4 className="font-bold text-indigo-800 dark:text-indigo-300 text-sm">Owner</h4>
+                                <h4 className="font-bold text-indigo-800 dark:text-indigo-300 text-sm">Owner ({owners.length})</h4>
                                 <button onClick={() => setAddingRole(addingRole === 'owner' ? null : 'owner')} className={`${addingRole === 'owner' ? 'bg-indigo-200 dark:bg-indigo-800' : ''} text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 p-1.5 rounded transition-colors`}><UserPlus size={16} /></button>
                                 {renderUserDropdown('owner', owners)}
                             </div>
                             <div className="px-4 flex-1 overflow-y-auto space-y-2 custom-scrollbar">
-                                {displayOwners.length > 0 ? displayOwners.map((member, i) => (
+                                {displayOwners.length > 0 ? displayOwners.slice(0, 5).map((member, i) => (
                                     <div key={i} className={`flex items-center justify-between p-2 bg-white dark:bg-slate-800 border ${String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false' ? 'border-red-200 dark:border-red-900/50 opacity-70' : 'border-slate-200 dark:border-slate-700'} rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)]`}>
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs">{member.initials || 'O'}</div>
+                                            {member.avatar ? (
+                                                <img src={member.avatar} alt={member.name} className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-slate-700" />
+                                            ) : (
+                                                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs">{member.initials || 'O'}</div>
+                                            )}
                                             <div className="flex flex-col">
                                                <span className={`text-sm font-medium ${String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false' ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-200'}`}>{member.name || member.id}</span>
                                                {(String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false') && (
@@ -474,15 +479,19 @@ export const CampaignSettings = ({ campaign }: { campaign: Campaign }) => {
                         {/* Hiring Manager Column */}
                         <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col h-full h-min-[300px] overflow-visible pb-2 pt-2 shadow-sm shrink-0">
                             <div className="relative px-4 py-3 bg-emerald-50 dark:bg-emerald-900/20 border-b border-emerald-100 dark:border-emerald-900/50 mx-2 rounded-lg flex justify-between items-center mb-2">
-                                <h4 className="font-bold text-emerald-800 dark:text-emerald-300 text-sm">Hiring Manager</h4>
+                                <h4 className="font-bold text-emerald-800 dark:text-emerald-300 text-sm">Hiring Manager ({managers.length})</h4>
                                 <button onClick={() => setAddingRole(addingRole === 'manager' ? null : 'manager')} className={`${addingRole === 'manager' ? 'bg-emerald-200 dark:bg-emerald-800' : ''} text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 p-1.5 rounded transition-colors`}><UserPlus size={16} /></button>
                                 {renderUserDropdown('manager', managers)}
                             </div>
                             <div className="px-4 flex-1 overflow-y-auto space-y-2 custom-scrollbar">
-                                {displayManagers.length > 0 ? displayManagers.map((member, i) => (
+                                {displayManagers.length > 0 ? displayManagers.slice(0, 5).map((member, i) => (
                                     <div key={i} className={`flex items-center justify-between p-2 bg-white dark:bg-slate-800 border ${String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false' ? 'border-red-200 dark:border-red-900/50 opacity-70' : 'border-slate-200 dark:border-slate-700'} rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)]`}>
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">{member.initials || 'HM'}</div>
+                                            {member.avatar ? (
+                                                <img src={member.avatar} alt={member.name} className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-slate-700" />
+                                            ) : (
+                                                <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">{member.initials || 'HM'}</div>
+                                            )}
                                             <div className="flex flex-col">
                                                <span className={`text-sm font-medium ${String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false' ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-200'}`}>{member.name || member.id}</span>
                                                {(String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false') && (
@@ -499,15 +508,19 @@ export const CampaignSettings = ({ campaign }: { campaign: Campaign }) => {
                         {/* Recruiter Column */}
                         <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col h-full h-min-[300px] overflow-visible pb-2 pt-2 shadow-sm shrink-0">
                             <div className="relative px-4 py-3 bg-amber-50 dark:bg-amber-900/20 border-b border-amber-100 dark:border-amber-900/50 mx-2 rounded-lg flex justify-between items-center mb-2">
-                                <h4 className="font-bold text-amber-800 dark:text-amber-300 text-sm">Recruiter</h4>
+                                <h4 className="font-bold text-amber-800 dark:text-amber-300 text-sm">Recruiter ({recruiters.length})</h4>
                                 <button onClick={() => setAddingRole(addingRole === 'recruiter' ? null : 'recruiter')} className={`${addingRole === 'recruiter' ? 'bg-amber-200 dark:bg-amber-800' : ''} text-amber-600 dark:text-amber-400 hover:text-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/50 p-1.5 rounded transition-colors`}><UserPlus size={16} /></button>
                                 {renderUserDropdown('recruiter', recruiters)}
                             </div>
                             <div className="px-4 flex-1 overflow-y-auto space-y-2 custom-scrollbar">
-                                {displayRecruiters.length > 0 ? displayRecruiters.map((member, i) => (
+                                {displayRecruiters.length > 0 ? displayRecruiters.slice(0, 5).map((member, i) => (
                                     <div key={i} className={`flex items-center justify-between p-2 bg-white dark:bg-slate-800 border ${String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false' ? 'border-red-200 dark:border-red-900/50 opacity-70' : 'border-slate-200 dark:border-slate-700'} rounded-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)]`}>
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">{member.initials || 'R'}</div>
+                                            {member.avatar ? (
+                                                <img src={member.avatar} alt={member.name} className="w-8 h-8 rounded-full object-cover border border-slate-200 dark:border-slate-700" />
+                                            ) : (
+                                                <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">{member.initials || 'R'}</div>
+                                            )}
                                             <div className="flex flex-col">
                                                <span className={`text-sm font-medium ${String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false' ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-200'}`}>{member.name || member.id}</span>
                                                {(String(member.status).toLowerCase() === 'deactivated' || String(member.enabled) === 'false') && (

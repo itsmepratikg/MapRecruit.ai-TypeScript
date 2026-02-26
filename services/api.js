@@ -56,6 +56,7 @@ api.interceptors.response.use(
             else if (error.response.status >= 500) {
                 const message = error.response.data?.message || 'Internal Server Error';
                 toast.error(`System Error: ${message}`, {
+                    id: `sys-err-${message}`,
                     duration: 5000,
                     style: {
                         border: '1px solid #ef4444',

@@ -216,22 +216,21 @@ export const SidebarFooter = ({
             </div>
 
             {/* Switch Client */}
-            {hasPermission('clientSwitcher') && (
-                <div className="relative" onMouseEnter={(e) => isDesktop && handlePopoverEnter('client', e)} onMouseLeave={() => isDesktop && handlePopoverLeave()}>
-                    <button
-                        data-tour="nav-client-switcher"
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'client' ? 'bg-slate-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400' : ''}`}
-                        onClick={() => handleMenuClick('client')}
-                    >
+            <div className="relative" onMouseEnter={(e) => isDesktop && handlePopoverEnter('client', e)} onMouseLeave={() => isDesktop && handlePopoverLeave()}>
+                <button
+                    data-tour="nav-client-switcher"
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'client' ? 'bg-slate-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400' : ''}`}
+                    onClick={() => handleMenuClick('client')}
+                >
                         <Building2 size={18} className={activePopover === 'client' ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"} />
                         <span className="text-sm font-medium truncate" title={
-                            clients.find(c => (c._id?.toString() === userProfile.activeClientID?.toString() || c.id?.toString() === userProfile.activeClientID?.toString()))?.clientName ||
-                            (typeof userProfile.activeClient === 'object' ? userProfile.activeClient.clientName : userProfile.activeClient) ||
+                            clients?.find(c => (c._id?.toString() === userProfile?.activeClientID?.toString() || c.id?.toString() === userProfile?.activeClientID?.toString()))?.clientName ||
+                            (userProfile?.activeClient && typeof userProfile.activeClient === 'object' ? userProfile.activeClient.clientName : userProfile?.activeClient) ||
                             "Select Client"
                         }>
                             {
-                                clients.find(c => (c._id?.toString() === userProfile.activeClientID?.toString() || c.id?.toString() === userProfile.activeClientID?.toString()))?.clientName ||
-                                (typeof userProfile.activeClient === 'object' ? userProfile.activeClient.clientName : userProfile.activeClient) ||
+                                clients?.find(c => (c._id?.toString() === userProfile?.activeClientID?.toString() || c.id?.toString() === userProfile?.activeClientID?.toString()))?.clientName ||
+                                (userProfile?.activeClient && typeof userProfile.activeClient === 'object' ? userProfile.activeClient.clientName : userProfile?.activeClient) ||
                                 "Select Client"
                             }
                         </span>
@@ -251,15 +250,13 @@ export const SidebarFooter = ({
                         </Portal>
                     )}
                 </div>
-            )}
 
             {/* Switch Company (Permission Based) */}
-            {hasPermission('companySwitcher') && (
-                <div className="relative" onMouseEnter={(e) => isDesktop && handlePopoverEnter('company', e)} onMouseLeave={() => isDesktop && handlePopoverLeave()}>
-                    <button
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'company' ? 'bg-slate-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400' : ''}`}
-                        onClick={() => handleMenuClick('company')}
-                    >
+            <div className="relative" onMouseEnter={(e) => isDesktop && handlePopoverEnter('company', e)} onMouseLeave={() => isDesktop && handlePopoverLeave()}>
+                <button
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-md transition-colors ${activePopover === 'company' ? 'bg-slate-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400' : ''}`}
+                    onClick={() => handleMenuClick('company')}
+                >
                         <Globe size={18} className={activePopover === 'company' ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"} />
                         <span className="text-sm font-medium">{t("Admin Switcher")}</span>
                     </button>
@@ -282,7 +279,6 @@ export const SidebarFooter = ({
                         </Portal>
                     )}
                 </div>
-            )}
 
             {/* User Account */}
             <div className="relative pt-2" onMouseEnter={(e) => isDesktop && handlePopoverEnter('account', e)} onMouseLeave={() => isDesktop && handlePopoverLeave()}>
@@ -295,7 +291,7 @@ export const SidebarFooter = ({
                         {userProfile.avatar ? (
                             <img src={userProfile.avatar} alt="User" className="w-full h-full object-cover" />
                         ) : (
-                            userProfile.firstName.charAt(0) + userProfile.lastName.charAt(0)
+                            (userProfile?.firstName?.charAt(0) || 'U') + (userProfile?.lastName?.charAt(0) || '')
                         )}
                     </div>
                     <div className="text-left flex-1 min-w-0">

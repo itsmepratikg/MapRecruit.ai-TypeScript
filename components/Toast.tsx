@@ -1,6 +1,5 @@
-
 import React, { createContext, useContext, useCallback, useEffect } from 'react';
-import toast, { Toaster, ToastOptions } from 'react-hot-toast';
+import toast, { Toaster, ToastOptions, ToastBar, useToasterStore } from 'react-hot-toast';
 import { Info, X } from 'lucide-react';
 
 type ToastType = 'success' | 'error' | 'info';
@@ -69,6 +68,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const addToast = useCallback((message: string, type: ToastType = 'info', customOptions?: ToastOptions) => {
     const options: ToastOptions = {
       duration: 4000,
+      id: customOptions?.id || (typeof message === 'string' ? message : undefined),
       ...customOptions
     };
 
@@ -164,6 +164,15 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       },
     });
   }, []);
+  const { toasts } = useToasterStore();
+  const TOAST_LIMIT = 5;
+
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible)
+      .filter((_, i) => i >= TOAST_LIMIT)
+      .forEach((t) => toast.dismiss(t.id));
+  }, [toasts]);
 
   return (
     <ToastContext.Provider value={{ addToast, addPromise }}>
@@ -172,13 +181,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         position="top-right"
         containerStyle={{ zIndex: 9999 }}
         toastOptions={{
-          className: 'text-sm font-medium shadow-xl',
+          className: 'text-sm font-medium shadow-xl overflow-hidden',
           style: {
             background: 'var(--toast-bg)',
             color: 'var(--toast-text)',
             border: '1px solid var(--toast-border)',
             padding: '12px 16px',
             borderRadius: '0.75rem',
+            overflow: 'hidden',
           },
           success: {
             iconTheme: {
@@ -193,7 +203,41 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             },
           },
         }}
-      />
+      >
+        {(t) => (
+          <ToastBar toast={t} style={{ padding: 0, margin: 0, position: 'relative', overflow: 'hidden' }}>
+            {({ icon, message }) => (
+              <>
+                <div className="flex items-center gap-2 p-1 relative z-10 w-full">
+                  {icon}
+                  {message}
+                </div>
+                {t.type !== 'loading' && t.duration !== Infinity && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      height: '3px',
+                      backgroundColor: t.type === 'success' ? '#10b981' : t.type === 'error' ? '#ef4444' : '#3b82f6',
+                      opacity: 0.8,
+                      animation: `toastProgress ${t.duration || 4000}ms linear forwards`,
+                      animationPlayState: t.pauseDuration ? 'paused' : 'running',
+                      transition: 'background-color 0.2s ease',
+                    }}
+                  />
+                )}
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
+      <style>{`
+        @keyframes toastProgress {
+          0% { width: 100%; }
+          100% { width: 0%; }
+        }
+      `}</style>
     </ToastContext.Provider>
   );
 };
