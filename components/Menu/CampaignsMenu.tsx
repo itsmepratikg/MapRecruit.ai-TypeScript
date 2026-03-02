@@ -221,15 +221,27 @@ export const CampaignsMenu = ({
                     isCollapsed={isCollapsed}
                 />
 
-                <NavItem
-                    icon={Settings}
-                    label="Settings"
-                    activeTab={isActive('Settings')}
-                    to={getLink('Settings')}
-                    onClick={() => { if (!isDesktop) setIsSidebarOpen(false); }}
-                    isCollapsed={isCollapsed}
-                />
+                <div>
+                    <NavItem
+                        icon={Settings}
+                        label="Settings"
+                        activeTab={isActive('Settings')}
+                        to={getLink('Settings')}
+                        onClick={() => { if (!isDesktop) setIsSidebarOpen(false); }}
+                        isCollapsed={isCollapsed}
+                    />
+                    {isActive('Settings') && !isCollapsed && (
+                        <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                            <button onClick={() => handleNav('Settings')} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${location.pathname.endsWith(`/settings/${campaignId}`) ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                Campaign Settings
+                            </button>
+                            <button onClick={() => navigate(`/showcampaign/settings/additionaldetails/${campaignId}`)} className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${location.pathname.includes('/additionaldetails') ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                                Additional Details
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </div >
     );
 };

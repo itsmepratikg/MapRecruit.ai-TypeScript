@@ -38,6 +38,7 @@ import { Duplicates } from './Profile/Duplicates';
 import { Similar } from './Profile/Similar';
 import { Recommended } from './Profile/Recommended';
 import { Chat } from './Profile/Chat';
+import { AdditionalDetails } from './Profile/AdditionalDetails';
 
 export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: propsCandidateId }: { activeTab?: string, candidateId?: string }) => {
   const { tab: urlTab, id: urlId } = useParams<{ tab?: string; id: string }>();
@@ -405,6 +406,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
       case 'recommended': return <Recommended />;
       case 'duplicate': return <Duplicates />;
       case 'similar': return <Similar />;
+      case 'additionaldetails': return <AdditionalDetails id={id} collection="resumes" />;
       default: return <Overview data={resumeDetails} onEditSection={handleEditSection} />;
     }
   };

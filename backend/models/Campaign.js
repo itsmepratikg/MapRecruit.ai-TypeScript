@@ -94,7 +94,7 @@ const campaignSchema = mongoose.Schema({
     },
 
     // Rounds
-    screeningRounds: [mongoose.Schema.Types.Mixed], // Array of round configs
+    screeningRounds: [require('./schemas/ScreeningRoundSchema')], // Array of strongly-typed round configs
     qualifyingRounds: [mongoose.Schema.Types.Mixed],
 
     // Job Posting

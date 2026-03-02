@@ -13,6 +13,7 @@ import { CampaignService as NewCampaignService } from '../../services/CampaignSe
 import { Campaign } from '../../types';
 import { Recommendations } from './Recommendations';
 import { Navigate } from 'react-router-dom';
+import { AdditionalDetails } from '../Profile/AdditionalDetails';
 import { useWebSocket } from '../../context/WebSocketContext';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { mapCampaignToUI } from '../Campaigns';
@@ -322,6 +323,9 @@ export const CampaignExternalRoutes = () => {
             {/* --- SETTINGS --- */}
             <Route path="settings/:id" element={
                 <ExternalRouteWrapper component={CampaignSettings} activeTab="SETTINGS" />
+            } />
+            <Route path="settings/additionaldetails/:id" element={
+                <ExternalRouteWrapper component={AdditionalDetails} activeTab="ADDITIONAL_DETAILS" subProps={{ collection: 'campaigns' }} />
             } />
 
             {/* Fallback */}

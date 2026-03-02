@@ -484,6 +484,77 @@ const toggleFavorite = async (req, res) => {
     }
 };
 
+// @desc    Update a specific screening round via deep path merging
+// @route   PUT /api/campaigns/:id/rounds/:roundId
+// @access  Private
+const updateScreeningRound = async (req, res) => {
+    try {
+        const companyID = req.user.currentCompanyID || req.user.companyID;
+        const { id: campaignId, roundId } = req.params;
+
+        if (!isValidObjectId(campaignId)) {
+            return res.status(400).json({ message: 'Invalid Campaign ID' });
+        }
+
+        const campaign = await Campaign.findOne({
+            _id: { $eq: campaignId },
+            companyID: companyID,
+            clientID: { $in: await getAllowedClientIds(req.user.id, companyID) }
+        });
+
+        if (!campaign) {
+            return res.status(404).json({ message: 'Campaign not found' });
+        }
+
+        // We convert req.body (e.g. { "reachOutSources.email.templateID": "t1" }) 
+        // into a MongoDB $set object prefixed with the array filter
+        // Example: { "screeningRounds.$[elem].reachOutSources.email.templateID": "t1" }
+        const sanitizedBody = sanitizeNoSQL(req.body);
+        let updateSetFields = {};
+
+        // Flattens the body and prepends the path
+        const buildDotNotation = (obj, prefix = '') => {
+            for (let prop in obj) {
+                const val = obj[prop];
+                const key = prefix ? `${prefix}.${prop}` : prop;
+                
+                // If the value is a pure object (not an array, not null) and we want to go deeper 
+                // Currently, going deep guarantees we don't overwrite sibling fields
+                if (typeof val === 'object' && val !== null && !Array.isArray(val) && Object.keys(val).length > 0) {
+                    buildDotNotation(val, key);
+                } else {
+                    updateSetFields[`screeningRounds.$[elem].${key}`] = val;
+                }
+            }
+        };
+
+        buildDotNotation(sanitizedBody);
+
+        if (Object.keys(updateSetFields).length === 0) {
+            return res.status(400).json({ message: 'No valid update fields provided' });
+        }
+
+        const updatedCampaign = await Campaign.findOneAndUpdate(
+            { _id: campaignId },
+            { $set: updateSetFields },
+            { 
+                arrayFilters: [{ "elem.id": roundId }],
+                new: true,
+                runValidators: true // Enforces the new ScreeningRoundSchema
+            }
+        );
+
+        if (!updatedCampaign) {
+            return res.status(404).json({ message: 'Failed to update round. Round ID might not exist.' });
+        }
+
+        res.status(200).json(updatedCampaign);
+    } catch (error) {
+        console.error('updateScreeningRound Error:', error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 module.exports = {
     getCampaigns,
     getCampaign,
@@ -493,7 +564,7 @@ module.exports = {
     updateCampaign,
     deleteCampaign,
     bulkUpdateStatus,
-    bulkUpdateStatus,
     scrapeJobUrl,
-    toggleFavorite
+    toggleFavorite,
+    updateScreeningRound
 };

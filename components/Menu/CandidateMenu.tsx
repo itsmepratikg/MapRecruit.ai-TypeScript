@@ -38,7 +38,17 @@ export const CandidateMenu = ({
         }
 
         if (!activeId) return;
-        navigate(`/profile/${tabId}/${activeId}`);
+
+        // Use the new simplified routing: /profile/:id or /profile/additionaldetails/:id
+        if (tabId === 'profile') {
+            navigate(`/profile/${activeId}`);
+        } else if (tabId === 'additionaldetails') {
+            navigate(`/profile/additionaldetails/${activeId}`);
+        } else {
+            // Fallback for other tabs that might still use the /profile/:tab/:id pattern
+            navigate(`/profile/${tabId}/${activeId}`);
+        }
+
         if (!isDesktop) setIsSidebarOpen(false);
     };
 
@@ -66,15 +76,27 @@ export const CandidateMenu = ({
                             </h4>
                         )}
                         {category.items.map((tab, itemIndex) => (
-                            <div key={tab.id} className="animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${(catIndex * 3 + itemIndex) * 50}ms` }}>
-                                <NavItem
-                                    icon={tab.icon}
-                                    label={tab.label}
-                                    activeTab={activeTab === tab.id}
-                                    onClick={() => handleTabClick(tab.id)}
-                                    isCollapsed={isCollapsed}
-                                />
-                            </div>
+                            <React.Fragment key={tab.id}>
+                                <div className="animate-in fade-in slide-in-from-left-2 duration-300" style={{ animationDelay: `${(catIndex * 3 + itemIndex) * 50}ms` }}>
+                                    <NavItem
+                                        icon={tab.icon}
+                                        label={tab.label}
+                                        activeTab={activeTab === tab.id || (tab.id === 'profile' && activeTab === 'additionaldetails')}
+                                        onClick={() => handleTabClick(tab.id)}
+                                        isCollapsed={isCollapsed}
+                                    />
+                                </div>
+                                {tab.id === 'profile' && (activeTab === 'profile' || activeTab === 'additionaldetails') && !isCollapsed && (
+                                    <div className="ml-8 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-3 animate-in slide-in-from-left-2 duration-200">
+                                        <button
+                                            onClick={() => handleTabClick('additionaldetails')}
+                                            className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${activeTab === 'additionaldetails' ? 'text-emerald-700 dark:text-emerald-400 font-medium bg-slate-50 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                                        >
+                                            Additional Details
+                                        </button>
+                                    </div>
+                                )}
+                            </React.Fragment>
                         ))}
                     </div>
                 ))}

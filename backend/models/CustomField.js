@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
 const customFieldSchema = new mongoose.Schema({
-    collectionName: { type: String }, // 'collection' might be a reserved keyword in some contexts, but Schema can handle it
+    companyID: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true, index: true },
+    clientID: { type: mongoose.Schema.Types.ObjectId, ref: 'Client', index: true },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    collectionName: { type: String, index: true }, // mapped from 'collection' in JSON
     enabled: { type: Boolean, default: true },
     default: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
     order: { type: Number, default: 1 },
-    sectionID: { type: mongoose.Schema.Types.ObjectId, ref: 'CustomSection', required: true },
+    sectionID: { type: mongoose.Schema.Types.ObjectId, ref: 'CustomSection', required: true, index: true },
     fieldType: { type: String },
     name: { type: String, required: true },
     format: { type: String, required: true },

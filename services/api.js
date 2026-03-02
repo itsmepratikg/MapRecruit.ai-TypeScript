@@ -390,5 +390,16 @@ export const integrationService = {
     }
 };
 
+export const customFieldService = {
+    getGroupedByCollection: async (collection) => {
+        const response = await api.get(`/custom-fields/grouped/${collection}`);
+        return response.data;
+    },
+    updateCustomDataBatch: async (collection, id, customData) => {
+        const response = await api.post(`/custom-fields/update-batch/${collection}/${id}`, { customData });
+        return response.data;
+    }
+};
+
 export default api;
 

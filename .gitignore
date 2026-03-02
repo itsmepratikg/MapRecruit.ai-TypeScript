@@ -34,16 +34,16 @@ install_agent_os_temp.js
 install_design_os.cjs
 install_design_os.js
 
-# Environment Variables
 .env
 .env.*
 backend/.env
 backend/.env.*
 
-# Debug and Seed Scripts
-backend/debug_ids.js
-backend/seed_data.js
-backend/seed_user.js
-
 # Trash
 .trash/
+
+# Skills
+/.agent
+/.claude
+/.maprecruit-skills
+/agent-os

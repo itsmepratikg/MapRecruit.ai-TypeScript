@@ -21,10 +21,12 @@ Whenever a task is started, immediately check the `/.maprecruit-skills/` directo
 - **Security/Auth**: Refer to `rbac-and-privacy` and `coding-safety`.
 - **Form/Data Handling**: Refer to `code-validation` and `coding-safety`.
 - **Verification/PRs**: Refer to `testing-strategy` and `execution-master`.
+- **Schema & Database Work**: Refer to `database-architect`, `database-design`, `nosql-expert`, and `nestjs-expert` for Mongoose patterns.
 
 ### 2. Execution Flow
 - **Plan**: Use `execution-master` to structure the work and `system-architect` for high-level design.
-- **Implement**: Follow the specific guidelines from the relevant skills (e.g., `brand-identity`, `react-patterns`).
+- **Implement**: Follow the specific guidelines from the relevant skills (e.g., `brand-identity`, `react-patterns`, `nosql-expert`).
+- **Database**: Use `database-architect` for modeling, `database-design` for schema, and `database-migration` for migrations.
 - **Verify**: Use `testing-strategy` for multi-viewport audits and Dark Mode checks.
 
 ### 3. Safety First

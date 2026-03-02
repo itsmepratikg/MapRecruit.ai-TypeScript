@@ -626,20 +626,27 @@ const AppContent = () => {
                           setActiveProfileSubView={setActiveProfileSubView}
                         />
                       } />
-                      {/* Candidate Profile Menu - Ensure route matches main content structure /profile/:tab/:id */}
-                      <Route path="/profile/:tab/:id" element={
+                      {/* Candidate Profile Menu */}
+                      <Route path="/profile/additionaldetails/:id" element={
                         <CandidateMenu
-                          selectedCandidateId={selectedCandidateId}
-                          activeProfileTab={activeProfileTab}
+                          selectedCandidateId={null}
+                          activeProfileTab="additionaldetails"
                           setActiveProfileTab={setActiveProfileTab}
                           onBack={() => navigate('/profiles/searchprofiles/Search')}
                           isCollapsed={isCollapsed}
                           setIsSidebarOpen={setIsSidebarOpen}
                         />
                       } />
-                      {/* Handle legacy /profile/:id and /profile/:id/:tab */}
-                      <Route path="/profile/:id" element={<LegacyProfileRedirect />} />
-                      <Route path="/profile/:id/:tab" element={<LegacyProfileRedirect />} />
+                      <Route path="/profile/:id" element={
+                        <CandidateMenu
+                          selectedCandidateId={null}
+                          activeProfileTab="profile"
+                          setActiveProfileTab={setActiveProfileTab}
+                          onBack={() => navigate('/profiles/searchprofiles/Search')}
+                          isCollapsed={isCollapsed}
+                          setIsSidebarOpen={setIsSidebarOpen}
+                        />
+                      } />
 
                       {/* Redirect legacy /profiles to searchprofiles */}
                       <Route path="/profiles" element={<Navigate to="/profiles/searchprofiles/Search" replace />} />
@@ -796,14 +803,14 @@ const AppContent = () => {
                     <Route path="/profiles/searchprofiles/*" element={
                       <Profiles onNavigateToProfile={(id) => navigate(`/profile/${id}`)} />
                     } />
-                    <Route path="/profile/:tab/:id" element={
+                    <Route path="/profile/additionaldetails/:id" element={
                       <div className="h-full flex flex-col animate-in fade-in duration-300">
-                        <CandidateProfile />
+                        <CandidateProfile activeTab="additionaldetails" />
                       </div>
                     } />
                     <Route path="/profile/:id" element={
                       <div className="h-full flex flex-col animate-in fade-in duration-300">
-                        <CandidateProfile />
+                        <CandidateProfile activeTab="profile" />
                       </div>
                     } />
                     {/* Handle legacy /profile/:id/:tab (Swaps to new tab/id format) */}

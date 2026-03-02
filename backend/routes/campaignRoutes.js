@@ -10,7 +10,8 @@ const {
     deleteCampaign,
     bulkUpdateStatus,
     scrapeJobUrl,
-    toggleFavorite
+    toggleFavorite,
+    updateScreeningRound
 } = require('../controllers/campaignController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -30,5 +31,8 @@ router.route('/:id')
     .get(protect, tenantGuard('Campaign'), getCampaign)
     .put(protect, tenantGuard('Campaign'), updateCampaign)
     .delete(protect, tenantGuard('Campaign'), deleteCampaign);
+
+router.route('/:id/rounds/:roundId')
+    .put(protect, tenantGuard('Campaign'), updateScreeningRound);
 
 module.exports = router;
