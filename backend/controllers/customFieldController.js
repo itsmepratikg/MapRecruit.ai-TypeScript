@@ -32,6 +32,7 @@ const getCustomFieldsByCollection = async (req, res) => {
 const getGroupedCustomFields = async (req, res) => {
     try {
         const companyID = req.user.currentCompanyID || req.user.companyID;
+        const clientID = req.user.currentClientID || req.user.clientID;
         const { collection } = req.params;
 
         // Map collection to page identifier used in CustomSection model
@@ -43,16 +44,35 @@ const getGroupedCustomFields = async (req, res) => {
 
         const page = collectionToPage[collection] || collection;
 
+        // Base query for access level filtering
+        const accessFilter = {
+            $or: [
+                { accessLevel: 'Company' },
+                { accessLevel: { $exists: false } },
+                { $and: [{ accessLevel: 'Client' }, { clientID: clientID }] }
+            ]
+        };
+
         // Fetch sections for this specific page/context
-        const sections = await CustomSection.find({ companyID, page, enabled: true }).sort({ order: 1 }).lean();
+        const sections = await CustomSection.find({
+            companyID,
+            page,
+            ...accessFilter
+            // Note: We might want to see disabled ones in the management tab though?
+            // The user asked for an option to enable/disable, so we should show all.
+        }).sort({ order: 1 }).lean();
 
         // Fetch fields for this specific collection
-        const fields = await CustomField.find({ companyID, collectionName: collection, enabled: true }).sort({ order: 1 }).lean();
+        const fields = await CustomField.find({
+            companyID,
+            collectionName: collection,
+            ...accessFilter
+        }).sort({ order: 1 }).lean();
 
         const grouped = sections.map(section => ({
             ...section,
             fields: fields.filter(f => f.sectionID && f.sectionID.toString() === section._id.toString())
-        })).filter(s => s.fields.length > 0);
+        })).filter(s => s.fields.length > 0 || s.sectionType === 'Custom'); // Keep custom empty sections
 
         res.status(200).json(grouped);
     } catch (error) {
@@ -147,9 +167,63 @@ const updateCustomDataBatch = async (req, res) => {
     }
 };
 
+// @desc    Update a custom section
+// @route   PUT /api/custom-fields/sections/:id
+// @access  Private
+const updateSection = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const companyID = req.user.currentCompanyID || req.user.companyID;
+        const updateData = sanitizeNoSQL(req.body);
+
+        const section = await CustomSection.findOneAndUpdate(
+            { _id: id, companyID },
+            { $set: updateData },
+            { new: true }
+        );
+
+        if (!section) {
+            return res.status(404).json({ message: 'Section not found' });
+        }
+
+        res.status(200).json(section);
+    } catch (error) {
+        console.error('updateSection Error:', error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+// @desc    Update a custom field definition
+// @route   PUT /api/custom-fields/fields/:id
+// @access  Private
+const updateField = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const companyID = req.user.currentCompanyID || req.user.companyID;
+        const updateData = sanitizeNoSQL(req.body);
+
+        const field = await CustomField.findOneAndUpdate(
+            { _id: id, companyID },
+            { $set: updateData },
+            { new: true }
+        );
+
+        if (!field) {
+            return res.status(404).json({ message: 'Field not found' });
+        }
+
+        res.status(200).json(field);
+    } catch (error) {
+        console.error('updateField Error:', error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 module.exports = {
     getCustomFieldsByCollection,
     getGroupedCustomFields,
     updateCustomDataField,
-    updateCustomDataBatch
+    updateCustomDataBatch,
+    updateSection,
+    updateField
 };

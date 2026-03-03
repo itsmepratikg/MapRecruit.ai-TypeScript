@@ -398,6 +398,14 @@ export const customFieldService = {
     updateCustomDataBatch: async (collection, id, customData) => {
         const response = await api.post(`/custom-fields/update-batch/${collection}/${id}`, { customData });
         return response.data;
+    },
+    updateSection: async (id, data) => {
+        const response = await api.put(`/custom-fields/sections/${id}`, data);
+        return response.data;
+    },
+    updateField: async (id, data) => {
+        const response = await api.put(`/custom-fields/fields/${id}`, data);
+        return response.data;
     }
 };
 

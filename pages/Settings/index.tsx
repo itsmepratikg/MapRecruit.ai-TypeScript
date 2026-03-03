@@ -18,6 +18,8 @@ import { WorkspaceConfigurations } from './WorkspaceConfigurations';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+import { CustomFieldsPage } from './CustomFields/CustomFields';
+
 interface SettingsPageProps {
     activeTab?: string; // Optional for backward compatibility if needed, but we will ignore it
     onSelectUser?: (user: any) => void;
@@ -48,6 +50,7 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             'ROLE_HIERARCHY': 'rolehierarchy',
             'THEMES': 'themes',
             'WORKSPACE_CONFIG': 'workspaceconfig',
+            'CUSTOM_FIELD': 'customfield',
             // Add others as needed, or fallback to TitleCase
         };
         if (map[id]) return map[id];
@@ -94,13 +97,15 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             <Route path={getPath('THEMES')} element={<ThemeSettings />} />
             <Route path={getPath('WORKSPACE_CONFIG')} element={<WorkspaceConfigurations />} />
             <Route path={getPath('AUTHENTICATION')} element={<WorkspaceConfigurations />} />
+            <Route path="customfield/:type" element={<CustomFieldsPage />} />
+            <Route path="customfield" element={<Navigate to="campaign" replace />} />
             <Route path="users/userprofile/:section/:id" element={<UserProfileContainer />} />
             <Route path="users/userprofile/:section" element={<UserProfileContainer />} />
             <Route path="clientprofile/:tab/:clientId" element={<ClientProfileContainer />} />
             {/* Add routes for other settings items */}
             {Object.keys(SETTINGS_CONTENT).map(id => {
                 // Only render placeholder for items not explicitly routed above
-                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY', 'THEMES', 'WORKSPACE_CONFIG', 'AUTHENTICATION'].includes(id)) {
+                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY', 'THEMES', 'WORKSPACE_CONFIG', 'AUTHENTICATION', 'CUSTOM_FIELD'].includes(id)) {
                     return <Route key={id} path={getPath(id)} element={<SettingsContentWrapper id={id} />} />;
                 }
                 return null;

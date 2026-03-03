@@ -4,7 +4,9 @@ const {
     getCustomFieldsByCollection,
     getGroupedCustomFields,
     updateCustomDataField,
-    updateCustomDataBatch
+    updateCustomDataBatch,
+    updateSection,
+    updateField
 } = require('../controllers/customFieldController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -12,5 +14,7 @@ router.get('/:collection', protect, getCustomFieldsByCollection);
 router.get('/grouped/:collection', protect, getGroupedCustomFields);
 router.put('/update/:id', protect, updateCustomDataField);
 router.post('/update-batch/:collection/:id', protect, updateCustomDataBatch);
+router.put('/sections/:id', protect, updateSection);
+router.put('/fields/:id', protect, updateField);
 
 module.exports = router;

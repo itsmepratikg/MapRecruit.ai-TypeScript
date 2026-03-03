@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Portal } from './Menu/Portal';
+import { AlertTriangle } from './Icons';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
