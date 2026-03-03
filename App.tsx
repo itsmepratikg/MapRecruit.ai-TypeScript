@@ -813,6 +813,46 @@ const AppContent = () => {
                         <CandidateProfile activeTab="profile" />
                       </div>
                     } />
+                    <Route path="/profile/resume/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="resume" />
+                      </div>
+                    } />
+                    <Route path="/profile/activity/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="activity" />
+                      </div>
+                    } />
+                    <Route path="/profile/chat/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="chat" />
+                      </div>
+                    } />
+                    <Route path="/profile/campaigns/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="campaigns" />
+                      </div>
+                    } />
+                    <Route path="/profile/folders/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="folders" />
+                      </div>
+                    } />
+                    <Route path="/profile/interviews/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="interviews" />
+                      </div>
+                    } />
+                    <Route path="/profile/recommended/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="recommended" />
+                      </div>
+                    } />
+                    <Route path="/profile/similar/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="similar" />
+                      </div>
+                    } />
                     {/* Handle legacy /profile/:id/:tab (Swaps to new tab/id format) */}
                     <Route path="/profile/:id/:tab" element={<LegacyProfileRedirect />} />
 
