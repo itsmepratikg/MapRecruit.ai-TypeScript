@@ -229,6 +229,8 @@ app.use('/api/support', require('./routes/supportRoutes'));
 app.use('/api/chat', require('./routes/chatRoutes'));
 app.use('/api/emails', require('./routes/emailRoutes'));
 app.use('/api/custom-fields', require('./routes/customFieldRoutes'));
+app.use('/api/presence', require('./routes/presenceRoutes'));
+
 
 // Integration Routes (SharePoint, Drive, Uploads)
 app.use('/api/v1/sharepoint', require('./routes/sharepointRoutes'));

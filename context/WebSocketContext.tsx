@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
-import { io, Socket } from 'socket.io-client';
+import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
+import axios from 'axios';
 
-// Determine Socket URL (strip /api if present)
-const getSocketUrl = () => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    return apiUrl.includes('/api') ? apiUrl.replace('/api', '') : apiUrl;
+// Determine API URL
+const getApiUrl = () => {
+    return import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 };
 
 export interface UserPresence {
     id: string;
+    _id?: string; // Support both formats
     firstName: string;
     lastName: string;
     avatar?: string;
@@ -16,14 +16,14 @@ export interface UserPresence {
     color: string;
     campaignId?: string; // Current room
     page?: string;      // Specific page/tab within campaign
-    lastActive?: number;
+    lastActive?: string | number;
     status?: 'active' | 'idle';
     role?: string;
     location?: string;
 }
 
 interface WebSocketContextType {
-    socket: Socket | null;
+    socket: any | null; // Kept for type compatibility, but set to null
     activeUsers: Map<string, UserPresence>;
     isConnected: boolean;
     joinRoom: (campaignId: string, user: Omit<UserPresence, 'lastActive' | 'campaignId' | 'status'>, page?: string) => void;
@@ -33,92 +33,79 @@ interface WebSocketContextType {
 const WebSocketContext = createContext<WebSocketContextType | null>(null);
 
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
-    const [socket, setSocket] = useState<Socket | null>(null);
     const [activeUsers, setActiveUsers] = useState<Map<string, UserPresence>>(new Map());
-    const [isConnected, setIsConnected] = useState(false);
+    const [isConnected, setIsConnected] = useState(true); // Always true for HTTP approach
 
+    // State to track current room and user for heartbeats
+    const [currentRoom, setCurrentRoom] = useState<{
+        campaignId: string;
+        user: Omit<UserPresence, 'lastActive' | 'campaignId' | 'status'>;
+        page?: string;
+    } | null>(null);
+
+    const heartbeatTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    const performHeartbeat = useCallback(async () => {
+        if (!currentRoom) return;
+
+        try {
+            const baseUrl = getApiUrl();
+            const response = await axios.post(`${baseUrl}/api/presence/heartbeat`, {
+                userId: currentRoom.user.id || (currentRoom.user as any)._id,
+                campaignId: currentRoom.campaignId,
+                user: currentRoom.user,
+                page: currentRoom.page
+            });
+
+            const users: UserPresence[] = response.data;
+            const next = new Map<string, UserPresence>();
+            users.forEach(u => {
+                const uid = u.userId || u.id || (u as any)._id;
+                next.set(uid, { ...u, id: uid });
+            });
+            setActiveUsers(next);
+        } catch (error) {
+            console.error('[Presence] Heartbeat failed:', error);
+        }
+    }, [currentRoom]);
+
+    // Handle heartbeat cycle
     useEffect(() => {
-        const socketInstance = io(getSocketUrl(), {
-            transports: ['websocket'],
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000,
-        });
+        if (!currentRoom) {
+            setActiveUsers(new Map());
+            if (heartbeatTimerRef.current) clearInterval(heartbeatTimerRef.current);
+            return;
+        }
 
-        socketInstance.on('connect', () => {
-            console.log('WebSocket Connected:', socketInstance.id);
-            setIsConnected(true);
-        });
+        // Initial heartbeat
+        performHeartbeat();
 
-        socketInstance.on('disconnect', () => {
-            console.log('WebSocket Disconnected');
-            setIsConnected(false);
-            setActiveUsers(new Map()); // Clear on disconnect
-        });
-
-        // 1. Initial Sync (Full list for the room)
-        socketInstance.on('room-sync', (users: UserPresence[]) => {
-            console.log('[WebSocketContext] Syncing room users:', users.length);
-            setActiveUsers(prev => {
-                const next = new Map();
-                users.forEach(u => next.set(u.id, u));
-                return next;
-            });
-        });
-
-        // 2. Granular Join
-        socketInstance.on('user-joined', (user: UserPresence) => {
-            console.log('[WebSocketContext] User joined:', user.firstName);
-            setActiveUsers(prev => {
-                const next = new Map(prev);
-                next.set(user.id, user);
-                return next;
-            });
-        });
-
-        // 3. Granular Leave
-        socketInstance.on('user-left', (data: { userId: string, socketId: string }) => {
-            console.log('[WebSocketContext] User left:', data.userId);
-            setActiveUsers(prev => {
-                const next = new Map(prev);
-                next.delete(data.userId);
-                return next;
-            });
-        });
-
-        // 4. Granular Update (Status/Page)
-        socketInstance.on('user-updated', (data: Partial<UserPresence> & { userId: string }) => {
-            console.log('[WebSocketContext] User updated:', data.userId, data.status || data.page);
-            setActiveUsers(prev => {
-                const existing = prev.get(data.userId);
-                if (!existing) return prev;
-                const next = new Map(prev);
-                next.set(data.userId, { ...existing, ...data });
-                return next;
-            });
-        });
-
-        setSocket(socketInstance);
+        // Setup 20-second interval
+        heartbeatTimerRef.current = setInterval(performHeartbeat, 20000);
 
         return () => {
-            socketInstance.disconnect();
+            if (heartbeatTimerRef.current) clearInterval(heartbeatTimerRef.current);
         };
-    }, []);
+    }, [currentRoom, performHeartbeat]);
 
     const joinRoom = useCallback((campaignId: string, user: Omit<UserPresence, 'lastActive' | 'campaignId' | 'status'>, page?: string) => {
-        if (socket) {
-            socket.emit('join-page', { campaignId, user: { ...user, page } });
-        }
-    }, [socket]);
+        console.log(`[Presence] Joining campaign ${campaignId} at page ${page}`);
+        setCurrentRoom({ campaignId, user: { ...user, id: user.id || (user as any)._id }, page });
+    }, []);
 
-    const leaveRoom = useCallback((campaignId: string, userId: string) => {
-        if (socket) {
-            socket.emit('leave-page', { campaignId, userId });
+    const leaveRoom = useCallback(async (campaignId: string, userId: string) => {
+        console.log(`[Presence] Leaving campaign ${campaignId}`);
+        setCurrentRoom(null);
+        try {
+            const baseUrl = getApiUrl();
+            await axios.post(`${baseUrl}/api/presence/leave`, { userId, campaignId });
+        } catch (error) {
+            console.error('[Presence] Leave failed:', error);
         }
-    }, [socket]);
+    }, []);
 
     return (
-        <WebSocketContext.Provider value={{ socket, activeUsers, isConnected, joinRoom, leaveRoom }}>
+        <WebSocketContext.Provider value={{ socket: null, activeUsers, isConnected, joinRoom, leaveRoom }}>
             {children}
         </WebSocketContext.Provider>
     );
@@ -131,3 +118,4 @@ export const useWebSocket = () => {
     }
     return context;
 };
+
