@@ -295,11 +295,11 @@ export const JobDescription = ({ campaign }: { campaign?: Campaign }) => {
       const handleEditEvent = () => setIsEditing(true);
 
       window.addEventListener('CAMPAIGN_ENHANCE_JD', handleEnhanceEvent);
-      window.addEventListener('CAMPAIGN_EDIT_JD', handleEditEvent);
+      window.addEventListener('CAMPAIGN_EDIT_DETAILS', handleEditEvent);
 
       return () => {
          window.removeEventListener('CAMPAIGN_ENHANCE_JD', handleEnhanceEvent);
-         window.removeEventListener('CAMPAIGN_EDIT_JD', handleEditEvent);
+         window.removeEventListener('CAMPAIGN_EDIT_DETAILS', handleEditEvent);
       };
    }, []);
 

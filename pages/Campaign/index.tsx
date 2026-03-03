@@ -297,7 +297,7 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
                            <Sparkles size={14} /> Enhance JD
                         </button>
                         <button
-                           onClick={() => window.dispatchEvent(new CustomEvent('CAMPAIGN_EDIT_JD'))}
+                           onClick={() => window.dispatchEvent(new CustomEvent('CAMPAIGN_EDIT_DETAILS'))}
                            className="w-full text-left px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg flex items-center gap-2 transition-colors"
                         >
                            <FileText size={14} /> Edit details
@@ -307,7 +307,7 @@ export const CampaignHeader = ({ campaign, isScrolled, onBack, currentUserId }: 
                </div>
             </div>
          </div>
-         
+
          {/* Share Modal */}
          <ShareModal
             isOpen={isShareModalOpen}

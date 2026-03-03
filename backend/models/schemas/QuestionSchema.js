@@ -12,7 +12,7 @@ const LocationConfigSchema = new mongoose.Schema({
 }, { strict: false, _id: false });
 
 const QuestionSchema = new mongoose.Schema({
-    questionID: { type: String }, // Links to the Standalone Questionnaire document if this is a copy
+    questionID: { type: mongoose.Schema.Types.ObjectId }, // Links to the Standalone Questionnaire document if this is a copy
     questionName: { type: String },
     questionType: { type: String, enum: ['QUESTION', 'KNOCKOUT', 'ANNOUNCEMENT', 'FLOWCHART', 'GROUP'] },
     questionFormat: { type: String, enum: ['TEXT', 'AUDIO', 'IMAGE', 'VIDEO', 'GIF', 'DOCUMENT'] },
@@ -77,14 +77,14 @@ const QuestionSchema = new mongoose.Schema({
     checkAttributes: [mongoose.Schema.Types.Mixed],
 
     flowChartNextQuestion: [{
-        _id: { type: String }
+        _id: { type: mongoose.Schema.Types.ObjectId }
     }],
 
-    groupID: { type: String },
+    groupID: { type: mongoose.Schema.Types.ObjectId },
     groupName: { type: String },
 
     criteria: [{
-        questionID: { type: String },
+        questionID: { type: mongoose.Schema.Types.ObjectId },
         roundNumber: { type: Number },
         response: [{ type: String }]
     }]

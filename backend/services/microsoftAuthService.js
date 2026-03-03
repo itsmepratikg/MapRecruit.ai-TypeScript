@@ -53,7 +53,12 @@ const microsoftAuthService = {
             const response = await axios.post(
                 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
                 params,
-                { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Origin': process.env.FRONTEND_URL || 'http://localhost:3000'
+                    }
+                }
             );
 
             const newTokens = response.data;

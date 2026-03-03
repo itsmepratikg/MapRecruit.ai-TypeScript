@@ -34,12 +34,24 @@ const getGroupedCustomFields = async (req, res) => {
         const companyID = req.user.currentCompanyID || req.user.companyID;
         const { collection } = req.params;
 
-        const sections = await CustomSection.find({ companyID, enabled: true }).lean();
+        // Map collection to page identifier used in CustomSection model
+        const collectionToPage = {
+            'resumes': 'profile',
+            'campaigns': 'jobDescription',
+            'interviews': 'interview'
+        };
+
+        const page = collectionToPage[collection] || collection;
+
+        // Fetch sections for this specific page/context
+        const sections = await CustomSection.find({ companyID, page, enabled: true }).sort({ order: 1 }).lean();
+
+        // Fetch fields for this specific collection
         const fields = await CustomField.find({ companyID, collectionName: collection, enabled: true }).sort({ order: 1 }).lean();
 
         const grouped = sections.map(section => ({
             ...section,
-            fields: fields.filter(f => f.sectionID.toString() === section._id.toString())
+            fields: fields.filter(f => f.sectionID && f.sectionID.toString() === section._id.toString())
         })).filter(s => s.fields.length > 0);
 
         res.status(200).json(grouped);
