@@ -37,8 +37,14 @@ const AvatarItem = memo(({ user, isMe }: { user: any, isMe: boolean }) => {
                 {user.avatar ? (
                     <img
                         src={user.avatar}
+                        referrerPolicy="no-referrer"
                         alt={user.firstName}
                         className="w-full h-full object-cover rounded-full"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                            (e.target as HTMLImageElement).parentElement!.classList.add(userColorObj.class);
+                            (e.target as HTMLImageElement).parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center text-[10px] font-bold text-slate-700">${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}</div>`;
+                        }}
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-slate-700">
@@ -55,8 +61,21 @@ const AvatarItem = memo(({ user, isMe }: { user: any, isMe: boolean }) => {
                     <div className="flex flex-col gap-3">
                         {/* Header */}
                         <div className="flex items-center gap-3">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${!user.avatar ? userColorObj.class : 'bg-slate-100'} border border-slate-200 dark:border-slate-700`}>
-                                {user.avatar ? <img src={user.avatar} className="w-full h-full rounded-full object-cover" /> : `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}`}
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${!user.avatar ? userColorObj.class : 'bg-slate-100'} border border-slate-200 dark:border-slate-700 overflow-hidden`}>
+                                {user.avatar ? (
+                                    <img
+                                        src={user.avatar}
+                                        referrerPolicy="no-referrer"
+                                        className="w-full h-full rounded-full object-cover"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).style.display = 'none';
+                                            (e.target as HTMLImageElement).parentElement!.classList.add(userColorObj.class);
+                                            (e.target as HTMLImageElement).parentElement!.innerText = `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}`;
+                                        }}
+                                    />
+                                ) : (
+                                    `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}`
+                                )}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="font-bold text-sm text-slate-900 dark:text-white truncate">

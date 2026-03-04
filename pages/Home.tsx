@@ -135,40 +135,6 @@ export const Home = ({ onNavigate }: HomeProps) => {
     return (
         <div className="p-4 lg:p-8 bg-slate-50/50 dark:bg-slate-900 min-h-full overflow-y-auto custom-scrollbar transition-colors duration-300">
             <div className="max-w-[1600px] mx-auto space-y-4">
-                {/* Dashboard Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-emerald-500/10 rounded-xl">
-                            <Layout className="text-emerald-500" size={24} />
-                        </div>
-                        <div>
-                            <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight leading-none mb-1">
-                                {t("Welcome back")}, <span className="text-emerald-500">{userProfile?.firstName || 'User'}</span>
-                            </h1>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-                                {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                        {/* Real-time Co-Presence */}
-                        <div className="mr-2">
-                            <CoPresenceAvatars
-                                campaignId="dashboard"
-                                currentUserId={userProfile?._id || userProfile?.id || ''}
-                            />
-                        </div>
-
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-xl text-slate-600 dark:text-slate-300 transition-all active:scale-95 group"
-                        >
-                            <RefreshCw size={18} className="group-hover:rotate-180 transition-transform duration-500" />
-                        </button>
-                    </div>
-                </div>
-
                 {/* GridStack Container */}
                 <div className="grid-stack" data-tour="dashboard-widgets">
                     {visibleWidgets.map((widget: any) => (

@@ -179,7 +179,17 @@ export const WelcomeHeader = ({ onNavigate, counts }: { onNavigate?: (tab: strin
             <div className="flex items-center gap-4 mb-2">
                <div className={`w-12 h-12 rounded-xl p-0.5 shadow-lg ring-2 ring-white/20 shrink-0 ${!userProfile?.avatar ? 'bg-white' : 'bg-transparent'}`}>
                   {userProfile?.avatar ? (
-                     <img src={userProfile.avatar} className="w-full h-full object-cover rounded-lg" alt="User" />
+                     <img
+                        src={userProfile.avatar}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover rounded-lg"
+                        alt="User"
+                        onError={(e) => {
+                           (e.target as HTMLImageElement).style.display = 'none';
+                           (e.target as HTMLImageElement).parentElement!.classList.add(userColorObj.class);
+                           (e.target as HTMLImageElement).parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center text-lg font-bold">${initials}</div>`;
+                        }}
+                     />
                   ) : (
                      <div className={`w-full h-full rounded-lg flex items-center justify-center text-lg font-bold ${userColorObj.class}`}>
                         {initials}
