@@ -187,6 +187,5 @@ export const Home = ({ onNavigate }: HomeProps) => {
                 ))}
             </div>
         </div>
-        </div >
     );
 };
