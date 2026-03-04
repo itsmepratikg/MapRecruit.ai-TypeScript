@@ -114,9 +114,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
                 const mappedProfile = {
                     ...userData,
-                    activeClientID: safeActiveClientID,
+                    activeClientID: safeActiveClientID ? safeActiveClientID.toString() : null,
                     activeClient: activeClientName,
-                    _id: userData._id || userData.id,
+                    _id: (userData._id || userData.id || userData.userId)?.toString(),
                     color: userData.color || userData.userColor || '#3b82f6',
                     phone: userData.phone || userData.mobile || userData.phoneNumber,
                     location: userData.location || (Array.isArray(userData.locations) && userData.locations[0]?.text) || 'NA',
