@@ -15,6 +15,7 @@ mongoose.set('strictQuery', false);
 const { resolveTenant } = require('./middleware/tenantMiddleware');
 
 const app = express();
+app.set('trust proxy', 1); // Trust first proxy (Vercel)
 const server = http.createServer(app); // Create HTTP server
 const io = new Server(server, {
     cors: {
@@ -41,6 +42,7 @@ const limiter = rateLimit({
     max: 1000, // Limit each IP to 1000 requests per windowMs
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    validate: { xForwardedForHeader: false }, // Disable warning on Vercel
 });
 
 // Middleware

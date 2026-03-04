@@ -1,10 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
 import axios from 'axios';
-
-// Determine API URL
-const getApiUrl = () => {
-    return import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-};
+import { API_URL } from '../services/api';
 
 export interface UserPresence {
     id: string;
@@ -49,18 +45,18 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         if (!currentRoom) return;
 
         try {
-            const baseUrl = getApiUrl();
-            const response = await axios.post(`${baseUrl}/api/presence/heartbeat`, {
+            const { presenceService } = await import('../services/api');
+            const responseData = await presenceService.heartbeat({
                 userId: currentRoom.user.id || (currentRoom.user as any)._id,
                 campaignId: currentRoom.campaignId,
                 user: currentRoom.user,
                 page: currentRoom.page
             });
 
-            const users: UserPresence[] = response.data;
+            const users: UserPresence[] = responseData;
             const next = new Map<string, UserPresence>();
             users.forEach(u => {
-                const uid = u.userId || u.id || (u as any)._id;
+                const uid = (u as any).userId || u.id || (u as any)._id;
                 next.set(uid, { ...u, id: uid });
             });
             setActiveUsers(next);
@@ -97,8 +93,8 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         console.log(`[Presence] Leaving campaign ${campaignId}`);
         setCurrentRoom(null);
         try {
-            const baseUrl = getApiUrl();
-            await axios.post(`${baseUrl}/api/presence/leave`, { userId, campaignId });
+            const { presenceService } = await import('../services/api');
+            await presenceService.leave({ userId, campaignId });
         } catch (error) {
             console.error('[Presence] Leave failed:', error);
         }

@@ -168,8 +168,9 @@ const ExternalRouteWrapper = ({
     // Join Room
     useEffect(() => {
         if (id && userProfile) {
+            const userId = userProfile?._id || userProfile?.id || 'visitor';
             joinRoom(id, {
-                id: userProfile.id || 'visitor',
+                id: userId,
                 firstName: userProfile.firstName || 'Visitor',
                 lastName: userProfile.lastName || '',
                 email: userProfile.email || '',
@@ -178,10 +179,10 @@ const ExternalRouteWrapper = ({
             }, activeTab);
 
             return () => {
-                leaveRoom(id, userProfile.id || 'visitor');
+                leaveRoom(id, userId);
             };
         }
-    }, [id, userProfile, joinRoom, leaveRoom, activeTab]); // Added activeTab to dependencies
+    }, [id, userProfile, joinRoom, leaveRoom, activeTab]);
 
 
     const handleSwitchConfirm = async () => {
@@ -239,7 +240,7 @@ const ExternalRouteWrapper = ({
     return (
         <div className="flex flex-col h-full bg-slate-50/50 dark:bg-slate-900 transition-colors overflow-hidden relative">
             <div className={`flex flex-col h-full transition-all duration-300 ${showClientSwitchModal ? 'blur-sm pointer-events-none' : ''}`}>
-                <CampaignHeader campaign={campaign} isScrolled={isScrolled} onBack={() => navigate('/campaigns')} currentUserId={userProfile?.id} />
+                <CampaignHeader campaign={campaign} isScrolled={isScrolled} onBack={() => navigate('/campaigns')} currentUserId={userProfile?._id || userProfile?.id} />
                 <div ref={scrollContainerRef} className="flex-1 overflow-y-auto custom-scrollbar">
                     <Component campaign={campaign} activeView={activeTab} {...subProps} />
                 </div>

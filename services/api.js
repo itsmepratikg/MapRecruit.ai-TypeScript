@@ -2,8 +2,8 @@ import axios from 'axios';
 // Construct API URL carefully
 // If env var is "http://localhost:5000", we want "http://localhost:5000/api"
 // If env var is "http://localhost:5000/api", we want "http://localhost:5000/api"
-const VITE_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-const API_URL = VITE_API_URL.endsWith('/api') ? VITE_API_URL : `${VITE_API_URL}/api`;
+const base = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '');
+export const API_URL = base.endsWith('/api') ? base : `${base}/api`;
 
 import { attachSafetyInterceptor } from './SafetyInterceptor';
 
@@ -405,6 +405,17 @@ export const customFieldService = {
     },
     updateField: async (id, data) => {
         const response = await api.put(`/custom-fields/fields/${id}`, data);
+        return response.data;
+    }
+};
+
+export const presenceService = {
+    heartbeat: async (data) => {
+        const response = await api.post('/presence/heartbeat', data);
+        return response.data;
+    },
+    leave: async (data) => {
+        const response = await api.post('/presence/leave', data);
         return response.data;
     }
 };

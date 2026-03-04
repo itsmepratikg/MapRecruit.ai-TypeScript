@@ -707,7 +707,7 @@ export const WorkflowBuilder = ({ activeView = 'BUILDER' }: { activeView?: strin
 
             {/* Top Toolbar - Save Action */}
             <div className="absolute top-4 right-6 z-20 flex gap-2">
-                <CoPresenceAvatars />
+                <CoPresenceAvatars campaignId={campaignId!} currentUserId={userProfile?._id || userProfile?.id || ''} />
                 <button
                     onClick={() => setShowShareModal(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm transition-colors"
