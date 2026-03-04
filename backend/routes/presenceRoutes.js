@@ -8,35 +8,45 @@ router.post('/heartbeat', async (req, res) => {
         const { userId, campaignId, user, page } = req.body;
 
         if (!userId || !campaignId) {
+            console.warn('[Presence] Heartbeat rejected: Missing userId or campaignId', { userId, campaignId });
             return res.status(400).json({ message: 'UserId and CampaignId are required' });
         }
+
+        // Defensive: Clean the user object to prevent Mongoose/Mongo internal field conflicts
+        const cleanUser = { ...user };
+        delete cleanUser._id;
+        delete cleanUser.id;
+        delete cleanUser.__v;
 
         // Upsert presence info
         await Presence.findOneAndUpdate(
             { userId, campaignId },
             {
-                ...user,
+                ...cleanUser,
                 userId,
                 campaignId,
                 page,
                 lastActive: new Date()
             },
-            { upsert: true, new: true }
+            { upsert: true, new: true, setDefaultsOnInsert: true }
         );
 
         // Fetch all active users in this campaign
-        const activeSeconds = 60; // Consider active if seen in last 60s
-        const cutoff = new Date(Date.now() - activeSeconds * 1000);
+        // Consider active if seen in last 45s (slighter tighter than TTL to avoid lag)
+        const cutoff = new Date(Date.now() - 45 * 1000);
 
         const activeUsers = await Presence.find({
             campaignId,
             lastActive: { $gte: cutoff }
-        });
+        }).lean(); // Use lean for performance
 
         res.json(activeUsers);
     } catch (error) {
-        console.error('Presence heartbeat error:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('[Presence] Heartbeat handler error:', error);
+        res.status(500).json({
+            message: 'Internal server error in presence heartbeat',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 });
 
