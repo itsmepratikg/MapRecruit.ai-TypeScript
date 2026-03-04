@@ -409,16 +409,7 @@ export const customFieldService = {
     }
 };
 
-export const presenceService = {
-    heartbeat: async (data) => {
-        const response = await api.post('/presence/heartbeat', data);
-        return response.data;
-    },
-    leave: async (data) => {
-        const response = await api.post('/presence/leave', data);
-        return response.data;
-    }
-};
+export { presenceService } from './presenceService';
 
 export default api;
 

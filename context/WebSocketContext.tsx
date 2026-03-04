@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
-import axios from 'axios';
-import { API_URL } from '../services/api';
+import { presenceService } from '../services/presenceService';
 
 export interface UserPresence {
     id: string;
@@ -22,6 +21,7 @@ interface WebSocketContextType {
     socket: any | null; // Kept for type compatibility, but set to null
     activeUsers: Map<string, UserPresence>;
     isConnected: boolean;
+    presenceStatus: 'connected' | 'disconnected' | 'connecting';
     joinRoom: (campaignId: string, user: Omit<UserPresence, 'lastActive' | 'campaignId' | 'status'>, page?: string) => void;
     leaveRoom: (campaignId: string, userId: string) => void;
 }
@@ -30,7 +30,8 @@ const WebSocketContext = createContext<WebSocketContextType | null>(null);
 
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     const [activeUsers, setActiveUsers] = useState<Map<string, UserPresence>>(new Map());
-    const [isConnected, setIsConnected] = useState(true); // Always true for HTTP approach
+    const [isConnected, setIsConnected] = useState(true);
+    const [presenceStatus, setPresenceStatus] = useState<'connected' | 'disconnected' | 'connecting'>('connecting');
 
     // State to track current room and user for heartbeats
     const [currentRoom, setCurrentRoom] = useState<{
@@ -40,14 +41,20 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     } | null>(null);
 
     const heartbeatTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const lastHeartbeatRef = useRef<number>(0);
 
     const performHeartbeat = useCallback(async () => {
         if (!currentRoom) return;
 
         try {
-            const { presenceService } = await import('../services/api');
+            const userId = currentRoom.user.id || (currentRoom.user as any)._id;
+            if (!userId || userId === 'visitor') {
+                console.warn('[Presence] Skipping heartbeat for visitor/unset user');
+                return;
+            }
+
             const responseData = await presenceService.heartbeat({
-                userId: currentRoom.user.id || (currentRoom.user as any)._id,
+                userId,
                 campaignId: currentRoom.campaignId,
                 user: currentRoom.user,
                 page: currentRoom.page
@@ -60,8 +67,11 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
                 next.set(uid, { ...u, id: uid });
             });
             setActiveUsers(next);
+            setPresenceStatus('connected');
+            lastHeartbeatRef.current = Date.now();
         } catch (error) {
             console.error('[Presence] Heartbeat failed:', error);
+            setPresenceStatus('disconnected');
         }
     }, [currentRoom]);
 
@@ -69,6 +79,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (!currentRoom) {
             setActiveUsers(new Map());
+            setPresenceStatus('connecting');
             if (heartbeatTimerRef.current) clearInterval(heartbeatTimerRef.current);
             return;
         }
@@ -85,23 +96,27 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     }, [currentRoom, performHeartbeat]);
 
     const joinRoom = useCallback((campaignId: string, user: Omit<UserPresence, 'lastActive' | 'campaignId' | 'status'>, page?: string) => {
+        const userId = user.id || (user as any)._id;
+        if (!userId || userId === 'visitor') return;
+
         console.log(`[Presence] Joining campaign ${campaignId} at page ${page}`);
-        setCurrentRoom({ campaignId, user: { ...user, id: user.id || (user as any)._id }, page });
+        setCurrentRoom({ campaignId, user: { ...user, id: userId }, page });
     }, []);
 
     const leaveRoom = useCallback(async (campaignId: string, userId: string) => {
         console.log(`[Presence] Leaving campaign ${campaignId}`);
         setCurrentRoom(null);
-        try {
-            const { presenceService } = await import('../services/api');
-            await presenceService.leave({ userId, campaignId });
-        } catch (error) {
-            console.error('[Presence] Leave failed:', error);
+        if (userId && userId !== 'visitor') {
+            try {
+                await presenceService.leave({ userId, campaignId });
+            } catch (error) {
+                console.error('[Presence] Leave failed:', error);
+            }
         }
     }, []);
 
     return (
-        <WebSocketContext.Provider value={{ socket: null, activeUsers, isConnected, joinRoom, leaveRoom }}>
+        <WebSocketContext.Provider value={{ socket: null, activeUsers, isConnected, presenceStatus, joinRoom, leaveRoom }}>
             {children}
         </WebSocketContext.Provider>
     );
@@ -114,4 +129,5 @@ export const useWebSocket = () => {
     }
     return context;
 };
+
 
