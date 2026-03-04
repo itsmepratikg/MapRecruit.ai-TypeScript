@@ -15,7 +15,7 @@ export const EngageAIConfigStep: React.FC<EngageAIConfigStepProps> = ({ onBack, 
     const [rounds, setRounds] = useState<ScreeningRound[]>([]);
 
     const roundTypes = [
-        { id: 'Announcement', icon: Bell, title: 'Announcement', color: 'text-blue-600 bg-blue-50' },
+        { id: 'Announcement', icon: Bell, title: 'Announcement', color: 'text-emerald-600 bg-emerald-50' },
         { id: 'Assessment', icon: ClipboardList, title: 'Assessment', color: 'text-emerald-600 bg-emerald-50' },
         { id: 'Interview', icon: Video, title: 'Interview', color: 'text-violet-600 bg-violet-50' },
         { id: 'Survey', icon: MessageSquare, title: 'Survey', color: 'text-amber-600 bg-amber-50' },
@@ -43,7 +43,7 @@ export const EngageAIConfigStep: React.FC<EngageAIConfigStepProps> = ({ onBack, 
                         <button
                             key={type.id}
                             onClick={() => addRound(type.id)}
-                            className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-violet-500 hover:shadow-md transition-all group text-left"
+                            className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500 hover:shadow-md transition-all group text-left"
                         >
                             <div className={`p-2 rounded-lg w-fit mb-3 ${type.color} dark:bg-opacity-10 group-hover:scale-110 transition-transform`}>
                                 <type.icon size={20} />
@@ -113,7 +113,7 @@ export const EngageAIConfigStep: React.FC<EngageAIConfigStepProps> = ({ onBack, 
                         </button>
                         <button
                             onClick={() => onContinue(rounds)}
-                            className="flex items-center gap-2 px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all"
+                            className="flex items-center gap-2 px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg shadow-emerald-500/20 transition-all"
                         >
                             {t("Continue")}
                             <ArrowRight size={18} />

@@ -60,7 +60,7 @@ export const EducationBuilder: React.FC<EducationBuilderProps> = ({ entries, onC
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">{t("Education")}</label>
                 <button
                     onClick={() => setIsAdding(true)}
-                    className="text-indigo-600 dark:text-indigo-400 text-sm font-medium flex items-center gap-1 hover:underline"
+                    className="text-emerald-600 dark:text-emerald-400 text-sm font-medium flex items-center gap-1 hover:underline"
                 >
                     <Plus size={16} /> {t("Add Education")}
                 </button>
@@ -81,7 +81,7 @@ export const EducationBuilder: React.FC<EducationBuilderProps> = ({ entries, onC
                                 <span>{entry.institution}</span>
                                 {entry.year && <span>Class of {entry.year}</span>}
                                 {entry.merit && <span>{entry.merit} {entry.meritType === 'Percentage' ? '%' : 'GPA'}</span>}
-                                <span className={`px-1.5 py-0.5 rounded ${entry.importance === 'Required' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                                <span className={`px-1.5 py-0.5 rounded ${entry.importance === 'Required' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'}`}>
                                     {entry.importance}
                                 </span>
                             </div>
@@ -95,7 +95,7 @@ export const EducationBuilder: React.FC<EducationBuilderProps> = ({ entries, onC
 
             {/* Add Form */}
             {isAdding && (
-                <div className="p-4 bg-white dark:bg-slate-800 border-2 border-indigo-100 dark:border-indigo-900/30 rounded-xl animate-in zoom-in-95 duration-200 space-y-4 shadow-lg">
+                <div className="p-4 bg-white dark:bg-slate-800 border-2 border-emerald-100 dark:border-emerald-900/30 rounded-xl animate-in zoom-in-95 duration-200 space-y-4 shadow-lg">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="text-xs font-medium text-slate-500 uppercase">{t("Degree Level")}</label>
@@ -190,7 +190,7 @@ export const EducationBuilder: React.FC<EducationBuilderProps> = ({ entries, onC
                         </button>
                         <button
                             onClick={handleAdd}
-                            className="px-4 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium"
+                            className="px-4 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium"
                         >
                             Add Details
                         </button>

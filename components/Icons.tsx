@@ -42,6 +42,8 @@ export const ChevronDown = (props: any) => <Icon {...props} iconClass="fa-solid 
 export const ChevronLeft = (props: any) => <Icon {...props} iconClass="fa-solid fa-chevron-left" />;
 export const ChevronRight = (props: any) => <Icon {...props} iconClass="fa-solid fa-chevron-right" />;
 export const ChevronUp = (props: any) => <Icon {...props} iconClass="fa-solid fa-chevron-up" />;
+export const ChevronsLeft = (props: any) => <Icon {...props} iconClass="fa-solid fa-angles-left" />;
+export const ChevronsRight = (props: any) => <Icon {...props} iconClass="fa-solid fa-angles-right" />;
 export const ClipboardList = (props: any) => <Icon {...props} iconClass="fa-solid fa-clipboard-list" />;
 export const Clock = (props: any) => <Icon {...props} iconClass="fa-solid fa-clock" />;
 export const Command = (props: any) => <Icon {...props} iconClass="fa-solid fa-terminal" />;

@@ -46,7 +46,7 @@ export const JobFitCalibration: React.FC<JobFitCalibrationProps> = ({ config, on
 
     const getImportanceColor = (val: number) => {
         if (val === 0) return 'text-slate-400';
-        if (val <= 3) return 'text-blue-500';
+        if (val <= 3) return 'text-emerald-500';
         if (val <= 7) return 'text-amber-500';
         return 'text-red-500';
     };
@@ -54,7 +54,7 @@ export const JobFitCalibration: React.FC<JobFitCalibrationProps> = ({ config, on
     return (
         <div className="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700 space-y-6">
             <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-700 pb-4">
-                <div className="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-lg text-indigo-600 dark:text-indigo-400">
+                <div className="bg-emerald-100 dark:bg-emerald-900/30 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
                     <SlidersHorizontal size={20} />
                 </div>
                 <div>
@@ -89,7 +89,7 @@ export const JobFitCalibration: React.FC<JobFitCalibrationProps> = ({ config, on
                                         checked={config[key].enable}
                                         onChange={(e) => updateField(key, 'enable', e.target.checked)}
                                     />
-                                    <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
+                                    <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600"></div>
                                 </label>
                             </div>
                         </div>
@@ -102,7 +102,7 @@ export const JobFitCalibration: React.FC<JobFitCalibrationProps> = ({ config, on
                                 step="1"
                                 value={config[key].weightage}
                                 onChange={(e) => updateField(key, 'weightage', parseInt(e.target.value))}
-                                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-700 accent-indigo-600"
+                                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-700 accent-emerald-600"
                             />
                             <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
                                 <span>0 (Ignore)</span>

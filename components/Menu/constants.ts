@@ -160,17 +160,17 @@ export const TALENT_CHAT_MENU = [
 import { Users, MapPin, Target, Share2, Heart } from '../Icons';
 
 export const PROFILE_VIEW_PATH_MAP: Record<string, string> = {
-  'SEARCH': 'Search',
-  'FOLDERS': 'Folders',
-  'TAGS': 'Tags',
-  'SHARED': 'Shared',
-  'FAVORITES': 'Favorites',
-  'DUPLICATES': 'Duplicates',
-  'LOCAL': 'Local',
-  'NEW_APPLIES': 'NewApplies',
-  'OPEN_APPLIES': 'OpenApplies',
-  'NEW_LOCAL': 'NewLocal',
-  'INTERVIEW_STATUS': 'InterviewStatus',
+  'SEARCH': 'search',
+  'FOLDERS': 'folders',
+  'TAGS': 'tags',
+  'SHARED': 'shared',
+  'FAVORITES': 'favourites',
+  'DUPLICATES': 'duplicates',
+  'LOCAL': 'local',
+  'NEW_APPLIES': 'newapplies',
+  'OPEN_APPLIES': 'openapplies',
+  'NEW_LOCAL': 'newlocal',
+  'INTERVIEW_STATUS': 'interviewstatus',
 };
 
 export const getProfileViewPath = (id: string) => PROFILE_VIEW_PATH_MAP[id] || id;

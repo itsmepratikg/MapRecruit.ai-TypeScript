@@ -632,7 +632,7 @@ const AppContent = () => {
                           selectedCandidateId={null}
                           activeProfileTab="additionaldetails"
                           setActiveProfileTab={setActiveProfileTab}
-                          onBack={() => navigate('/profiles/searchprofiles/Search')}
+                          onBack={() => navigate('/profiles/searchprofiles/search')}
                           isCollapsed={isCollapsed}
                           setIsSidebarOpen={setIsSidebarOpen}
                         />
@@ -642,14 +642,14 @@ const AppContent = () => {
                           selectedCandidateId={null}
                           activeProfileTab="profile"
                           setActiveProfileTab={setActiveProfileTab}
-                          onBack={() => navigate('/profiles/searchprofiles/Search')}
+                          onBack={() => navigate('/profiles/searchprofiles/search')}
                           isCollapsed={isCollapsed}
                           setIsSidebarOpen={setIsSidebarOpen}
                         />
                       } />
 
                       {/* Redirect legacy /profiles to searchprofiles */}
-                      <Route path="/profiles" element={<Navigate to="/profiles/searchprofiles/Search" replace />} />
+                      <Route path="/profiles" element={<Navigate to="/profiles/searchprofiles/search" replace />} />
 
                       <Route path="/settings/users/userprofile/*" element={
                         <UserAdminMenu
@@ -857,22 +857,34 @@ const AppContent = () => {
                     <Route path="/profile/:id/:tab" element={<LegacyProfileRedirect />} />
 
                     <Route path="/campaigns" element={
-                      <Campaigns onNavigateToCampaign={(c: any) => {
-                        const id = c.id || c._id?.$oid || c._id;
-                        navigate(`/showcampaign/intelligence/${id}`);
-                      }} initialTab={'Active'} />
+                      <Campaigns
+                        onNavigateToCampaign={(c: any) => {
+                          const id = c.id || c._id?.$oid || c._id;
+                          navigate(`/showcampaign/intelligence/${id}`);
+                        }}
+                        initialTab={'Active'}
+                        onCreateCampaign={() => setIsCreateCampaignOpen(true)}
+                      />
                     } />
                     <Route path="/closedcampaigns" element={
-                      <Campaigns onNavigateToCampaign={(c: any) => {
-                        const id = c.id || c._id?.$oid || c._id;
-                        navigate(`/showcampaign/intelligence/${id}`);
-                      }} initialTab={'Closed'} />
+                      <Campaigns
+                        onNavigateToCampaign={(c: any) => {
+                          const id = c.id || c._id?.$oid || c._id;
+                          navigate(`/showcampaign/intelligence/${id}`);
+                        }}
+                        initialTab={'Closed'}
+                        onCreateCampaign={() => setIsCreateCampaignOpen(true)}
+                      />
                     } />
                     <Route path="/archivedcampaigns" element={
-                      <Campaigns onNavigateToCampaign={(c: any) => {
-                        const id = c.id || c._id?.$oid || c._id;
-                        navigate(`/showcampaign/intelligence/${id}`);
-                      }} initialTab={'Archived'} />
+                      <Campaigns
+                        onNavigateToCampaign={(c: any) => {
+                          const id = c.id || c._id?.$oid || c._id;
+                          navigate(`/showcampaign/intelligence/${id}`);
+                        }}
+                        initialTab={'Archived'}
+                        onCreateCampaign={() => setIsCreateCampaignOpen(true)}
+                      />
                     } />
 
                     {/* EmailDashboard now sub-route of TalentChat */}

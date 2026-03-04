@@ -108,6 +108,11 @@ const userSchema = mongoose.Schema({
             tokens: { type: mongoose.Schema.Types.Mixed },
             email: { type: String }
         }
+    },
+    defaultCommunicationSender: {
+        Email: { type: mongoose.Schema.Types.ObjectId, ref: 'CommunicationSender' },
+        Phone: { type: mongoose.Schema.Types.ObjectId, ref: 'CommunicationSender' },
+        SMS: { type: mongoose.Schema.Types.ObjectId, ref: 'CommunicationSender' }
     }
 }, {
     timestamps: true,

@@ -11,9 +11,9 @@ export const GenerateJDButton: React.FC<GenerateJDButtonProps> = ({ onClick }) =
 
     return (
         <div className="mt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <div className="p-4 bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 rounded-xl border border-violet-100 dark:border-violet-800/30 flex items-center justify-between group">
+            <div className="p-4 bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-xl border border-emerald-100 dark:border-emerald-800/30 flex items-center justify-between group">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-violet-600 dark:text-violet-400">
+                    <div className="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                         <Sparkles size={20} className="fill-current" />
                     </div>
                     <div>
@@ -24,7 +24,7 @@ export const GenerateJDButton: React.FC<GenerateJDButtonProps> = ({ onClick }) =
 
                 <button
                     onClick={onClick}
-                    className="px-4 py-2 bg-white dark:bg-slate-800 text-violet-600 dark:text-violet-400 font-medium text-sm rounded-lg shadow-sm border border-violet-100 dark:border-violet-800 hover:bg-violet-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2 group-hover:translate-x-0.5"
+                    className="px-4 py-2 bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-medium text-sm rounded-lg shadow-sm border border-emerald-100 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2 group-hover:translate-x-0.5"
                 >
                     {t("Generate")} <ArrowRight size={16} />
                 </button>

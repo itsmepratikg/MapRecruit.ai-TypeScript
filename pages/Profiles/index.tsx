@@ -17,17 +17,17 @@ export const Profiles = ({ onNavigateToProfile }: { onNavigateToProfile: () => v
 
   const getPath = (id: string) => {
     const map: Record<string, string> = {
-      'SEARCH': 'Search',
-      'FOLDERS': 'Folders',
-      'TAGS': 'Tags',
-      'SHARED': 'Shared',
-      'FAVORITES': 'Favorites',
-      'DUPLICATES': 'Duplicates',
-      'LOCAL': 'Local',
-      'NEW_APPLIES': 'NewApplies',
-      'OPEN_APPLIES': 'OpenApplies',
-      'NEW_LOCAL': 'NewLocal',
-      'INTERVIEW_STATUS': 'InterviewStatus',
+      'SEARCH': 'search',
+      'FOLDERS': 'folders',
+      'TAGS': 'tags',
+      'SHARED': 'shared',
+      'FAVORITES': 'favourites',
+      'DUPLICATES': 'duplicates',
+      'LOCAL': 'local',
+      'NEW_APPLIES': 'newapplies',
+      'OPEN_APPLIES': 'openapplies',
+      'NEW_LOCAL': 'newlocal',
+      'INTERVIEW_STATUS': 'interviewstatus',
     };
     return map[id] || id;
   };
@@ -36,7 +36,7 @@ export const Profiles = ({ onNavigateToProfile }: { onNavigateToProfile: () => v
     <div className="flex-1 overflow-hidden h-full flex flex-col">
       <Routes>
         <Route path="/" element={<Navigate to={getPath('SEARCH')} replace />} />
-        <Route path="Search" element={<SearchProfile onNavigateToProfile={onNavigateToProfile} />} />
+        <Route path="search" element={<SearchProfile onNavigateToProfile={onNavigateToProfile} />} />
         <Route path={getPath('NEW_APPLIES')} element={<NewApplies />} />
         <Route path={getPath('OPEN_APPLIES')} element={<OpenApplies />} />
         <Route path={getPath('NEW_LOCAL')} element={<NewLocalProfiles />} />

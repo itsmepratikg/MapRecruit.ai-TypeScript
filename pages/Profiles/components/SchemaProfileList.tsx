@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { profileService } from '../../../services/api';
 import SchemaTable from '../../../components/Schema/SchemaTable';
 import { useToast } from '../../../components/Toast';
 import { Search } from '../../../components/Icons';
+import { useUserProfile } from '../../../hooks/useUserProfile';
 
 export const SchemaProfileList = ({ filterType, onNavigateToProfile }: any) => {
     const { addToast } = useToast();
+    const { userProfile } = useUserProfile();
     const [profiles, setProfiles] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -27,12 +29,48 @@ export const SchemaProfileList = ({ filterType, onNavigateToProfile }: any) => {
         }
     };
 
-    const filteredProfiles = profiles.filter(p => {
-        // Implement complex logic if needed based on 'filterType' (e.g. 'Favorites', 'Shared')
-        // For MVP, simplistic filtering
-        const name = p.profile?.fullName || '';
-        return name.toLowerCase().includes(searchQuery.toLowerCase());
-    });
+    const filteredProfiles = useMemo(() => {
+        let result = profiles;
+
+        // Apply filter types
+        if (filterType === 'Local' && userProfile) {
+            // "connecting this to find any candidates who are located in loggedin user's location"
+            const userLoc = typeof userProfile.location === 'object'
+                ? (userProfile.location as any).text?.toLowerCase()
+                : userProfile.location?.toLowerCase();
+
+            if (userLoc) {
+                result = result.filter(p => {
+                    const profileLoc = p.profile?.location?.toLowerCase() || '';
+                    return profileLoc.includes(userLoc) || userLoc.includes(profileLoc);
+                });
+            }
+        }
+        else if (filterType === 'NewApplies') {
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+            result = result.filter(p => {
+                // Using resume document's createdAt as requested
+                const createdAt = p.resume?.createdAt || p.profile?.createdAt || p.createdAt;
+                if (!createdAt) return false;
+                const createdDate = new Date(createdAt);
+                return createdDate >= sevenDaysAgo;
+            });
+        }
+
+        // Search filtering
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(p => {
+                const name = p.profile?.fullName?.toLowerCase() || '';
+                const email = p.profile?.emails?.[0]?.email?.toLowerCase() || '';
+                return name.includes(query) || email.includes(query);
+            });
+        }
+
+        return result;
+    }, [profiles, filterType, userProfile, searchQuery]);
 
     const columns = [
         {
@@ -42,7 +80,7 @@ export const SchemaProfileList = ({ filterType, onNavigateToProfile }: any) => {
                     className="font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
                     onClick={() => onNavigateToProfile(item)}
                 >
-                    {item.profile?.fullName || 'Unknown Candidate'}
+                    {item.profile?.fullName || (item.resume?.name ? item.resume.name : 'Unknown')}
                 </div>
             )
         },
@@ -62,10 +100,14 @@ export const SchemaProfileList = ({ filterType, onNavigateToProfile }: any) => {
 
     if (loading) return <div className="p-8 text-center text-slate-500">Loading Profiles...</div>;
 
+    const displayTitle = filterType === 'NewApplies' ? 'New Applies' : `${filterType || 'All'} Profiles`;
+
     return (
         <div className="flex flex-col h-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden">
             <div className="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-white dark:bg-slate-800">
-                <h3 className="font-bold text-lg text-slate-800 dark:text-white">{filterType || 'All'} Profiles (Schema)</h3>
+                <h3 className="font-bold text-lg text-slate-800 dark:text-white">
+                    {displayTitle}
+                </h3>
 
                 <div className="flex items-center gap-3">
                     <div className="relative">

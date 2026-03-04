@@ -409,6 +409,41 @@ export const customFieldService = {
     }
 };
 
+export const communicationSenderService = {
+    getAll: async (params) => {
+        const response = await api.get('/communication-senders', { params });
+        return response.data;
+    },
+    getById: async (id) => {
+        const response = await api.get(`/communication-senders/${id}`);
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await api.post('/communication-senders', data);
+        return response.data;
+    },
+    update: async (id, data) => {
+        const response = await api.put(`/communication-senders/${id}`, data);
+        return response.data;
+    },
+    delete: async (id) => {
+        const response = await api.delete(`/communication-senders/${id}`);
+        return response.data;
+    },
+    verify: async (id) => {
+        const response = await api.post(`/communication-senders/${id}/verify`);
+        return response.data;
+    },
+    getMySenders: async () => {
+        const response = await api.get('/communication-senders/my/senders');
+        return response.data;
+    },
+    updateMyDefaults: async (defaults) => {
+        const response = await api.put('/communication-senders/my/defaults', defaults);
+        return response.data;
+    }
+};
+
 export { presenceService } from './presenceService';
 
 export default api;

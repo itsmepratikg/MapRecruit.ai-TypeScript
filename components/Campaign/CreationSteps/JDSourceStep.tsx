@@ -31,7 +31,7 @@ export const JDSourceStep: React.FC<JDSourceStepProps> = ({
 
     const sources = [
         { id: 'AI' as JDSource, title: t('AI Generation'), description: t('Smartly craft using AI'), icon: Sparkles, color: 'text-violet-600' },
-        { id: 'URL' as JDSource, title: t('Import from URL'), description: t('Fetch from job board'), icon: LinkIcon, color: 'text-blue-600' },
+        { id: 'URL' as JDSource, title: t('Import from URL'), description: t('Fetch from job board'), icon: LinkIcon, color: 'text-emerald-600' },
         { id: 'UPLOAD' as JDSource, title: t('Upload File'), description: t('PDF, Docx or Text'), icon: Upload, color: 'text-emerald-600' },
         { id: 'MANUAL' as JDSource, title: t('Manual Entry'), description: t('Write from scratch'), icon: FileText, color: 'text-amber-600' },
     ];
@@ -57,11 +57,11 @@ export const JDSourceStep: React.FC<JDSourceStepProps> = ({
                                 key={src.id}
                                 onClick={() => handleSourceClick(src.id)}
                                 className={`flex-1 flex flex-col items-center py-4 px-2 border-b-2 transition-all relative ${selectedSource === src.id
-                                    ? 'border-blue-600 text-blue-600'
+                                    ? 'border-emerald-600 text-emerald-600'
                                     : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                                     }`}
                             >
-                                <src.icon size={20} className={`mb-2 ${selectedSource === src.id ? 'text-blue-600' : 'text-slate-400'}`} />
+                                <src.icon size={20} className={`mb-2 ${selectedSource === src.id ? 'text-emerald-600' : 'text-slate-400'}`} />
                                 <span className="text-sm font-bold truncate w-full text-center">{src.title}</span>
                                 <span className="text-[10px] text-slate-500 hidden md:block">{src.description}</span>
                             </button>
@@ -87,7 +87,7 @@ export const JDSourceStep: React.FC<JDSourceStepProps> = ({
                             {selectedSource === 'URL' && (
                                 <div className="space-y-6">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600">
+                                        <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600">
                                             <LinkIcon size={20} />
                                         </div>
                                         <div>
@@ -133,7 +133,7 @@ export const JDSourceStep: React.FC<JDSourceStepProps> = ({
                                         <button
                                             onClick={onNext}
                                             disabled={!generatedHtml || generatedHtml.length < 50}
-                                            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                                            className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                                         >
                                             {t("Next: Review")}
                                         </button>

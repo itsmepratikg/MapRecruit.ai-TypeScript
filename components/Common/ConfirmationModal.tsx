@@ -39,7 +39,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         switch (variant) {
             case 'danger': return 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400';
             case 'success': return 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400';
-            default: return 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400';
+            default: return 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400';
         }
     };
 
@@ -47,7 +47,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         switch (variant) {
             case 'danger': return 'bg-red-600 hover:bg-red-700 text-white';
             case 'success': return 'bg-emerald-600 hover:bg-emerald-700 text-white';
-            default: return 'bg-indigo-600 hover:bg-indigo-700 text-white';
+            default: return 'bg-emerald-600 hover:bg-emerald-700 text-white';
         }
     };
 

@@ -60,15 +60,13 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ teams, onChange, users, cur
 
                         return (
                             <div
-                                key={`${role}-${user.id}`}
-                                onClick={() => !disabled && handleToggle(role, user.id)}
                                 className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-colors
                   ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-900' : 'hover:bg-slate-50 dark:hover:bg-slate-700'}
-                  ${isSelected ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 border' : 'border border-transparent'}
+                  ${isSelected ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 border' : 'border border-transparent'}
                 `}
                             >
                                 <div className={`w-4 h-4 rounded border flex items-center justify-center
-                  ${isSelected ? 'bg-blue-600 border-blue-600' : 'border-slate-300 dark:border-slate-600'}
+                  ${isSelected ? 'bg-emerald-600 border-emerald-600' : 'border-slate-300 dark:border-slate-600'}
                 `}>
                                     {isSelected && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                                 </div>
@@ -83,7 +81,7 @@ const TeamSelector: React.FC<TeamSelectorProps> = ({ teams, onChange, users, cur
                                     )}
                                     <div className="flex flex-col truncate">
                                         <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
-                                            {user.name || user.email || 'Unknown User'} {isMe && <span className="text-xs text-blue-500">(You)</span>}
+                                            {user.name || user.email || 'Unknown User'} {isMe && <span className="text-xs text-emerald-500">(You)</span>}
                                         </span>
                                         <span className="text-xs text-slate-400 truncate">{user.email || ''}</span>
                                     </div>

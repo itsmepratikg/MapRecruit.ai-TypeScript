@@ -38,8 +38,8 @@ const JobBoardSelector: React.FC<JobBoardSelectorProps> = ({ selectedBoards, onC
                             className={`
                             relative flex items-center p-3 border rounded-lg cursor-pointer transition-all
                             ${isSelected
-                                    ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 ring-1 ring-blue-500'
-                                    : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500'}
+                                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 ring-1 ring-emerald-500'
+                                    : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500'}
                         `}
                         >
                             <div className="flex-1">
@@ -54,7 +54,7 @@ const JobBoardSelector: React.FC<JobBoardSelectorProps> = ({ selectedBoards, onC
                             <div className={`
                             w-5 h-5 rounded border flex items-center justify-center ml-3
                             ${isSelected
-                                    ? 'bg-blue-600 border-blue-600'
+                                    ? 'bg-emerald-600 border-emerald-600'
                                     : 'border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900'}
                         `}>
                                 {isSelected && (

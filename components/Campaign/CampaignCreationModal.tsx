@@ -196,7 +196,7 @@ export const CampaignCreationModal: React.FC<CampaignCreationModalProps> = ({ is
                 <div className="px-8 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0 bg-white dark:bg-slate-900 z-10">
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-700 dark:from-emerald-400 dark:to-emerald-500">
                                 {t("Create New Campaign")}
                             </h2>
                             <p className="text-sm text-slate-500 font-medium">Step {Math.min(step + 1, 5)} of 5: {steps[Math.min(step, 4)].desc}</p>
@@ -215,7 +215,7 @@ export const CampaignCreationModal: React.FC<CampaignCreationModalProps> = ({ is
                         <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 dark:bg-slate-800 -translate-y-1/2" />
                         {/* Active Progress Line */}
                         <div
-                            className="absolute top-1/2 left-0 h-0.5 bg-blue-500 -translate-y-1/2 transition-all duration-500 ease-out"
+                            className="absolute top-1/2 left-0 h-0.5 bg-emerald-500 -translate-y-1/2 transition-all duration-500 ease-out"
                             style={{ width: `${(Math.min(step, 4) / 4) * 100}%` }}
                         />
 
@@ -228,13 +228,13 @@ export const CampaignCreationModal: React.FC<CampaignCreationModalProps> = ({ is
                                 <div key={idx} className="relative z-10 flex flex-col items-center gap-2">
                                     <div
                                         className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2 font-bold
-                                            ${isCompleted ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/20' :
-                                                isActive ? 'bg-white dark:bg-slate-900 border-blue-500 text-blue-600 scale-110 shadow-xl' :
+                                            ${isCompleted ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-500/20' :
+                                                isActive ? 'bg-white dark:bg-slate-900 border-emerald-500 text-emerald-600 scale-110 shadow-xl' :
                                                     'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'}`}
                                     >
                                         {isCompleted ? '✓' : idx + 1}
                                     </div>
-                                    <span className={`text-[11px] font-bold uppercase tracking-wider ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'}`}>
+                                    <span className={`text-[11px] font-bold uppercase tracking-wider ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'}`}>
                                         {s.label}
                                     </span>
                                 </div>
@@ -279,7 +279,7 @@ export const CampaignCreationModal: React.FC<CampaignCreationModalProps> = ({ is
                                                     setStep(1);
                                                 }
                                             }}
-                                            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                                            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
                                         >
                                             Edit Details
                                         </button>
@@ -338,7 +338,7 @@ export const CampaignCreationModal: React.FC<CampaignCreationModalProps> = ({ is
                         <button
                             onClick={handleStep2Complete}
                             disabled={saving}
-                            className="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg shadow-blue-500/30 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                            className="px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-lg shadow-emerald-500/30 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                         >
                             {saving ? (
                                 <>

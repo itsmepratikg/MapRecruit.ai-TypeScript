@@ -60,7 +60,7 @@ const CampaignSettingsStep: React.FC<CampaignSettingsStepProps> = ({ settings, o
                                 onChange={(e) => updateSettings({ openJob: e.target.checked })}
                                 className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 dark:peer-focus:ring-emerald-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600"></div>
                         </label>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ const CampaignSettingsStep: React.FC<CampaignSettingsStepProps> = ({ settings, o
                 <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg border-b border-slate-100 dark:border-slate-800 pb-2">AI Modules</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {Object.entries(settings.campaignModules).map(([key, enabled]) => (
-                        <div key={key} className={`flex items-center justify-between p-4 border rounded-lg transition-all ${enabled ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/10' : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900'}`}>
+                        <div key={key} className={`flex items-center justify-between p-4 border rounded-lg transition-all ${enabled ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/10' : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900'}`}>
                             <div>
                                 <span className="text-sm font-medium text-slate-900 dark:text-slate-100 block capitalize">{key.replace('AI', ' AI')}</span>
                                 <span className="text-xs text-slate-500">{enabled ? 'Enabled' : 'Disabled'}</span>
@@ -83,7 +83,7 @@ const CampaignSettingsStep: React.FC<CampaignSettingsStepProps> = ({ settings, o
                                     onChange={() => handleModulesChange(key as any)}
                                     className="sr-only peer"
                                 />
-                                <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600"></div>
                             </label>
                         </div>
                     ))}

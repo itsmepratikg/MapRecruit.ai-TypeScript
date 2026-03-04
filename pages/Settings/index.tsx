@@ -19,13 +19,16 @@ import { WorkspaceConfigurations } from './WorkspaceConfigurations';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { CustomFieldsPage } from './CustomFields/CustomFields';
+import { CommunicationSettings } from './Communication/CommunicationSettings';
+import { CommunicationForm } from './Communication/CommunicationForm';
 
 interface SettingsPageProps {
     activeTab?: string; // Optional for backward compatibility if needed, but we will ignore it
     onSelectUser?: (user: any) => void;
+    onSelectClient?: (client: any) => void;
 }
 
-export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
+export const SettingsPage = ({ onSelectUser, onSelectClient }: SettingsPageProps) => {
     const { t } = useTranslation();
     // The activeTab is no longer directly used for rendering, but might be for initial state or other logic if needed.
     // const activeTab = searchParams.get('tab') || 'COMPANY_INFO';
@@ -38,22 +41,22 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
    * ... others map via PascalCase convention or explicit map if needed.
    */
     const getPath = (id: string) => {
-        // Simple transform: COMPANY_INFO -> CompanyInfo ... wait, "Company Information" -> CompanyInfo? 
-        // The requirement asks for CompanyInfo. Let's make a manual map for now to be safe and explicit.
-        const map: Record<string, string> = {
-            'COMPANY_INFO': 'companyinfo',
-            'ROLES': 'roles',
-            'USERS': 'users',
-            'CLIENTS': 'clients',
-            'FRANCHISE': 'franchise',
-            'REACHOUT_LAYOUTS': 'reachoutlayouts',
-            'ROLE_HIERARCHY': 'rolehierarchy',
-            'THEMES': 'themes',
-            'WORKSPACE_CONFIG': 'workspaceconfig',
-            'CUSTOM_FIELD': 'customfield',
-            // Add others as needed, or fallback to TitleCase
-        };
-        if (map[id]) return map[id];
+        const item = SETTINGS_CONTENT[id];
+        if (item && item.customPath) return item.customPath;
+
+        // Specific overrides
+        if (id === 'COMPANY_INFO') return 'companyinfo';
+        if (id === 'ROLES') return 'roles';
+        if (id === 'USERS') return 'users';
+        if (id === 'REACHOUT_LAYOUTS') return 'reachoutlayouts';
+        if (id === 'CLIENTS') return 'clients';
+        if (id === 'FRANCHISE') return 'franchise';
+        if (id === 'ROLE_HIERARCHY') return 'rolehierarchy';
+        if (id === 'THEMES') return 'themes';
+        if (id === 'WORKSPACE_CONFIG') return 'workspaceconfig';
+        if (id === 'AUTHENTICATION') return 'authentication';
+        if (id === 'CUSTOM_FIELD') return 'customfields';
+        if (id === 'COMMUNICATION') return 'communication';
 
         // Fallback helper to convert SCREAMING_SNAKE to PascalCaseish
         return id.toLowerCase().replace(/_/g, '');
@@ -66,12 +69,8 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
         const content = SETTINGS_CONTENT[id];
         return (
             <div className="h-full overflow-hidden flex flex-col">
-                <div className="flex-1 overflow-y-auto custom-scrollbar p-8 lg:p-12">
-                    <div className="max-w-7xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div>
-                            <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">{t(content.title)}</h3>
-                            <p className="text-slate-500 dark:text-slate-400">{t(content.desc)}</p>
-                        </div>
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-8 lg:p-12 transition-all">
+                    <div className="max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
                         <PlaceholderView
                             title={`${t(content.title)} ${t("Configuration")}`}
                             description={t("Manage your {0} settings here. This module is currently under active development.", { title: t(content.title).toLowerCase() })}
@@ -86,17 +85,20 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
     return (
         <Routes>
             <Route path="/" element={<Navigate to={`/settings/${getPath('COMPANY_INFO')}`} replace />} />
-            <Route path={getPath('COMPANY_INFO')} element={<CompanyInfo />} />
-            <Route path={getPath('ROLES')} element={<RolesPermissions />} />
-            <Route path={`${getPath('ROLES')}/:id`} element={<RolesPermissions />} />
-            <Route path={getPath('USERS')} element={<UsersSettings onSelectUser={onSelectUser} />} />
-            <Route path={getPath('CLIENTS')} element={<ClientsSettings />} /> {/* Add Route */}
-            <Route path={getPath('ROLE_HIERARCHY')} element={<RoleHierarchy />} />
-            <Route path={getPath('FRANCHISE')} element={<FranchiseSettings />} />
-            <Route path={getPath('REACHOUT_LAYOUTS')} element={<ReachOutLayouts />} />
-            <Route path={getPath('THEMES')} element={<ThemeSettings />} />
-            <Route path={getPath('WORKSPACE_CONFIG')} element={<WorkspaceConfigurations />} />
-            <Route path={getPath('AUTHENTICATION')} element={<WorkspaceConfigurations />} />
+            <Route path="companyinfo" element={<CompanyInfo />} />
+            <Route path="roles" element={<RolesPermissions />} />
+            <Route path="users/*" element={<UsersSettings onSelectUser={onSelectUser} />} />
+            <Route path="reachoutlayouts/*" element={<ReachOutLayouts />} />
+            <Route path="clients" element={<ClientsSettings onSelectClient={onSelectClient} />} />
+            <Route path="franchise" element={<FranchiseSettings />} />
+            <Route path="rolehierarchy" element={<RoleHierarchy />} />
+            <Route path="themes" element={<ThemeSettings />} />
+            <Route path="workspaceconfig" element={<WorkspaceConfigurations />} />
+            <Route path="authentication" element={<WorkspaceConfigurations />} />
+            <Route path="customfields" element={<CustomFieldsPage />} />
+            <Route path="communication" element={<CommunicationSettings />} />
+            <Route path="communication/:id" element={<CommunicationForm />} />
+
             <Route path="customfield/:type" element={<CustomFieldsPage />} />
             <Route path="customfield" element={<Navigate to="campaign" replace />} />
             <Route path="users/userprofile/:section/:id" element={<UserProfileContainer />} />
@@ -105,7 +107,7 @@ export const SettingsPage = ({ onSelectUser }: SettingsPageProps) => {
             {/* Add routes for other settings items */}
             {Object.keys(SETTINGS_CONTENT).map(id => {
                 // Only render placeholder for items not explicitly routed above
-                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY', 'THEMES', 'WORKSPACE_CONFIG', 'AUTHENTICATION', 'CUSTOM_FIELD'].includes(id)) {
+                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY', 'THEMES', 'WORKSPACE_CONFIG', 'AUTHENTICATION', 'CUSTOM_FIELD', 'COMMUNICATION'].includes(id)) {
                     return <Route key={id} path={getPath(id)} element={<SettingsContentWrapper id={id} />} />;
                 }
                 return null;

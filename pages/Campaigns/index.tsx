@@ -5,11 +5,8 @@ import { ClosedCampaigns } from './ClosedCampaigns';
 import { ArchivedCampaigns } from './ArchivedCampaigns';
 import { CampaignStats } from './components/CampaignStats';
 import { campaignService } from '../../services/api';
-import { CampaignCreationModal } from '../../components/Campaign/CampaignCreationModal';
-
-export const Campaigns = ({ onNavigateToCampaign, initialTab }: any) => {
+export const Campaigns = ({ onNavigateToCampaign, initialTab, onCreateCampaign }: any) => {
   const [activeTab, setActiveTab] = useState(initialTab || 'Active');
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   useEffect(() => {
     if (initialTab && ['Active', 'Closed', 'Archived'].includes(initialTab)) {
@@ -23,16 +20,23 @@ export const Campaigns = ({ onNavigateToCampaign, initialTab }: any) => {
         <ActiveCampaigns
           onNavigate={onNavigateToCampaign}
           onTabChange={setActiveTab}
-          onCreateCampaign={() => setIsCreateModalOpen(true)}
+          onCreateCampaign={onCreateCampaign}
         />
       )}
-      {activeTab === 'Closed' && <ClosedCampaigns onNavigate={onNavigateToCampaign} onTabChange={setActiveTab} />}
-      {activeTab === 'Archived' && <ArchivedCampaigns onNavigate={onNavigateToCampaign} onTabChange={setActiveTab} />}
-
-      <CampaignCreationModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-      />
+      {activeTab === 'Closed' && (
+        <ClosedCampaigns
+          onNavigate={onNavigateToCampaign}
+          onTabChange={setActiveTab}
+          onCreateCampaign={onCreateCampaign}
+        />
+      )}
+      {activeTab === 'Archived' && (
+        <ArchivedCampaigns
+          onNavigate={onNavigateToCampaign}
+          onTabChange={setActiveTab}
+          onCreateCampaign={onCreateCampaign}
+        />
+      )}
     </div>
   );
 };

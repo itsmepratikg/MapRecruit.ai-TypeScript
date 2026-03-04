@@ -5,8 +5,24 @@ import {
   Calendar, ChevronDown, Search, X, CheckSquare, Square, RefreshCw
 } from '../../components/Icons';
 import { useUserProfile } from '../../hooks/useUserProfile';
+import { useActivities } from '../../hooks/useActivities';
+import { ActivityItem } from '../../components/ActivityItem';
+import { Activity as ActivityInterface } from '../../types/Activity';
 
-// ... (existing imports)
+const ACTIVITY_FILTER_OPTIONS = [
+  'Profile Created',
+  'Email Sent',
+  'Email Opened',
+  'SMS Sent',
+  'Resume Uploaded',
+  'Profile Merged',
+  'Status Updated',
+  'Note Added',
+  'Interview Scheduled',
+  'Survey Completed',
+  'Candidate Applied',
+  'Profile Viewed'
+];
 
 export const Activities = () => {
   // --- Data State ---
@@ -243,7 +259,7 @@ export const Activities = () => {
             // or we could assume the user is okay with a specific grouping implementation here.
 
             (() => {
-              const grouped: Record<string, ActivityType[]> = {};
+              const grouped: Record<string, ActivityInterface[]> = {};
               filteredActivities.forEach(act => {
                 const date = new Date(act.activityAt || act.createdAt);
                 const dateKey = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });

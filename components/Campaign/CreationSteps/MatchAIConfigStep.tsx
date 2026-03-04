@@ -59,7 +59,7 @@ export const MatchAIConfigStep: React.FC<MatchAIConfigStepProps> = ({ onBack, on
                         </button>
                         <button
                             onClick={onContinue}
-                            className="flex items-center gap-2 px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all"
+                            className="flex items-center gap-2 px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg shadow-emerald-500/20 transition-all"
                         >
                             {t("Continue")}
                             <ArrowRight size={18} />
