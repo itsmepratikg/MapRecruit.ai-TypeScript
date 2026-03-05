@@ -41,15 +41,29 @@ api.interceptors.response.use(
     (error) => {
         if (error.response) {
             // Handle 401 Unauthorized
-            if (error.response.status === 401) {
-                // Check if we are on the login page to avoid infinite loops
+            if (error.response?.status === 401) {
+                const url = error.config?.url || '';
                 const isLogin = window.location.pathname === '/';
-                if (!isLogin) {
-                    console.warn("[API] 401 Unauthorized detected. Clearing session and redirecting...");
+
+                // These endpoints are non-critical background or heartbeat requests.
+                // We shouldn't force a global logout if they fail with 401 occasionally.
+                const suppressedEndpoints = [
+                    '/emails',
+                    '/users/active',
+                    '/presence/',
+                    '/campaigns/stats',
+                    '/clients/all',
+                    '/clients'
+                ];
+
+                const isBestEffortEndpoint = suppressedEndpoints.some(e => url.includes(e));
+
+                if (!isLogin && !isBestEffortEndpoint) {
+                    console.log('Logging out due to unsuppressed 401 (critical failure) at:', url);
                     localStorage.removeItem('authToken');
-                    // We don't want to use navigate here as this is outside a React component
-                    // but window.location will force a reload and redirect via App.tsx logic
                     window.location.href = '/';
+                } else {
+                    console.warn('Suppressing global logout for 401 on background/non-critical endpoint:', url);
                 }
             }
             // Handle 500 Server Error (Global Toast)
