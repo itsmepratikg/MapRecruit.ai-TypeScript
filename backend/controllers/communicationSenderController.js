@@ -7,7 +7,7 @@ exports.getAll = async (req, res) => {
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        const filter = { deleted: false };
+        const filter = { deleted: { $ne: true } };
         if (req.user && req.user.companyID) {
             filter.companyID = req.user.companyID;
         } else if (req.query.companyID) {
@@ -127,21 +127,50 @@ exports.getMySenders = async (req, res) => {
         const userID = req.user._id;
         const activeClientID = req.user.activeClientID;
 
+        // Extract raw string values first to prevent any potential crashes
+        const userIdStr = userID ? userID.toString() : null;
+        const clientIdStr = activeClientID ? activeClientID.toString() : null;
+
+        const userIds = [];
+        if (userIdStr) {
+            userIds.push(userID);
+            userIds.push(userIdStr);
+            if (userID.constructor.name !== 'ObjectId') {
+                try { userIds.push(new require('mongoose').Types.ObjectId(userIdStr)); } catch (e) { }
+            }
+        }
+
+        const clientIds = [];
+        if (clientIdStr) {
+            clientIds.push(activeClientID);
+            clientIds.push(clientIdStr);
+            if (activeClientID.constructor.name !== 'ObjectId') {
+                try { clientIds.push(new require('mongoose').Types.ObjectId(clientIdStr)); } catch (e) { }
+            }
+        }
+
         const filter = {
-            deleted: false,
+            deleted: { $ne: true },
             companyID: companyID,
             $or: [
                 // Condition 1: User specific - if userID array has values, current user must be in it
-                { userID: { $elemMatch: { $eq: userID } } },
+                { userID: { $elemMatch: { $in: userIds } } },
 
-                // Condition 2: Client/Global access - only applies if userID array is empty
+                // Condition 2: Client/Global access - only applies if userID array is empty/missing
                 {
-                    userID: { $size: 0 },
-                    $or: [
-                        // Case A: Assigned to current active client
-                        { clientID: { $elemMatch: { $eq: activeClientID } } },
-                        // Case B: Global for the company (clientID array is also empty)
-                        { clientID: { $size: 0 } }
+                    $and: [
+                        { $or: [{ userID: { $exists: false } }, { userID: { $size: 0 } }, { userID: [] }, { userID: null }] },
+                        {
+                            $or: [
+                                // Case A: Assigned to current active client
+                                { clientID: { $elemMatch: { $in: clientIds } } },
+                                // Case B: Global for the company (clientID array is also empty/missing)
+                                { clientID: { $exists: false } },
+                                { clientID: { $size: 0 } },
+                                { clientID: [] },
+                                { clientID: null }
+                            ]
+                        }
                     ]
                 }
             ]
