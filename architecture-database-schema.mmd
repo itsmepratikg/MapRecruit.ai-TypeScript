@@ -1,0 +1,307 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1e293b', 'primaryTextColor': '#f8fafc', 'primaryBorderColor': '#334155', 'lineColor': '#64748b'}}}%%
+
+erDiagram
+    COMPANY {
+        ObjectId _id PK
+        String name
+        String slug
+        String email
+        Object theme
+        Object settings
+        Object metadata
+        Array modules
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    CLIENT {
+        ObjectId _id PK
+        String name
+        ObjectId companyID FK
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    USER {
+        ObjectId _id PK
+        String firstName
+        String lastName
+        String email
+        String password
+        ObjectId company FK
+        ObjectId activeClient FK
+        String role
+        Object integrations
+        Object metadata
+        Object defaultCommunicationSender
+        Array passkeys
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    CAMPAIGN {
+        ObjectId _id PK
+        String title
+        String status
+        ObjectId companyID FK
+        ObjectId clientID FK
+        ObjectId createdBy FK
+        Object details
+        Object customFields
+        Array profiles
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    CANDIDATE {
+        ObjectId _id PK
+        String firstName
+        String lastName
+        String email
+        ObjectId companyID FK
+        ObjectId clientID FK
+        Object customFields
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    INTERVIEW {
+        ObjectId _id PK
+        ObjectId candidateID FK
+        ObjectId campaignID FK
+        ObjectId companyID FK
+        ObjectId clientID FK
+        String status
+        Array rounds
+        ObjectId scheduledBy FK
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    ACTIVITY {
+        ObjectId _id PK
+        String type
+        String action
+        ObjectId userId FK
+        ObjectId companyID FK
+        ObjectId targetId
+        String targetType
+        Object metadata
+        Date createdAt
+    }
+
+    WORKFLOW {
+        ObjectId _id PK
+        String name
+        ObjectId companyID FK
+        ObjectId campaignID FK
+        ObjectId createdBy FK
+        Array nodes
+        Array edges
+        Object settings
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    COMMUNICATION_SENDER {
+        ObjectId _id PK
+        String name
+        String email
+        String phoneNumber
+        String channel
+        ObjectId companyID FK
+        Array clientID
+        Array userID
+        Boolean defaultForEmail
+        Boolean defaultForSMS
+        Boolean defaultForCalls
+        ObjectId createdBy FK
+        ObjectId updatedBy FK
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    CUSTOM_FIELD {
+        ObjectId _id PK
+        String label
+        String fieldName
+        String fieldType
+        String collection
+        ObjectId companyID FK
+        Object options
+        Number order
+        Boolean required
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    CUSTOM_SECTION {
+        ObjectId _id PK
+        String name
+        String collection
+        ObjectId companyID FK
+        Array fields
+        Number order
+        Boolean deleted
+    }
+
+    LIBRARY {
+        ObjectId _id PK
+        String name
+        String type
+        ObjectId companyID FK
+        Object content
+        Boolean deleted
+        Date createdAt
+        Date updatedAt
+    }
+
+    ROLE {
+        ObjectId _id PK
+        String name
+        ObjectId companyID FK
+        Object permissions
+    }
+
+    ROLE_HIERARCHY {
+        ObjectId _id PK
+        ObjectId companyID FK
+        Array levels
+        Object config
+    }
+
+    OWNING_ENTITY {
+        ObjectId _id PK
+        String name
+        ObjectId companyID FK
+    }
+
+    TAG {
+        ObjectId _id PK
+        String name
+        ObjectId companyID FK
+        String color
+    }
+
+    SCHEMA {
+        ObjectId _id PK
+        String collection
+        Object definition
+    }
+
+    SYNCED_DATA {
+        ObjectId _id PK
+        ObjectId userId FK
+        String provider
+        String itemType
+        String externalId
+        Object data
+        String status
+        Date lastSynced
+    }
+
+    PRESENCE {
+        ObjectId _id PK
+        ObjectId userId FK
+        String status
+        String pageId
+        Date lastSeen
+    }
+
+    SUBSCRIPTION {
+        ObjectId _id PK
+        ObjectId companyID FK
+        String plan
+        Object limits
+        Date validUntil
+    }
+
+    FRANCHISE {
+        ObjectId _id PK
+        String name
+        ObjectId companyID FK
+    }
+
+    ARTICLE {
+        ObjectId _id PK
+        String title
+        String content
+    }
+
+    QUESTIONNAIRE {
+        ObjectId _id PK
+        String title
+        Array questions
+    }
+
+    USER_RECENT_SEARCH {
+        ObjectId _id PK
+        ObjectId userId FK
+        String query
+        Date createdAt
+    }
+
+    USER_RECENT_VISIT {
+        ObjectId _id PK
+        ObjectId userId FK
+        ObjectId targetId
+        String targetType
+        Date visitedAt
+    }
+
+    USER_SAVED_SEARCH {
+        ObjectId _id PK
+        ObjectId userId FK
+        String name
+        Object filters
+        Date createdAt
+    }
+
+    %% Relationships
+    COMPANY ||--o{ CLIENT : "has many"
+    COMPANY ||--o{ USER : "employs"
+    COMPANY ||--o{ CAMPAIGN : "owns"
+    COMPANY ||--o{ CANDIDATE : "tracks"
+    COMPANY ||--o{ CUSTOM_FIELD : "defines"
+    COMPANY ||--o{ CUSTOM_SECTION : "organizes"
+    COMPANY ||--o{ LIBRARY : "stores"
+    COMPANY ||--o{ ROLE : "configures"
+    COMPANY ||--o{ ROLE_HIERARCHY : "structures"
+    COMPANY ||--o{ OWNING_ENTITY : "manages"
+    COMPANY ||--o{ TAG : "labels with"
+    COMPANY ||--o{ COMMUNICATION_SENDER : "registers"
+    COMPANY ||--o{ WORKFLOW : "automates"
+    COMPANY ||--o{ SUBSCRIPTION : "subscribes"
+    COMPANY ||--o{ FRANCHISE : "franchises"
+
+    CLIENT ||--o{ CAMPAIGN : "scopes"
+    CLIENT ||--o{ CANDIDATE : "scopes"
+    CLIENT ||--o{ INTERVIEW : "scopes"
+
+    USER ||--o{ CAMPAIGN : "creates"
+    USER ||--o{ ACTIVITY : "generates"
+    USER ||--o{ WORKFLOW : "designs"
+    USER ||--o{ SYNCED_DATA : "syncs"
+    USER ||--o{ PRESENCE : "signals"
+    USER ||--o{ USER_RECENT_SEARCH : "searches"
+    USER ||--o{ USER_RECENT_VISIT : "visits"
+    USER ||--o{ USER_SAVED_SEARCH : "saves"
+    USER ||--o| CLIENT : "active client"
+
+    CAMPAIGN ||--o{ INTERVIEW : "schedules"
+    CAMPAIGN ||--o{ WORKFLOW : "uses"
+
+    CANDIDATE ||--o{ INTERVIEW : "participates"
+    CANDIDATE ||--o{ ACTIVITY : "tracked in"
+
+    COMMUNICATION_SENDER }o--o{ USER : "assigned to users"
+    COMMUNICATION_SENDER }o--o{ CLIENT : "scoped to clients"

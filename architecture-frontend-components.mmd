@@ -1,0 +1,129 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1e293b', 'primaryTextColor': '#f8fafc', 'primaryBorderColor': '#334155', 'lineColor': '#64748b'}}}%%
+
+graph TB
+    subgraph FE_SVC["Frontend Services Layer — services/"]
+        API["api.js<br/><i>Axios base instance<br/>JWT interceptor, error handling</i>"]
+        CAMP_S["CampaignService.ts"]
+        INT_S["integrationService.ts"]
+        ACT_S["activityService.ts"]
+        IVW_S["interviewService.ts"]
+        OE_S["owningEntityService.ts"]
+        GP_S["googlePickerService.ts"]
+        MP_S["microsoftPickerService.ts"]
+        SAFETY_S["SafetyInterceptor.ts"]
+        PRES_S["presenceService.js"]
+        CLIENT_S["clientService.mock.ts"]
+    end
+
+    subgraph HOOKS_LAYER["Custom Hooks — hooks/"]
+        direction TB
+        subgraph DATA_HOOKS["Data Fetching"]
+            UPR["useUserProfile.ts<br/><i>→ api GET /users/profile</i>"]
+            UPREF["useUserPreferences.ts<br/><i>→ api GET/PUT /users/preferences</i>"]
+            UCAMPAIGNS["useCampaigns.ts<br/><i>→ CampaignService</i>"]
+            UCANDS["useCandidates.ts<br/><i>→ api GET /profiles</i>"]
+            UCANP["useCandidateProfile.ts<br/><i>→ api GET /profiles/:id</i>"]
+            UACTS["useActivities.ts<br/><i>→ activityService</i>"]
+            URECENT["useRecentItems.ts<br/><i>→ api GET /users/recent</i>"]
+        end
+
+        subgraph AUTH_HOOKS["Auth & Security"]
+            UPERMS["usePermissions.ts<br/><i>Role-based access checks</i>"]
+            UROLES["useRoleHierarchy.ts<br/><i>Hierarchy-aware role logic</i>"]
+            USESS["useSessionTimeout.ts<br/><i>Auto-logout on idle</i>"]
+        end
+
+        subgraph UI_HOOKS["UI / Theming"]
+            UTHEME["useCompanyTheme.ts<br/><i>Dynamic company theming</i>"]
+            USCREEN["useScreenSize.ts<br/><i>Responsive breakpoints</i>"]
+            UCLARITY["useClarity.ts<br/><i>Microsoft Clarity analytics</i>"]
+        end
+    end
+
+    subgraph CONTEXTS["React Context Providers"]
+        UC["UserContext.tsx<br/><i>Auth state, user profile,<br/>client switching, token mgmt</i>"]
+        WSC["WebSocketContext.tsx<br/><i>Socket.IO connection,<br/>real-time events, reconnection</i>"]
+        IC["ImpersonationContext.tsx<br/><i>Admin impersonate user flow</i>"]
+    end
+
+    subgraph SHARED_COMP["Shared Components — components/"]
+        direction TB
+
+        subgraph LAYOUT["Layout"]
+            SIDEBAR["Menu/Sidebar.tsx"]
+            TOPNAV["Menu/TopNav.tsx"]
+            PROFILEMENU["Menu/ProfileMenu.tsx"]
+            CAMPAIGNMENU["Menu/CampaignMenu.tsx"]
+            CLIENTMENU["Menu/ClientProfileMenu.tsx"]
+        end
+
+        subgraph SEARCH_COMP["Search & Discovery"]
+            GSEARCH["GlobalSearch.tsx<br/><i>Omnibox search across entities</i>"]
+            TSEARCH["TalentSearchEngine.tsx<br/><i>Advanced profile search</i>"]
+            ADVSEARCH["AdvancedSearchModal.tsx"]
+        end
+
+        subgraph PROFILE_COMP["Profile Components"]
+            PVIEWS["ProfileViews.tsx<br/><i>Grid/List/Board view modes</i>"]
+            PCAMPS["ProfileCampaigns.tsx"]
+            PDRAWER["ProfileDrawer.tsx"]
+            CREATE_P["CreateProfileModal.tsx"]
+            EDIT_P["EditProfileModal.tsx"]
+            RESUME_P["ResumePreviewModal.tsx"]
+            EXPORT_P["ExportProfileModal.tsx"]
+            NETWORK["NetworkGraphModal.tsx"]
+            OPTOUT["OptOutModal.tsx"]
+        end
+
+        subgraph CAMPAIGN_COMP["Campaign Components — Campaign/"]
+            CCREATE["CampaignCreationModal.tsx"]
+            CSTEPS["CreationSteps/"]
+            CGEN["Generator/"]
+            CHOVER["HoverMenu.tsx"]
+            CSHARE["ShareModal.tsx"]
+            CJOBFIT["JobFitCalibration.tsx"]
+        end
+
+        subgraph ENGAGE_COMP["Engage Workflow — engage/"]
+            ENODES["CanvasNodes.tsx"]
+            ECOPRES["CoPresenceAvatars.tsx"]
+            ECONFIG["ConfigModals.tsx"]
+            ESHARE["WorkflowShareModal.tsx"]
+            EAUTO["AutomationConfig.tsx"]
+        end
+
+        subgraph MISC_COMP["Utility Components"]
+            TOAST_C["Toast.tsx"]
+            CF_RENDER["CustomFieldRenderer.tsx"]
+            THEME_M["ThemeSettingsModal.tsx"]
+            RTE["RichTextEditor.tsx"]
+            TIME_P["TimePicker.tsx"]
+            ICONS_C["Icons.tsx"]
+            INTERVIEW_C["InterviewComponents.tsx"]
+            ACTIVITY_C["ActivityItem.tsx"]
+            ACCESS_C["AccessControlModal.tsx"]
+            DASH_W["DashboardWidgets.tsx"]
+            HERO_W["HeroWidgets.tsx"]
+        end
+    end
+
+    subgraph UTILS_FE["Frontend Utilities — utils/"]
+        U1["accessControl.ts"]
+        U2["activityUtils.ts"]
+        U3["colorUtils.ts"]
+        U4["mongoUtils.ts"]
+        U5["themeUtils.ts"]
+    end
+
+    subgraph TYPES_LAYER["TypeScript Types — types/"]
+        T1["types.ts"]
+        T2["data.ts"]
+    end
+
+    %% Wiring
+    HOOKS_LAYER --> FE_SVC
+    CONTEXTS --> HOOKS_LAYER
+    SHARED_COMP --> HOOKS_LAYER
+    SHARED_COMP --> CONTEXTS
+    SHARED_COMP --> UTILS_FE
+    FE_SVC --> API

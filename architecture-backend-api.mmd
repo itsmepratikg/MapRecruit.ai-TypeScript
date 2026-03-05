@@ -1,0 +1,132 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1e293b', 'primaryTextColor': '#f8fafc', 'primaryBorderColor': '#334155', 'lineColor': '#64748b'}}}%%
+
+graph LR
+    subgraph SERVER_ENTRY["server.js — Express Init"]
+        CORS["CORS"]
+        RATE["Rate Limiter"]
+        SESSION["express-session"]
+        SOCKET["Socket.IO"]
+        DB_CONN["connectDB → Mongoose"]
+    end
+
+    subgraph MW["Middleware Pipeline"]
+        M1["authMiddleware.js<br/><i>JWT verify via protect()</i>"]
+        M2["tenantMiddleware.js<br/><i>resolveTenant() — companyID,<br/>activeClientID injection</i>"]
+        M3["guardMiddleware.js<br/><i>requireAdmin(), requireRole()</i>"]
+    end
+
+    subgraph ROUTES_BLOCK["API Routes → Controllers"]
+        direction TB
+
+        subgraph AUTH_BLOCK["Authentication & Users"]
+            RA["/api/auth → authRoutes.js"]
+            RA --> CA["authController.js<br/><i>register, login, verifyToken,<br/>passkeyRegister, passkeyLogin,<br/>passkeyGetOptions, requestMFA</i>"]
+            CA --> PK["passkeyController.js<br/><i>WebAuthn FIDO2 passkeys</i>"]
+
+            RU["/api/users → userRoutes.js"]
+            RU --> CU["userController.js<br/><i>getProfile, updateProfile,<br/>getUsers, updateUser,<br/>bulkUpdate, getUsersByCompany</i>"]
+        end
+
+        subgraph CAMPAIGN_BLOCK["Campaigns"]
+            RC["/api/campaigns → campaignRoutes.js"]
+            RC --> CC["campaignController.js<br/><i>CRUD, search, bulkArchive,<br/>getCampaignsByClient,<br/>getExternalCampaign</i>"]
+        end
+
+        subgraph PROFILE_BLOCK["Profiles & Candidates"]
+            RP["/api/profiles → profileRoutes.js"]
+            RP --> CP["profileController.js<br/><i>CRUD, search, bulkUpdate,<br/>merge, getByEmail,<br/>getProfilesByCampaign</i>"]
+        end
+
+        subgraph INTERVIEW_BLOCK["Interviews"]
+            RI["/api/interviews → interviewRoutes.js"]
+            RI --> CI["interviewController.js<br/><i>CRUD, getByCandidate,<br/>getByCampaign, updateRounds</i>"]
+        end
+
+        subgraph WORKFLOW_BLOCK["Workflows"]
+            RW["/api/workflows → workflowRoutes.js"]
+            RW --> CW["workflowController.js<br/><i>CRUD, getByCompany,<br/>executeWorkflow</i>"]
+        end
+
+        subgraph ACTIVITY_BLOCK["Activities & Analytics"]
+            RAC["/api/activities → activityRoutes.js"]
+            RAC --> CAC["activityController.js"]
+
+            RAN["/api/analytics → analyticsRoutes.js"]
+            RAN --> CAN["analyticsController.js<br/><i>Dashboard KPIs, pipeline metrics</i>"]
+        end
+
+        subgraph COMPANY_BLOCK["Company & Clients"]
+            RCO["/api/company → companyRoutes.js"]
+            RCO --> CCO["companyController.js"]
+
+            RCL["/api/clients → clientRoutes.js"]
+            RCL --> CCL["clientController.js<br/><i>CRUD, getByCompany,<br/>switchClient</i>"]
+
+            ROE["/api/owning-entities → owningEntityRoutes.js"]
+            ROE --> COE["owningEntityController.js"]
+        end
+
+        subgraph COMM_BLOCK["Communication"]
+            RCS["/api/communication-senders → communicationSenderRoutes.js"]
+            RCS --> CCS["communicationSenderController.js<br/><i>getAll, getMySenders, CRUD,<br/>hierarchical filter:<br/>userID → clientID → companyID</i>"]
+
+            RE["/api/emails → emailRoutes.js"]
+            RE --> CE["emailController.js"]
+        end
+
+        subgraph INTEGRATION_BLOCK["Integrations"]
+            RIN["/api/user/integrations → integrationRoutes.js"]
+            RIN --> CIN["integrationController.js<br/><i>Google/Microsoft OAuth callback,<br/>syncCalendar, syncAll,<br/>createCalendarEvent,<br/>fetchDriveFile, fetchMicrosoftFile,<br/>syncProfilePhoto</i>"]
+
+            RINS["/api/v1/integration-settings → integrationSettingsRoutes.js"]
+            RINS --> CINS["integrationSettingsController.js"]
+
+            RSP["/api/v1/sharepoint → sharepointRoutes.js"]
+            RSP --> CSP["sharepointController.js"]
+
+            RGD["/api/v1/drive → googleDriveRoutes.js"]
+            RGD --> CGD["googleDriveController.js"]
+
+            RUP["/api/v1/upload → uploadRoutes.js"]
+            RUP --> CUP["uploadController.js"]
+        end
+
+        subgraph CONFIG_BLOCK["Configuration"]
+            RCF["/api/custom-fields → customFieldRoutes.js"]
+            RCF --> CCF["customFieldController.js<br/><i>CRUD, getByCollection,<br/>getByCompany, reorder</i>"]
+
+            RS["/api/schemas → schemaRoutes.js"]
+            RS --> CS["schemaController.js"]
+
+            RL["/api/library → libraryRoutes.js"]
+            RL --> CL["libraryController.js"]
+        end
+
+        subgraph MISC_BLOCK["Misc"]
+            RCH["/api/chat → chatRoutes.js"]
+            RPR["/api/presence → presenceRoutes.js"]
+            RWH["/api/webhooks → webhookRoutes.js"]
+            RWH --> CWH["webhookController.js"]
+            RSU["/api/support → supportRoutes.js"]
+            RSU --> CSU["supportController.js"]
+        end
+    end
+
+    subgraph SERVICES_BLOCK["Backend Services"]
+        S1["googleAuthService.js<br/><i>Token refresh, getAccessToken()</i>"]
+        S2["microsoftAuthService.js<br/><i>MSAL token refresh, getAccessToken()</i>"]
+        S3["syncService.js<br/><i>Background scheduler:<br/>fetchUserCalendarEvents(),<br/>fetchUserOutlookEvents(),<br/>init() — periodic sync</i>"]
+        S4["notificationDispatcher.js<br/><i>Email/push notification dispatch</i>"]
+        S5["scrapeService.js<br/><i>Web page scraping</i>"]
+        S6["teamsGraphService.js<br/><i>MS Teams channel/message ops</i>"]
+    end
+
+    %% Flow
+    SERVER_ENTRY --> MW
+    MW --> ROUTES_BLOCK
+    CIN --> S1
+    CIN --> S2
+    CIN --> S3
+    S3 --> S1
+    S3 --> S2
+    CIN --> S6

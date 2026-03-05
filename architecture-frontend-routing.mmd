@@ -1,0 +1,89 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1e293b', 'primaryTextColor': '#f8fafc', 'primaryBorderColor': '#334155', 'lineColor': '#64748b'}}}%%
+
+graph TD
+    subgraph APP["App.tsx — React Router"]
+        direction TB
+        ROOT["/ → Navigate to /home"]
+
+        subgraph PUBLIC["Public Routes"]
+            LOGIN_R["/login → Login/index.tsx"]
+            GOOGLE_CB["/auth/google/callback → MyAccount/GoogleCallback.tsx"]
+            MS_CB["/auth/microsoft/callback → MyAccount/MicrosoftCallback.tsx"]
+            CAMP_EXT["/campaign/:id/external → Campaign/CampaignExternalRoutes.tsx"]
+        end
+
+        subgraph PROTECTED["Protected Routes — RequireAuth"]
+            HOME_R["/home → pages/Home.tsx"]
+
+            subgraph CAMPAIGNS_ROUTE["/campaigns"]
+                CAMP_LIST["/campaigns → pages/Campaigns.tsx"]
+                CAMP_NEW["/campaigns/new → components/Campaign/CampaignCreationModal.tsx"]
+                CAMP_DASH["/campaigns/:id → pages/Campaign/index.tsx"]
+            end
+
+            subgraph CAMPAIGN_TABS["Campaign Dashboard Tabs"]
+                INTEL["/campaigns/:id/intelligence → Campaign/Intelligence/"]
+                ENGAGE_TAB["/campaigns/:id/engage → Campaign/EngageAI/"]
+                MATCH_TAB["/campaigns/:id/match → Campaign/MatchAI/"]
+                SOURCE_TAB["/campaigns/:id/source → Campaign/SourceAI/"]
+                RECO_TAB["/campaigns/:id/recommendations → Campaign/Recommendations/"]
+                CAMP_SETTINGS["/campaigns/:id/settings → Campaign/Settings/"]
+            end
+
+            subgraph PROFILES_ROUTE["/profiles"]
+                PROF_LIST["/profiles → pages/Profiles.tsx"]
+                PROF_SEARCH["/profiles/search → Profiles/SearchProfile/"]
+                PROF_TAGS["/profiles/tags → Profiles/Tags/"]
+                PROF_FOLDERS["/profiles/folders → Profiles/FoldersMetrics/"]
+                PROF_DUP["/profiles/duplicates → Profiles/DuplicateProfiles/"]
+                PROF_LOCAL["/profiles/local → Profiles/LocalProfiles.tsx"]
+                PROF_INT["/profiles/interview-status → Profiles/InterviewStatus.tsx"]
+                PROF_DETAIL["/profiles/:id → pages/CandidateProfile.tsx"]
+            end
+
+            subgraph SETTINGS_ROUTE["/settings"]
+                SET_INDEX["/settings → Settings/index.tsx"]
+                SET_COMPANY["/settings/company → Settings/CompanyInfo.tsx"]
+                SET_CLIENTS["/settings/clients → Settings/Clients.tsx"]
+                SET_ROLES["/settings/roles → Settings/Roles/"]
+                SET_USERS["/settings/users → Settings/Users/"]
+                SET_CF["/settings/custom-fields → Settings/CustomFields/"]
+                SET_FRANCHISE["/settings/franchise → Settings/Franchise.tsx"]
+                SET_THEME["/settings/theme → Settings/ThemeSettings.tsx"]
+                SET_WORKSPACE["/settings/workspace → Settings/WorkspaceConfigurations.tsx"]
+                SET_COMM["/settings/communication → Settings/Communication/"]
+            end
+
+            subgraph MYACCOUNT_ROUTE["/myaccount"]
+                MA_INDEX["/myaccount → MyAccount/index.tsx"]
+                MA_BASIC["/myaccount/basic → MyAccount/BasicDetails.tsx"]
+                MA_AUTH["/myaccount/authsync → MyAccount/AuthSync.tsx"]
+                MA_APPEAR["/myaccount/appearance → MyAccount/Appearance.tsx"]
+                MA_CAL["/myaccount/calendar → MyAccount/CalendarSettings.tsx"]
+                MA_COMM["/myaccount/communication → MyAccount/Communication.tsx"]
+                MA_PASSKEY["/myaccount/passkeys → MyAccount/PasskeySettings.tsx"]
+                MA_ROLES["/myaccount/roles → MyAccount/RolesPermissions.tsx"]
+                MA_LOGIN["/myaccount/sessions → MyAccount/LoginSessions.tsx"]
+                MA_NOTIFS["/myaccount/notifications → MyAccount/UserNotifications.tsx"]
+            end
+
+            CALENDAR_R["/calendar → pages/Calendar/"]
+            EMAILS_R["/emails → pages/Emails/"]
+            MESSAGES_R["/messages → pages/Messages/"]
+            NOTES_R["/notes → pages/Notes/"]
+            ACTIVITIES_R["/activities → pages/Activities/"]
+            SYNC_R["/synchronizations → pages/Synchronizations/"]
+            TALENT_R["/talent-chat → pages/TalentChat/"]
+            CHATBOT_R["/chatbot → pages/Chatbot/"]
+            CREATE_R["/create → pages/Create/"]
+            SUPPORT_R["/support → pages/Support/"]
+        end
+    end
+
+    subgraph CONTEXTS_WRAP["Context Providers Wrapping App"]
+        UC["UserProvider<br/><i>context/UserContext.tsx</i>"]
+        WSC["WebSocketProvider<br/><i>context/WebSocketContext.tsx</i>"]
+        IC["ImpersonationProvider<br/><i>context/ImpersonationContext.tsx</i>"]
+    end
+
+    CONTEXTS_WRAP --> APP
