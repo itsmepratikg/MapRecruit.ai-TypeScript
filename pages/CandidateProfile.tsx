@@ -3,7 +3,7 @@ import {
   User, FileText, Briefcase, Activity, MessageSquare,
   Users, ThumbsUp, Video, Mail, Phone, Linkedin,
   ChevronLeft, MoreHorizontal, Minimize2, HelpCircle,
-  FileEdit, Folder, Copy, MessageCircle, MapPin, CheckCircle, Tag as TagIcon
+  FileEdit, Folder, Copy, MessageCircle, MapPin, CheckCircle, Tag as TagIcon, X
 } from '../components/Icons';
 import { ActionIcons, StatusBadge, EmptyView } from '../components/Common';
 import { InterviewFormContent } from '../components/InterviewComponents';
@@ -20,6 +20,7 @@ import { useToast } from '../components/Toast';
 
 import { LocalMatchAnalysisModal } from '../components/LocalMatchAnalysisModal';
 import { ResumePreviewModal } from '../components/ResumePreviewModal';
+import { TagManagementModal } from '../components/Common/TagManagementModal';
 
 import { useParams, useLocation } from 'react-router-dom';
 import { useCandidateProfile } from '../hooks/useCandidateProfile';
@@ -72,6 +73,52 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
   const [shortlistStatus, setShortlistStatus] = useState<'shortlisted' | 'rejected' | 'none'>('none');
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [showResumePreview, setShowResumePreview] = useState(false);
+
+  // --- TAGS LOGIC ---
+  const [availableTags, setAvailableTags] = useState<any[]>([]);
+  const [isTagsDropdownOpen, setIsTagsDropdownOpen] = useState(false);
+  const [tagsLoading, setTagsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        setTagsLoading(true);
+        const data = await profileService.getTags({ type: 'Profile' });
+        setAvailableTags(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Failed to fetch tags", err);
+      } finally {
+        setTagsLoading(false);
+      }
+    };
+    fetchTags();
+  }, []);
+
+  const handleAddTag = async (selectedTag: any) => {
+    try {
+      const currentTags = liveData?.tagID || [];
+      const updatedTags = [...currentTags, selectedTag];
+      if (id) await profileService.update(id, { tagID: updatedTags });
+      addToast("Tag added", "success");
+      setIsTagsDropdownOpen(false);
+      if (refreshProfile) refreshProfile();
+    } catch (e) {
+      addToast("Failed to add tag", "error");
+    }
+  };
+
+  const handleRemoveTag = async (tagToRemove: any) => {
+    try {
+      const currentTags = liveData?.tagID || [];
+      const tToRemoveId = tagToRemove.$oid || tagToRemove._id || tagToRemove.id;
+      const updatedTags = currentTags.filter((t: any) => (t.$oid || t._id || t.id) !== tToRemoveId);
+      if (id) await profileService.update(id, { tagID: updatedTags });
+      addToast("Tag removed", "success");
+      if (refreshProfile) refreshProfile();
+    } catch (e) {
+      addToast("Failed to remove tag", "error");
+    }
+  };
 
   // --- ACCESS CONTROL & OWNING ENTITY LOGIC ---
   useEffect(() => {
@@ -521,24 +568,41 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
 
                     <div className="flex items-center gap-2 flex-wrap">
                       <TagIcon size={16} className="text-slate-400" />
-                      <div className="flex items-center gap-2">
-                        {displayTags.length > 0 ? (
+                      <div className="flex items-center gap-2 relative">
+                        {tags.length > 0 ? (
                           <>
-                            <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-xs border border-slate-200 dark:border-slate-600">
-                              {displayTags[0]}
-                            </span>
-                            {displayTags.length > 1 && (
-                              <button className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
-                                +{displayTags.length - 1} more
-                              </button>
+                            {tags.slice(0, 3).map((t: any, index: number) => (
+                              <span key={index} title={t.description || ''} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-xs border border-slate-200 dark:border-slate-600 flex items-center gap-1 group shadow-sm transition-all hover:border-indigo-300 dark:hover:border-indigo-700">
+                                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.color || '#10b981' }}></div>
+                                {t.name || t.text || t.tag}
+                              </span>
+                            ))}
+                            {tags.length > 3 && (
+                              <span className="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                                +{tags.length - 3}
+                              </span>
                             )}
                           </>
                         ) : (
                           <span className="text-xs text-slate-400 italic">No tags</span>
                         )}
-                        <button className="px-2 py-0.5 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-600 rounded text-xs text-slate-500 hover:text-green-600 hover:border-green-400 transition-colors flex items-center gap-1">
-                          <span>+ Add Tags</span>
+
+                        <button
+                          onClick={() => setIsTagsDropdownOpen(true)}
+                          className="ml-1 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-600 rounded text-xs text-slate-500 hover:text-green-600 hover:border-green-400 transition-all flex items-center gap-1 active:scale-95 shadow-sm"
+                        >
+                          <span>+ Manage Tags</span>
                         </button>
+
+                        <TagManagementModal
+                          isOpen={isTagsDropdownOpen}
+                          onClose={() => setIsTagsDropdownOpen(false)}
+                          availableTags={availableTags}
+                          attachedTags={tags}
+                          onAddTag={handleAddTag}
+                          onRemoveTag={handleRemoveTag}
+                          isLoading={tagsLoading}
+                        />
                       </div>
                     </div>
                   </div>

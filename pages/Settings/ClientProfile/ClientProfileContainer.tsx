@@ -8,7 +8,8 @@ import { ChevronLeft } from '../../../components/Icons';
 import { PlaceholderView } from '../components/PlaceholderView';
 import { Users, FileText, CheckCircle } from '../../../components/Icons';
 import { ClientInformation } from './components/ClientInformation';
-import { CustomFieldsPanel } from './components/CustomFieldsPanel';
+import { ClientCustomFields } from './components/ClientCustomFields';
+import { ClientUsers } from './components/ClientUsers';
 import { ClientSettings } from './components/ClientSettings';
 
 export const ClientProfileContainer = () => {
@@ -59,17 +60,9 @@ export const ClientProfileContainer = () => {
             case 'clientinformation':
                 return <ClientInformation client={clientData} />;
             case 'users':
-                return (
-                    <div className="p-8 lg:p-12">
-                        <PlaceholderView
-                            title={t("Client Users")}
-                            description={t("Manage users who have access to {0}.", { name: clientData.clientName })}
-                            icon={Users}
-                        />
-                    </div>
-                );
+                return <ClientUsers clientId={clientId || ''} />;
             case 'customfields':
-                return <CustomFieldsPanel clientId={clientId || ''} />;
+                return <ClientCustomFields clientId={clientId || ''} />;
             case 'screeningrounds':
                 return (
                     <div className="p-8 lg:p-12">
@@ -89,20 +82,6 @@ export const ClientProfileContainer = () => {
 
     return (
         <div className="flex h-full flex-col bg-slate-50 dark:bg-slate-900 overflow-hidden">
-            {/* Header */}
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center gap-4 shrink-0 transition-colors">
-                <button
-                    onClick={() => navigate('/settings/CLIENTS')}
-                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 transition-colors"
-                >
-                    <ChevronLeft size={20} />
-                </button>
-                <div>
-                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">{clientData.clientName}</h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">{clientData.clientType || 'Client'}</p>
-                </div>
-            </div>
-
             <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {renderContent()}
             </div>
