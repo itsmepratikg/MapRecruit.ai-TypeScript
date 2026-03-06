@@ -5,6 +5,7 @@ import { integrationService } from '../../services/integrationService';
 import { toast } from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { ActionButtons } from '../../components/Common/ActionButtons';
 
 interface SecretMetadata {
     isSet: boolean;
@@ -675,32 +676,15 @@ export const WorkspaceConfigurations = () => {
                         </div>
 
                         <div className="flex gap-3">
-                            {!isEditing ? (
-                                <button
-                                    onClick={() => setIsEditing(true)}
-                                    className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
-                                >
-                                    <Save size={16} className="hidden" /> {/* Reusing Icon for generic edit vibe or use Edit2 */}
-                                    {t("Edit Configuration")}
-                                </button>
-                            ) : (
-                                <>
-                                    <button
-                                        onClick={() => { setIsEditing(false); fetchSettings(); }}
-                                        className="px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                    >
-                                        {t("Cancel")}
-                                    </button>
-                                    <button
-                                        onClick={handleSave}
-                                        disabled={loading}
-                                        className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
-                                    >
-                                        {loading ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Save size={16} />}
-                                        {t("Save Changes")}
-                                    </button>
-                                </>
-                            )}
+                            <ActionButtons
+                                isEditing={isEditing}
+                                onEdit={() => setIsEditing(true)}
+                                onSave={handleSave}
+                                onDiscard={() => { setIsEditing(false); fetchSettings(); }}
+                                isSaving={loading}
+                                editLabel={t("Edit Configuration")}
+                                discardLabel={t("Cancel")}
+                            />
                         </div>
                     </div>
 

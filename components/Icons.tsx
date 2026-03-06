@@ -75,6 +75,7 @@ export const GripHorizontal = (props: any) => <Icon {...props} iconClass="fa-sol
 export const Hash = (props: any) => <Icon {...props} iconClass="fa-solid fa-hashtag" />;
 export const Heart = (props: any) => <Icon {...props} iconClass="fa-solid fa-heart" />;
 export const HelpCircle = (props: any) => <Icon {...props} iconClass="fa-solid fa-circle-question" />;
+export const Headset = (props: any) => <Icon {...props} iconClass="fa-solid fa-headset" />;
 export const History = (props: any) => <Icon {...props} iconClass="fa-solid fa-clock-rotate-left" />;
 export const Home = (props: any) => <Icon {...props} iconClass="fa-solid fa-house" />;
 export const Image = (props: any) => <Icon {...props} iconClass="fa-solid fa-image" />;

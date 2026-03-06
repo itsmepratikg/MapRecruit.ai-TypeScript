@@ -14,6 +14,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useUserProfile } from '../../../hooks/useUserProfile';
 import { useRoleHierarchy } from '../../../hooks/useRoleHierarchy';
 import { DEFAULT_PERMISSIONS } from './constants';
+import { ActionButtons } from '../../../components/Common/ActionButtons';
 
 // ... (keep utils)
 
@@ -372,48 +373,34 @@ export const RolesPermissions = () => {
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    {!isEditing ? (
-                        <>
-                            {currentRole && isSeniorTo(currentRole._id || currentRole.id) ? (
-                                <button
-                                    onClick={() => setIsEditing(true)}
-                                    className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-bold shadow-sm flex items-center gap-2"
-                                >
-                                    <Edit2 size={16} /> {t("Edit Role")}
-                                </button>
-                            ) : (
-                                <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-lg text-sm font-medium flex items-center gap-2 cursor-not-allowed">
-                                    <Lock size={16} /> {t("Read Only (Seniority Restricted)")}
-                                </div>
-                            )}
-                        </>
+                    {(!isEditing && currentRole && !isSeniorTo(currentRole._id || currentRole.id)) ? (
+                        <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-lg text-sm font-medium flex items-center gap-2 cursor-not-allowed">
+                            <Lock size={16} /> {t("Read Only (Seniority Restricted)")}
+                        </div>
                     ) : (
-                        <>
-                            <button
-                                onClick={() => {
-                                    if (id === 'new') {
-                                        navigate('/settings/roles');
-                                    } else {
-                                        setIsEditing(false);
-                                        // Reset form to currentRole
-                                        if (currentRole) {
-                                            setRoleForm({
-                                                roleName: currentRole.roleName,
-                                                description: currentRole.description,
-                                                accessibilitySettings: currentRole.accessibilitySettings || {},
-                                                companyID: currentRole.companyID
-                                            });
-                                        }
+                        <ActionButtons
+                            isEditing={isEditing}
+                            onEdit={() => setIsEditing(true)}
+                            onSave={handleSaveRole}
+                            onDiscard={() => {
+                                if (id === 'new') {
+                                    navigate('/settings/roles');
+                                } else {
+                                    setIsEditing(false);
+                                    if (currentRole) {
+                                        setRoleForm({
+                                            roleName: currentRole.roleName,
+                                            description: currentRole.description,
+                                            accessibilitySettings: currentRole.accessibilitySettings || {},
+                                            companyID: currentRole.companyID
+                                        });
                                     }
-                                }}
-                                className="px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 dark:text-slate-300"
-                            >
-                                {t("Cancel")}
-                            </button>
-                            <button onClick={handleSaveRole} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm flex items-center gap-2">
-                                <Save size={16} /> {t("Save Role")}
-                            </button>
-                        </>
+                                }
+                            }}
+                            editLabel={t("Edit Role")}
+                            saveLabel={t("Save Role")}
+                            discardLabel={t("Cancel")}
+                        />
                     )}
                 </div>
             </div>

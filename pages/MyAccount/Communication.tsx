@@ -8,6 +8,7 @@ import { useToast } from '../../components/Toast';
 import { communicationSenderService } from '../../services/api';
 import { useUserContext } from '../../context/UserContext';
 import { RichTextEditor } from '../../components/RichTextEditor';
+import { ActionButtons } from '../../components/Common/ActionButtons';
 
 // --- Types ---
 interface SenderRecord {
@@ -181,31 +182,16 @@ export const Communication = () => {
                         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">Manage your personal sender IDs and messaging defaults.</p>
                     </div>
                     <div className="flex gap-3">
-                        {isEditing ? (
-                            <>
-                                <button
-                                    onClick={handleCancel}
-                                    className="px-5 py-2.5 border-2 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-2xl text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    onClick={handleSave}
-                                    disabled={saving}
-                                    className="px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-sm font-black transition-all shadow-xl shadow-emerald-600/20 flex items-center gap-2 active:scale-95 disabled:opacity-50"
-                                >
-                                    {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-                                    Save Changes
-                                </button>
-                            </>
-                        ) : (
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                className="px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-sm font-black transition-all shadow-xl shadow-emerald-600/20 flex items-center gap-2 active:scale-95"
-                            >
-                                <Edit2 size={16} /> Edit Profile
-                            </button>
-                        )}
+                        <ActionButtons
+                            isEditing={isEditing}
+                            onEdit={() => setIsEditing(true)}
+                            onSave={handleSave}
+                            onDiscard={handleCancel}
+                            isSaving={saving}
+                            editLabel="Edit Profile"
+                            saveLabel="Save Changes"
+                            discardLabel="Cancel"
+                        />
                     </div>
                 </div>
 
@@ -387,8 +373,8 @@ const IDBentoCard = ({ title, icon, colorClass, accentColor, senders, searchQuer
                         key={s._id}
                         onClick={() => isEditing && onSelect(s._id)}
                         className={`flex items-center justify-between p-3 rounded-2xl border-2 transition-all ${selectedID === s._id
-                                ? `bg-${accentColor}-50/30 dark:bg-${accentColor}-900/10 border-${accentColor}-500/30`
-                                : isEditing ? 'bg-white dark:bg-slate-800 border-slate-50 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer' : 'bg-white dark:bg-slate-800 border-transparent'
+                            ? `bg-${accentColor}-50/30 dark:bg-${accentColor}-900/10 border-${accentColor}-500/30`
+                            : isEditing ? 'bg-white dark:bg-slate-800 border-slate-50 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer' : 'bg-white dark:bg-slate-800 border-transparent'
                             }`}
                     >
                         <div className="flex flex-col">
@@ -396,8 +382,8 @@ const IDBentoCard = ({ title, icon, colorClass, accentColor, senders, searchQuer
                             <span className="text-[10px] text-slate-400 font-bold truncate max-w-[180px]">{s.email || s.phoneNumber}</span>
                         </div>
                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${selectedID === s._id
-                                ? `bg-${accentColor}-600 border-${accentColor}-600 text-white shadow-lg shadow-${accentColor}-500/30`
-                                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'
+                            ? `bg-${accentColor}-600 border-${accentColor}-600 text-white shadow-lg shadow-${accentColor}-500/30`
+                            : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'
                             }`}>
                             {selectedID === s._id && <CheckCircle size={10} />}
                         </div>

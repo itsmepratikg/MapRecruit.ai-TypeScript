@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
-import { 
-  Zap, Plus, Edit2, Trash2, CheckCircle, AlertCircle, 
-  GitBranch, MessageSquare, Clock, Filter, X, Save, ArrowRight
+import {
+    Zap, Plus, Edit2, Trash2, CheckCircle, AlertCircle,
+    GitBranch, MessageSquare, Clock, Filter, X, Save, ArrowRight
 } from '../../../components/Icons';
+import { ActionButtons } from '../../../components/Common/ActionButtons';
 import { useToast } from '../../../components/Toast';
 
 // Mock Data
@@ -39,7 +40,7 @@ const LogicFlowAlert = () => (
                     </div>
                 </div>
                 <p className="mt-3 text-xs opacity-90">
-                    Auto-Pilot rules trigger <strong>first</strong>. If conditions are met, the configured reply is sent immediately. 
+                    Auto-Pilot rules trigger <strong>first</strong>. If conditions are met, the configured reply is sent immediately.
                     If no rules match, the system checks if the assigned recruiter is offline (based on My Account settings) to send the generic Auto-Reply.
                 </p>
             </div>
@@ -86,10 +87,10 @@ export const AutoPilot = () => {
         setRules(prev => prev.map(r => r.id === id ? { ...r, active: !r.active } : r));
     };
 
-    const handleSave = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSave = (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
         const keywordsArray = formData.keywords.split(',').map(k => k.trim()).filter(k => k);
-        
+
         if (currentRule) {
             setRules(prev => prev.map(r => r.id === currentRule.id ? { ...r, ...formData, keywords: keywordsArray } : r));
             addToast("Rule updated successfully", "success");
@@ -114,17 +115,17 @@ export const AutoPilot = () => {
                     <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in zoom-in-95 duration-200">
                         <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
                             <h3 className="font-bold text-slate-800 dark:text-slate-100">{currentRule ? 'Edit Rule' : 'Create Auto-Pilot Rule'}</h3>
-                            <button onClick={() => setIsEditing(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={20}/></button>
+                            <button onClick={() => setIsEditing(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={20} /></button>
                         </div>
                         <form onSubmit={handleSave} className="p-6 space-y-4">
                             <div>
                                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Rule Name</label>
-                                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200" placeholder="e.g. Price Query" />
+                                <input required type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200" placeholder="e.g. Price Query" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Trigger</label>
-                                    <select value={formData.trigger} onChange={e => setFormData({...formData, trigger: e.target.value})} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200">
+                                    <select value={formData.trigger} onChange={e => setFormData({ ...formData, trigger: e.target.value })} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200">
                                         <option>Message Contains</option>
                                         <option>Exact Match</option>
                                         <option>First Message</option>
@@ -137,15 +138,21 @@ export const AutoPilot = () => {
                             </div>
                             <div>
                                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Keywords (Comma Separated)</label>
-                                <input required type="text" value={formData.keywords} onChange={e => setFormData({...formData, keywords: e.target.value})} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200" placeholder="pricing, cost, rate" />
+                                <input required type="text" value={formData.keywords} onChange={e => setFormData({ ...formData, keywords: e.target.value })} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200" placeholder="pricing, cost, rate" />
                             </div>
                             <div>
                                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Auto-Response</label>
-                                <textarea required rows={4} value={formData.response} onChange={e => setFormData({...formData, response: e.target.value})} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200 resize-none" placeholder="Enter the message to send automatically..." />
+                                <textarea required rows={4} value={formData.response} onChange={e => setFormData({ ...formData, response: e.target.value })} className="w-full p-2 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200 resize-none" placeholder="Enter the message to send automatically..." />
                             </div>
                             <div className="pt-4 flex justify-end gap-3">
-                                <button type="button" onClick={() => setIsEditing(false)} className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm font-medium">Cancel</button>
-                                <button type="submit" className="px-6 py-2 bg-emerald-600 text-white rounded-lg text-sm font-bold shadow-sm hover:bg-emerald-700 flex items-center gap-2"><Save size={16}/> Save Rule</button>
+                                <ActionButtons
+                                    isEditing={true}
+                                    onEdit={() => { }}
+                                    onSave={() => handleSave()}
+                                    onDiscard={() => setIsEditing(false)}
+                                    saveLabel="Save Rule"
+                                    discardLabel="Cancel"
+                                />
                             </div>
                         </form>
                     </div>
@@ -154,7 +161,7 @@ export const AutoPilot = () => {
 
             <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
                 <div className="max-w-5xl mx-auto">
-                    
+
                     <div className="flex justify-between items-center mb-6">
                         <div>
                             <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
@@ -194,11 +201,11 @@ export const AutoPilot = () => {
                                             <div className="w-9 h-5 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
                                         </label>
                                         <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
-                                        <button onClick={() => handleEdit(rule)} className="text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors"><Edit2 size={16}/></button>
-                                        <button onClick={() => handleDelete(rule.id)} className="text-slate-400 hover:text-red-500 p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors"><Trash2 size={16}/></button>
+                                        <button onClick={() => handleEdit(rule)} className="text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDelete(rule.id)} className="text-slate-400 hover:text-red-500 p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors"><Trash2 size={16} /></button>
                                     </div>
                                 </div>
-                                
+
                                 <div className="ml-14 space-y-3">
                                     <div>
                                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Keywords</span>

@@ -10,7 +10,7 @@ import {
 import { useToast } from '../../../components/Toast';
 import { communicationSenderService } from '../../../services/api';
 import { ConfirmationModal } from '../../../components/Common/ConfirmationModal';
-
+import { ActionButtons } from '../../../components/Common/ActionButtons';
 export const CommunicationForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -153,44 +153,22 @@ export const CommunicationForm = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    {!isEditing ? (
-                        <>
-                            {id !== 'new' && (
-                                <button
-                                    onClick={() => setShowDeleteModal(true)}
-                                    className="p-2.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-xl transition-all border border-transparent hover:border-rose-200"
-                                    title={t("Delete Sender")}
-                                >
-                                    <Trash2 size={20} />
-                                </button>
-                            )}
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-sm transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
-                            >
-                                <Edit2 size={18} />
-                                {t("Edit Details")}
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <button
-                                onClick={handleDiscard}
-                                className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-xl font-black text-sm transition-all hover:bg-slate-50 active:scale-95"
-                            >
-                                <X size={18} />
-                                {t("Discard")}
-                            </button>
-                            <button
-                                onClick={() => handleSave()}
-                                disabled={saving}
-                                className="flex items-center gap-2 px-8 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-sm transition-all shadow-lg shadow-emerald-600/20 disabled:opacity-50 active:scale-95"
-                            >
-                                {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-                                {t("Save Changes")}
-                            </button>
-                        </>
+                    {id !== 'new' && !isEditing && (
+                        <button
+                            onClick={() => setShowDeleteModal(true)}
+                            className="p-2.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-xl transition-all border border-transparent hover:border-rose-200"
+                            title={t("Delete Sender")}
+                        >
+                            <Trash2 size={20} />
+                        </button>
                     )}
+                    <ActionButtons
+                        isEditing={isEditing}
+                        onEdit={() => setIsEditing(true)}
+                        onSave={() => handleSave()}
+                        onDiscard={handleDiscard}
+                        isSaving={saving}
+                    />
                 </div>
             </div>
 
