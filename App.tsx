@@ -34,7 +34,7 @@ import { useRecentItems } from './hooks/useRecentItems';
 import { WebSocketProvider } from './context/WebSocketContext';
 
 import { useSessionTimeout } from './hooks/useSessionTimeout';
-import { campaignService, clientService, authService } from './services/api';
+import { campaignService, clientService, authService, profileService } from './services/api';
 import { useClarity } from './hooks/useClarity';
 import { mapCampaignToUI } from './pages/Campaigns';
 import { ConfirmClientSwitchModal } from './components/ConfirmClientSwitchModal';
@@ -52,6 +52,7 @@ const GlobalSearch = React.lazy(() => import('./components/GlobalSearch').then(m
 const CampaignCreationModal = React.lazy(() => import('./components/Campaign/CampaignCreationModal').then(m => ({ default: m.CampaignCreationModal })));
 const CreateProfileModal = React.lazy(() => import('./components/CreateProfileModal').then(m => ({ default: m.CreateProfileModal })));
 const CreateFolderModal = React.lazy(() => import('./pages/Profiles/FoldersMetrics/CreateFolderModal').then(m => ({ default: m.CreateFolderModal })));
+const CreateTagModal = React.lazy(() => import('./pages/Profiles/Tags/CreateTagModal').then(m => ({ default: m.CreateTagModal })));
 
 // Lazy Load Menus
 const DashboardMenu = React.lazy(() => import('./components/Menu/DashboardMenu').then(m => ({ default: m.DashboardMenu })));
@@ -73,6 +74,16 @@ type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS'
 export const LegacyProfileRedirect = () => {
   const { id, tab } = useParams();
   // Swap from /profile/:id/:tab to /profile/:tab/:id
+  // But ONLY if tab is valid. If tab is missing, default to profile
+  // If id is actually a tab name (like 'resume'), we don't want to loop.
+  const knownTabs = ['profile', 'resume', 'activity', 'chat', 'campaigns', 'folders', 'interviews', 'recommended', 'similar', 'additionaldetails'];
+
+  if (id && knownTabs.includes(id)) {
+    // This looks like it's already in /profile/:tab/:id format but hitting this route?
+    // This route is /profile/:id/:tab. So if id is 'profile', we are at /profile/profile/:tab
+    return <Navigate to={`/profile/${id}/${tab}`} replace />;
+  }
+
   return <Navigate to={`/profile/${tab || 'profile'}/${id}`} replace />;
 };
 
@@ -159,6 +170,7 @@ const AppContent = () => {
   const [isCreateProfileOpen, setIsCreateProfileOpen] = useState(false);
   const [isCreateCampaignOpen, setIsCreateCampaignOpen] = useState(false);
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
+  const [isCreateTagOpen, setIsCreateTagOpen] = useState(false);
   const [isGlobalSearchOpen, setIsGlobalSearchOpen] = useState(false); // Global Search State
 
   // Placeholder Modal State
@@ -373,21 +385,35 @@ const AppContent = () => {
   };
 
   // Sub-navigation handlers
-  const handleNavigateToProfile = () => {
-    setSelectedCandidateId('1');
-    setActiveProfileTab('profile');
+  const handleNavigateToProfile = (id: string = '1', tab: string = 'profile') => {
+    navigate(`/profile/${tab}/${id}`);
+    if (!isDesktop) setIsSidebarOpen(false);
   };
-  const handleBackToProfiles = () => setSelectedCandidateId(null);
+  const handleBackToProfiles = () => navigate('/profiles/searchprofiles/search');
 
-  const handleNavigateToCampaign = (campaign: Campaign, tab: string = 'Intelligence') => {
-    setSelectedCampaign(campaign);
-    setActiveCampaignTab(tab);
-    // When navigating to a specific campaign, we ensure we are in CAMPAIGNS view
-    setActiveView('CAMPAIGNS');
+  const handleNavigateToCampaign = (campaign: Campaign, tab: string = 'intelligence') => {
+    const id = campaign._id?.$oid || campaign._id || (campaign as any).id;
+    if (id) {
+      navigate(`/showcampaign/${tab.toLowerCase()}/${id}`);
+    } else {
+      setActiveView('CAMPAIGNS');
+      setSelectedCampaign(campaign);
+      setActiveCampaignTab(tab);
+    }
     // Mobile sidebar handling
     if (!isDesktop) setIsSidebarOpen(false);
   };
-  const handleBackToCampaigns = () => setSelectedCampaign(null);
+
+  const handleCreateTag = async (tagData: any) => {
+    try {
+      await profileService.createTag(tagData);
+      addToast("Tag created successfully", "success");
+      setIsCreateTagOpen(false);
+    } catch (error) {
+      console.error("Failed to create tag:", error);
+    }
+  };
+  const handleBackToCampaigns = () => navigate('/campaigns');
 
   const handleNavigateToCampaignList = React.useCallback((tab: string) => {
     setTargetCampaignTab(tab);
@@ -437,7 +463,7 @@ const AppContent = () => {
 
   const handleBackToUsers = () => {
     setSelectedAdminUser(null);
-    // We are already in SETTINGS view, Users tab will be shown
+    navigate('/settings/users');
   };
 
   // Logic for mobile collapsed state
@@ -455,7 +481,7 @@ const AppContent = () => {
     if (type === 'NAV') {
       const routeMap: Record<string, string> = {
         'DASHBOARD': '/dashboard',
-        'PROFILES': '/profiles/searchprofiles',
+        'PROFILES': '/profiles/searchprofiles/search',
         'CAMPAIGNS': '/campaigns',
         'METRICS': '/metrics',
         'SETTINGS': '/settings/companyinfo',
@@ -489,9 +515,8 @@ const AppContent = () => {
     } else if (type === 'CAMPAIGN') {
       handleNavigateToCampaign(data);
     } else if (type === 'CANDIDATE') {
-      setActiveView('PROFILES');
       // Default to /profile/profile/:id
-      const candId = data.id || '1';
+      const candId = data.id || data._id?.$oid || data._id || '1';
       navigate(`/profile/profile/${candId}`);
     }
 
@@ -627,17 +652,19 @@ const AppContent = () => {
                           setActiveProfileSubView={setActiveProfileSubView}
                         />
                       } />
-                      {/* Candidate Profile Menu */}
-                      <Route path="/profile/additionaldetails/:id" element={
+                      {/* Candidate Profile Menu - Show for any profile sub-route */}
+                      <Route path="/profile/:tab/:id" element={
                         <CandidateMenu
                           selectedCandidateId={null}
-                          activeProfileTab="additionaldetails"
+                          activeProfileTab="profile"
                           setActiveProfileTab={setActiveProfileTab}
                           onBack={() => navigate('/profiles/searchprofiles/search')}
                           isCollapsed={isCollapsed}
                           setIsSidebarOpen={setIsSidebarOpen}
                         />
                       } />
+
+                      {/* Support legacy /profile/:id in sidebar too */}
                       <Route path="/profile/:id" element={
                         <CandidateMenu
                           selectedCandidateId={null}
@@ -790,6 +817,7 @@ const AppContent = () => {
                     onSwitchClient={handleSwitchClient}
                     setActiveAccountTab={setActiveAccountTab}
                     isCapturingSupport={isCapturingSupport}
+                    setIsCreateTagOpen={setIsCreateTagOpen}
                   />
                 )}
               </div>
@@ -801,17 +829,20 @@ const AppContent = () => {
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     <Route path="/dashboard" element={<Home onNavigate={(tab) => navigate(`/campaigns?tab=${tab}`)} />} />
 
+                    <Route path="/profiles" element={<Navigate to="/profiles/searchprofiles/search" replace />} />
                     <Route path="/profiles/searchprofiles/*" element={
-                      <Profiles onNavigateToProfile={(id) => navigate(`/profile/${id}`)} />
+                      <Profiles onNavigateToProfile={(id) => navigate(`/profile/profile/${id}`)} />
+                    } />
+
+                    <Route path="/profile/:id" element={<LegacyProfileRedirect />} />
+                    <Route path="/profile/profile/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile activeTab="profile" />
+                      </div>
                     } />
                     <Route path="/profile/additionaldetails/:id" element={
                       <div className="h-full flex flex-col animate-in fade-in duration-300">
                         <CandidateProfile activeTab="additionaldetails" />
-                      </div>
-                    } />
-                    <Route path="/profile/:id" element={
-                      <div className="h-full flex flex-col animate-in fade-in duration-300">
-                        <CandidateProfile activeTab="profile" />
                       </div>
                     } />
                     <Route path="/profile/resume/:id" element={
@@ -854,6 +885,12 @@ const AppContent = () => {
                         <CandidateProfile activeTab="similar" />
                       </div>
                     } />
+                    <Route path="/profile/:tab/:id" element={
+                      <div className="h-full flex flex-col animate-in fade-in duration-300">
+                        <CandidateProfile />
+                      </div>
+                    } />
+
                     {/* Handle legacy /profile/:id/:tab (Swaps to new tab/id format) */}
                     <Route path="/profile/:id/:tab" element={<LegacyProfileRedirect />} />
 
@@ -890,12 +927,7 @@ const AppContent = () => {
 
                     {/* EmailDashboard now sub-route of TalentChat */}
 
-                    <Route path="/campaigns/:id/*" element={
-                      // We need to pass the campaign object. ideally fetch by ID. For now using selectedCampaign state which needs to be set.
-                      // In a real app, CampaignDashboard would fetch by ID.
-                      // We will check if selectedCampaign is set, if not try to find it from GLOBAL_CAMPAIGNS or redirect.
-                      <CampaignDashboardWrapper />
-                    } />
+                    <Route path="/campaigns/:id/*" element={<CampaignLegacyRedirect />} />
 
                     <Route path="/showcampaign/*" element={<CampaignExternalRoutes />} />
 
@@ -905,11 +937,19 @@ const AppContent = () => {
                       <SettingsPage onSelectUser={handleUserSelect} />
                     } />
 
+                    {/* Client Profile Direct Routes */}
+                    <Route path="/clientprofile/:tab/:clientId" element={
+                      <SettingsPage onSelectUser={handleUserSelect} />
+                    } />
+                    <Route path="/clientprofile/:clientId" element={<ClientProfileRedirect />} />
+
+                    <Route path="/myaccount" element={<Navigate to="/myaccount/basicdetails" replace />} />
                     <Route path="/myaccount/*" element={<MyAccount activeTab={activeAccountTab} />} />
 
                     <Route path="/activities" element={<Activities />} />
                     <Route path="/history" element={<PreviousHistory onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />} />
                     <Route path="/notifications" element={<Notifications onNavigate={(view, config) => handleGlobalNavigate('NAV', { view, ...config })} />} />
+                    <Route path="/talentchat" element={<Navigate to="/talentchat/conversations" replace />} />
                     <Route path="/talentchat/*" element={<TalentChat />} />
                     <Route path="/talent-chat/*" element={<Navigate to="/talentchat" replace />} />
                     <Route path="/support" element={<SupportPage />} />
@@ -934,6 +974,8 @@ const AppContent = () => {
                 <CampaignCreationModal isOpen={isCreateCampaignOpen} onClose={() => setIsCreateCampaignOpen(false)} />
                 {/* Create Folder Modal */}
                 <CreateFolderModal isOpen={isCreateFolderOpen} onClose={() => setIsCreateFolderOpen(false)} />
+                {/* Create Tag Modal */}
+                <CreateTagModal isOpen={isCreateTagOpen} onClose={() => setIsCreateTagOpen(false)} onSubmit={handleCreateTag} />
               </React.Suspense>
               {/* Placeholder Modal */}
               <PlaceholderModal
@@ -960,6 +1002,17 @@ const AppContent = () => {
       </ImpersonationProvider>
     </QuickTourManager >
   );
+};
+
+// Helper wrapper to handle campaign ID redirect
+const CampaignLegacyRedirect = () => {
+  const { id } = useParams();
+  return <Navigate to={`/showcampaign/intelligence/${id}`} replace />;
+};
+
+const ClientProfileRedirect = () => {
+  const { clientId } = useParams();
+  return <Navigate to={`/settings/clientprofile/clientinformation/${clientId}`} replace />;
 };
 
 // Helper wrapper to handle campaign ID param

@@ -329,9 +329,17 @@ export const CampaignExternalRoutes = () => {
                 <ExternalRouteWrapper component={AdditionalDetails} activeTab="ADDITIONAL_DETAILS" subProps={{ collection: 'campaigns' }} />
             } />
 
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="intelligence" replace />} />
+            {/* --- FALLBACKS --- */}
+            {/* Handle /showcampaign/:id by redirecting to intelligence */}
+            <Route path=":id" element={<NavigateWithId />} />
 
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );
+};
+
+const NavigateWithId = () => {
+    const { id } = useParams();
+    return <Navigate to={`/showcampaign/intelligence/${id}`} replace />;
 };

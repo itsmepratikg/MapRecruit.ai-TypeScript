@@ -102,7 +102,7 @@ const getProfile = async (req, res) => {
         const profile = await Candidate.findOne({
             _id: { $eq: req.params.id },
             ...accessFilter
-        });
+        }).populate('tagID');
 
         if (!profile) {
             return res.status(404).json({ message: 'Profile not found or access denied' });
@@ -341,13 +341,31 @@ const getArticles = async (req, res) => {
 // @access  Private
 const getTags = async (req, res) => {
     try {
-        const companyID = req.user.currentCompanyID || req.user.companyID;
+        const companyIDStr = req.user.currentCompanyID || req.user.companyID;
+        if (!companyIDStr) {
+            return res.status(401).json({ message: 'No company association found' });
+        }
 
-        const tags = await Tag.find({ companyID, active: true });
+        const mongoose = require('mongoose');
+        const companyID = new mongoose.Types.ObjectId(companyIDStr);
 
-        // Get counts for each tag
+        const { type } = req.query;
+        // More lenient query: deleted not true, enabled not false
+        let query = {
+            companyID: companyID,
+            deleted: { $ne: true },
+            enabled: { $ne: false }
+        };
+
+        if (type) {
+            query.type = type;
+        }
+
+        const tags = await Tag.find(query).populate('createdBy', 'firstName lastName').populate('updatedBy', 'firstName lastName');
+
+        // Get counts for each tag using aggregation
         const tagStats = await Candidate.aggregate([
-            { $match: { companyID, tagID: { $exists: true, $ne: [] } } },
+            { $match: { companyID: companyID, tagID: { $exists: true, $ne: [] } } },
             { $unwind: "$tagID" },
             { $group: { _id: "$tagID", count: { $sum: 1 } } }
         ]);
@@ -357,17 +375,21 @@ const getTags = async (req, res) => {
             return acc;
         }, {});
 
-        const formatted = tags.map(t => ({
-            _id: t._id,
-            name: t.name,
-            color: t.color,
-            count: statsMap[t._id.toString()] || 0
-        }));
+        const formatted = tags.map(t => {
+            const tagObj = t.toObject ? t.toObject() : t;
+            const idStr = t._id.toString();
+            return {
+                ...tagObj,
+                count: statsMap[idStr] || 0,
+                profilesCount: statsMap[idStr] || 0, // Alias for backward compatibility
+                name: t.tag || t.name // Alias 'name' for backward frontend compatibility
+            };
+        });
 
         res.status(200).json(formatted);
     } catch (error) {
         console.error('getTags Error:', error);
-        res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
 

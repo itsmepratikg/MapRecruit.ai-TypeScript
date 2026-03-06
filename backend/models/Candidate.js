@@ -47,7 +47,11 @@ const candidateSchema = mongoose.Schema({
         originalFileName: String,
         mrProfileID: { type: String, index: true },
         type: mongoose.Schema.Types.Mixed
-    }
+    },
+    tagID: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tag'
+    }]
 }, {
     timestamps: true,
     strict: false

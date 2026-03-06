@@ -39,15 +39,8 @@ export const CandidateMenu = ({
 
         if (!activeId) return;
 
-        // Use the new simplified routing: /profile/:id or /profile/additionaldetails/:id
-        if (tabId === 'profile') {
-            navigate(`/profile/${activeId}`);
-        } else if (tabId === 'additionaldetails') {
-            navigate(`/profile/additionaldetails/${activeId}`);
-        } else {
-            // Fallback for other tabs that might still use the /profile/:tab/:id pattern
-            navigate(`/profile/${tabId}/${activeId}`);
-        }
+        // Use the standardized routing: /profile/:tab/:id
+        navigate(`/profile/${tabId}/${activeId}`);
 
         if (!isDesktop) setIsSidebarOpen(false);
     };

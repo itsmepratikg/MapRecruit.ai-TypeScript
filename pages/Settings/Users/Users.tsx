@@ -8,6 +8,7 @@ import {
 } from '../../../components/Icons';
 import { useToast } from '../../../components/Toast';
 import { SchemaUserList } from './components/SchemaUserList';
+import { ConfirmationModal } from '../../../components/ConfirmationModal';
 import { userService, clientService } from '../../../services/api';
 import { useUserProfile } from '../../../hooks/useUserProfile';
 import { useRoleHierarchy } from '../../../hooks/useRoleHierarchy';
@@ -41,6 +42,8 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
         roleID: '',
         clients: [] as string[]
     });
+
+    const [showSaveConfirm, setShowSaveConfirm] = useState(false);
 
     useEffect(() => {
         loadUsers();
@@ -107,11 +110,16 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
         }
     };
 
-    const handleSaveUser = async () => {
+    const handleSaveUser = () => {
         if (!formData.name || !formData.email || !formData.roleID) {
             addToast(t("Name, Email, and Role are required"), 'error');
             return;
         }
+        setShowSaveConfirm(true);
+    };
+
+    const executeSaveUser = async () => {
+        setShowSaveConfirm(false);
 
         // Split Name into First and Last
         const [firstName, ...lastNames] = formData.name.trim().split(/\s+/);
@@ -460,6 +468,15 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
 
                     </div >
                 </div >
+
+                <ConfirmationModal
+                    isOpen={showSaveConfirm}
+                    onClose={() => setShowSaveConfirm(false)}
+                    onConfirm={executeSaveUser}
+                    title={selectedUser ? t("Update User") : t("Create User")}
+                    message={selectedUser ? t("Are you sure you want to update this user's information?") : t("Are you sure you want to create this new user?")}
+                    confirmText={selectedUser ? t("Update Now") : t("Create Now")}
+                />
             </div >
         );
     }

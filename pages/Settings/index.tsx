@@ -21,6 +21,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { CustomFieldsPage } from './CustomFields/CustomFields';
 import { CommunicationSettings } from './Communication/CommunicationSettings';
 import { CommunicationForm } from './Communication/CommunicationForm';
+import { TagsSettings } from './Tags';
 import { NotFound } from '../../components/Common/NotFound';
 
 interface SettingsPageProps {
@@ -57,7 +58,8 @@ export const SettingsPage = ({ onSelectUser, onSelectClient }: SettingsPageProps
         if (id === 'WORKSPACE_CONFIG') return 'workspaceconfig';
         if (id === 'AUTHENTICATION') return 'authentication';
         if (id === 'CUSTOM_FIELD') return 'customfields';
-        if (id === 'COMMUNICATION') return 'communication';
+        if (id === 'PROFILE_TAGS') return 'tags/profile';
+        if (id === 'APP_TAGS') return 'tags/application';
 
         // Fallback helper to convert SCREAMING_SNAKE to PascalCaseish
         return id.toLowerCase().replace(/_/g, '');
@@ -102,13 +104,14 @@ export const SettingsPage = ({ onSelectUser, onSelectClient }: SettingsPageProps
 
             <Route path="customfield/:type" element={<CustomFieldsPage />} />
             <Route path="customfield" element={<Navigate to="campaign" replace />} />
+            <Route path="tags/*" element={<TagsSettings />} />
             <Route path="users/userprofile/:section/:id" element={<UserProfileContainer />} />
             <Route path="users/userprofile/:section" element={<UserProfileContainer />} />
             <Route path="clientprofile/:tab/:clientId" element={<ClientProfileContainer />} />
             {/* Add routes for other settings items */}
             {Object.keys(SETTINGS_CONTENT).map(id => {
                 // Only render placeholder for items not explicitly routed above
-                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY', 'THEMES', 'WORKSPACE_CONFIG', 'AUTHENTICATION', 'CUSTOM_FIELD', 'COMMUNICATION'].includes(id)) {
+                if (!['COMPANY_INFO', 'ROLES', 'USERS', 'REACHOUT_LAYOUTS', 'CLIENTS', 'FRANCHISE', 'ROLE_HIERARCHY', 'THEMES', 'WORKSPACE_CONFIG', 'AUTHENTICATION', 'CUSTOM_FIELD', 'COMMUNICATION', 'PROFILE_TAGS', 'APP_TAGS'].includes(id)) {
                     return <Route key={id} path={getPath(id)} element={<SettingsContentWrapper id={id} />} />;
                 }
                 return null;

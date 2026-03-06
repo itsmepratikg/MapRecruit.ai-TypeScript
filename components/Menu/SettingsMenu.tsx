@@ -37,8 +37,8 @@ export const SettingsMenu = ({
 
                 let targetCompany = null;
                 if (Array.isArray(companyData)) {
-                    targetCompany = activeCompanyId 
-                        ? companyData.find(c => String(c._id) === String(activeCompanyId)) 
+                    targetCompany = activeCompanyId
+                        ? companyData.find(c => String(c._id) === String(activeCompanyId))
                         : companyData[0];
                 } else {
                     targetCompany = companyData;
@@ -67,6 +67,8 @@ export const SettingsMenu = ({
             'CLIENTS': 'clients',
             'REACHOUT_LAYOUTS': 'reachoutlayouts',
             'THEMES': 'themes',
+            'PROFILE_TAGS': 'tags/profile',
+            'APP_TAGS': 'tags/application',
         };
         if (map[id]) return map[id];
         return id.toLowerCase().replace(/_/g, '');

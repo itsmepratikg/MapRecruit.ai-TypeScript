@@ -15,6 +15,7 @@ import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { HoverMenu } from '../Campaign/HoverMenu';
 import { SmartPinCard } from './SmartPinCard';
+import { useUserContext } from '../../context/UserContext';
 
 // --- Client Menu ---
 export const ClientMenuContent = ({ activeClient, activeClientId, clients, onSwitchClient, onClose }: { activeClient: string, activeClientId?: string, clients: any[], onSwitchClient: (client: string) => void, onClose: () => void }) => {
@@ -271,6 +272,7 @@ export const CreateMenuContent = ({
     onCreateProfile: () => void,
     onCreateCampaign: () => void,
     onCreateFolder: () => void,
+    onCreateTag: () => void,
     onOpenPlaceholder: (title: string, msg: string) => void,
     closeMenu?: () => void
 }) => {
@@ -295,7 +297,7 @@ export const CreateMenuContent = ({
             <button onClick={() => handleClick(onCreateFolder)} data-tour="create-menu-folder" className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
                 <FolderPlus size={16} className="text-orange-600 dark:text-orange-400" /> <span>{t("Folder")}</span>
             </button>
-            <button onClick={() => handleClick(() => onOpenPlaceholder('Create Tag', 'Global tag management and AI-suggested tagging features will be available in the next release.'))} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
+            <button onClick={() => handleClick(onCreateTag)} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-3 transition-colors">
                 <Tag size={16} className="text-purple-600 dark:text-purple-400" /> <span>{t("Tag")}</span>
             </button>
         </div>
@@ -761,6 +763,42 @@ export const SettingsMenuContent = ({
     onClose: () => void
 }) => {
     const { t } = useTranslation();
+    const [isFranchise, setIsFranchise] = useState(false);
+    const { userProfile } = useUserContext();
+
+    useEffect(() => {
+        const checkFranchiseStatus = async () => {
+            try {
+                // Fetch company data to check for franchise flag
+                const response = await api.get('/company'); // Typical endpoint for company info
+                const companyData = response.data;
+                if (!companyData) return;
+
+                const activeCompanyId = userProfile?.currentCompanyID || userProfile?.companyID || userProfile?.companyId;
+
+                let targetCompany = null;
+                if (Array.isArray(companyData)) {
+                    targetCompany = activeCompanyId
+                        ? companyData.find((c: any) => String(c._id) === String(activeCompanyId))
+                        : companyData[0];
+                } else {
+                    targetCompany = companyData;
+                }
+
+                if (targetCompany) {
+                    const hasFranchiseFlag = targetCompany.franchise === true || targetCompany.productSettings?.franchise === true;
+                    // Verify if this is the active company before setting flag
+                    if (!activeCompanyId || String(targetCompany._id) === String(activeCompanyId)) {
+                        setIsFranchise(hasFranchiseFlag);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch company status for flyout franchise check", error);
+            }
+        };
+        checkFranchiseStatus();
+    }, [userProfile]);
+
     // Helper to map IDs to PascalCase paths (same as in Settings page)
     const getPath = (id: string) => {
         const map: Record<string, string> = {
@@ -805,25 +843,27 @@ export const SettingsMenuContent = ({
 
                             {isOpen && (
                                 <div className="mt-1 space-y-0.5 animate-in slide-in-from-top-1 duration-200">
-                                    {category.items.map(item => {
-                                        const path = getPath(item.id);
-                                        const tourId =
-                                            item.id === 'CLIENTS' ? 'nav-settings-clients' :
-                                                item.id === 'USERS' ? 'nav-settings-users' :
-                                                    item.id === 'COMPANY_INFO' ? 'nav-settings-company' : undefined;
+                                    {(category.id === 'ORGANIZATION' && !isFranchise
+                                        ? category.items.filter(item => item.id !== 'FRANCHISE')
+                                        : category.items).map(item => {
+                                            const path = getPath(item.id);
+                                            const tourId =
+                                                item.id === 'CLIENTS' ? 'nav-settings-clients' :
+                                                    item.id === 'USERS' ? 'nav-settings-users' :
+                                                        item.id === 'COMPANY_INFO' ? 'nav-settings-company' : undefined;
 
-                                        return (
-                                            <button
-                                                key={item.id}
-                                                onClick={(e) => { e.stopPropagation(); onNavigate(path); onClose(); }}
-                                                data-tour={tourId}
-                                                className={`w-full text-left pl-6 pr-3 py-2 text-xs flex items-center gap-2 transition-colors rounded-md ${activeTab === path ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
-                                            >
-                                                <item.icon size={14} className={activeTab === path ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"} />
-                                                {t(item.label)}
-                                            </button>
-                                        );
-                                    })}
+                                            return (
+                                                <button
+                                                    key={item.id}
+                                                    onClick={(e) => { e.stopPropagation(); onNavigate(path); onClose(); }}
+                                                    data-tour={tourId}
+                                                    className={`w-full text-left pl-6 pr-3 py-2 text-xs flex items-center gap-2 transition-colors rounded-md ${activeTab === path ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
+                                                >
+                                                    <item.icon size={14} className={activeTab === path ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"} />
+                                                    {t(item.label)}
+                                                </button>
+                                            );
+                                        })}
                                 </div>
                             )}
                         </div>

@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { ClientData } from '../../../../types';
 import { useTranslation } from 'react-i18next';
-import { Save, Building2, Globe, Mail, Phone, MapPin, Clock, Calendar } from '../../../../components/Icons';
+import { Save, Building2, Globe, Mail, Phone, MapPin, Clock, Calendar, Edit3 } from '../../../../components/Icons';
 import { useToast } from '../../../../components/Toast';
+import { ConfirmationModal } from '../../../../components/ConfirmationModal';
 
 interface ClientInformationProps {
     client: ClientData;
@@ -17,8 +18,15 @@ export const ClientInformation = ({ client }: ClientInformationProps) => {
     // Manage form state
     const [formData, setFormData] = useState<any>(client);
 
+    const [showSaveConfirm, setShowSaveConfirm] = useState(false);
+
     const handleSave = () => {
+        setShowSaveConfirm(true);
+    };
+
+    const executeSave = async () => {
         setEditMode(false);
+        setShowSaveConfirm(false);
         addToast(t("Client information saved successfully"), 'success');
         // Trigger API update here
     };
@@ -58,19 +66,25 @@ export const ClientInformation = ({ client }: ClientInformationProps) => {
 
     return (
         <div className="p-8 lg:p-12 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
-            <div className="flex justify-between items-center mb-8">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{t("Client Information")}</h1>
-                    <p className="text-slate-500 dark:text-slate-400">{t("Manage basic details and configuration.")}</p>
-                </div>
+            <div className="flex justify-end items-center mb-8">
                 <button
                     onClick={() => editMode ? handleSave() : setEditMode(true)}
                     className={`px-6 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2 ${editMode ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
                 >
-                    {editMode ? <Save size={16} /> : null}
+                    {editMode ? <Save size={16} /> : <Edit3 size={16} />}
                     {editMode ? t("Save Changes") : t("Edit Details")}
                 </button>
             </div>
+
+            <ConfirmationModal
+                isOpen={showSaveConfirm}
+                onClose={() => setShowSaveConfirm(false)}
+                onConfirm={executeSave}
+                title={t("Update Client Information")}
+                message={t("Are you sure you want to save the changes to the client profile?")}
+                confirmText={t("Save Changes")}
+                cancelText={t("Revert")}
+            />
 
             <Section title={t("Basic Details")}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

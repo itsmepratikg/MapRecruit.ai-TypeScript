@@ -11,7 +11,7 @@ import { useToast } from '../../../../components/Toast';
 import { useTranslation } from 'react-i18next';
 import { useImpersonation } from '../../../../context/ImpersonationContext';
 
-export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
+export const SchemaUserList = ({ searchQuery, onSelectUser, data: externalData, loading: externalLoading }: any) => {
     const { t } = useTranslation();
     const { addToast } = useToast();
     const { startImpersonation } = useImpersonation();
@@ -21,8 +21,10 @@ export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
     const [impersonateModal, setImpersonateModal] = useState<{ isOpen: boolean, user: any | null }>({ isOpen: false, user: null });
 
     useEffect(() => {
-        loadUsers();
-    }, []);
+        if (!externalData) {
+            loadUsers();
+        }
+    }, [externalData]);
 
     const loadUsers = async () => {
         try {
@@ -38,8 +40,9 @@ export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
         }
     };
 
-    const filteredUsers = users.filter(u => {
-        const name = u.name || u.email || '';
+    const allUsers = externalData || users;
+    const filteredUsers = allUsers.filter((u: any) => {
+        const name = u.name || `${u.firstName || ''} ${u.lastName || ''}` || u.email || '';
         return name.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
@@ -48,14 +51,27 @@ export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
             header: t('Name'),
             accessor: (item: any) => {
                 const initials = ((item.firstName?.[0] || '') + (item.lastName?.[0] || '')).toUpperCase() || '?';
+                const avatar = item.avatar || item.profilePicture;
+
                 return (
                     <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-indigo-500 shadow-sm`}>
-                            {initials}
-                        </div>
+                        {avatar ? (
+                            <img
+                                src={avatar.startsWith('data:') ? avatar : `https://api.maprecruit.ai/avatars/${avatar}`}
+                                alt={item.name}
+                                className="w-10 h-10 rounded-full object-cover border-2 border-slate-100 dark:border-slate-800 shadow-sm"
+                                onError={(e) => {
+                                    (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name || initials)}&background=random`;
+                                }}
+                            />
+                        ) : (
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-black text-white bg-gradient-to-br from-indigo-500 to-purple-600 shadow-md border-2 border-white dark:border-slate-800`}>
+                                {initials}
+                            </div>
+                        )}
                         <div className="flex flex-col">
-                            <span className="font-bold text-slate-800 dark:text-slate-200">{item.name || `${item.firstName || ''} ${item.lastName || ''}`.trim() || 'N/A'}</span>
-                            <span className="text-[10px] text-slate-400 capitalize">{item.jobTitle || t('No Title')}</span>
+                            <span className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-tight">{item.name || `${item.firstName} ${item.lastName}`}</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{item.email}</span>
                         </div>
                     </div>
                 );
@@ -101,7 +117,14 @@ export const SchemaUserList = ({ searchQuery, onSelectUser }: any) => {
         }
     ];
 
-    if (loading) return <div className="p-8 text-center text-slate-500">{t("Loading Users...")}</div>;
+    const isTableLoading = externalLoading !== undefined ? externalLoading : loading;
+
+    if (isTableLoading) return (
+        <div className="p-12 flex flex-col items-center justify-center gap-4">
+            <div className="w-10 h-10 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin"></div>
+            <p className="text-slate-500 font-medium animate-pulse">{t("Scanning users...")}</p>
+        </div>
+    );
 
     // WAIT, I need to add the import first. I'll do that in a separate replacement or use a full replace.
     // Since I can't add imports easily with this tool without targeting top, I'll rely on a second Replace call for imports.

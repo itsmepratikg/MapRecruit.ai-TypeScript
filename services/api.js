@@ -131,8 +131,8 @@ export const authService = {
 };
 
 export const userService = {
-    getAll: async () => {
-        const response = await api.get('/users');
+    getAll: async (params) => {
+        const response = await api.get('/users', { params });
         return response.data;
     },
     getById: async (id) => {
@@ -252,8 +252,12 @@ export const profileService = {
         const response = await api.get('/profiles/articles');
         return response.data;
     },
-    getTags: async () => {
-        const response = await api.get('/profiles/tags');
+    getTags: async (params) => {
+        const response = await api.get('/profiles/tags', { params });
+        return response.data;
+    },
+    createTag: async (tagData) => {
+        const response = await api.post('/profiles/tags', tagData);
         return response.data;
     },
     getStats: async () => {
@@ -405,8 +409,8 @@ export const integrationService = {
 };
 
 export const customFieldService = {
-    getGroupedByCollection: async (collection) => {
-        const response = await api.get(`/custom-fields/grouped/${collection}`);
+    getGroupedByCollection: async (collection, params) => {
+        const response = await api.get(`/custom-fields/grouped/${collection}`, { params });
         return response.data;
     },
     updateCustomDataBatch: async (collection, id, customData) => {

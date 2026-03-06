@@ -12,6 +12,7 @@ import {
 
 interface CustomFieldCollectionTabProps {
     collection: 'resumes' | 'campaigns' | 'interviews';
+    clientId?: string;
 }
 
 const FILE_FORMATS = [
@@ -24,7 +25,7 @@ const FILE_FORMATS = [
     { label: 'XLSX', value: '.xlsx' }
 ];
 
-export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> = ({ collection }) => {
+export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> = ({ collection, clientId }) => {
     const [loading, setLoading] = useState(true);
     const [sections, setSections] = useState<any[]>([]);
     const [expandedSections, setExpandedSections] = useState<string[]>([]);
@@ -41,12 +42,12 @@ export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> =
 
     useEffect(() => {
         fetchGroupedFields();
-    }, [collection]);
+    }, [collection, clientId]);
 
     const fetchGroupedFields = async () => {
         setLoading(true);
         try {
-            const data = await customFieldService.getGroupedByCollection(collection);
+            const data = await customFieldService.getGroupedByCollection(collection, clientId ? { clientID: clientId } : {});
             setSections(data);
             // Default to all collapsed as per user request
             setExpandedSections([]);

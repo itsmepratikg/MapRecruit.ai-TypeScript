@@ -11,6 +11,7 @@ interface SidebarFooterProps {
     setIsCreateProfileOpen: (v: boolean) => void;
     setIsCreateCampaignOpen: (v: boolean) => void;
     setIsCreateFolderOpen: (v: boolean) => void;
+    setIsCreateTagOpen: (v: boolean) => void;
     setIsGlobalSearchOpen: (v: boolean) => void; // New Prop
     onOpenPlaceholder: (title: string, msg: string) => void;
     onNavigate: (view: any) => void;
@@ -27,6 +28,7 @@ export const SidebarFooter = ({
     setIsCreateProfileOpen,
     setIsCreateCampaignOpen,
     setIsCreateFolderOpen,
+    setIsCreateTagOpen,
     setIsGlobalSearchOpen,
     onOpenPlaceholder,
     onNavigate,
@@ -207,6 +209,7 @@ export const SidebarFooter = ({
                                 onCreateProfile={() => { setIsCreateProfileOpen(true); setActivePopover(null); }}
                                 onCreateCampaign={() => { setIsCreateCampaignOpen(true); setActivePopover(null); }}
                                 onCreateFolder={() => { setIsCreateFolderOpen(true); setActivePopover(null); }}
+                                onCreateTag={() => { setIsCreateTagOpen(true); setActivePopover(null); }}
                                 onOpenPlaceholder={(t, m) => { onOpenPlaceholder(t, m); setActivePopover(null); }}
                                 closeMenu={() => setActivePopover(null)}
                             />
@@ -345,6 +348,7 @@ export const SidebarFooter = ({
                                 onCreateProfile={() => { setIsCreateProfileOpen(true); setMobileMenuOpen(null); }}
                                 onCreateCampaign={() => { setIsCreateCampaignOpen(true); setMobileMenuOpen(null); }}
                                 onCreateFolder={() => { setIsCreateFolderOpen(true); setMobileMenuOpen(null); }}
+                                onCreateTag={() => { setIsCreateTagOpen(true); setMobileMenuOpen(null); }}
                                 onOpenPlaceholder={(t, m) => { onOpenPlaceholder(t, m); setMobileMenuOpen(null); }}
                                 closeMenu={() => setMobileMenuOpen(null)}
                             />

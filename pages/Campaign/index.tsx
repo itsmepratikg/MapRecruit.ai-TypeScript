@@ -368,29 +368,29 @@ export const CampaignDashboard = ({ campaign, onBack }: { campaign: Campaign, on
          {/* Pass userProfile to header if needed, but CoPresenceAvatars uses context */}
          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto custom-scrollbar">
             <Routes>
-               <Route path="/" element={<Navigate to="Intelligence" replace />} />
-               <Route path="Intelligence" element={<Intelligence />} />
-               <Route path="SourceAI/*" element={
+               <Route path="/" element={<Navigate to="intelligence" replace />} />
+               <Route path="intelligence" element={<Intelligence />} />
+               <Route path="sourceai/*" element={
                   <Routes>
-                     <Route path="/" element={<Navigate to="Attach" replace />} />
-                     <Route path="Attach" element={<SourceAIWrapper activeView="ATTACH" campaign={campaign} />} />
-                     <Route path="Profiles" element={<SourceAIWrapper activeView="PROFILES" campaign={campaign} />} />
-                     <Route path="Integrations" element={<SourceAIWrapper activeView="INTEGRATIONS" campaign={campaign} />} />
-                     <Route path="JD" element={<SourceAIWrapper activeView="JD" campaign={campaign} />} />
+                     <Route path="/" element={<Navigate to="attach" replace />} />
+                     <Route path="attach" element={<SourceAIWrapper activeView="ATTACH" campaign={campaign} />} />
+                     <Route path="profiles" element={<SourceAIWrapper activeView="PROFILES" campaign={campaign} />} />
+                     <Route path="integrations" element={<SourceAIWrapper activeView="INTEGRATIONS" campaign={campaign} />} />
+                     <Route path="jd" element={<SourceAIWrapper activeView="JD" campaign={campaign} />} />
                   </Routes>
                } />
-               <Route path="MatchAI" element={<MatchAI />} />
-               <Route path="EngageAI/*" element={
+               <Route path="matchai" element={<MatchAI />} />
+               <Route path="engageai/*" element={
                   <Routes>
-                     <Route path="/" element={<Navigate to="Builder" replace />} />
-                     <Route path="Builder" element={<EngageAIWrapper activeView="BUILDER" />} />
-                     <Route path="Room" element={<EngageAIWrapper activeView="ROOM" />} />
-                     <Route path="Tracking" element={<EngageAIWrapper activeView="TRACKING" />} />
+                     <Route path="/" element={<Navigate to="builder" replace />} />
+                     <Route path="builder" element={<EngageAIWrapper activeView="BUILDER" />} />
+                     <Route path="room" element={<EngageAIWrapper activeView="ROOM" />} />
+                     <Route path="tracking" element={<EngageAIWrapper activeView="TRACKING" />} />
                   </Routes>
                } />
-               <Route path="Recommendations" element={<Recommendations activeView="PROFILES" />} />
-               <Route path="Settings" element={<CampaignSettings campaign={campaign} />} />
-               <Route path="*" element={<Navigate to="Intelligence" replace />} />
+               <Route path="recommendations" element={<Recommendations activeView="PROFILES" />} />
+               <Route path="settings" element={<CampaignSettings campaign={campaign} />} />
+               <Route path="*" element={<Navigate to="intelligence" replace />} />
             </Routes>
          </div>
       </div>
