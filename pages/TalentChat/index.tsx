@@ -18,6 +18,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { NotFound } from '../../components/Common/NotFound';
 
 // Mock Business Settings (Usually fetched from MyAccount)
 const MOCK_SETTINGS = {
@@ -82,7 +83,7 @@ const ConversationsView = () => {
                 });
             } catch (err: any) {
                 if (err.response?.status === 403) {
-                     console.error('[TalentChat] Insufficient Google API Scopes. Emails will not sync until permissions are granted in the Emails page.');
+                    console.error('[TalentChat] Insufficient Google API Scopes. Emails will not sync until permissions are granted in the Emails page.');
                 }
                 console.warn('Failed to fetch workspace emails for Talent Chat sidebar:', err);
             } finally {
@@ -218,7 +219,7 @@ export const TalentChat = () => {
             <Route path={getPath('KEYWORDS')} element={<KeywordsWrapper />} />
             <Route path={getPath('SCHEDULES')} element={<PlaceholderPage title="Chat Schedules" description="Manage availability schedules for automated chat responses." icon={Calendar} />} />
             <Route path={getPath('ANALYTICS')} element={<ChatAnalytics />} />
-            <Route path="*" element={<Navigate to={getPath('CONVERSATIONS')} replace />} />
+            <Route path="*" element={<NotFound title="Chat Page Not Found" description="The chat section you are looking for does not exist." />} />
         </Routes>
     );
 };

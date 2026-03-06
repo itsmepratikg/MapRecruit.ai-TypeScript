@@ -59,6 +59,7 @@ export const SETTINGS_CATEGORIES = [
     label: 'Organization',
     items: [
       { id: 'COMPANY_INFO', label: 'Company Info', icon: Building2 },
+      { id: 'FRANCHISE', label: 'Franchise', icon: GitBranch },
       { id: 'ROLES', label: 'Roles', icon: Shield },
       { id: 'ROLE_HIERARCHY', label: 'Role Hierarchy', icon: GitBranch },
       { id: 'USERS', label: 'Users', icon: Users },

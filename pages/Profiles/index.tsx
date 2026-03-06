@@ -12,6 +12,7 @@ import { NewLocalProfiles } from './NewLocalProfiles';
 import { InterviewStatus } from './InterviewStatus';
 import { ViewMode } from '../../types';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { NotFound } from '../../components/Common/NotFound';
 
 export const Profiles = ({ onNavigateToProfile }: { onNavigateToProfile: () => void }) => {
 
@@ -47,7 +48,7 @@ export const Profiles = ({ onNavigateToProfile }: { onNavigateToProfile: () => v
         <Route path={getPath('FAVORITES')} element={<FavoriteProfiles />} />
         <Route path={getPath('DUPLICATES')} element={<DuplicateProfiles />} />
         <Route path={getPath('LOCAL')} element={<LocalProfiles />} />
-        <Route path="*" element={<Navigate to={getPath('SEARCH')} replace />} />
+        <Route path="*" element={<NotFound title="Profiles Page Not Found" description="The profiles section you are looking for does not exist." />} />
       </Routes>
     </div>
   );

@@ -21,6 +21,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { CustomFieldsPage } from './CustomFields/CustomFields';
 import { CommunicationSettings } from './Communication/CommunicationSettings';
 import { CommunicationForm } from './Communication/CommunicationForm';
+import { NotFound } from '../../components/Common/NotFound';
 
 interface SettingsPageProps {
     activeTab?: string; // Optional for backward compatibility if needed, but we will ignore it
@@ -112,7 +113,7 @@ export const SettingsPage = ({ onSelectUser, onSelectClient }: SettingsPageProps
                 }
                 return null;
             })}
-            <Route path="*" element={<Navigate to={`/settings/${getPath('COMPANY_INFO')}`} replace />} />
+            <Route path="*" element={<NotFound title="Settings Page Not Found" description="The settings section you are looking for does not exist." />} />
         </Routes>
     );
 };

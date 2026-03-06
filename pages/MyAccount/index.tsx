@@ -16,6 +16,7 @@ import { LoginSessions } from './LoginSessions';
 import { PasskeySettings } from './PasskeySettings';
 import { GoogleChatLinking } from './GoogleChatLinking';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { NotFound } from '../../components/Common/NotFound';
 
 interface MyAccountProps {
   activeTab: string; // Legacy, ignored in favor of routes
@@ -56,7 +57,7 @@ export const MyAccount = ({ userOverride }: MyAccountProps) => {
           <Route path="security" element={<PasskeySettings />} />
           <Route path="loginsessions" element={<LoginSessions />} />
           {/* Prevent recursive loops by redirecting to the base absolute path if no match */}
-          <Route path="*" element={<Navigate to="/myaccount/basicdetails" replace />} />
+          <Route path="*" element={<NotFound title="Account Page Not Found" description="The account section you are looking for does not exist." />} />
         </Routes>
       </div>
     </div>

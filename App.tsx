@@ -65,6 +65,7 @@ const TalentChatMenu = React.lazy(() => import('./components/Menu/TalentChatMenu
 const ClientProfileMenu = React.lazy(() => import('./components/Menu/ClientProfileMenu').then(m => ({ default: m.ClientProfileMenu })));
 
 import { PagePreloader } from './components/Common/PagePreloader';
+import { NotFound } from './components/Common/NotFound';
 
 type ViewState = 'DASHBOARD' | 'PROFILES' | 'CAMPAIGNS' | 'METRICS' | 'SETTINGS' | 'MY_ACCOUNT' | 'ACTIVITIES' | 'HISTORY' | 'NOTIFICATIONS' | 'TALENT_CHAT';
 
@@ -915,6 +916,12 @@ const AppContent = () => {
                     <Route path="/auth/google/callback" element={<GoogleCallback />} />
                     <Route path="/auth/microsoft/callback" element={<MicrosoftCallback />} />
                     <Route path="/impersonate/:payload/*" element={<ImpersonateWrapper />} />
+                    <Route path="*" element={
+                      <NotFound
+                        title="Page Not Found"
+                        description="The URL you entered does not exist or has been moved."
+                      />
+                    } />
                   </Routes>
                 </React.Suspense>
               </div>

@@ -6,6 +6,7 @@ import { useToast } from '../../../components/Toast';
 import { EmptyView } from '../../../components/Common';
 import { ClipboardList, Save, Shield, Edit2, X, Undo2, AlertTriangle } from '../../../components/Icons';
 import { ConfirmationModal } from '../../../components/ConfirmationModal';
+import { ActionButtons } from '../../../components/Common/ActionButtons';
 
 interface AdditionalDetailsProps {
     collection?: 'resumes' | 'campaigns' | 'interviews';
@@ -187,39 +188,13 @@ export const AdditionalDetails: React.FC<AdditionalDetailsProps> = ({
 
                 {!propsReadOnly && (
                     <div className="flex items-center gap-3">
-                        {!isEditing ? (
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                className="group flex items-center gap-2 px-6 py-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition-all active:scale-95 shadow-sm"
-                            >
-                                <Edit2 size={16} className="text-slate-400 group-hover:text-emerald-500 transition-colors" />
-                                <span className="text-sm">Edit Details</span>
-                            </button>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={handleCancelInitiate}
-                                    className="group flex items-center gap-2 px-5 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-all active:scale-95 text-sm"
-                                >
-                                    <Undo2 size={16} />
-                                    <span>Discard</span>
-                                </button>
-                                <button
-                                    onClick={handleSaveInitiate}
-                                    disabled={saving}
-                                    className="group flex items-center gap-2 px-8 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-200/50 dark:shadow-none transition-all active:scale-95 disabled:opacity-50 text-sm"
-                                >
-                                    {saving ? (
-                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                    ) : (
-                                        <>
-                                            <Save size={18} />
-                                            <span>Save Changes</span>
-                                        </>
-                                    )}
-                                </button>
-                            </>
-                        )}
+                        <ActionButtons
+                            isEditing={isEditing}
+                            onEdit={() => setIsEditing(true)}
+                            onSave={handleSaveInitiate}
+                            onDiscard={handleCancelInitiate}
+                            isSaving={saving}
+                        />
                     </div>
                 )}
             </div>

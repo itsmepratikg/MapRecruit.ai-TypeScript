@@ -4,6 +4,7 @@ import {
     MessageSquare, Plus, Edit2, Trash2, Search, X, Save, Command, Slash, CheckCircle
 } from '../../../components/Icons';
 import { useToast } from '../../../components/Toast';
+import { ActionButtons } from '../../../components/Common/ActionButtons';
 
 // Mock Data
 const MOCK_RESPONSES = [
@@ -87,8 +88,8 @@ export const CannedResponses = () => {
         }
     };
 
-    const handleSave = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSave = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
         const cleanCode = formData.shortcode.replace(/^\//, '').trim();
 
         if (!cleanCode) {
@@ -165,8 +166,14 @@ export const CannedResponses = () => {
                                 <textarea required rows={6} value={formData.content} onChange={e => setFormData({ ...formData, content: e.target.value })} className="w-full p-3 border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm dark:text-slate-200 resize-none custom-scrollbar" placeholder="Type the full message here..." />
                             </div>
                             <div className="pt-2 flex justify-end gap-3">
-                                <button type="button" onClick={() => setIsEditing(false)} className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm font-medium">Cancel</button>
-                                <button type="submit" className="px-6 py-2 bg-emerald-600 text-white rounded-lg text-sm font-bold shadow-sm hover:bg-emerald-700 flex items-center gap-2"><Save size={16} /> Save Response</button>
+                                <ActionButtons
+                                    isEditing={true}
+                                    onEdit={() => { }}
+                                    onSave={() => handleSave()}
+                                    onDiscard={() => setIsEditing(false)}
+                                    saveLabel="Save Response"
+                                    discardLabel="Cancel"
+                                />
                             </div>
                         </form>
                     </div>

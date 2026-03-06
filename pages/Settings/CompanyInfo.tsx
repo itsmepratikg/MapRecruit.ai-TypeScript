@@ -8,7 +8,9 @@ import {
 } from '../../components/Icons';
 import { useToast } from '../../components/Toast';
 import { companyService } from '../../services/api';
+import { ActionButtons } from '../../components/Common/ActionButtons';
 import { SafeKeeper, useSafeKeeper } from '../../components/Security/SafeKeeper';
+import { useUserContext } from '../../context/UserContext';
 
 // --- DATA CONSTANTS ---
 
@@ -121,6 +123,7 @@ const ALL_COUNTRIES = Object.values(GEO_DATA).flatMap(continent => Object.keys(c
 export const CompanyInfo = () => {
     const { t } = useTranslation();
     const { addToast, addPromise } = useToast();
+    const { userProfile } = useUserContext();
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
     const [shortLogoPreview, setShortLogoPreview] = useState<string | null>(null);
 
@@ -244,11 +247,28 @@ export const CompanyInfo = () => {
         const loadCompanyData = async () => {
             try {
                 const data = await companyService.get();
-                setIsFranchised(data.franchise === true);
-                if (data && data.companyProfile) {
-                    const profile = data.companyProfile;
-                    const settings = data.productSettings || {};
-                    const access = data.accessabilitySettings || {};
+                if (!data) return;
+
+                const activeCompanyId = userProfile?.currentCompanyID || userProfile?.companyID || userProfile?.companyId;
+
+                let targetCompany = null;
+                if (Array.isArray(data)) {
+                    targetCompany = activeCompanyId
+                        ? data.find(c => String(c._id) === String(activeCompanyId))
+                        : data[0];
+                } else {
+                    targetCompany = data;
+                }
+
+                if (targetCompany) {
+                    const hasFranchiseFlag = targetCompany.franchise === true || targetCompany.productSettings?.franchise === true;
+                    if (!activeCompanyId || String(targetCompany._id) === String(activeCompanyId)) {
+                        setIsFranchised(hasFranchiseFlag);
+                    }
+
+                    const profile = targetCompany.companyProfile || {};
+                    const settings = targetCompany.productSettings || {};
+                    const access = targetCompany.accessabilitySettings || {};
 
                     setFormData({
                         companyName: profile.companyName || '',
@@ -378,29 +398,14 @@ export const CompanyInfo = () => {
 
                             <div className="flex gap-3">
                                 <SafeKeeper.Action>
-                                    {isEditing ? (
-                                        <>
-                                            <button
-                                                onClick={handleCancel}
-                                                className="px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                            >
-                                                {t("Cancel")}
-                                            </button>
-                                            <button
-                                                onClick={handleSave}
-                                                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
-                                            >
-                                                <Save size={16} /> {t("Save Changes")}
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <button
-                                            onClick={handleStartEdit}
-                                            className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
-                                        >
-                                            <Edit2 size={16} /> {t("Edit Settings")}
-                                        </button>
-                                    )}
+                                    <ActionButtons
+                                        isEditing={isEditing}
+                                        onEdit={handleStartEdit}
+                                        onSave={handleSave}
+                                        onDiscard={handleCancel}
+                                        editLabel={t("Edit Settings")}
+                                        discardLabel={t("Cancel")}
+                                    />
                                 </SafeKeeper.Action>
                             </div>
                         </div>
