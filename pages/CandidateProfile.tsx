@@ -534,112 +534,98 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         </div>
       )}
 
-      <header className={`relative shrink-0 sticky top-0 z-30 transition-all duration-500 ${isScrolled ? 'h-16 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-700' : 'h-auto py-4 md:py-6 bg-white dark:bg-slate-800'}`}>
+      <header className={`relative shrink-0 sticky top-0 z-30 transition-all duration-500 overflow-hidden ${isScrolled ? 'h-16 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-700' : 'h-56 bg-white dark:bg-slate-800'}`}>
         {!isScrolled && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-20 transition-opacity duration-700">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-green-400/20 blur-[100px] rounded-full"></div>
             <div className="absolute top-1/2 -left-24 w-72 h-72 bg-indigo-400/10 blur-[80px] rounded-full"></div>
           </div>
         )}
-        <div className="h-full relative px-4 md:px-8">
+        <div className="h-full relative px-4 md:px-8 flex items-center">
 
-          <div className={`transition-all duration-300 ease-in-out origin-top ${isScrolled ? 'opacity-0 scale-95 pointer-events-none absolute inset-0' : 'opacity-100 scale-100 relative'}`}>
-            <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-              <div className="flex gap-4 w-full md:w-auto">
-                <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-2xl uppercase shrink-0">
+          {/* Expanded Header Version - ONLY visible when not scrolled */}
+          <div className={`w-full transition-all duration-500 ease-out ${isScrolled ? 'opacity-0 scale-95 pointer-events-none absolute invisible' : 'opacity-100 scale-100 relative visible'}`}>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex gap-6 items-center w-full md:w-auto">
+                <div className="w-24 h-24 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-3xl uppercase shrink-0 shadow-inner border-4 border-white dark:border-slate-800">
                   {candidateName.charAt(0)}
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h1 className="text-2xl font-bold text-green-600 dark:text-green-400">{candidateName}</h1>
+                  <div className="flex items-center gap-3 flex-wrap mb-1">
+                    <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{candidateName}</h1>
 
                     {owningEntityName && (
-                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 text-[10px] font-bold border border-indigo-100 dark:border-indigo-800 shadow-sm">
-                        <span className="opacity-60 uppercase tracking-tighter">{ownerDisplay?.label || 'Entity'}:</span>
+                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 text-[10px] font-black border border-emerald-100 dark:border-emerald-800 shadow-sm uppercase">
+                        <span className="opacity-60">{ownerDisplay?.label || 'Entity'}:</span>
                         <span className="truncate max-w-[150px]">{owningEntityName}</span>
                       </div>
                     )}
                   </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-3">{candidateRole}</p>
+                  <p className="text-base text-emerald-600 dark:text-emerald-400 font-bold mb-3">{candidateRole}</p>
 
-                  <div className="mb-3">
+                  <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-1.5">
+                      <MapPin size={16} className="text-slate-400" />
+                      <span className="font-medium">{candidateLocation}</span>
+                      <CheckCircle size={14} className="text-emerald-500" />
+                    </div>
+
                     <button
                       onClick={() => setIsContactModalOpen(true)}
-                      className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                      className="flex items-center gap-1.5 font-bold text-indigo-600 hover:text-indigo-700 underline underline-offset-4"
                     >
-                      <User size={16} /> Contact Details
+                      <User size={16} /> View Contacts
                     </button>
                   </div>
 
-                  <div className="flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-400">
+                  <div className="mt-4 flex items-center gap-2 flex-wrap">
+                    <TagIcon size={14} className="text-slate-400" />
                     <div className="flex items-center gap-2">
-                      <MapPin size={16} className="text-green-500 dark:text-green-400" />
-                      <span>{candidateLocation}</span>
-                      <CheckCircle size={16} className="text-green-500 dark:text-green-400" />
-                    </div>
+                      {tags.length > 0 ? (
+                        <>
+                          {tags.slice(0, 3).map((t: any, index: number) => (
+                            <span key={index} title={t.description || ''} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-xs border border-slate-200 dark:border-slate-600 flex items-center gap-1.5 shadow-sm">
+                              <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.color || '#10b981' }}></div>
+                              {t.name || t.text || t.tag}
+                            </span>
+                          ))}
+                          {tags.length > 3 && (
+                            <span className="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                              +{tags.length - 3}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-xs text-slate-400 italic">No tags</span>
+                      )}
 
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <TagIcon size={16} className="text-slate-400" />
-                      <div className="flex items-center gap-2 relative">
-                        {tags.length > 0 ? (
-                          <>
-                            {tags.slice(0, 3).map((t: any, index: number) => (
-                              <span key={index} title={t.description || ''} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-xs border border-slate-200 dark:border-slate-600 flex items-center gap-1 group shadow-sm transition-all hover:border-indigo-300 dark:hover:border-indigo-700">
-                                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.color || '#10b981' }}></div>
-                                {t.name || t.text || t.tag}
-                              </span>
-                            ))}
-                            {tags.length > 3 && (
-                              <span className="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">
-                                +{tags.length - 3}
-                              </span>
-                            )}
-                          </>
-                        ) : (
-                          <span className="text-xs text-slate-400 italic">No tags</span>
-                        )}
-
-                        <button
-                          onClick={() => setIsTagsDropdownOpen(true)}
-                          className="ml-1 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-600 rounded text-xs text-slate-500 hover:text-green-600 hover:border-green-400 transition-all flex items-center gap-1 active:scale-95 shadow-sm"
-                        >
-                          <span>+ Manage Tags</span>
-                        </button>
-
-                        <TagManagementModal
-                          isOpen={isTagsDropdownOpen}
-                          onClose={() => setIsTagsDropdownOpen(false)}
-                          availableTags={availableTags}
-                          attachedTags={tags}
-                          onAddTag={handleAddTag}
-                          onRemoveTag={handleRemoveTag}
-                          isLoading={tagsLoading}
-                        />
-                      </div>
+                      <button
+                        onClick={() => setIsTagsDropdownOpen(true)}
+                        className="px-2 py-0.5 bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-600 rounded text-[10px] font-bold uppercase text-slate-400 hover:text-emerald-600 hover:border-emerald-400 transition-all flex items-center gap-1"
+                      >
+                        + Manage
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-4 md:gap-6 w-full md:w-auto">
-                <div className="flex justify-end w-full">
-                  <HeroWidgets
-                    widgets={profileWidgets}
-                    metaData={metaData}
-                    permissions={mockPermissions}
-                    onAction={handleWidgetAction}
-                    shortlistStatus={shortlistStatus}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-right text-sm w-full md:w-auto">
-                  <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Personnel Status</span><span className="text-slate-500 dark:text-slate-400">{candidateStatus}</span></div>
-                  <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Availability</span><span className="text-slate-500 dark:text-slate-400">{candidateAvailability}</span></div>
-                  <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Employment Status</span><span className="text-slate-500 dark:text-slate-400">{candidateType}</span></div>
-                  <div><span className="text-slate-800 dark:text-slate-200 font-bold block">Channel</span><span className="text-slate-500 dark:text-slate-400">{metaData.inputChannel || "Manual"}</span></div>
+              <div className="flex flex-col items-end gap-3 w-full md:w-auto">
+                <HeroWidgets
+                  widgets={profileWidgets}
+                  metaData={metaData}
+                  permissions={mockPermissions}
+                  onAction={handleWidgetAction}
+                  shortlistStatus={shortlistStatus}
+                />
+                <div className="flex flex-wrap items-center justify-end gap-x-6 gap-y-2 text-right">
+                  <div className="text-right"><span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Personnel Status</span><StatusBadge status={candidateStatus} /></div>
+                  <div className="text-right"><span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Availability</span><span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateAvailability}</span></div>
+                  <div className="text-right"><span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Employment</span><span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateType}</span></div>
                   {ownerDisplay && (
-                    <div className="col-span-2 border-t border-slate-100 dark:border-slate-700 mt-1 pt-1">
-                      <span className="text-slate-800 dark:text-slate-200 font-bold block">{ownerDisplay.label}</span>
-                      <span className="text-indigo-600 dark:text-indigo-400 font-medium">{ownerDisplay.name}</span>
+                    <div className="text-right border-l border-slate-200 dark:border-slate-700 pl-4 ml-2">
+                      <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">{ownerDisplay.label}</span>
+                      <span className="text-indigo-600 dark:text-indigo-400 font-bold text-xs">{ownerDisplay.name}</span>
                     </div>
                   )}
                 </div>
@@ -647,37 +633,69 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
             </div>
           </div>
 
-          <div className={`absolute inset-0 px-4 md:px-6 flex items-center justify-between transition-all duration-300 transform bg-white dark:bg-slate-800 z-50 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+          {/* Compact Header Version - ONLY visible when scrolled */}
+          <div className={`absolute inset-0 px-4 md:px-8 flex items-center justify-between transition-all duration-300 overflow-hidden ${isScrolled ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}`}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 font-bold text-lg uppercase shrink-0">
+              <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black text-lg uppercase shrink-0 border-2 border-emerald-200 dark:border-emerald-800 shadow-sm">
                 {candidateName.charAt(0)}
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-slate-800 dark:text-white leading-tight">{candidateName}</h3>
+                  <h3 className="font-bold text-slate-800 dark:text-white leading-tight truncate">{candidateName}</h3>
                   {owningEntityName && (
-                    <span className="w-2 h-2 rounded-full bg-indigo-500" title={`Owning Entity: ${owningEntityName}`}></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse shrink-0"></span>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">{candidateRole}</p>
+                <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold truncate max-w-[250px]">{candidateRole}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors shadow-sm">Shortlist</button>
-              <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 transition-colors">
-                <Mail size={18} />
-              </button>
+            <div className="flex items-center gap-3">
               <button
-                onClick={() => setShowResumePreview(true)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 transition-colors"
-                title="View Resume"
+                onClick={() => setShortlistStatus('shortlisted')}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-xs font-black uppercase transition-all shadow-md shadow-emerald-200 dark:shadow-none active:scale-95"
               >
-                <FileEdit size={18} />
+                Shortlist
               </button>
+
+              <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => window.open(`mailto:${profileBasic.emails?.[0]?.text || ''}`)}
+                  className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-full transition-all"
+                  title="Send Email"
+                >
+                  <Mail size={18} />
+                </button>
+                <button
+                  onClick={() => setShowResumePreview(true)}
+                  className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-full transition-all"
+                  title="View Resume"
+                >
+                  <FileText size={18} />
+                </button>
+                <button
+                  onClick={() => setIsEditModalOpen(true)}
+                  className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-full transition-all"
+                  title="Edit Profile"
+                >
+                  <FileEdit size={18} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        <TagManagementModal
+          isOpen={isTagsDropdownOpen}
+          onClose={() => setIsTagsDropdownOpen(false)}
+          availableTags={availableTags}
+          attachedTags={tags}
+          onAddTag={handleAddTag}
+          onRemoveTag={handleRemoveTag}
+          isLoading={tagsLoading}
+        />
       </header>
 
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto custom-scrollbar">
