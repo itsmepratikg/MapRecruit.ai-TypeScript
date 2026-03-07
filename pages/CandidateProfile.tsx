@@ -66,7 +66,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
   const [previewCampaign, setPreviewCampaign] = useState<any>(null);
   const [maximizedTemplate, setMaximizedTemplate] = useState<any>(null);
   const [selectedInterview, setSelectedInterview] = useState<any>(null);
-  const [showMatchScore, setShowMatchScore] = useState(false);
+  const [analysisData, setAnalysisData] = useState<any>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Edit State
   const [editModalTab, setEditModalTab] = useState('BASIC');
   const [isContactModalOpen, setIsContactModalOpen] = useState(false); // Contact Modal State
@@ -315,6 +315,10 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
   const mockPermissions = { canEdit: true };
 
   const handleEditSection = (section: string) => {
+    if (section === 'MATCH_SCORE') {
+      setAnalysisData(liveData); // Default to full profile if not from campaign
+      return;
+    }
     setEditModalTab(section);
     setIsEditModalOpen(true);
   };
@@ -459,7 +463,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
       case 'resume': return <Resume />;
       case 'activity': return <Activities companyID={userCompanyID} resumeID={id} />;
       case 'chat': return <Chat />;
-      case 'campaigns': return <LinkedCampaigns onPreviewCampaign={setPreviewCampaign} onShowMatchScore={() => setShowMatchScore(true)} onSaveFeedback={handleSaveCampaignFeedback} />;
+      case 'campaigns': return <LinkedCampaigns onPreviewCampaign={setPreviewCampaign} onShowMatchScore={(camp: any) => setAnalysisData(camp)} onSaveFeedback={handleSaveCampaignFeedback} />;
       case 'folders': return <Folders />;
       case 'interviews': return <Interviews onSelectInterview={setSelectedInterview} />;
       case 'recommended': return <Recommended />;
@@ -473,7 +477,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
   return (
     <div className="flex flex-col h-full overflow-hidden relative bg-slate-50 dark:bg-slate-900 w-full animate-in fade-in duration-300">
       {/* MODALS */}
-      {showMatchScore && <LocalMatchAnalysisModal onClose={() => setShowMatchScore(false)} />}
+      {analysisData && <LocalMatchAnalysisModal analysis={analysisData} onClose={() => setAnalysisData(null)} />}
       <ResumePreviewModal
         isOpen={showResumePreview}
         onClose={() => setShowResumePreview(false)}

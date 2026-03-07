@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { StatusBadge, StarRating } from './Common';
 import { TemplateSelector, InterviewFormContent, AssessmentQuestion } from './InterviewComponents';
+import { stripHtml, getSkillCategory, SkillMatchCategory } from '../utils/mongoUtils';
 
 /**
  * Helper to get score color coding based on value (0-10)
@@ -174,6 +175,7 @@ export const RoundCard = ({ round, isOpen, onToggle, onMaximizeTemplate }: any) 
 };
 
 export const CampaignDetailView = ({ campaign, onBack, onMaximizeTemplate, isScrolled, onShowMatchScore, onSaveFeedback }: any) => {
+
    const navigate = useNavigate();
 
    const [expandedRoundId, setExpandedRoundId] = useState<number | null>(null);
@@ -219,7 +221,7 @@ export const CampaignDetailView = ({ campaign, onBack, onMaximizeTemplate, isScr
                   {/* COMPACT STATE */}
                   <div className={`flex items-center gap-4 transition-all duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}>
                      <button
-                        onClick={() => onShowMatchScore && onShowMatchScore()}
+                        onClick={() => onShowMatchScore && onShowMatchScore(campaign)}
                         className={`rounded-full ${getScoreColor(parseFloat(campaign.score))} flex items-center justify-center font-bold shadow-sm w-8 h-8 text-[10px] shrink-0 transform hover:scale-110 transition-transform`}
                      >
                         {formatScore(campaign.score)}
@@ -234,7 +236,7 @@ export const CampaignDetailView = ({ campaign, onBack, onMaximizeTemplate, isScr
                   {/* EXPANDED STATE */}
                   <div className={`flex items-start gap-4 transition-all duration-300 ${!isScrolled ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}>
                      <button
-                        onClick={() => onShowMatchScore && onShowMatchScore()}
+                        onClick={() => onShowMatchScore && onShowMatchScore(campaign)}
                         className={`w-10 h-10 rounded-full ${getScoreColor(parseFloat(campaign.score))} flex items-center justify-center font-bold shadow-sm hover:scale-105 transition-transform shrink-0`}
                      >
                         {formatScore(campaign.score)}
@@ -351,7 +353,7 @@ export const CampaignCard = ({ camp, onPreview, expanded, onToggle, onShowMatchS
          <div className="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
             <div className="shrink-0">
                <button
-                  onClick={(e) => { e.stopPropagation(); onShowMatchScore && onShowMatchScore(); }}
+                  onClick={(e) => { e.stopPropagation(); onShowMatchScore && onShowMatchScore(camp); }}
                   className={`w-8 h-8 rounded-full ${getScoreColor(parseFloat(camp.score))} flex items-center justify-center font-bold shadow-sm text-[10px] hover:scale-110 transition-transform`}
                >
                   {formatScore(camp.score)}
@@ -385,25 +387,43 @@ export const CampaignCard = ({ camp, onPreview, expanded, onToggle, onShowMatchS
    );
 };
 
-export const mapInterviewToCampaign = (iv: any) => ({
-   id: iv._id,
-   campaignID: iv.campaign?._id || iv.campaignID,
-   name: iv.campaign?.title || "Unknown Campaign",
-   jobID: iv.campaign?.passcode || "N/A",
-   date: iv.sourceAI?.linkedAt ? new Date(iv.sourceAI.linkedAt).toLocaleDateString() :
-      iv.createdAt ? new Date(iv.createdAt).toLocaleDateString() : 'N/A',
-   status: iv.status || 'Linked',
-   offerStatus: iv.offerStatus || 'N/A',
-   role: iv.MRI?.experience?.jobTitle?.jobTitle || "Not Specified",
-   company: iv.campaign?.company || "MapRecruit",
-   location: iv.campaign?.locations?.[0]?.text || "Remote / Various",
-   applied: iv.applicationType === 'Applied' ? 'Yes' : 'No',
-   source: iv.sourceAI?.applicationSource || "Other",
-   feedback: iv.feedBack?.comment || "No feedback yet",
-   rating: iv.feedBack?.rating || 0,
-   score: iv.MRI?.actual_mri_score !== undefined ? iv.MRI.actual_mri_score : 0,
-   rounds: iv.screeningRounds || []
-});
+export const mapInterviewToCampaign = (iv: any) => {
+   const allSkills = iv.MRI?.experience?.skills || iv.experience?.skills || [];
+   return {
+      id: iv._id,
+      campaignID: iv.campaign?._id || iv.campaignID,
+      name: iv.campaign?.title || "Unknown Campaign",
+      jobID: iv.campaign?.passcode || "N/A",
+      date: iv.sourceAI?.linkedAt ? new Date(iv.sourceAI.linkedAt).toLocaleDateString() :
+         iv.createdAt ? new Date(iv.createdAt).toLocaleDateString() : 'N/A',
+      status: iv.status || 'Linked',
+      offerStatus: iv.offerStatus || 'N/A',
+      role: iv.MRI?.experience?.jobTitle?.jobTitle || "Not Specified",
+      company: iv.campaign?.company || "MapRecruit",
+      location: iv.campaign?.locations?.[0]?.text || "Remote / Various",
+      applied: iv.applicationType === 'Applied' ? 'Yes' : 'No',
+      source: iv.sourceAI?.applicationSource || "Other",
+      feedback: iv.feedBack?.comment || "No feedback yet",
+      rating: iv.feedBack?.rating || 0,
+      score: iv.MRI?.actual_mri_score !== undefined ? iv.MRI.actual_mri_score : 0,
+      rounds: iv.screeningRounds || [],
+      skills: {
+         matched: {
+            required: allSkills.filter((s: any) => s.eligibilityCheck === 'Required' && getSkillCategory(s) !== SkillMatchCategory.NOT_MENTIONED)
+               .map((s: any) => ({ text: stripHtml(s.jobSkill), category: getSkillCategory(s) })),
+            preferred: allSkills.filter((s: any) => s.eligibilityCheck === 'Preferred' && getSkillCategory(s) !== SkillMatchCategory.NOT_MENTIONED)
+               .map((s: any) => ({ text: stripHtml(s.jobSkill), category: getSkillCategory(s) }))
+         },
+         missing: {
+            required: allSkills.filter((s: any) => s.eligibilityCheck === 'Required' && getSkillCategory(s) === SkillMatchCategory.NOT_MENTIONED)
+               .map((s: any) => stripHtml(s.jobSkill)),
+            preferred: allSkills.filter((s: any) => s.eligibilityCheck === 'Preferred' && getSkillCategory(s) === SkillMatchCategory.NOT_MENTIONED)
+               .map((s: any) => stripHtml(s.jobSkill))
+         }
+      },
+      aiSummary: iv.MRI?.genAI?.[0]?.matchSummary || iv.MRI?.experience?.matchSummary || 'No summary available.'
+   };
+};
 
 export const CampaignsView = ({ interviews, onPreviewCampaign, onShowMatchScore, onSaveFeedback }: any) => {
    const [expandedId, setExpandedId] = useState<string | null>(null);
