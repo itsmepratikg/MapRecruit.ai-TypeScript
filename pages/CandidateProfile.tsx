@@ -277,7 +277,9 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
   const candidateLocation = profileBasic.locations?.[0]?.text || "No Location"; // Using first location
   const candidateStatus = resumeDetails.personnelStatus || "Pending";
   const candidateType = resumeDetails.employmentStatus || "N/A";
-  const candidateAvailability = resumeDetails.availability || "N/A";
+  const candidateAvailability = resumeDetails.availability || "Available";
+  const candidateSource = resumeDetails.source || resumeDetails.sourceAI?.applicationSource || "Other";
+  const candidateChannels = Array.isArray(resumeDetails.channels) ? resumeDetails.channels.join(', ') : (resumeDetails.channels || "Direct");
 
   // Tag handling
   const tags = resumeDetails.tagID || [];
@@ -538,7 +540,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         </div>
       )}
 
-      <header className={`relative shrink-0 sticky top-0 z-30 transition-all duration-500 overflow-hidden ${isScrolled ? 'h-16 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-700' : 'h-56 bg-white dark:bg-slate-800'}`}>
+      <header className={`relative shrink-0 sticky top-0 z-30 transition-all duration-500 ${isScrolled ? 'h-16 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-700' : 'h-56 bg-white dark:bg-slate-800'}`}>
         {!isScrolled && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-20 transition-opacity duration-700">
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-green-400/20 blur-[100px] rounded-full"></div>
@@ -565,7 +567,16 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
                       </div>
                     )}
                   </div>
-                  <p className="text-base text-emerald-600 dark:text-emerald-400 font-bold mb-3">{candidateRole}</p>
+                  <p className="text-base text-emerald-600 dark:text-emerald-400 font-bold mb-2">{candidateRole}</p>
+
+                  <div className="mb-3">
+                    <button
+                      onClick={() => setIsContactModalOpen(true)}
+                      className="flex items-center gap-1.5 font-black text-[10px] uppercase tracking-wider text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline underline-offset-4 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-800 transition-all shadow-sm"
+                    >
+                      <User size={12} /> View Contacts
+                    </button>
+                  </div>
 
                   <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
@@ -573,13 +584,6 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
                       <span className="font-medium">{candidateLocation}</span>
                       <CheckCircle size={14} className="text-emerald-500" />
                     </div>
-
-                    <button
-                      onClick={() => setIsContactModalOpen(true)}
-                      className="flex items-center gap-1.5 font-bold text-indigo-600 hover:text-indigo-700 underline underline-offset-4"
-                    >
-                      <User size={16} /> View Contacts
-                    </button>
                   </div>
 
                   <div className="mt-4 flex items-center gap-2 flex-wrap">
@@ -622,12 +626,39 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
                   onAction={handleWidgetAction}
                   shortlistStatus={shortlistStatus}
                 />
-                <div className="flex flex-wrap items-center justify-end gap-x-6 gap-y-2 text-right">
-                  <div className="text-right"><span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Personnel Status</span><StatusBadge status={candidateStatus} /></div>
-                  <div className="text-right"><span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Availability</span><span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateAvailability}</span></div>
-                  <div className="text-right"><span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Employment</span><span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateType}</span></div>
+
+                <div className="flex flex-wrap items-start justify-end gap-6 text-left">
+                  {/* Row 1: 3 Column Info */}
+                  <div className="flex gap-6">
+                    <div>
+                      <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Personnel Status</span>
+                      <StatusBadge status={candidateStatus} />
+                    </div>
+                    <div>
+                      <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Availability</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateAvailability}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Employment</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateType}</span>
+                    </div>
+                  </div>
+
+                  {/* Row 2: 2 Column Info (Separated by border) */}
+                  <div className="flex gap-6 border-l border-slate-200 dark:border-slate-700 pl-6">
+                    <div>
+                      <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Source</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateSource}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">Channels</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-bold text-xs">{candidateChannels}</span>
+                    </div>
+                  </div>
+
+                  {/* Client Details */}
                   {ownerDisplay && (
-                    <div className="text-right border-l border-slate-200 dark:border-slate-700 pl-4 ml-2">
+                    <div className="border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
                       <span className="text-slate-400 text-[10px] font-black uppercase block mb-0.5">{ownerDisplay.label}</span>
                       <span className="text-indigo-600 dark:text-indigo-400 font-bold text-xs">{ownerDisplay.name}</span>
                     </div>

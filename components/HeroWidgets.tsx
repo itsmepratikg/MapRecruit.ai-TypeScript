@@ -189,10 +189,10 @@ export const HeroWidgets: React.FC<HeroWidgetsProps> = ({
 
                     {/* Dropdown Content */}
                     {showOverflow && (
-                        <div className="absolute top-10 right-0 z-40 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 w-[240px] animate-in zoom-in-95 duration-200 origin-top-right">
-                            <div className="grid grid-cols-4 gap-2">
+                        <div className="absolute top-10 right-0 z-[100] bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-2.5 w-[220px] animate-in slide-in-from-top-2 duration-200 origin-top-right ring-4 ring-black/5 dark:ring-white/5">
+                            <div className="grid grid-cols-4 gap-1.5">
                                 {overflowWidgets.map((widget, idx) => (
-                                    <div key={idx} className="flex justify-center">
+                                    <div key={idx} className="flex justify-center h-10 w-10">
                                         {widget}
                                     </div>
                                 ))}

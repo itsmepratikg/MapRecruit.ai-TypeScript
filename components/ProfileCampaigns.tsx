@@ -427,8 +427,15 @@ export const mapInterviewToCampaign = (iv: any) => {
 
 export const CampaignsView = ({ interviews, onPreviewCampaign, onShowMatchScore, onSaveFeedback }: any) => {
    const [expandedId, setExpandedId] = useState<string | null>(null);
+   const [filterText, setFilterText] = useState("");
 
-   const displayCampaigns = (Array.isArray(interviews) ? interviews : []).map(mapInterviewToCampaign);
+   const displayCampaigns = (Array.isArray(interviews) ? interviews : [])
+      .map(mapInterviewToCampaign)
+      .filter((camp: any) =>
+         camp.name.toLowerCase().includes(filterText.toLowerCase()) ||
+         camp.role.toLowerCase().includes(filterText.toLowerCase()) ||
+         camp.company.toLowerCase().includes(filterText.toLowerCase())
+      );
 
    return (
       <div className="space-y-4">
@@ -437,7 +444,13 @@ export const CampaignsView = ({ interviews, onPreviewCampaign, onShowMatchScore,
             <div className="flex gap-2">
                <div className="relative">
                   <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input type="text" placeholder="Search..." className="pl-9 pr-4 py-1.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full w-64 focus:outline-none focus:border-green-500 dark:text-slate-200" />
+                  <input
+                     type="text"
+                     placeholder="Search campaigns..."
+                     value={filterText}
+                     onChange={(e) => setFilterText(e.target.value)}
+                     className="pl-9 pr-4 py-1.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full w-64 focus:outline-none focus:border-green-500 dark:text-slate-200"
+                  />
                </div>
             </div>
          </div>
@@ -455,7 +468,7 @@ export const CampaignsView = ({ interviews, onPreviewCampaign, onShowMatchScore,
                ))
             ) : (
                <div className="bg-white dark:bg-slate-800 p-8 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-center text-slate-500">
-                  No campaigns linked to this candidate.
+                  {filterText ? `No campaigns matching "${filterText}"` : "No campaigns linked to this candidate."}
                </div>
             )}
          </div>
