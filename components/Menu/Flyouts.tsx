@@ -21,13 +21,19 @@ import { useUserContext } from '../../context/UserContext';
 export const ClientMenuContent = ({ activeClient, activeClientId, clients, onSwitchClient, onClose }: { activeClient: string, activeClientId?: string, clients: any[], onSwitchClient: (client: string) => void, onClose: () => void }) => {
     const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
+    const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
     const filteredClients = useMemo(() => {
         if (!searchQuery) return clients;
         const lowerQ = searchQuery.toLowerCase();
         return clients.filter(c => {
-            const name = typeof c === 'string' ? c : c.clientName;
-            return name.toLowerCase().includes(lowerQ);
+            if (typeof c === 'string') return c.toLowerCase().includes(lowerQ);
+            const name = c.clientName || c.name || '';
+            const code = c.clientCode || '';
+            const alias = c.clientNameAlias || '';
+            return name.toLowerCase().includes(lowerQ) ||
+                code.toLowerCase().includes(lowerQ) ||
+                alias.toLowerCase().includes(lowerQ);
         });
     }, [clients, searchQuery]);
 
@@ -35,8 +41,7 @@ export const ClientMenuContent = ({ activeClient, activeClientId, clients, onSwi
         const groups: Record<string, any[]> = {};
 
         filteredClients.forEach(client => {
-            // Handle both string[] (legacy) and object[] (fetched)
-            const clientName = typeof client === 'string' ? client : client.clientName;
+            const clientName = typeof client === 'string' ? client : (client.clientName || client.name);
             const clientType = typeof client === 'string' ? 'Client' : (client.clientType || 'Client');
 
             if (!groups[clientType]) {
@@ -48,7 +53,6 @@ export const ClientMenuContent = ({ activeClient, activeClientId, clients, onSwi
             });
         });
 
-        // Sort clients within groups
         Object.keys(groups).forEach(key => {
             groups[key].sort((a, b) => a.name.localeCompare(b.name));
         });
@@ -56,28 +60,48 @@ export const ClientMenuContent = ({ activeClient, activeClientId, clients, onSwi
         return groups;
     }, [filteredClients]);
 
-    // Order of groups: Client, Branch, Vendor, then others alphabetically
     const sortedGroupKeys = useMemo(() => {
-        const keys = Object.keys(groupedClients);
-        const priority = ['Branch', 'Client', 'Vendor'];
-        return keys.sort((a, b) => {
-            const idxA = priority.indexOf(a);
-            const idxB = priority.indexOf(b);
-            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-            if (idxA !== -1) return -1;
-            if (idxB !== -1) return 1;
-            return a.localeCompare(b);
-        });
+        return Object.keys(groupedClients).sort((a, b) => a.localeCompare(b));
     }, [groupedClients]);
 
+    // Initialize expanded groups based on active client or search
+    useEffect(() => {
+        if (searchQuery.length > 0) {
+            setExpandedGroups(new Set(sortedGroupKeys));
+            return;
+        }
+
+        const activeGroups = new Set<string>();
+        sortedGroupKeys.forEach(group => {
+            const hasActive = groupedClients[group].some(client => {
+                const isIdMatch = activeClientId && client.data?._id && String(client.data._id) === String(activeClientId);
+                const isNameMatch = client.name === activeClient;
+                return isIdMatch || (!activeClientId && isNameMatch);
+            });
+            if (hasActive) activeGroups.add(group);
+        });
+        setExpandedGroups(activeGroups);
+    }, [activeClient, activeClientId, sortedGroupKeys, searchQuery, groupedClients]);
+
+    const toggleGroup = (group: string) => {
+        setExpandedGroups(prev => {
+            const next = new Set(prev);
+            if (next.has(group)) next.delete(group);
+            else next.add(group);
+            return next;
+        });
+    };
+
+    const hasMultipleGroups = sortedGroupKeys.length > 1;
+
     return (
-        <div className="flex flex-col w-64 h-auto max-h-[90vh] bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden">
-            <div className="flex justify-between items-center px-3 py-2 bg-slate-50 dark:bg-slate-900 rounded-t mb-0 shrink-0">
-                <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{t("Switch Client")}</div>
+        <div className="flex flex-col w-72 h-auto max-h-[90vh] bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center px-4 py-3 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 shrink-0">
+                <div className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t("Switch Environment")}</div>
                 <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors lg:hidden"><X size={14} /></button>
             </div>
 
-            <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 shrink-0">
+            <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 shrink-0 bg-white dark:bg-slate-800">
                 <div className="relative">
                     <Search size={14} className="absolute left-3 top-2.5 text-slate-400" />
                     <input
@@ -85,48 +109,74 @@ export const ClientMenuContent = ({ activeClient, activeClientId, clients, onSwi
                         placeholder={t("Search clients...")}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-9 pr-3 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 dark:text-slate-200"
+                        className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 dark:text-slate-200"
                         autoFocus
                     />
                 </div>
             </div>
 
-            <div className="p-1 space-y-1 overflow-y-auto custom-scrollbar">
-                {sortedGroupKeys.map(group => (
-                    <div key={group}>
-                        {/* Only show header if there are multiple groups, or providing structure */}
-                        {sortedGroupKeys.length > 0 && (
-                            <div className="px-3 py-1 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1">
-                                {t(group)}
-                            </div>
-                        )}
-                        {groupedClients[group].map((client: any) => {
-                            // Robust isActive Check: matches ID first, then Name
-                            const isIdMatch = activeClientId && client.data?._id && client.data._id.toString() === activeClientId.toString();
-                            const isNameMatch = client.name === activeClient;
-                            const isActive = isIdMatch || (!activeClientId && isNameMatch);
-
-                            return (
+            <div className="p-2 space-y-1 overflow-y-auto custom-scrollbar bg-white dark:bg-slate-800">
+                {sortedGroupKeys.map(group => {
+                    const groupContainsActive = groupedClients[group].some((client: any) => {
+                        return activeClientId && client.data?._id && String(client.data._id) === String(activeClientId);
+                    });
+                    const isExpanded = expandedGroups.has(group) || !hasMultipleGroups || (searchQuery.length > 0) || groupContainsActive;
+                    return (
+                        <div key={group} className="space-y-1">
+                            {hasMultipleGroups && (
                                 <button
-                                    key={client.name}
-                                    onClick={() => onSwitchClient(client.data?._id || client.data?.id || client.name)}
-                                    className={`w-full text-left px-3 py-2.5 text-xs rounded-lg flex items-center justify-between font-bold transition-all duration-200 ${isActive ? 'text-indigo-700 dark:text-indigo-300 bg-indigo-50/50 dark:bg-indigo-900/20 ring-1 ring-indigo-200 dark:ring-indigo-800' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400 border border-transparent'}`}
+                                    onClick={() => toggleGroup(group)}
+                                    className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-md group transition-colors"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <div className={`w-1.5 h-1.5 rounded-full transition-colors ${isActive ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]' : 'bg-slate-300 dark:bg-slate-600'}`}></div>
-                                        <span className="truncate max-w-[180px]">{client.name}</span>
+                                        <div className={`w-1 h-3 rounded-full ${isExpanded ? 'bg-indigo-500' : 'bg-slate-300 dark:bg-slate-600'}`}></div>
+                                        <span className={`text-[10px] font-bold uppercase tracking-wider ${isExpanded ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 dark:text-slate-500'}`}>
+                                            {t(group)}
+                                        </span>
+                                        <span className="text-[9px] text-slate-400 font-normal">({groupedClients[group].length})</span>
                                     </div>
-                                    {isActive && (
-                                        <div className="bg-indigo-600 text-white w-4 h-4 rounded-full flex items-center justify-center shadow-sm shrink-0 ml-2">
-                                            <Check size={10} strokeWidth={4} />
-                                        </div>
-                                    )}
+                                    <ChevronDown size={14} className={`text-slate-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
                                 </button>
-                            );
-                        })}
+                            )}
+
+                            {isExpanded && (
+                                <div className={`${hasMultipleGroups ? 'pl-2 space-y-0.5 animate-in slide-in-from-top-1 duration-200' : 'space-y-1'}`}>
+                                    {groupedClients[group].map((client: any) => {
+                                        const isIdMatch = activeClientId && client.data?._id && String(client.data._id) === String(activeClientId);
+                                        const isNameMatch = client.name === activeClient;
+                                        const isActive = isIdMatch || (!activeClientId && isNameMatch);
+                                        const clientId = client.data?._id?.$oid || client.data?._id || client.data?.id || client.name;
+                                        const key = typeof clientId === 'object' ? JSON.stringify(clientId) : String(clientId);
+
+                                        return (
+                                            <button
+                                                key={key}
+                                                onClick={() => onSwitchClient(client.data?._id || client.data?.id || client.name)}
+                                                className={`w-full text-left px-3 py-2.5 text-xs rounded-lg flex items-center justify-between transition-all duration-200 ${isActive ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 ring-1 ring-emerald-200/50 dark:ring-emerald-800/50 font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/40 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium'}`}
+                                            >
+                                                <div className="flex items-center gap-2 min-w-0">
+                                                    <div className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${isActive ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]' : 'bg-slate-300 dark:bg-slate-600 group-hover:bg-emerald-400'}`}></div>
+                                                    <span className="truncate">{client.name}</span>
+                                                </div>
+                                                {isActive && (
+                                                    <div className="bg-emerald-600 text-white w-4 h-4 rounded-full flex items-center justify-center shadow-md scale-110 shrink-0 ml-2">
+                                                        <Check size={10} strokeWidth={4} />
+                                                    </div>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+                {filteredClients.length === 0 && (
+                    <div className="flex flex-col items-center justify-center py-8 text-slate-400 dark:text-slate-600">
+                        <Search size={32} className="opacity-20 mb-2" />
+                        <p className="text-xs italic">{t("No matching environments")}</p>
                     </div>
-                ))}
-                {filteredClients.length === 0 && <div className="px-3 py-2 text-sm text-slate-400 italic text-center">No clients found</div>}
+                )}
             </div>
         </div>
     );
@@ -203,14 +253,15 @@ export const CompanySwitcherContent = ({ onClose, isVisible = true, activeCompan
                     </div>
                 ) : filtered.length > 0 ? (
                     filtered.map(company => {
-                        const isActive = company._id === activeCompanyID;
+                        const currentId = company._id?.$oid || company._id || company.id;
+                        const isActive = String(currentId) === String(activeCompanyID);
                         const companyName = company.companyProfile?.companyName || company.name || "Unnamed Company";
                         const initials = companyName.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase();
 
                         return (
                             <button
-                                key={company._id}
-                                onClick={() => handleSwitch(company._id)}
+                                key={company._id?.$oid || company._id || company.id}
+                                onClick={() => handleSwitch(company._id?.$oid || company._id || company.id)}
                                 className={`w-full text-left px-3 py-3 rounded-lg flex items-center justify-between group transition-all duration-200 ${isActive ? 'bg-indigo-50 dark:bg-indigo-900/20 ring-1 ring-indigo-200 dark:ring-indigo-800' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent'}`}
                             >
                                 <div className="flex items-center gap-4 min-w-0">
@@ -594,6 +645,7 @@ export const CampaignMenuContent = ({
                 acc.push({
                     name: clientName,
                     type: clientType,
+                    data: clientDoc, // Preserve client object for unique key
                     campaigns: [campData]
                 });
             }
@@ -682,7 +734,7 @@ export const CampaignMenuContent = ({
                                 {groupedCampaigns[type].map((client: any) => {
                                     const isExpanded = expandedClient === client.name || searchQuery.length > 0;
                                     return (
-                                        <div key={client.name} className="rounded overflow-hidden">
+                                        <div key={client.data?._id?.$oid || client.data?._id || client.data?.id || client.name} className="rounded overflow-hidden">
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); setExpandedClient(isExpanded ? '' : client.name); }}
                                                 className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${isExpanded ? 'text-slate-800 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400'}`}

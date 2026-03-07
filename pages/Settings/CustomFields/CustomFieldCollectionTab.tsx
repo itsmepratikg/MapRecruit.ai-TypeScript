@@ -13,6 +13,7 @@ import {
 interface CustomFieldCollectionTabProps {
     collection: 'resumes' | 'campaigns' | 'interviews';
     clientId?: string;
+    isActive?: boolean;
 }
 
 const FILE_FORMATS = [
@@ -25,7 +26,7 @@ const FILE_FORMATS = [
     { label: 'XLSX', value: '.xlsx' }
 ];
 
-export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> = ({ collection, clientId }) => {
+export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> = ({ collection, clientId, isActive = true }) => {
     const [loading, setLoading] = useState(true);
     const [sections, setSections] = useState<any[]>([]);
     const [expandedSections, setExpandedSections] = useState<string[]>([]);
@@ -66,6 +67,10 @@ export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> =
     };
 
     const handleSectionEdit = (section: any) => {
+        if (!isActive) {
+            addToast("This client is deactivated. Go to settings and activate it first to make any changes.", "error");
+            return;
+        }
         setEditingSectionId(section._id);
         setSectionBuffer({ ...section });
     };
@@ -100,6 +105,10 @@ export const CustomFieldCollectionTab: React.FC<CustomFieldCollectionTabProps> =
     };
 
     const handleFieldEdit = (field: any) => {
+        if (!isActive) {
+            addToast("This client is deactivated. Go to settings and activate it first to make any changes.", "error");
+            return;
+        }
         setEditingFieldId(field._id);
         setFieldBuffer({ ...field });
     };

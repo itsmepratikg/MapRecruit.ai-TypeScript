@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 
 interface ClientCustomFieldsProps {
     clientId: string;
+    isActive?: boolean;
 }
 
-export const ClientCustomFields = ({ clientId }: ClientCustomFieldsProps) => {
+export const ClientCustomFields = ({ clientId, isActive = true }: ClientCustomFieldsProps) => {
     const { t } = useTranslation();
     const [activeTabId, setActiveTabId] = useState('campaign');
 
@@ -25,6 +26,17 @@ export const ClientCustomFields = ({ clientId }: ClientCustomFieldsProps) => {
             {/* Header Content */}
             <div className="px-8 lg:px-12 pt-8 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-20">
                 <div className="max-w-7xl mx-auto">
+                    {!isActive && (
+                        <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl flex items-center gap-3 text-amber-800 dark:text-amber-200">
+                            <div className="p-2 bg-amber-100 dark:bg-amber-800/40 rounded-lg">
+                                <Settings size={18} className="text-amber-600 dark:text-amber-400" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold">{t("Client is Deactivated")}</p>
+                                <p className="text-xs opacity-80">{t("Custom field management is disabled. Activate the client from settings to enable configurations.")}</p>
+                            </div>
+                        </div>
+                    )}
                     <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-6 mb-2">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-emerald-500/10 text-emerald-500 rounded-xl">
@@ -71,6 +83,7 @@ export const ClientCustomFields = ({ clientId }: ClientCustomFieldsProps) => {
                         key={`${activeTab.id}-${clientId}`}
                         collection={activeTab.collection as any}
                         clientId={clientId}
+                        isActive={isActive}
                     />
                 </div>
             </div>

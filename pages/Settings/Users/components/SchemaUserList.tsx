@@ -11,7 +11,7 @@ import { useToast } from '../../../../components/Toast';
 import { useTranslation } from 'react-i18next';
 import { useImpersonation } from '../../../../context/ImpersonationContext';
 
-export const SchemaUserList = ({ searchQuery, onSelectUser, data: externalData, loading: externalLoading }: any) => {
+export const SchemaUserList = ({ searchQuery, onSelectUser, data: externalData, loading: externalLoading, isActive = true }: any) => {
     const { t } = useTranslation();
     const { addToast } = useToast();
     const { startImpersonation } = useImpersonation();
@@ -179,7 +179,7 @@ export const SchemaUserList = ({ searchQuery, onSelectUser, data: externalData, 
                     }
                 ]}
                 title={t("Users")}
-                onEdit={onSelectUser}
+                onEdit={isActive ? onSelectUser : () => addToast(t("This client is deactivated. Go to settings and activate it first to make any changes."), 'error')}
             />
 
             {/* Impersonation Modal */}

@@ -15,10 +15,21 @@ export const ClientInformation = ({ client }: ClientInformationProps) => {
     const { addToast } = useToast();
     const [editMode, setEditMode] = useState(false);
 
+    // Determine if client is active
+    const isActive = client.status === 'Active' || client.enable !== false;
+
     // Manage form state
     const [formData, setFormData] = useState<any>(client);
 
     const [showSaveConfirm, setShowSaveConfirm] = useState(false);
+
+    const handleEditToggle = () => {
+        if (!isActive) {
+            addToast(t("This client is deactivated. Go to settings and activate it first to make any changes."), 'error');
+            return;
+        }
+        setEditMode(true);
+    };
 
     const handleSave = () => {
         setShowSaveConfirm(true);
@@ -66,10 +77,27 @@ export const ClientInformation = ({ client }: ClientInformationProps) => {
 
     return (
         <div className="p-8 lg:p-12 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+            {!isActive && (
+                <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-center gap-3 text-amber-800 dark:text-amber-200">
+                    <div className="p-2 bg-amber-100 dark:bg-amber-800/40 rounded-lg">
+                        <Edit3 size={18} className="text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <div>
+                        <p className="text-sm font-bold">{t("Client is Deactivated")}</p>
+                        <p className="text-xs opacity-80">{t("This client profile is currently in read-only mode. Activate it from the settings to enable editing.")}</p>
+                    </div>
+                </div>
+            )}
+
             <div className="flex justify-end items-center mb-8">
                 <button
-                    onClick={() => editMode ? handleSave() : setEditMode(true)}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2 ${editMode ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                    onClick={() => editMode ? handleSave() : handleEditToggle()}
+                    className={`px-6 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2 ${!isActive && !editMode
+                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed border border-slate-200 dark:border-slate-700'
+                            : editMode
+                                ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'
+                        }`}
                 >
                     {editMode ? <Save size={16} /> : <Edit3 size={16} />}
                     {editMode ? t("Save Changes") : t("Edit Details")}

@@ -130,6 +130,44 @@ export const SettingsMenu = ({
                             )}
                             {displayItems.map(item => {
                                 const path = getPath(item.id);
+                                if (item.subItems) {
+                                    const parentPath = getPath(item.id);
+                                    return (
+                                        <div key={item.id} className="space-y-1">
+                                            <NavItem
+                                                icon={item.icon}
+                                                label={item.label}
+                                                to={`/settings/${parentPath}`}
+                                                onClick={() => {
+                                                    setActiveSettingsTab(parentPath);
+                                                    if (!isDesktop) setIsSidebarOpen(false);
+                                                }}
+                                                isCollapsed={isCollapsed}
+                                            />
+                                            {!isCollapsed && (
+                                                <div className="pl-3 border-l-2 border-slate-100 dark:border-slate-800/50 ml-5 my-1 space-y-1">
+                                                    {item.subItems.map((sub: any) => {
+                                                        const subPath = getPath(sub.id);
+                                                        return (
+                                                            <NavItem
+                                                                key={sub.id}
+                                                                icon={sub.icon}
+                                                                label={sub.label}
+                                                                to={`/settings/${subPath}`}
+                                                                onClick={() => {
+                                                                    setActiveSettingsTab(subPath);
+                                                                    if (!isDesktop) setIsSidebarOpen(false);
+                                                                }}
+                                                                isCollapsed={isCollapsed}
+                                                                style={{ paddingLeft: '0.75rem', fontSize: '0.8rem' }}
+                                                            />
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                }
                                 return (
                                     <NavItem
                                         key={item.id}

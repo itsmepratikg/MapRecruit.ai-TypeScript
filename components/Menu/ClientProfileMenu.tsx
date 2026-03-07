@@ -11,6 +11,7 @@ interface ClientProfileMenuProps {
     activeTab: string;
     setActiveTab: (tab: string) => void;
     clientId?: string;
+    client?: any; // Add client data prop
     onNavigate: (tab: string) => void;
     isCollapsed?: boolean;
     setIsSidebarOpen?: (isOpen: boolean) => void;
@@ -21,6 +22,7 @@ export const ClientProfileMenu = ({
     activeTab,
     setActiveTab,
     clientId,
+    client,
     onNavigate,
     isCollapsed = false,
     setIsSidebarOpen
@@ -73,8 +75,12 @@ export const ClientProfileMenu = ({
                     <ChevronLeft size={20} />
                 </button>
                 <div className="overflow-hidden">
-                    <h2 className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">{t("Edit Client")}</h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">ID: {clientId ? clientId.slice(0, 8) + '...' : 'New'}</p>
+                    <h2 className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">
+                        {client?.clientName || t("Client Profile")}
+                    </h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                        {client?.clientCode ? `${t("Client Code")}: ${client.clientCode}` : `ID: ${clientId || 'New'}`}
+                    </p>
                 </div>
             </div>
 

@@ -694,16 +694,13 @@ const AppContent = () => {
                           onBack={() => navigate('/settings/clients')}
                           activeTab={activeClientProfileTab}
                           setActiveTab={setActiveClientProfileTab}
+                          client={clients?.find((c: any) => (c._id?.$oid || c._id || c.id) === location.pathname.split('/').pop())}
                           onNavigate={(tab) => {
-                            // We need the clientId from the URL path. 
-                            // Sidebar doesn't inherently know it unless passed, but we are inside Routes relative to /settings/clientprofile/* 
-                            // ACTUALLY, the route matches /settings/clientprofile/:tab/:clientId
-                            // So we can assume the URL structure.
                             const parts = location.pathname.split('/');
-                            const clientId = parts[parts.length - 1]; // Last part should be ID
+                            const clientId = parts[parts.length - 1];
                             navigate(`/settings/clientprofile/${tab}/${clientId}`);
                           }}
-                          clientId={location.pathname.split('/').pop()} // Approximate ID extraction
+                          clientId={location.pathname.split('/').pop()}
                           isCollapsed={isCollapsed}
                           setIsSidebarOpen={setIsSidebarOpen}
                         />

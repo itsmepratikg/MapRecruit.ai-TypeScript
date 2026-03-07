@@ -7,9 +7,10 @@ import { userService } from '../../../../services/api';
 
 interface ClientUsersProps {
     clientId: string;
+    isActive?: boolean;
 }
 
-export const ClientUsers = ({ clientId }: ClientUsersProps) => {
+export const ClientUsers = ({ clientId, isActive = true }: ClientUsersProps) => {
     const { t } = useTranslation();
     const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -37,6 +38,17 @@ export const ClientUsers = ({ clientId }: ClientUsersProps) => {
             {/* Header Content */}
             <div className="px-8 lg:px-12 pt-10 pb-6 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-20">
                 <div className="max-w-7xl mx-auto">
+                    {!isActive && (
+                        <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl flex items-center gap-3 text-amber-800 dark:text-amber-200">
+                            <div className="p-2 bg-amber-100 dark:bg-amber-800/40 rounded-lg">
+                                <Users size={18} className="text-amber-600 dark:text-amber-400" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold">{t("Client is Deactivated")}</p>
+                                <p className="text-xs opacity-80">{t("User management is disabled. Activate the client from settings to manage delegates.")}</p>
+                            </div>
+                        </div>
+                    )}
                     <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-6">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl shadow-sm">
@@ -74,6 +86,7 @@ export const ClientUsers = ({ clientId }: ClientUsersProps) => {
                             searchQuery={searchQuery}
                             data={users}
                             loading={loading}
+                            isActive={isActive}
                             onSelectUser={(user: any) => {
                                 console.log("Selected user:", user);
                             }}

@@ -7,85 +7,39 @@ const User = require('../models/User');
 // @access  Private
 const getClients = async (req, res) => {
     try {
-        // Prioritize currentCompanyID for context-aware fetching
         const { id: userId } = req.user;
         const companyID = req.user.currentCompanyID || req.user.companyID;
 
-        // console.log(`[DEBUG] getClients - User: ${userId}, Context CompanyID: ${companyID}`);
-
         if (!companyID) {
-            console.warn('[DEBUG] getClients - No Company ID found in user token');
             return res.status(400).json({ message: 'User has no Company ID' });
         }
 
-        // 1. Fetch Company Document to get Master Client List
-        // Enforce ObjectId usage as per requirement
         if (!mongoose.Types.ObjectId.isValid(companyID)) {
-            console.error(`[DEBUG] getClients - Invalid Company ID format: ${companyID}`);
             return res.status(400).json({ message: 'Invalid Company ID format' });
         }
 
-        const company = await mongoose.connection.collection('companiesDB').findOne({
-            _id: new mongoose.Types.ObjectId(companyID)
-        });
-
-        if (!company) {
-            console.error(`[DEBUG] getClients - Company NOT FOUND for ID: ${companyID}`);
-            return res.status(404).json({ message: 'Company not found' });
-        }
-        // console.log(`[DEBUG] getClients - Found Company: ${company.name || company.companyName}. Clients count: ${company.clients?.length || 0}`);
-
-        // Normalize Company Clients to Strings
-        const companyClientIds = (company.clients || []).map(id => id.toString());
-
-        // 2. Fetch User to determine Access Level
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            console.error(`[DEBUG] getClients - Invalid User ID format: ${userId}`);
-            return res.status(400).json({ message: 'Invalid User ID format' });
-        }
-
+        // 1. Fetch User to determine Access Level
         const user = await User.findOne({ _id: new mongoose.Types.ObjectId(userId) });
-
         if (!user) {
-            console.error(`[DEBUG] getClients - User NOT FOUND: ${userId}`);
             return res.status(404).json({ message: 'User not found' });
         }
-        // console.log(`[DEBUG] getClients - User Role: ${user.role}. User Assigned Clients: ${user.clients?.length || 0}`);
 
-        // 3. Determine Clients Allowed for this User
-        let allowedClientIds = [];
         const isAdmin = ['Product Admin', 'Admin', 'Super Admin'].includes(user.role);
 
-        if (isAdmin) {
-            allowedClientIds = companyClientIds;
-            // console.log(`[DEBUG] getClients - Admin Access. Allowing all ${allowedClientIds.length} company clients.`);
-        } else {
-            const userClientIds = (user.clients || []).map(id => id.toString());
-            allowedClientIds = companyClientIds.filter(id => userClientIds.includes(id));
-            console.log(`[DEBUG] getClients - Standard Access. Intersection Count: ${allowedClientIds.length}`);
+        // 2. Build Query
+        let query = { companyID: new mongoose.Types.ObjectId(companyID) };
+
+        if (!isAdmin) {
+            const userClientIds = (user.clients || []).map(id =>
+                mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : id
+            );
+            query._id = { $in: userClientIds };
         }
 
-        if (allowedClientIds.length === 0) {
-            console.warn('[DEBUG] getClients - No allowed clients found for this user/company combination.');
-            return res.status(200).json([]);
-        }
+        // 3. Fetch Clients
+        const clients = await Client.find(query);
 
-        // 4. Fetch Details for Allowed Clients
-        // We must support both String and ObjectId types for _id in clientsdb
-        const queryIds = [];
-        allowedClientIds.forEach(id => {
-            queryIds.push(id);
-            if (mongoose.Types.ObjectId.isValid(id)) {
-                queryIds.push(new mongoose.Types.ObjectId(id));
-            }
-        });
-
-        const clients = await Client.find({
-            _id: { $in: queryIds }
-        });
-
-        // console.log(`[DEBUG] getClients - Found ${clients.length} detailed client docs in clientsDB.`);
-
+        // 4. Format Output
         const formattedClients = clients.map(c => {
             const doc = c.toObject ? c.toObject() : c;
             return {
@@ -94,7 +48,7 @@ const getClients = async (req, res) => {
                 clientName: doc.clientName || doc.name || 'Unnamed Client',
                 clientCode: doc.clientCode || '',
                 clientType: doc.clientType || 'Client',
-                status: doc.status || 'Active'
+                status: doc.status || (doc.enable === false ? 'Inactive' : 'Active')
             };
         });
 
@@ -147,61 +101,55 @@ const createClient = async (req, res) => {
 
 const getClientById = async (req, res) => {
     try {
-        const { companyID, id: userId } = req.user;
-        const clientId = req.params.id;
+        const userId = req.user.id || req.user._id;
+        const clientId = req.params.id ? req.params.id.trim() : null;
 
-        if (!mongoose.Types.ObjectId.isValid(clientId)) {
+        console.log(`[DEBUG] getClientById - UserID: ${userId}, ClientID: ${clientId}`);
+
+        if (!clientId || !mongoose.Types.ObjectId.isValid(clientId)) {
             return res.status(400).json({ message: 'Invalid Client ID format' });
         }
 
-        // 1. Fetch Company Document
-        if (!mongoose.Types.ObjectId.isValid(companyID)) {
-            return res.status(400).json({ message: 'Invalid Company ID format' });
-        }
-
-        const company = await mongoose.connection.collection('companiesDB').findOne({
-            _id: new mongoose.Types.ObjectId(companyID)
-        });
-
-        if (!company) {
-            return res.status(404).json({ message: 'Company not found' });
-        }
-
-        const companyClientIds = (company.clients || []).map(id => id.toString());
-
-        // 2. Fetch User to determine Access Level
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ message: 'Invalid User ID format' });
-        }
-
+        // 1. Fetch User to determine Access Level
         const user = await User.findOne({ _id: new mongoose.Types.ObjectId(userId) });
-
         if (!user) {
+            console.warn(`[DEBUG] getClientById - User not found for ID: ${userId}`);
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // 3. Determine Clients Allowed for this User
-        let allowedClientIds = [];
         const isAdmin = ['Product Admin', 'Admin', 'Super Admin'].includes(user.role);
+        console.log(`[DEBUG] getClientById - User Role: ${user.role}, IsAdmin: ${isAdmin}`);
 
-        if (isAdmin) {
-            allowedClientIds = companyClientIds;
-        } else {
-            const userClientIds = (user.clients || []).map(id => id.toString());
-            allowedClientIds = companyClientIds.filter(id => userClientIds.includes(id));
-        }
-
-        // 4. Verify Access to Requested Client
-        if (!allowedClientIds.includes(clientId)) {
-            return res.status(403).json({ message: 'Access denied to this client' });
-        }
-
-        // 5. Fetch Client Details
+        // 3. Fetch Client
         const client = await Client.findOne({ _id: new mongoose.Types.ObjectId(clientId) });
 
         if (!client) {
+            console.warn(`[DEBUG] getClientById - Client not found in database for ID: ${clientId}`);
             return res.status(404).json({ message: 'Client not found in database' });
         }
+
+        // 4. Verify Access
+        const userCompanyID = req.user.currentCompanyID || req.user.companyID || user.currentCompanyID || user.companyID;
+        console.log(`[DEBUG] getClientById - Context CompanyID: ${userCompanyID}, Client's CompanyID: ${client.companyID}`);
+
+        // If not Product Admin, enforce company match
+        if (user.role !== 'Product Admin') {
+            if (client.companyID && userCompanyID && client.companyID.toString() !== userCompanyID.toString()) {
+                console.warn(`[DEBUG] getClientById - Access Denied (Company Mismatch). Client CoID: ${client.companyID}, User CoID: ${userCompanyID}`);
+                return res.status(403).json({ message: 'Access denied to this client' });
+            }
+
+            // If not admin, check if user is assigned to this client
+            if (!isAdmin) {
+                const userClientIds = (user.clients || []).map(id => id.toString());
+                if (!userClientIds.includes(clientId.toString())) {
+                    console.warn(`[DEBUG] getClientById - Access Denied (User not assigned). ClientID: ${clientId}`);
+                    return res.status(403).json({ message: 'Access denied. You are not assigned to this client.' });
+                }
+            }
+        }
+
+        console.log(`[DEBUG] getClientById - Access Granted for ${client.clientName}`);
 
         const doc = client.toObject();
         const formattedClient = {
@@ -210,7 +158,7 @@ const getClientById = async (req, res) => {
             clientName: doc.clientName || doc.name || 'Unnamed Client',
             clientCode: doc.clientCode || '',
             clientType: doc.clientType || 'Client',
-            status: doc.status || 'Active'
+            status: doc.status || (doc.enable === false ? 'Inactive' : 'Active')
         };
 
         res.status(200).json(formattedClient);
@@ -232,6 +180,12 @@ const updateClient = async (req, res) => {
         const client = await Client.findById(clientId);
         if (!client) {
             return res.status(404).json({ message: 'Client not found' });
+        }
+
+        // Verify company ownership
+        const userCompanyID = req.user.currentCompanyID || req.user.companyID;
+        if (client.companyID.toString() !== userCompanyID.toString()) {
+            return res.status(403).json({ message: 'Access denied to this client' });
         }
 
         // Update fields using findByIdAndUpdate with $set to handle nested paths like 'themesdata.themeVariables.mainColor'

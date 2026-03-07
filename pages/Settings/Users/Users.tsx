@@ -379,21 +379,24 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
                                             </div>
                                         </div>
 
-                                        {/* Grouped List */}
-                                        <div className="max-h-60 overflow-y-auto custom-scrollbar p-2">
+                                        {/* Grouped Cascader content */}
+                                        <div className="max-h-80 overflow-y-auto custom-scrollbar p-2 bg-white dark:bg-slate-800">
                                             {(() => {
                                                 const filtered = clients.filter(c =>
                                                     (c.name || c.clientName || '').toLowerCase().includes(searchQuery.toLowerCase())
                                                 );
 
                                                 if (filtered.length === 0) {
-                                                    return <div className="p-4 text-center text-sm text-slate-500 italic">No clients found</div>;
+                                                    return (
+                                                        <div className="py-8 text-center text-slate-400">
+                                                            <Search size={32} className="mx-auto opacity-20 mb-2" />
+                                                            <p className="text-xs italic">{t("No clients found")}</p>
+                                                        </div>
+                                                    );
                                                 }
 
                                                 const grouped = filtered.reduce((acc: any, client) => {
-                                                    // Override logic for specific clients based on user feedback
-                                                    let type = client.type || client.clientType || 'Client'; // Default
-
+                                                    let type = client.type || client.clientType || 'Client';
                                                     const lowerName = (client.name || client.clientName || '').toLowerCase();
 
                                                     if (lowerName.includes('trc talent solutions') || lowerName.includes('google') || lowerName.includes('maprecruit')) {
@@ -404,53 +407,90 @@ export const UsersSettings = ({ onSelectUser }: UsersSettingsProps) => {
                                                         type = 'Vendor';
                                                     }
 
-                                                    // Capitalize first letter
                                                     type = type.charAt(0).toUpperCase() + type.slice(1);
-
                                                     if (!acc[type]) acc[type] = [];
                                                     acc[type].push(client);
                                                     return acc;
                                                 }, {});
 
-                                                // Sort keys: Branch, Client, Vendor, Others
-                                                const priority = ['Branch', 'Client', 'Vendor'];
-                                                const sortedKeys = Object.keys(grouped).sort((a, b) => {
-                                                    const idxA = priority.indexOf(a);
-                                                    const idxB = priority.indexOf(b);
-                                                    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-                                                    if (idxA !== -1) return -1;
-                                                    if (idxB !== -1) return 1;
-                                                    return a.localeCompare(b);
-                                                });
+                                                const sortedKeys = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
 
-                                                return sortedKeys.map(type => (
-                                                    <div key={type} className="mb-3 last:mb-0">
-                                                        <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1 px-2">
-                                                            {t(type)}
+                                                return sortedKeys.map(type => {
+                                                    const clientsInGroup = [...grouped[type]].sort((a: any, b: any) =>
+                                                        (a.name || a.clientName || '').localeCompare(b.name || b.clientName || '')
+                                                    );
+
+                                                    const groupIds = clientsInGroup.map(c => c._id);
+                                                    const selectedInGroup = (formData.clients || []).filter(id => groupIds.includes(id));
+                                                    const allSelected = groupIds.length > 0 && selectedInGroup.length === groupIds.length;
+                                                    const isExpanded = searchQuery.length > 0 || selectedInGroup.length > 0 || sortedKeys.length === 1;
+
+                                                    return (
+                                                        <div key={type} className="mb-4 last:mb-0">
+                                                            <div className="flex items-center justify-between px-2 mb-2 border-b border-slate-100 dark:border-slate-700 pb-1.5">
+                                                                <div className="flex items-center gap-2">
+                                                                    <div className={`w-1 h-3 rounded-full transition-colors ${isExpanded ? 'bg-indigo-500' : 'bg-slate-300 dark:bg-slate-600'}`}></div>
+                                                                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                                                        {t(type)}
+                                                                        <span className="text-[9px] lowercase font-medium opacity-60">({selectedInGroup.length}/{groupIds.length})</span>
+                                                                    </span>
+                                                                </div>
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        e.stopPropagation();
+                                                                        if (allSelected) {
+                                                                            setFormData(prev => ({
+                                                                                ...prev,
+                                                                                clients: (prev.clients || []).filter(id => !groupIds.includes(id))
+                                                                            }));
+                                                                        } else {
+                                                                            setFormData(prev => ({
+                                                                                ...prev,
+                                                                                clients: [...new Set([...(prev.clients || []), ...groupIds])]
+                                                                            }));
+                                                                        }
+                                                                    }}
+                                                                    className="text-[10px] font-bold text-indigo-500 hover:text-indigo-600 transition-colors uppercase tracking-tight"
+                                                                >
+                                                                    {allSelected ? t("Unselect All") : t("Select Group")}
+                                                                </button>
+                                                            </div>
+
+                                                            <div className="space-y-0.5">
+                                                                {clientsInGroup.map((client: any) => {
+                                                                    const isSelected = (formData.clients || []).includes(client._id);
+                                                                    return (
+                                                                        <label
+                                                                            key={client._id}
+                                                                            className={`flex items-center justify-between p-2.5 rounded-lg cursor-pointer group transition-all duration-200 ${isSelected ? 'bg-indigo-50/50 dark:bg-indigo-900/10 ring-1 ring-indigo-100 dark:ring-indigo-800/20 shadow-sm' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50'}`}
+                                                                            onClick={(e) => e.stopPropagation()}
+                                                                        >
+                                                                            <span className={`text-sm transition-colors ${isSelected ? 'text-indigo-700 dark:text-indigo-300 font-bold' : 'text-slate-600 dark:text-slate-300 font-medium'}`}>
+                                                                                {client.name || client.clientName}
+                                                                            </span>
+                                                                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all duration-200 ${isSelected ? 'bg-indigo-600 border-indigo-600 text-white scale-110 shadow-lg shadow-indigo-600/20' : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 group-hover:border-indigo-400'}`}>
+                                                                                {isSelected && <CheckCircle size={12} strokeWidth={3} />}
+                                                                            </div>
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                className="hidden"
+                                                                                checked={isSelected}
+                                                                                onChange={() => {
+                                                                                    if (isSelected) {
+                                                                                        setFormData(prev => ({ ...prev, clients: (prev.clients || []).filter(id => id !== client._id) }));
+                                                                                    } else {
+                                                                                        setFormData(prev => ({ ...prev, clients: [...(prev.clients || []), client._id] }));
+                                                                                    }
+                                                                                }}
+                                                                            />
+                                                                        </label>
+                                                                    );
+                                                                })}
+                                                            </div>
                                                         </div>
-                                                        <div className="space-y-0.5">
-                                                            {grouped[type].map((client: any) => {
-                                                                const isSelected = (formData.clients || []).includes(client._id);
-                                                                return (
-                                                                    <label key={client._id} className="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer group transition-colors">
-                                                                        <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 group-hover:border-emerald-400'}`}>
-                                                                            {isSelected && <CheckCircle size={10} strokeWidth={4} />}
-                                                                        </div>
-                                                                        <input
-                                                                            type="checkbox"
-                                                                            className="hidden"
-                                                                            checked={isSelected}
-                                                                            onChange={() => toggleClientSelection(client._id)}
-                                                                        />
-                                                                        <span className={`text-sm ${isSelected ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-600 dark:text-slate-300'}`}>
-                                                                            {client.name || client.clientName}
-                                                                        </span>
-                                                                    </label>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    </div>
-                                                ));
+                                                    );
+                                                });
                                             })()}
                                         </div>
                                     </div>

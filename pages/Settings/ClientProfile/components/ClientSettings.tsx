@@ -7,12 +7,17 @@ import { useToast } from '../../../../components/Toast';
 
 interface ClientSettingsProps {
     client: ClientData;
+    isActive?: boolean;
 }
 
-export const ClientSettings = ({ client }: ClientSettingsProps) => {
+export const ClientSettings = ({ client, isActive = true }: ClientSettingsProps) => {
     const { t } = useTranslation();
     const { addToast } = useToast();
     const [editMode, setEditMode] = useState(false);
+
+    const handleEditToggle = () => {
+        setEditMode(true);
+    };
 
     // Weights State
     const [weights, setWeights] = useState({
@@ -107,14 +112,28 @@ export const ClientSettings = ({ client }: ClientSettingsProps) => {
 
     return (
         <div className="p-8 lg:p-12 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+            {!isActive && (
+                <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-center gap-3 text-amber-800 dark:text-amber-200">
+                    <div className="p-2 bg-amber-100 dark:bg-amber-800/40 rounded-lg">
+                        <AlertCircle size={18} className="text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <div>
+                        <p className="text-sm font-bold">{t("Client is Deactivated")}</p>
+                        <p className="text-xs opacity-80">{t("You can still modify configurations and reactivate the client profile below.")}</p>
+                    </div>
+                </div>
+            )}
             <div className="flex justify-between items-center mb-8">
                 <div>
                     <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{t("Client Configuration")}</h1>
                     <p className="text-slate-500 dark:text-slate-400">{t("Advanced settings for campaigns, job candidates, and operations.")}</p>
                 </div>
                 <button
-                    onClick={() => editMode ? handleSave() : setEditMode(true)}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2 ${editMode ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                    onClick={() => editMode ? handleSave() : handleEditToggle()}
+                    className={`px-6 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2 ${editMode
+                        ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                        : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'
+                        }`}
                 >
                     {editMode ? <Save size={16} /> : null}
                     {editMode ? t("Save Configuration") : t("Edit Configuration")}

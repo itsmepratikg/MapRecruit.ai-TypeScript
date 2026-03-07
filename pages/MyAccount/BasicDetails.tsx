@@ -104,41 +104,78 @@ const ColorDropdown = ({ selected, onSelect }: { selected: string, onSelect: (c:
 };
 
 const ClientMultiSelect = ({ selected = [], options = [], onSelect }: { selected: any[] | undefined, options: any[], onSelect: (selected: any[]) => void }) => {
+   const { t } = useTranslation();
    const [isOpen, setIsOpen] = useState(false);
-   const [search, setSearch] = useState('');
+   const [searchQuery, setSearchQuery] = useState('');
+   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
    const dropdownRef = useRef<HTMLDivElement>(null);
 
-   const filteredOptions = options.filter((opt: any) => {
-      const label = typeof opt === 'string' ? opt : (opt.clientName || opt.name || '');
-      return label.toLowerCase().includes(search.toLowerCase());
-   });
+   const filteredOptions = useMemo(() => {
+      const lowerQ = searchQuery.toLowerCase();
+      return options.filter((opt: any) => {
+         if (typeof opt === 'string') return opt.toLowerCase().includes(lowerQ);
+         const name = opt.clientName || opt.name || '';
+         const code = opt.clientCode || '';
+         return name.toLowerCase().includes(lowerQ) || code.toLowerCase().includes(lowerQ);
+      });
+   }, [options, searchQuery]);
 
-   useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-            setIsOpen(false);
+   const grouped = useMemo(() => {
+      const g = filteredOptions.reduce((acc: any, client) => {
+         let type = client.type || client.clientType || 'Client';
+         const lowerName = (client.name || client.clientName || '').toLowerCase();
+
+         if (lowerName.includes('trc talent solutions') || lowerName.includes('google') || lowerName.includes('maprecruit')) {
+            type = 'Client';
+         } else if (lowerName.includes('peachtree')) {
+            type = 'Branch';
+         } else if (lowerName.includes('diversified')) {
+            type = 'Vendor';
          }
-      };
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-   }, []);
 
-   const toggleOption = (option: string) => {
-      // Comparison logic that handles both strings and objects
-      const isSelected = selected.some((s: any) => {
-         const sVal = typeof s === 'string' ? s : (s.clientName || s.name);
-         const optVal = typeof option === 'string' ? option : (option.clientName || (option as any).name);
-         return sVal === optVal;
+         type = type.charAt(0).toUpperCase() + type.slice(1);
+         if (!acc[type]) acc[type] = [];
+         acc[type].push(client);
+         return acc;
+      }, {});
+
+      Object.keys(g).forEach(key => {
+         g[key].sort((a: any, b: any) =>
+            (a.clientName || a.name || '').localeCompare(b.clientName || b.name || '')
+         );
       });
 
+      return g;
+   }, [filteredOptions]);
+
+   const sortedGroupKeys = useMemo(() => {
+      return Object.keys(grouped).sort((a, b) => a.localeCompare(b));
+   }, [grouped]);
+
+   useEffect(() => {
+      if (searchQuery) {
+         setExpandedGroups(new Set(sortedGroupKeys));
+      }
+   }, [searchQuery, sortedGroupKeys]);
+
+   const toggleOption = (clientId: string) => {
+      const isSelected = selected.some(s => (s._id || s) === clientId);
       const newSelected = isSelected
-         ? selected.filter((s: any) => {
-            const sVal = typeof s === 'string' ? s : (s.clientName || s.name);
-            const optVal = typeof option === 'string' ? option : (option.clientName || (option as any).name);
-            return sVal !== optVal;
-         })
-         : [...selected, option];
+         ? selected.filter(s => (s._id || s) !== clientId)
+         : [...selected, options.find(o => (o._id || o) === clientId)].filter(Boolean);
       onSelect(newSelected);
+   };
+
+   const toggleGroup = (type: string, groupIds: string[]) => {
+      const selectedInGroup = selected.filter(s => groupIds.includes(s._id || s));
+      const allSelected = selectedInGroup.length === groupIds.length;
+
+      if (allSelected) {
+         onSelect(selected.filter(s => !groupIds.includes(s._id || s)));
+      } else {
+         const newClients = options.filter(o => groupIds.includes(o._id || o) && !selected.some(s => (s._id || s) === (o._id || o)));
+         onSelect([...selected, ...newClients]);
+      }
    };
 
    return (
@@ -146,66 +183,151 @@ const ClientMultiSelect = ({ selected = [], options = [], onSelect }: { selected
          <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="w-full px-3 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-left flex items-center justify-between focus:ring-2 focus:ring-emerald-500 outline-none"
+            className="w-full px-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-left flex items-center justify-between focus:ring-2 focus:ring-emerald-500 outline-none transition-all hover:bg-slate-50 dark:hover:bg-slate-600/50 min-h-[50px]"
          >
-            <div className="flex flex-wrap gap-1 max-w-[90%]">
+            <div className="flex flex-wrap gap-1.5 max-w-[90%]">
                {selected.length > 0 ? (
                   selected.map((s: any) => {
                      const label = typeof s === 'string' ? s : (s.clientName || s.name || 'Unknown');
+                     const id = s._id || s;
+                     const key = typeof id === 'object' ? (id.$oid || JSON.stringify(id)) : id;
                      return (
-                        <span key={label} className="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded text-xs font-semibold">
+                        <span key={key} className="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-lg text-[10px] font-bold border border-emerald-100 dark:border-emerald-800/30">
                            {label}
                         </span>
                      );
                   })
                ) : (
-                  <span className="text-sm text-slate-400">Select Clients access...</span>
+                  <span className="text-sm text-slate-400">{t("Select client access...")}</span>
                )}
             </div>
-            <ChevronDown size={16} className="text-slate-400 shrink-0" />
+            <div className="flex items-center gap-2 text-slate-400">
+               {selected.length > 0 && (
+                  <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full text-emerald-600 dark:text-emerald-400 font-bold">
+                     {selected.length}
+                  </span>
+               )}
+               <ChevronDown size={18} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+            </div>
          </button>
 
          {isOpen && (
-            <div className="absolute bottom-full left-0 w-full mb-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden min-w-[240px]">
-               <div className="p-2 border-b border-slate-100 dark:border-slate-700">
+            <div className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+               <div className="p-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 space-y-3">
                   <div className="relative">
-                     <Search size={14} className="absolute left-2.5 top-2 text-slate-400" />
+                     <Search size={14} className="absolute left-3 top-2.5 text-slate-400" />
                      <input
                         type="text"
-                        placeholder="Search clients..."
-                        className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded focus:outline-none dark:text-slate-200"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder={t("Search clients...")}
+                        className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 dark:text-slate-200"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         autoFocus
                      />
                   </div>
+                  <div className="flex justify-between items-center px-1">
+                     <button
+                        onClick={(e) => {
+                           e.preventDefault();
+                           onSelect([...options]);
+                        }}
+                        className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700"
+                     >
+                        {t("Select All")}
+                     </button>
+                     <button
+                        onClick={(e) => {
+                           e.preventDefault();
+                           onSelect([]);
+                        }}
+                        className="text-[11px] font-bold text-slate-500 hover:text-slate-700"
+                     >
+                        {t("Clear Selection")}
+                     </button>
+                  </div>
                </div>
-               <div className="max-h-60 overflow-y-auto custom-scrollbar">
-                  {filteredOptions.map((opt: any) => {
-                     const label = typeof opt === 'string' ? opt : (opt.clientName || opt.name || 'Unknown');
-                     const isSelected = selected.some((s: any) => {
-                        const sVal = typeof s === 'string' ? s : (s.clientName || s.name);
-                        return sVal === label;
-                     });
+
+               <div className="max-h-80 overflow-y-auto custom-scrollbar p-2 bg-white dark:bg-slate-800">
+                  {sortedGroupKeys.map(type => {
+                     const idMatch = (a: any, b: any) => {
+                        const idA = a?.$oid || a?._id?.$oid || a?._id || a?.id || a;
+                        const idB = b?.$oid || b?._id?.$oid || b?._id || b?.id || b;
+                        return String(idA) === String(idB);
+                     };
+
+                     const clientsInGroup = grouped[type];
+                     const groupIds = clientsInGroup.map((c: any) => c._id || c);
+                     const selectedInGroup = selected.filter(s => clientsInGroup.some(c => idMatch(s, c)));
+                     const allSelected = groupIds.length > 0 && selectedInGroup.length === groupIds.length;
+                     const isExpanded = expandedGroups.has(type) || sortedGroupKeys.length === 1 || selectedInGroup.length > 0;
 
                      return (
-                        <button
-                           key={label}
-                           type="button"
-                           onClick={() => toggleOption(opt)}
-                           className={`w-full text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center justify-between border-b border-slate-50 dark:border-slate-700/50 last:border-0 ${isSelected ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}
-                        >
-                           <span>{label}</span>
-                           {isSelected && (
-                              <div className="flex items-center justify-center w-4 h-4 rounded bg-emerald-500 text-white">
-                                 <Check size={12} strokeWidth={3} />
+                        <div key={type} className="mb-4 last:mb-0">
+                           {sortedGroupKeys.length > 1 && (
+                              <div className="flex items-center justify-between px-2 mb-2 border-b border-slate-100 dark:border-slate-700 pb-1.5">
+                                 <button
+                                    onClick={() => {
+                                       setExpandedGroups(prev => {
+                                          const next = new Set(prev);
+                                          if (next.has(type)) next.delete(type);
+                                          else next.add(type);
+                                          return next;
+                                       });
+                                    }}
+                                    className="flex items-center gap-2 group"
+                                 >
+                                    <div className={`w-1 h-3 rounded-full transition-colors ${isExpanded ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}></div>
+                                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                       {t(type)}
+                                       <span className="text-[9px] lowercase font-medium opacity-60">({selectedInGroup.length}/{groupIds.length})</span>
+                                    </span>
+                                    <ChevronDown size={12} className={`text-slate-300 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                                 </button>
+                                 <button
+                                    onClick={(e) => { e.preventDefault(); toggleGroup(type, groupIds); }}
+                                    className="text-[10px] font-bold text-emerald-500 hover:text-emerald-600 transition-colors uppercase tracking-tight"
+                                 >
+                                    {allSelected ? t("Unselect All") : t("Select Group")}
+                                 </button>
                               </div>
                            )}
-                        </button>
+
+                           {isExpanded && (
+                              <div className="space-y-0.5 animate-in slide-in-from-top-1 duration-200">
+                                 {clientsInGroup.map((client: any) => {
+                                    const clientId = client._id || client;
+                                    const key = typeof clientId === 'object' ? (clientId.$oid || JSON.stringify(clientId)) : clientId;
+                                    const isSelected = selected.some(s => idMatch(s, clientId));
+                                    const label = client.clientName || client.name || client;
+
+                                    return (
+                                       <label key={key} className={`flex items-center justify-between p-2.5 rounded-lg cursor-pointer group transition-all duration-200 ${isSelected ? 'bg-emerald-50/50 dark:bg-emerald-900/10 ring-1 ring-emerald-100 dark:ring-emerald-800/20 shadow-sm' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50'}`}>
+                                          <span className={`text-sm transition-colors ${isSelected ? 'text-emerald-700 dark:text-emerald-300 font-bold' : 'text-slate-600 dark:text-slate-300 font-medium'}`}>
+                                             {label}
+                                          </span>
+                                          <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all duration-200 ${isSelected ? 'bg-emerald-600 border-emerald-600 text-white scale-110 shadow-lg shadow-emerald-600/20' : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 group-hover:border-emerald-400'}`}>
+                                             {isSelected && <Check size={12} strokeWidth={3} />}
+                                          </div>
+                                          <input
+                                             type="checkbox"
+                                             className="hidden"
+                                             checked={isSelected}
+                                             onChange={() => toggleOption(clientId)}
+                                          />
+                                       </label>
+                                    );
+                                 })}
+                              </div>
+                           )}
+                        </div>
                      );
                   })}
+
                   {filteredOptions.length === 0 && (
-                     <div className="px-3 py-2 text-xs text-slate-400 text-center">No clients found</div>
+                     <div className="py-8 text-center text-slate-400 animate-in fade-in duration-300">
+                        <Search size={32} className="mx-auto opacity-20 mb-2" />
+                        <p className="text-xs italic">{t("No clients found")}</p>
+                     </div>
                   )}
                </div>
             </div>

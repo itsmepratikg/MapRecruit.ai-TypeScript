@@ -3,7 +3,7 @@ import {
   User, FileText, Briefcase, Activity, MessageSquare,
   Users, ThumbsUp, Video, Mail, Phone, Linkedin,
   ChevronLeft, MoreHorizontal, Minimize2, HelpCircle,
-  FileEdit, Folder, Copy, MessageCircle, MapPin, CheckCircle, Tag as TagIcon, X
+  FileEdit, Folder, Copy, MessageCircle, MapPin, CheckCircle, Tag as TagIcon, X, Search
 } from '../components/Icons';
 import { ActionIcons, StatusBadge, EmptyView } from '../components/Common';
 import { InterviewFormContent } from '../components/InterviewComponents';
@@ -53,7 +53,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
   // Use centralized user profile hook
   const { userProfile } = useUserProfile();
 
-  const userCompanyID = userProfile?.currentCompanyID || userProfile?.companyID || userProfile?.companyId;
+  const userCompanyID = userProfile?.companyID;
 
   const [accessDenied, setAccessDenied] = useState(false);
   const [owningEntityName, setOwningEntityName] = useState<string | null>(null);
@@ -129,11 +129,21 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         const user = userProfile;
 
         // Standardized Multi-Tenant IDs
-        const currentUserCompanyId = user.currentCompanyID || user.companyID || user.companyId;
-        const currentUserClientIds = Array.isArray(user.clientID || user.clients)
-          ? (user.clientID || user.clients)
-          : [user.clientID || user.clients].filter(Boolean);
-        const currentActiveClientId = user.activeClientID || (typeof user.activeClient === 'object' ? user.activeClient?._id : undefined) || user.clientId;
+        const currentUserCompanyId = user.companyID;
+        const currentUserClientIds = Array.isArray(user.clientID)
+          ? user.clientID
+          : [user.clientID].filter(Boolean);
+        const currentActiveClientId = user.activeClientID || ((user.activeClient && typeof user.activeClient === 'string') ? user.activeClient : undefined);
+
+        // Fetch client details for context (franchise/owning entity)
+        let clientData: any = null;
+        if (currentActiveClientId) {
+          try {
+            clientData = await clientService.getById(currentActiveClientId).catch(() => null);
+          } catch (e) {
+            console.warn("Could not fetch active client data");
+          }
+        }
 
         const resumeClientId = liveData.clientID || liveData.clientId;
         const resumeCompanyId = liveData.companyID || liveData.companyId;
@@ -149,7 +159,9 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         const isFranchiseMode = activeCompany.productSettings?.franchise === true;
 
         // 2. Fetch Active Client Settings
-        const clientData = await clientService.getById(currentActiveClientId);
+        if (!clientData) {
+          clientData = await clientService.getById(currentActiveClientId).catch(() => ({}));
+        }
         const searchLevel = clientData.settings?.profileSearchAccessLevel || 'Client';
 
         const isDirectAccess = !!urlId && !propsCandidateId;
@@ -162,7 +174,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         // 3. Access Check Logic
         if (isAdmin) {
           // Admins have access to everything within their Accessible Companies
-          const accessibleCompanies = user.AccessibleCompanyID || [user.companyID];
+          const accessibleCompanies = [user.companyID];
           isAllowed = accessibleCompanies.some((id: string) => id.toString() === resumeCompanyId?.toString());
         } else if (isDirectAccess) {
           // Direct Access: Strictly same company only
@@ -338,7 +350,7 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         setShowResumePreview(true);
         break;
       default:
-        addToast(`${action} widget clicked`, "default");
+        addToast(`${action} widget clicked`, "info");
     }
   };
 
@@ -693,7 +705,12 @@ export const CandidateProfile = ({ activeTab: propsActiveTab, candidateId: props
         data={{
           emails: profileBasic.emails || [],
           phones: profileBasic.phones || [],
-          socials: profileBasic.socialLinks || []
+          socials: profileBasic.websites || []
+        }}
+        onEdit={(type, index) => {
+          setIsContactModalOpen(false);
+          setEditModalTab('CONTACTS');
+          setIsEditModalOpen(true);
         }}
       />
     </div>

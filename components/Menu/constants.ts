@@ -82,8 +82,15 @@ export const SETTINGS_CATEGORIES = [
     label: 'System & Data',
     items: [
       { id: 'CUSTOM_FIELD', label: 'Custom Field', icon: FileText },
-      { id: 'PROFILE_TAGS', label: 'Profile Tags', icon: Tag },
-      { id: 'APP_TAGS', label: 'Application Tags', icon: Tag },
+      {
+        id: 'TAGS',
+        label: 'Tags',
+        icon: Tag,
+        subItems: [
+          { id: 'PROFILE_TAGS', label: 'Profile Tags', icon: Tag },
+          { id: 'APP_TAGS', label: 'Application Tags', icon: Tag },
+        ]
+      },
       { id: 'PROFILE_SOURCES', label: 'Profile Sources', icon: Database },
       { id: 'COMMUNICATION', label: 'Communication', icon: MessageSquare },
       { id: 'COMM_TEMPLATES', label: 'Comm Templates', icon: Mail },
